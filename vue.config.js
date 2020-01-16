@@ -18,6 +18,9 @@ module.exports = {
     hotOnly: false
   },
   configureWebpack: { // 配置webpack
-    plugins: []
+    plugins: [],
+    externals: {
+      'element-ui': 'element-ui'
+    }
   }
 }
