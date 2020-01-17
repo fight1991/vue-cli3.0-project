@@ -20,7 +20,11 @@ module.exports = {
   configureWebpack: { // 配置webpack
     plugins: [],
     externals: {
-      'element-ui': 'element-ui'
+      'element-ui': 'ELEMENT',
+      'vue': 'Vue',
+      'vuex': 'Vuex',
+      'axios': 'axios',
+      'vue-router': 'VueRouter'
     }
   }
 }
