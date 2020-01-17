@@ -1,3 +1,4 @@
+const path = require('path')
 module.exports = {
   publicPath: '/', // 应用部署路径
   outputDir: 'dist', // 生产环境构建目录
@@ -5,6 +6,14 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV !== 'production', // 生产环境不启用lint
   runtimeCompiler: false, // 是否在 Vue 组件中使用 template 选项
   productionSourceMap: false, // 不需要生产环境的 source map
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [
+        path.resolve(__dirname, './src/style/color.less')
+      ]
+    }
+  },
   devServer: {
     // proxy: {}
     overlay: { // 让浏览器 overlay 同时显示警告和错误
