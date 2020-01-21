@@ -2,7 +2,7 @@
 import VueRouter from 'vue-router'
 import Main from '../views/main.vue'
 // Vue.use(VueRouter)
-
+import Error from '@/views/error'
 const routes = [
   {
     path: '/',
@@ -10,7 +10,7 @@ const routes = [
     component: Main
   }
 ]
-
+routes.push(...Error)
 const router = new VueRouter({
   routes
 })
