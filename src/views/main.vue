@@ -9,6 +9,7 @@
         <el-main>Main</el-main>
       </el-container>
     </el-container>
+    <el-button @click="btnClick">点我发送</el-button>
   </div>
 </template>
 
@@ -21,6 +22,19 @@ export default {
   data () {
     return {
 
+    }
+  },
+  methods: {
+    btnClick () {
+      this.$post({
+        url: 'https://test.5itrade.cn/login/user/queryUserCorps',
+        data: {
+          aa: '123'
+        },
+        success: (res) => {
+          console.log(res)
+        }
+      })
     }
   }
 }
