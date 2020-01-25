@@ -5,7 +5,9 @@
         <layout-header></layout-header>
       </el-header>
       <el-container class="main-container">
-        <el-aside class="main-aside" width="200px">Aside</el-aside>
+        <el-aside class="main-aside" width="200px">
+          <layout-aside></layout-aside>
+        </el-aside>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -15,9 +17,11 @@
 
 <script>
 import layoutHeader from './layout/header'
+import layoutAside from './layout/aside'
 export default {
   components: {
-    layoutHeader
+    layoutHeader,
+    layoutAside
   },
   data () {
     return {

@@ -47,4 +47,3 @@ const request = {
 Object.keys(request).forEach(key => {
   Vue.prototype[key] = request[key]
 })
-console.log(Vue.prototype)
