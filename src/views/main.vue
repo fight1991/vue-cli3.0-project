@@ -8,20 +8,24 @@
         <el-aside class="main-aside" width="200px">
           <layout-aside></layout-aside>
         </el-aside>
-        <el-main>Main</el-main>
+        <el-main class="main-tab">
+          <tab-view></tab-view>
+        </el-main>
       </el-container>
     </el-container>
-    <el-button @click="btnClick">点我发送</el-button>
+    <!-- <el-button @click="btnClick">点我发送</el-button> -->
   </div>
 </template>
 
 <script>
 import layoutHeader from './layout/header'
 import layoutAside from './layout/aside'
+import tabView from './layout/tabView'
 export default {
   components: {
     layoutHeader,
-    layoutAside
+    layoutAside,
+    tabView
   },
   data () {
     return {
@@ -56,6 +60,9 @@ export default {
 }
 .main-container {
   height: 100%;
+}
+.main-tab {
+  padding: 0;
 }
 .main-aside {
   border-right: 1px solid #ccc;
