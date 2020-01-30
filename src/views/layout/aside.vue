@@ -36,8 +36,13 @@
 </template>
 
 <script>
+import nav from './asideNav'
 export default {
-
+  data () {
+    return {
+      navArr: nav
+    }
+  }
 }
 </script>
 
