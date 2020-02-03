@@ -5,7 +5,7 @@
         <layout-header></layout-header>
       </el-header>
       <el-container class="main-container">
-        <el-aside class="main-aside" width="200px">
+        <el-aside class="main-aside" width="220px">
           <layout-aside></layout-aside>
         </el-aside>
         <el-main class="main-tab">
@@ -19,7 +19,7 @@
 
 <script>
 import layoutHeader from './layout/header'
-import layoutAside from './layout/aside'
+import layoutAside from './layout/sliderBar/aside'
 import tabView from './layout/tabView'
 export default {
   components: {

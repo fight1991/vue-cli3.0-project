@@ -1,6 +1,7 @@
 export default {
   title: 'demo2-test1',
   icon: 'el-icon-eleme',
+  menuId: 'demo2-test1-1',
   pemission: '494949',
   children: [
     {
