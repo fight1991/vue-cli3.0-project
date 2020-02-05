@@ -1,6 +1,7 @@
 export default {
   state: {
     currentTabName: 'tab-index',
+    activeIndex: '',
     tabList: [
       {
         tabId: 'tab-index',
@@ -15,22 +16,29 @@ export default {
     ]
   },
   mutations: {
+    setActiveIndex (state, activeIndex) {
+      state.activeIndex = activeIndex
+    },
     setCurrentTabName (state, tabName) {
       state.currentTabName = tabName
     },
-    removeTab (state, tabId, { commit }) {
+    removeTab (state, tabId) {
       let index = state.tabList.findIndex(v => v.tabId === tabId)
       state.tabList.splice(index, 1)
       let tempTab = state.tabList[index - 1] || state.tabList[index + 1]
-      commit('setCurrentTabName', tempTab.tabId)
+      this.commit('setCurrentTabName', tempTab.tabId)
     },
-    addTab (state, tabInfo, { commit }) {
-      state.tabList.push({
-        tabId: tabInfo.tabId,
-        title: tabInfo.title,
-        components: [...tabInfo.components]
-      })
-      commit('setCurrentTabName', tabInfo.tabId)
+    addTab (state, tabInfo) {
+      console.log('打哈哈')
+      let temp = state.tabList.find(v => v.tabId === tabInfo.tabId)
+      if (!temp) {
+        state.tabList.push({
+          tabId: tabInfo.tabId,
+          title: tabInfo.title,
+          components: [...tabInfo.components]
+        })
+      }
+      this.commit('setCurrentTabName', tabInfo.tabId)
     }
   },
   actions: {

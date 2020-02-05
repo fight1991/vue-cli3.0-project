@@ -1,7 +1,7 @@
 <template>
 <div class="sidebar-container">
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu>
+    <el-menu @select="selectMenuItem" :default-active="activeIndex">
       <sidebar-item v-for="(menu, index) in menuList" :key="'menu'+index" :menuItem="menu"></sidebar-item>
     </el-menu>
   </el-scrollbar>
@@ -11,6 +11,7 @@
 <script>
 import navMenu from './asideNav'
 import sidebarItem from './sidebarItem'
+import { mapState } from 'vuex'
 console.log(navMenu)
 export default {
   components: {
@@ -19,6 +20,16 @@ export default {
   data () {
     return {
       menuList: navMenu
+    }
+  },
+  computed: {
+    ...mapState({
+      activeIndex: state => state.tab.activeIndex
+    })
+  },
+  methods: {
+    selectMenuItem (index) {
+      console.log(index)
     }
   }
 }

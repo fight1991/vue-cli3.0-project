@@ -18,7 +18,7 @@
           v-if="child.children&&child.children.length>0"
           :menuItem="child"
           :key="child.menuId"/>
-        <el-menu-item v-else :key="child.tabId" :index="child.tabId">
+        <el-menu-item v-else :key="child.tabId" :index="child.tabId" @click="testaa(child)">
           <i class="el-icon-location"></i>
           {{child.title}}
         </el-menu-item>
@@ -39,6 +39,18 @@ export default {
     menuItem: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    testaa (child) {
+      console.log(this.$store)
+      this.$store.commit('addTab', {
+        tabId: child.tabId,
+        title: child.title,
+        components: [{
+          dom: child.tabId
+        }]
+      })
     }
   }
 }

@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import layoutHeader from './layout/header'
-import layoutAside from './layout/sliderBar/aside'
-import tabView from './layout/tabView'
+import layoutHeader from '@/components/layout/header'
+import layoutAside from '@/components/layout/sliderBar/aside'
+import tabView from '@/components/layout/tabView'
 export default {
   components: {
     layoutHeader,

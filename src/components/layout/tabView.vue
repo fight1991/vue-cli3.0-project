@@ -1,9 +1,9 @@
 <template>
   <div class="tab-container">
-    <el-tabs v-model="activeTabName" type="card">
+    <el-tabs v-model="activeTabName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
       <template v-for="(item, index) in tabList">
         <el-tab-pane
-          :closable="index > 1"
+          :closable="index > 0"
           :key="item.tabId"
           :label="item.title"
           :name="item.tabId">
@@ -12,16 +12,6 @@
           </el-scrollbar>
         </el-tab-pane>
       </template>
-      <el-tab-pane
-        label="呵呵"
-        name="2">
-        <div class="tab-content">呵呵</div>
-      </el-tab-pane>
-      <el-tab-pane
-        label="啦啦"
-        name="3">
-        <div class="tab-content">啦啦</div>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -30,13 +20,26 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      activeTabName: 'tab-index'
+      activeTabName: this.$store.state.tab.currentTabName
+    }
+  },
+  watch: {
+    '$store.state.tab.currentTabName': function (res) {
+      this.activeTabName = res
     }
   },
   computed: {
     ...mapState({
       tabList: (state) => state.tab.tabList
     })
+  },
+  methods: {
+    tabClick () {
+      this.$store.commit('setActiveIndex', this.activeTabName)
+    },
+    removeTab () {
+      this.$store.commit('removeTab', this.activeTabName)
+    }
   }
 }
 </script>
