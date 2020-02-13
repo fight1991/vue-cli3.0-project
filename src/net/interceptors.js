@@ -1,8 +1,16 @@
 import router from '@/router/index'
 import { Message } from 'element-ui'
+/**
+ * 请求拦截器 onRequestResolve
+ * @param {*} config
+ */
 export default {
   // 请求发送成功之前
   onRequestResolve: function (config) {
+    // ajax异步请求
+    config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    let token = localStorage.getItem('token')
+    config.headers['ssoToken'] = token || ''
     let temp = config.data
     config.data = {
       appWebFlag: '1',
@@ -43,14 +51,18 @@ export default {
           break
         case 404:
           Message({
-            message: `path:${error.response.data.path} ${error.response.data.error}`,
+            message: `path:${error.response.data.path} ${
+              error.response.data.error
+            }`,
             type: 'error',
             duration: 5 * 1000
           })
           break
         case 405:
           Message({
-            message: `path:${error.response.data.path} ${error.response.data.error}`,
+            message: `path:${error.response.data.path} ${
+              error.response.data.error
+            }`,
             type: 'error',
             duration: 5 * 1000
           })

@@ -1,14 +1,16 @@
-import reqInstance from './netConfig'
 import Vue from 'vue'
-import store from '@/store/index'
+import store from '@/store'
+import Method from './netConfig'
+let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
+let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
 const request = {
   $get ({ url, data = {}, success, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
-    reqInstance.get(url, {
+    commonInstance.get(url, {
       params: data
-    }).then((res) => {
+    }).then(res => {
       success && success(res)
-    }).catch((err) => {
+    }).catch(err => {
       error && error(err)
     }).finally(() => {
       store.commit('changeLoading', false)
@@ -16,11 +18,11 @@ const request = {
   },
   $post ({ url, data = {}, success, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
-    reqInstance.post(url, data)
-      .then((res) => {
+    commonInstance.post(url, data)
+      .then(res => {
         success && success(res)
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
         error && error(err)
       })
@@ -30,13 +32,13 @@ const request = {
   },
   $upload ({ url, data = {}, success, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
-    reqInstance.post(url, data, {
+    upLoadInstance.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then((res) => {
+    }).then(res => {
       success && success(res)
-    }).catch((err) => {
+    }).catch(err => {
       error && error(err)
     }).finally(() => {
       store.commit('changeLoading', false)

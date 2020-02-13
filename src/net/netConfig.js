@@ -6,15 +6,14 @@ let {
   onResponseResolve,
   onResponseReject
 } = interceptors
-let reqInstance = axios.create({
-  timeout: 5000
-})
-// ajax异步请求
-reqInstance.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-let token = localStorage.getItem('token')
-reqInstance.defaults.headers.common['ssoToken'] = token || ''
-// 添加请求拦截器
-reqInstance.interceptors.request.use(onRequestResolve, onRequestReject)
-// 添加响应拦截器
-reqInstance.interceptors.response.use(onResponseResolve, onResponseReject)
-export default reqInstance
+
+export default class Method {
+  constructor (baseURL) {
+    this.instance = axios.create({
+      baseURL: baseURL,
+      timeout: 5000
+    })
+    this.instance.interceptors.request.use(onRequestResolve, onRequestReject)
+    this.instance.interceptors.response.use(onResponseResolve, onResponseReject)
+  }
+}
