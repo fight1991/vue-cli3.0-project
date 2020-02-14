@@ -7,6 +7,11 @@ import '@/components/global/registerGlobal'
 import '@/style/base.less'
 import '@/style/main.less'
 
+import directive from '@/derectives'
+import * as filters from '@/filters'
+Object.keys(directive).forEach(key => Vue.directive(key, directive[key]))
+Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
+
 Vue.config.productionTip = false
 
 new Vue({

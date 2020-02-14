@@ -32,7 +32,7 @@ export default {
     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
     if (error.response) {
       switch (error.response.status) {
-        case 401: // 当前请求需要用户验证
+        case 401:
           // 清除用户登录信息
           router.replace({
             path: '/login',
