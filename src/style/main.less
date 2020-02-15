@@ -8,7 +8,7 @@
     margin-top: 16px;
   }
   .popper__arrow {
-    display: none;
+    // display: none;
   }
 }
 .main-aside.el-aside {
@@ -56,6 +56,17 @@
   }
 }
 .tab-container {
+  .el-tabs__header.is-top {
+    background-color: #fff;
+    padding-right: 60px;
+  }
+  .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+    border-bottom-color: #e4e7ed;
+    background-color: #e5f2ff;
+  }
+  .el-tabs--card>.el-tabs__header .el-tabs__nav {
+    border-radius: 0;
+  }
   .tab-scrollbar-wrapper {
     overflow-x: hidden;
   }

@@ -8,6 +8,16 @@ const routes = [
     component: Main
   },
   {
+    path: '/index',
+    redirect: '/'
+  },
+  {
+    path: '*',
+    redirect: {
+      name: 'error-404'
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/pages/login.vue')
@@ -15,7 +25,10 @@ const routes = [
 ]
 routes.push(...Error)
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  next()
+})
 export default router
