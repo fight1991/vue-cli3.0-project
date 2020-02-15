@@ -5,7 +5,7 @@
         <layout-header></layout-header>
       </el-header>
       <el-container class="main-container">
-        <el-aside class="main-aside" width="220px">
+        <el-aside class="main-aside" :width="$store.state.collapse ? '64px': '200px'">
           <layout-aside></layout-aside>
         </el-aside>
         <el-main class="main-tab">
@@ -56,7 +56,7 @@ export default {
   height: 100%;
 }
 .main-header {
-  background-color: @sys-main-bg;
+  background-color: @sys-main-header;
 }
 .main-container {
   height: 100%;

@@ -8,6 +8,9 @@ export default new Vuex.Store({
   mutations: {
     changeLoading (state, res) {
       state.loading = res
+    },
+    changeCollapse (state) {
+      state.collapse = !state.collapse
     }
   },
   actions: {

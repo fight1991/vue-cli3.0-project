@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/pages/login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '@/views/pages/login.vue')
   }
 ]
 routes.push(...Error)
