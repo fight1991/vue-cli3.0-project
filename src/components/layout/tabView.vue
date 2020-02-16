@@ -89,6 +89,10 @@ export default {
 // }
 .tab-container {
   position: relative;
+  #pane-tab-index {
+    background-color: #fff;
+    position: relative;
+  }
   .tab-right {
     width: 60px;
     border-left: 1px solid #E4E7ED;
