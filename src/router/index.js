@@ -1,16 +1,17 @@
 import VueRouter from 'vue-router'
+import store from '@/store'
 import Error from '@/views/error'
 import businessRouter from '@/views/pages/index.js'
 
 const routes = [
   {
-    path: '/',
-    name: 'main',
+    path: '/index',
+    name: 'tab-index',
     component: () => import(/* webpackChunkName: "main" */ '../views/main.vue'),
     children: [...businessRouter]
   },
   {
-    path: '/index',
+    path: '/',
     redirect: '/'
   },
   {
@@ -30,7 +31,26 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
+// 登陆放行
 router.beforeEach((to, from, next) => {
   next()
+})
+// 路由跳转之后
+router.afterEach((to, from) => {
+  console.log(to)
+  document.title = to.meta.title || 'powerView'
+  let tabId = to.query.tabId || to.params.tabId || to.name
+  let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
+  if (store.state.tabView && to.meta.component) {
+    store.commit('addTab', {
+      tabId,
+      title,
+      isShow: true,
+      components: [to.meta.component],
+      path: to.path,
+      query: JSON.parse(JSON.stringify(to.query)),
+      params: JSON.parse(JSON.stringify(to.params))
+    })
+  }
 })
 export default router

@@ -8,7 +8,7 @@ export default {
     return {}
   },
   created () {
-    console.log('hha')
+    console.log('hha22')
   },
   methods: {
     test () {

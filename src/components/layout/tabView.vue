@@ -1,14 +1,15 @@
 <template>
   <div class="tab-container">
-    <el-tabs v-model="activeTabName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
+    <el-tabs :value="activeTabName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
       <template v-for="(item, index) in tabList">
         <el-tab-pane
+          v-if="item.isShow"
           :closable="index > 0"
           :key="item.tabId"
           :label="item.title"
           :name="item.tabId">
           <el-scrollbar wrap-class="tab-scrollbar-wrapper">
-            <component :is="item.components[item.components.length-1]['dom']"></component>
+            <component :is="item.components[item.components.length-1]"></component>
           </el-scrollbar>
         </el-tab-pane>
       </template>
@@ -31,12 +32,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      activeTabName: this.$store.state.tab.currentTabName
-    }
-  },
-  watch: {
-    '$store.state.tab.currentTabName': function (res) {
-      this.activeTabName = res
+      activeTabName: this.$store.state.tab.currentTab
     }
   },
   computed: {
@@ -44,12 +40,25 @@ export default {
       tabList: (state) => state.tab.tabList
     })
   },
+  watch: {
+    '$store.state.tab.currentTab': function (newData) {
+      this.activeTabName = newData
+    }
+  },
   methods: {
-    tabClick () {
-      this.$store.commit('setActiveIndex', this.activeTabName)
+    tabClick (tabInfo) {
+      let { path, query, params } = this.tabList.find(v => v.tabId === tabInfo.name)
+      if (path === this.$route.path) return
+      // 路由跳转
+      this.$router.push({
+        path,
+        query,
+        params
+      })
+      // this.$store.commit('setCurrentTab', this.activeTabName)
     },
-    removeTab () {
-      this.$store.commit('removeTab', this.activeTabName)
+    removeTab (name) {
+      this.$store.commit('closeTab', name)
     }
   }
 }

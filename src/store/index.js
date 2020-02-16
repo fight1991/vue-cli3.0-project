@@ -3,7 +3,8 @@ import tab from './modules/tab' // 页签管理模块
 export default new Vuex.Store({
   state: {
     collapse: false, // 是否折叠
-    loading: false
+    loading: false,
+    tabView: true // 是否开启页签模式
   },
   mutations: {
     changeLoading (state, res) {

@@ -8,6 +8,7 @@
   </span>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
+      :default-active="$route.path"
       router
       text-color="#fff"
       :collapse="$store.state.collapse">
