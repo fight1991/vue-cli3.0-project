@@ -36,17 +36,15 @@ function getDateDiff (dateTimeStamp) {
   return result
 }
 export default {
-  time: {
-    bind: function (el, binding) {
+  bind: function (el, binding) {
+    el.innerHTML = getDateDiff(binding.value)
+    // 每隔一分钟更新一次
+    el.__timeout__ = setInterval(function () {
       el.innerHTML = getDateDiff(binding.value)
-      // 每隔一分钟更新一次
-      el.__timeout__ = setInterval(function () {
-        el.innerHTML = getDateDiff(binding.value)
-      }, 60000)
-    },
-    unbind: function (el) {
-      clearInterval(el.__timeout__)
-      delete el.__timeout__
-    }
+    }, 60000)
+  },
+  unbind: function (el) {
+    clearInterval(el.__timeout__)
+    delete el.__timeout__
   }
 }

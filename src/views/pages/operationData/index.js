@@ -1,7 +1,7 @@
 export default {
   permission: '',
   icon: 'el-icon-eleme',
-  path: 'workData',
+  path: '/workData',
   name: 'workData',
   meta: {
     title: '工作数据',

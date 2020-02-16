@@ -1,11 +1,13 @@
 import VueRouter from 'vue-router'
-import Main from '../views/main.vue'
 import Error from '@/views/error'
+import businessRouter from '@/views/pages/index.js'
+
 const routes = [
   {
     path: '/',
     name: 'main',
-    component: Main
+    component: () => import(/* webpackChunkName: "main" */ '../views/main.vue'),
+    children: [...businessRouter]
   },
   {
     path: '/index',

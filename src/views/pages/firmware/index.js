@@ -1,13 +1,17 @@
+import abstract from '@/components/abstract.vue'
 export default {
-  title: '固件列表',
   permission: '',
   icon: 'el-icon-eleme',
-  path: 'firmware',
+  path: '/firmware',
   name: 'firmware',
+  component: abstract,
+  meta: {
+    title: '固件列表'
+  },
   children: [
     {
       permission: '',
-      path: 'firmware/harvesterList',
+      path: '/firmware/harvesterList',
       name: 'firmware-harvesterList',
       meta: {
         title: '采集器列表',
@@ -16,7 +20,7 @@ export default {
     },
     {
       permission: '',
-      path: 'firmware/inverterList',
+      path: '/firmware/inverterList',
       name: 'firmware-inverterList',
       meta: {
         title: '逆变器列表',
@@ -25,7 +29,7 @@ export default {
     },
     {
       permission: '',
-      path: 'firmware/eventList',
+      path: '/firmware/eventList',
       name: 'firmware-eventList',
       meta: {
         title: '事件列表',

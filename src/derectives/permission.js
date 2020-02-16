@@ -13,11 +13,9 @@ export default {
   //     }
   //   })
   // },
-  permissions: {
-    inserted: (el, binding) => {
-      if (!checkMenuCode(binding.value)) {
-        el.style.display = 'none'
-      }
+  inserted: (el, binding) => {
+    if (!checkMenuCode(binding.value)) {
+      el.style.display = 'none'
     }
   }
 }

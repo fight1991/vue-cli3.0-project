@@ -1,7 +1,7 @@
 export default {
   permission: '',
   icon: 'el-icon-eleme',
-  path: 'customer',
+  path: '/customer',
   name: 'customer',
   meta: {
     title: '客户管理',

@@ -1,13 +1,17 @@
+import abstract from '@/components/abstract.vue'
 export default {
-  title: '我的电站',
   permission: '',
   icon: 'el-icon-eleme',
-  path: 'plant',
+  path: '/plant',
   name: 'plant',
+  component: abstract,
+  meta: {
+    title: '我的电站'
+  },
   children: [
     {
       permission: '',
-      path: 'plant/add',
+      path: '/plant/add',
       name: 'plant-add',
       meta: {
         title: '创建电站',
@@ -16,7 +20,7 @@ export default {
     },
     {
       permission: '',
-      path: 'plant/list',
+      path: '/plant/list',
       name: 'plant-list',
       meta: {
         title: '电站列表',
