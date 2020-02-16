@@ -8,20 +8,22 @@
           :key="item.tabId"
           :label="item.title"
           :name="item.tabId">
-          <el-scrollbar wrap-class="tab-scrollbar-wrapper">
-            <component :is="item.components[item.components.length-1]"></component>
+          <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
+            <div class="tab-content" v-if="isReLoad">
+              <component :is="item.components[item.components.length-1]"></component>
+            </div>
           </el-scrollbar>
         </el-tab-pane>
       </template>
     </el-tabs>
     <div class="tab-right">
-      <el-dropdown trigger="click" class="demp">
+      <el-dropdown trigger="click" @command="closeTab">
         <span class="el-dropdown-link">
           关闭<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>关闭全部</el-dropdown-item>
-          <el-dropdown-item>关闭其他</el-dropdown-item>
+          <el-dropdown-item command="closeAllTab">关闭全部</el-dropdown-item>
+          <el-dropdown-item command="closeOtherTab">关闭其他</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -32,7 +34,13 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      activeTabName: this.$store.state.tab.currentTab
+      activeTabName: this.$store.state.tab.currentTab,
+      isReLoad: true
+    }
+  },
+  provide () {
+    return {
+      reload: this.reload
     }
   },
   computed: {
@@ -46,7 +54,14 @@ export default {
     }
   },
   methods: {
+    reload () {
+      this.isReLoad = false
+      this.$nextTick(() => {
+        this.isReLoad = true
+      })
+    },
     tabClick (tabInfo) {
+      console.log(this.activeTabName)
       let { path, query, params } = this.tabList.find(v => v.tabId === tabInfo.name)
       if (path === this.$route.path) return
       // 路由跳转
@@ -55,10 +70,12 @@ export default {
         query,
         params
       })
-      // this.$store.commit('setCurrentTab', this.activeTabName)
     },
     removeTab (name) {
       this.$store.commit('closeTab', name)
+    },
+    closeTab (type) {
+      this.$store.commit(type)
     }
   }
 }

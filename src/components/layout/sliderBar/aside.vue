@@ -52,6 +52,7 @@ export default {
   .pull-button {
     cursor: pointer;
     border-radius: 5px 0 0 5px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1);
     background-color: @sys-main-header;
     width: 10px;
     height: 40px;

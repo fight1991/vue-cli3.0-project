@@ -15,6 +15,11 @@ export default {
       }
     ]
   },
+  getters: {
+    currentTabInfo (state) {
+      return state.tabList.find(v => v.tabId === state.currentTab)
+    }
+  },
   mutations: {
     // 添加新页签
     addTab (state, payLoad) {
@@ -39,13 +44,20 @@ export default {
       if (tabId === state.currentTab) { // 如果关闭的是当前活动的页签
         this.commit('setCurrentTab', activeTabInfo['tabId'])
       }
+    },
+    // 关闭所有页签
+    closeAllTab (state) {
+      state.tabList.splice(1)
+      this.commit('setCurrentTab', 'tab-index')
+    },
+    // 关闭非当前页签的所有页签
+    closeOtherTab (state) {
+      let temp = { ...this.getters.currentTabInfo }
+      state.tabList.splice(1)
+      state.tabList.push(temp)
     }
-    // 移除某一页签(点击tab中的关闭按钮)
   },
   actions: {
-
-  },
-  getters: {
 
   }
 }

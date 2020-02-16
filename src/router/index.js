@@ -6,13 +6,13 @@ import businessRouter from '@/views/pages/index.js'
 const routes = [
   {
     path: '/index',
-    name: 'tab-index',
+    name: 'index',
     component: () => import(/* webpackChunkName: "main" */ '../views/main.vue'),
     children: [...businessRouter]
   },
   {
     path: '/',
-    redirect: '/'
+    redirect: '/index'
   },
   {
     path: '*',
