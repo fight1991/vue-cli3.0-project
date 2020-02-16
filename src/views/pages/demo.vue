@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 1000px">哈哈哈啦啦</div>
+  <div style="height: 1000px;background-color:#fff">{{$route.meta.title || ''}}</div>
 </template>
 
 <script>
@@ -18,6 +18,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>

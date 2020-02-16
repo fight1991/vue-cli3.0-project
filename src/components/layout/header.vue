@@ -69,7 +69,7 @@ export default {
   }
   span {
     color: #fff;
-    margin-left: 40px;
+    margin-left: 20px;
     font-size: 16px;
   }
 }
