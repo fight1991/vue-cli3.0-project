@@ -54,6 +54,7 @@ export default {
     closeOtherTab (state) {
       let temp = { ...this.getters.currentTabInfo }
       state.tabList.splice(1)
+      if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
     }
   },

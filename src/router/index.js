@@ -42,6 +42,7 @@ router.afterEach((to, from) => {
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
   if (store.state.tabView && to.meta.component) {
+    console.log(to)
     store.commit('addTab', {
       tabId,
       title,
