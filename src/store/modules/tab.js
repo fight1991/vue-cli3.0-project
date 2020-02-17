@@ -1,4 +1,4 @@
-let tabIndex = () => import(/* webpackChunkName: "tabIndex" */ '@/components/index')
+let tabIndex = () => import(/* webpackChunkName: "tabIndex" */ '@/components/index.vue')
 
 export default {
   state: {

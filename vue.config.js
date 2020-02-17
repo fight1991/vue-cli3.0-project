@@ -33,7 +33,8 @@ module.exports = {
       'vue': 'Vue',
       'vuex': 'Vuex',
       'axios': 'axios',
-      'vue-router': 'VueRouter'
+      'vue-router': 'VueRouter',
+      'vue-i18n': 'VueI18n'
     }
   }
 }
