@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 1000px;background-color:#fff">
+  <div style="height: 1000px;background-color:#fff;border-top:1px solid transparent">
     <p>{{$route.meta.title || ''}}</p>
     <p>{{$t('login')}}</p>
     <el-button @click="toggleLang">切换语言</el-button>
@@ -13,12 +13,9 @@ export default {
     return {}
   },
   created () {
-    console.log('hha')
+
   },
   methods: {
-    test () {
-
-    },
     toggleLang () {
       if (Vue.config.lang === 'zh-cn') {
         Vue.config.lang = 'en'
