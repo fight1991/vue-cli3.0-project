@@ -1,15 +1,14 @@
 import VueRouter from 'vue-router'
 import store from '@/store'
+
 import Error from '@/views/error'
+import Login from '@/views/login'
+import Inverter from '@/views/inverter'
 import businessRouter from '@/views/pages/index.js'
 
+const Main = () => import(/* webpackChunkName: "main" */ '../views/main.vue')
+
 const routes = [
-  {
-    path: '/index',
-    name: 'index',
-    component: () => import(/* webpackChunkName: "main" */ '../views/main.vue'),
-    children: [...businessRouter]
-  },
   {
     path: '/',
     redirect: '/index'
@@ -21,12 +20,15 @@ const routes = [
     }
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/pages/login.vue')
+    path: '/index',
+    name: 'index',
+    component: Main,
+    children: [...businessRouter]
   }
 ]
 routes.push(...Error)
+routes.push(...Inverter)
+routes.push(Login)
 const router = new VueRouter({
   mode: 'history',
   routes
@@ -37,12 +39,10 @@ router.beforeEach((to, from, next) => {
 })
 // 路由跳转之后
 router.afterEach((to, from) => {
-  console.log(to)
   document.title = to.meta.title || 'powerView'
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
   if (store.state.tabView && to.meta.component) {
-    console.log(to)
     store.commit('addTab', {
       tabId,
       title,

@@ -1,12 +1,10 @@
-import abstract from '@/components/abstract.vue'
 export default {
   permission: '',
   icon: 'el-icon-eleme',
   path: '/plant',
   name: 'plant',
-  component: abstract,
   meta: {
-    title: '我的电站'
+    title: '电站管理'
   },
   children: [
     {
@@ -20,11 +18,11 @@ export default {
     },
     {
       permission: '',
-      path: '/plant/list',
-      name: 'plant-list',
+      path: '/plant/view',
+      name: 'plant-view',
       meta: {
-        title: '电站列表',
-        component: () => import(/* webpackChunkName: "plant-list" */ '@/views/pages/demo')
+        title: '电站显示',
+        component: () => import(/* webpackChunkName: "plant-view" */ '@/views/pages/demo')
       }
     }
   ]

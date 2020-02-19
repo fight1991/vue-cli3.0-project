@@ -59,7 +59,7 @@ export default {
   background-color: @sys-main-header;
 }
 .main-container {
-  height: 100%;
+  height: calc(100% - 50px);
 }
 .main-tab {
   padding: 0;
