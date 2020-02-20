@@ -3,6 +3,7 @@ export default {
   icon: 'el-icon-eleme',
   path: '/plant',
   name: 'plant',
+  // hidden: true,
   meta: {
     title: '电站管理'
   },
