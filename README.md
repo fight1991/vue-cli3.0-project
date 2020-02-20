@@ -18,7 +18,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 运行环境 ##
 >  
 >  Node.js(8.0.0 +) —— JavaScript 运行环境  
->  npm(3.0.0) —— Nodejs 下的包管理器  
+>  npm(6.0.0+) —— Nodejs 下的包管理器  
 >  webpack(4.1.0) —— 模块打包器  
 >  vue-cli(4.1.0) —— Vue脚手架
 >  
@@ -77,6 +77,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 >     views：功能模块页面；
 >         pages: 业务功能页面;
 >         error：系统错误页面；
+>         login: 登录/注册页面
+>         inverter: 逆变器其他页面
+
 >  5. 布局规范：
 >     1、html 的布局层次尽量不要过深，避免出现不必要的层级；
 >     2、img a 禁止出现空地址或#,避免页面重绘；
