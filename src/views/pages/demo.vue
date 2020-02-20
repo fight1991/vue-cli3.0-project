@@ -3,6 +3,9 @@
     <p>{{$route.meta.title || ''}}</p>
     <p>{{$t('login')}}</p>
     <el-button @click="toggleLang">切换语言</el-button>
+    <el-col :span="24" align="right">
+      <!-- <page-box :pageSizes="[10, 20, 50, 100, 200, 500]" :pagination='paginationInit' @change="getAccountList"></page-box> -->
+    </el-col>
   </div>
 </template>
 

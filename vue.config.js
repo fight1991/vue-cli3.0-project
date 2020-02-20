@@ -35,6 +35,25 @@ module.exports = {
       'axios': 'axios',
       'vue-router': 'VueRouter',
       'vue-i18n': 'VueI18n'
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        minSize: 30000, // 依赖包超过30000bit将被单独打包
+        automaticNameDelimiter: '-',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'chunk-echarts',
+            minChunks: 2,
+            // name (module) {
+            //   const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+            //   return `chunk.${packageName.replace('@', '')}`
+            // },
+            priority: -10
+          }
+        }
+      }
     }
   }
 }

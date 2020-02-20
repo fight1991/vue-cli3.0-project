@@ -1,4 +1,4 @@
-let tabIndex = () => import(/* webpackChunkName: "tabIndex" */ '@/components/index.vue')
+let Home = () => import(/* webpackChunkName: "home" */ '@/views/pages/home')
 
 export default {
   state: {
@@ -9,7 +9,7 @@ export default {
         title: '首页',
         path: '/index',
         isShow: true,
-        components: [tabIndex],
+        components: [Home],
         query: {},
         params: {}
       }
