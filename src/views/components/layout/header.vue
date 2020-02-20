@@ -1,33 +1,54 @@
 <template>
   <div class="head-container">
     <div class="logo fl">
-      <img :src="logoSrc" alt="vue中国">
-      <span>后台管理系统</span>
+      <img :src="logoSrc">
+      <span>{{$t('monitor')}}</span>
     </div>
     <div class="login fr">
-      <span class="company">vue中国社区</span>
-        <el-dropdown
-          placement="top-start">
-          <span class="user">
-            <i class="user-logo el-icon-user-solid"></i>
-            <span class="userName">张三</span>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>修改密码</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+      <el-dropdown
+        trigger="click"
+        @command="toggleLang"
+        placement="top-start">
+        <span class="lang">
+          <span>{{lang}}</span>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="zh">中文</el-dropdown-item>
+          <el-dropdown-item command="en" divided>English</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-dropdown
+        trigger="click"
+        placement="top-start">
+        <span class="user-name">
+          <i class="user-logo el-icon-user-solid"></i>
+          <span>张三</span>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>修改密码</el-dropdown-item>
+          <el-dropdown-item divided>退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <span class="info"><i class="el-icon-message-solid"></i></span>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
   name: 'layout-header',
   data () {
     return {
+      lang: '中文',
       logoSrc: require('@/assets/logo.png')
+    }
+  },
+  methods: {
+    toggleLang (lang) {
+      Vue.config.lang = lang
+      this.lang = lang === 'en' ? 'English' : '中文'
     }
   }
 }
@@ -51,9 +72,9 @@ export default {
   .el-popper[x-placement^=bottom] .popper__arrow {
     display: none;
   }
-  .company {
-    padding: 0 5px;
-    margin: 0 10px;
+  .lang, .user-name {
+    cursor: pointer;
+    margin-right: 10px;
   }
   .user-logo {
     padding-right: 5px;
