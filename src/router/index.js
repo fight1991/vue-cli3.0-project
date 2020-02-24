@@ -2,7 +2,7 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 
 import Error from '@/views/error'
-import Login from '@/views/login'
+import Login from '@/views/login/index.js'
 import Inverter from '@/views/inverter'
 import businessRouter from '@/views/pages/index.js'
 

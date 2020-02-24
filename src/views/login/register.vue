@@ -1,9 +1,5 @@
 <template>
   <div class="login">
-    <div class="tab-header">
-      <div @click="toggleClick('code')" :class="{'tab-item':true, 'active': isCode}">验证码登录</div>
-      <div @click="toggleClick('pw')" :class="{'tab-item':true, 'active': isPw}">密码登录</div>
-    </div>
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
@@ -12,16 +8,23 @@
               <el-input v-model="dataForm.mobile" placeholder="手机号/邮箱"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="isCode">
+          <el-col :span="24">
             <el-form-item prop="code">
               <el-input v-model="dataForm.code" placeholder="验证码"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="isPw">
+          <el-col :span="24" >
             <el-form-item prop="pw">
               <el-input :type="pwType" v-model="dataForm.passWord" placeholder="密码">
-                <i slot="suffix" @click="showPw" class="el-input__icon el-icon-view"></i>
+                <i slot="suffix" @click="showPw('pwType')" class="el-input__icon el-icon-view"></i>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24" v-if="pageFlag==='reg'">
+            <el-form-item>
+              <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="确认密码">
+                <i slot="suffix" @click="showPw('confirmPwType')" class="el-input__icon el-icon-view"></i>
               </el-input>
             </el-form-item>
           </el-col>
@@ -29,11 +32,15 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span @click="registerBtn('pw')">忘记密码?</span>
-      <span @click="registerBtn('reg')">立即注册</span>
+      <el-checkbox v-model="isAgreen" v-if="pageFlag==='reg'">
+        <span class="agree-text">同意</span>
+        <span class="user-agree">《用户协议》</span>
+      </el-checkbox>
+      <span v-if="pageFlag==='pw'"></span>
+      <span @click="backLogin">返回登录</span>
     </el-row>
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goLogin">登录</el-button>
+      <el-button class="login-click" type="primary" @click="goRegister">{{pageFlag==='pw' ? '重置密码' : '免费注册'}}</el-button>
     </el-row>
   </div>
 </template>
@@ -43,8 +50,10 @@ export default {
   data () {
     return {
       pwType: 'password',
+      confirmPwType: 'password',
       codeText: '获取验证码',
       timer: null,
+      isAgreen: true,
       loginType: 'code',
       isCode: true,
       isPw: false,
@@ -52,26 +61,22 @@ export default {
       dataForm: {
         mobile: '',
         code: '',
-        passWord: ''
+        passWord: '',
+        confirmWord: ''
       },
       loginRules: {}
     }
   },
+  props: ['pageFlag'],
   methods: {
-    toggleClick (type) {
-      this.loginType = 'code'
-      if (type === 'code') {
-        this.isCode = true
-        this.isPw = false
-      } else {
-        this.isCode = false
-        this.isPw = true
-      }
+    // 返回登录模块
+    backLogin () {
+      this.$emit('toggleStatus', { type: 'login' })
     },
     // 登录输入框校验
     validPass () {
       // 手机或邮箱正则
-      let { mobile, code } = this.dataForm
+      let { mobile, code, passWord, confirmWord } = this.dataForm
       let regM = /\d+|^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
       let regC = /\d{4}/
       console.log(regM.test('001Abc@@lenovo'))
@@ -79,22 +84,25 @@ export default {
         this.$message.error('请填写正确格式的手机号/邮箱')
         return false
       }
-      if (this.isCode && !regC.test(code)) {
+      if (regC.test(code)) {
         this.$message.error('请填写4位数验证码')
+        return false
+      }
+      if (confirmWord !== passWord) {
+        this.$message.error('两次输入的密码不一致')
+        return false
+      }
+      if (!this.isAgreen) {
+        this.$message.error('请勾选用户协议')
         return false
       }
       return true
     },
-    showPw () {
-      this.pwType = this.pwType === 'text' ? 'password' : 'text'
+    showPw (type) {
+      this[type] = this[type] === 'text' ? 'password' : 'text'
     },
-    // 打开注册组件/密码找回
-    registerBtn (page) {
-      this.clearTime()
-      this.$emit('toggleStatus', { page, type: 'register' })
-    },
-    // 登录
-    goLogin () {
+    // 登录按钮
+    goRegister () {
       // 自定义表单校验
       let isPass = this.validPass()
       if (!isPass) return false
@@ -130,4 +138,10 @@ export default {
 </script>
 <style lang="less" scoped>
   @import './public';
+  .user-agree {
+    color: @sys-main-header;
+  }
+  .agree-text {
+    color: #4c4c4c;
+  }
 </style>
