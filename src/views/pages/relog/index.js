@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-wj-rz',
+  icon: 'icon-log',
   path: '/relog',
   name: 'relog',
   meta: {

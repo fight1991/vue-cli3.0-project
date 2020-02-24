@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-icon-',
+  icon: 'icon-alarm',
   path: '/alarm',
   name: 'alarm',
   meta: {

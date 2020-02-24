@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-dianzhangaikuang',
+  icon: 'icon-power',
   path: '/plant',
   name: 'plant',
   // hidden: true,

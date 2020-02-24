@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-mokuaiguanli',
+  icon: 'icon-module',
   path: '/module',
   name: 'module',
   meta: {

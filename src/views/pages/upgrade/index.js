@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-biaoshilei_yuanchengshengji',
+  icon: 'icon-ssh',
   path: '/upgrade',
   name: 'upgrade',
   meta: {

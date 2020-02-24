@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-gongchangguanli',
+  icon: 'icon-factory',
   path: '/factory',
   name: 'factory',
   meta: {
