@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-dianchi',
   path: '/battery',
   name: 'battery',
   meta: {

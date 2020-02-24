@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-shouhouguanli',
   path: '/afterSale',
   name: 'afterSale',
   meta: {

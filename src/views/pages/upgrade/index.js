@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-biaoshilei_yuanchengshengji',
   path: '/upgrade',
   name: 'upgrade',
   meta: {

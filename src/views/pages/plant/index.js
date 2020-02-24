@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-dianzhangaikuang',
   path: '/plant',
   name: 'plant',
   // hidden: true,

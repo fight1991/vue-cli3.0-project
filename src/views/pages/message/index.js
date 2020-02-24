@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-xiaoxi',
   path: '/message',
   name: 'message',
   meta: {

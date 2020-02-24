@@ -2,13 +2,13 @@
   <div>
     <template v-if="!menuItem.children || menuItem.children.length === 0">
       <el-menu-item :index="menuItem.path">
-        <i v-if="menuItem.icon" :class="menuItem.icon"></i>
+        <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
         <span slot="title">{{menuItem.meta.title || ''}}</span>
       </el-menu-item>
     </template>
     <el-submenu v-else :index="menuItem.path" popper-class="sidebar-pop">
       <template slot="title" >
-        <i v-if="menuItem.icon" :class="menuItem.icon"></i>
+        <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
         <span slot="title">{{menuItem.meta.title || ''}}</span>
       </template>
 
@@ -19,7 +19,7 @@
           :menuItem="child"
           :key="child.path"/>
         <el-menu-item v-else :key="child.path" :index="child.path">
-          <i v-if="child.icon" :class="child.icon"></i>
+          <i v-if="child.icon" :class="'iconfont '+ child.icon"></i>
           <span slot="title">{{child.meta.title || ''}}</span>
         </el-menu-item>
       </template>
@@ -57,5 +57,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.iconfont {
+  margin-right: 10px;
+  font-size: 18px;
+}
 </style>

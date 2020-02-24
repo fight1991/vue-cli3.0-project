@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'el-icon-eleme',
+  icon: 'icon-dashboard',
   path: '/dataView',
   name: 'data-view',
   meta: {

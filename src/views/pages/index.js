@@ -8,6 +8,7 @@ import Factory from './factory'
 import AfterSale from './afterSale'
 import Upgrade from './upgrade'
 import Message from './message'
+import Relog from './relog'
 
 export default [
   DataView,
@@ -19,5 +20,6 @@ export default [
   Factory,
   AfterSale,
   Upgrade,
-  Message
+  Message,
+  Relog
 ]

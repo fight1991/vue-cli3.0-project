@@ -1,6 +1,29 @@
 <template>
   <div class="login-container">
-    <div class="header">哈哈</div>
+    <div class="header">
+      <el-dropdown
+        @command="toggleLang"
+        placement="top-start">
+        <span class="lang">
+          <i class="iconfont icon-yuyan"></i>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="zh">中文</el-dropdown-item>
+          <el-dropdown-item command="en" divided>English</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-dropdown
+        placement="top-start">
+        <span class="app-downLoad">
+          <i class="iconfont icon-app"></i>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>app下载</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
     <div class="content">
       <transition name="component-fade" mode="out-in">
         <component :is="isLogin" @toggleStatus="toggleStatus" :pageFlag="pageFlag"></component>
@@ -12,6 +35,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import login from './login'
 import register from './register'
 export default {
@@ -22,7 +46,8 @@ export default {
   data () {
     return {
       pageFlag: '', // 注册和密码公用页面
-      isLogin: 'login' // 登录还是注册
+      isLogin: 'login', // 登录还是注册
+      lang: '中文'
     }
   },
   methods: {
@@ -30,6 +55,10 @@ export default {
     toggleStatus (typeStatus) {
       this.isLogin = typeStatus.type
       this.pageFlag = typeStatus.page
+    },
+    toggleLang (lang) {
+      Vue.config.lang = lang
+      this.lang = lang === 'en' ? 'English' : '中文'
     }
   }
 }
@@ -40,6 +69,21 @@ export default {
     flex-direction: column;
     height: 100%;
     background: url("../../assets/login-bg.jpg") no-repeat center;
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 20px;
+      font-size: 22px;
+      .el-dropdown {
+        color: #fff;
+      }
+      .app-downLoad, .lang {
+        cursor: pointer;
+      }
+      .lang {
+        margin-right: 10px;
+      }
+    }
     .content {
       flex: 1;
       display: flex;
