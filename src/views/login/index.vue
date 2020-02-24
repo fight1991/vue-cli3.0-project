@@ -69,6 +69,7 @@ export default {
     flex-direction: column;
     height: 100%;
     background: url("../../assets/login-bg.jpg") no-repeat center;
+    background-size: cover;
     .header {
       display: flex;
       justify-content: flex-end;
