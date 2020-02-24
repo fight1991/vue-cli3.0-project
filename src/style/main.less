@@ -1,4 +1,12 @@
 .login-container {
+  .el-checkbox__input.is-checked .el-checkbox__inner,
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: @sys-main-header;
+    border-color: @sys-main-header;
+  }
+  .el-checkbox__input.is-focus .el-checkbox__inner {
+    border-color: @sys-main-header;
+  }
   .login {
     .el-input__inner {
       border-radius: 0px;
@@ -54,14 +62,14 @@
 }
 .sidebar-container {
   color: #fff;
-  background-color: rgb(46, 49, 64);
+  background-color: @sys-aside-bg;
   .el-menu {
-    background-color: rgb(46, 49, 64);
+    background-color: @sys-aside-bg;
     border-right: none;
   }
   .el-menu-item {
     &:hover {
-      background-color: #666;
+      background-color: transparent;
     }
     &.is-active {
       background-color: @sys-main-header;
@@ -74,9 +82,7 @@
     }
   }
   .el-submenu__title, .el-menu-item {
-    i {
-      color: #fff;
-    }
+    color: @sys-aside-text;
   }
   .scrollbar-wrapper {
     overflow-x: hidden;

@@ -10,7 +10,6 @@
     <el-menu
       :default-active="$route.path"
       router
-      text-color="#fff"
       :collapse="$store.state.collapse">
       <sidebar-item v-for="(menu, index) in menuList" :key="'menu'+index" :menuItem="menu"></sidebar-item>
     </el-menu>
