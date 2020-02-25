@@ -25,10 +25,10 @@
       </el-dropdown>
     </div>
     <div class="content">
-      <transition name="component-fade" mode="out-in">
+      <transition name="zoom">
         <component :is="isLogin" @toggleStatus="toggleStatus" :pageFlag="pageFlag"></component>
-        <!-- <login v-if="isLogin" @toggleStatus="toggleStatus"></login>
-        <register v-else @toggleStatus="toggleStatus"></register> -->
+        <!-- <login v-show="isLogin" @toggleStatus="toggleStatus"></login> -->
+        <!-- <register v-else @toggleStatus="toggleStatus"></register> -->
       </transition>
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
     toggleStatus (typeStatus) {
       this.isLogin = typeStatus.type
       this.pageFlag = typeStatus.page
+      // this.isLogin = !this.isLogin
     },
     toggleLang (lang) {
       Vue.config.lang = lang
@@ -87,11 +88,17 @@ export default {
     }
     .content {
       flex: 1;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .login {
+      position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%,-50%); // 会改变变换的中心值
+      transform-origin: center;
       width: 400px;
       box-sizing: border-box;
       background-color: #fff;
@@ -134,11 +141,39 @@ export default {
   .login-btn {
     padding: 18px 0 10px;
   }
-  .component-fade-enter-active, .component-fade-leave-active {
-    // transition: opacity .2s linear;
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
   }
-  .component-fade-enter, .component-fade-leave-to
-  /* .component-fade-leave-active for below version 2.1.8 */ {
-    // opacity: 0;
+
+  50% {
+    opacity: 1;
   }
+}
+
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+.zoom-enter-active,.zoom-leave-active {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+.zoom-enter-active {
+  animation-name: zoomIn;
+}
+.zoom-leave-active {
+  animation-name: zoomOut;
+}
 </style>

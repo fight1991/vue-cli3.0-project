@@ -5,6 +5,7 @@ import store from './store'
 import '@/i18n'
 import '@/net/netMethods'
 
+// import 'vue2-animate/dist/vue2-animate.min.css'
 import '@/style/base.less'
 import '@/style/main.less'
 
