@@ -29,12 +29,12 @@ module.exports = {
   configureWebpack: { // 配置webpack
     plugins: [],
     externals: {
-      'element-ui': 'ELEMENT',
+      // 'element-ui': 'ELEMENT',
+      'vue-i18n': 'VueI18n',
       'vue': 'Vue',
       'vuex': 'Vuex',
       'axios': 'axios',
-      'vue-router': 'VueRouter',
-      'vue-i18n': 'VueI18n'
+      'vue-router': 'VueRouter'
     },
     optimization: {
       splitChunks: {
