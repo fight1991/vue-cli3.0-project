@@ -10,7 +10,7 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [
-        path.join(__dirname, './src/style/color.less')
+        path.join(__dirname, './src/style/variable/color.less')
       ]
     }
   },

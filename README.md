@@ -86,6 +86,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 >     3、对于出现多次的布局，建议做成组件提取出来放在src/components/下
 >  6. css：
 >     1、公共样式存放在src/style/下，单页面样式存放在模块下面；
+>         base.less 重置标签默认样式 
+>         color.less 颜色变量
+>         main.less 覆盖element-ui默认样式
+>         variable.scss 设置element-ui主题颜色
 >     2、所有静态图片必须压缩减重（推荐：www.tinypng.com）,移动端尽量控制在50kb以下，pc端在150kb以下；
 >     3、声明顺序尽量规范： 
 >       1.位置属性(position, display, left, top, right, float, overflow, z-index等)
