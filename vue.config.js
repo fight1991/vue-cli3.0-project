@@ -26,6 +26,17 @@ module.exports = {
     https: false,
     hotOnly: false
   },
+  chainWebpack: config => { // npm run build --report查看打包后的文件结构
+    if (process.env.NODE_ENV === 'production') {
+      if (process.env.npm_config_report) {
+        config
+          .plugin('webpack-bundle-analyzer')
+          .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+          .end()
+        config.plugins.delete('prefetch')
+      }
+    }
+  },
   configureWebpack: { // 配置webpack
     plugins: [],
     externals: {
@@ -39,19 +50,17 @@ module.exports = {
     optimization: {
       splitChunks: {
         chunks: 'all',
-        minSize: 30000, // 依赖包超过30000bit将被单独打包
-        automaticNameDelimiter: '-',
         cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'chunk-echarts',
-            minChunks: 2,
-            // name (module) {
-            //   const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-            //   return `chunk.${packageName.replace('@', '')}`
-            // },
-            priority: -10
+          elementUI: {
+            name: 'chunk-elementUI', // 单独将 elementUI 拆包
+            priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]element-ui[\\/]/
           }
+          // echart: {
+          //   name: 'chunk-echart',
+          //   priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+          //   test: /[\\/]node_modules[\\/]echarts[\\/]/
+          // }
         }
       }
     }
