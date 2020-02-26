@@ -23,6 +23,7 @@ Vue.use(MyComponents)
 Vue.use(MyDirectives)
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
+// 语言切换
 Vue.config.lang = store.state.lang
 Vue.prototype.$switchLang = function (lang) {
   this.config.lang = lang
