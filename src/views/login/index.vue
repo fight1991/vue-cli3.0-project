@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import login from './login'
 import register from './register'
 export default {
@@ -58,7 +57,7 @@ export default {
       // this.isLogin = !this.isLogin
     },
     toggleLang (lang) {
-      Vue.config.lang = lang
+      this.$witchLang(lang)
       this.lang = lang === 'en' ? 'English' : '中文'
     }
   }

@@ -23,7 +23,11 @@ Vue.use(MyComponents)
 Vue.use(MyDirectives)
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
-Vue.config.lang = 'zh'
+Vue.config.lang = store.state.lang
+Vue.prototype.$switchLang = function (lang) {
+  this.config.lang = lang
+  store.commit('toggleLang', lang)
+}.bind(Vue)
 Object.keys(langs).forEach(key => Vue.locale(key, langs[key]))
 
 Vue.use(ElementUI)

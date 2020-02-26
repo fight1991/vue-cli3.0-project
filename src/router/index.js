@@ -5,6 +5,8 @@ import Error from '@/views/error'
 import Login from '@/views/login/index.js'
 import Inverter from '@/views/inverter'
 import businessRouter from '@/views/pages/index.js'
+import storage from '@/util/storage'
+import { Message } from 'element-ui'
 
 const Main = () => import(/* webpackChunkName: "main" */ '../views/main.vue')
 
@@ -35,7 +37,16 @@ const router = new VueRouter({
 })
 // 登陆放行
 router.beforeEach((to, from, next) => {
-  next()
+  if (to.path === '/login') {
+    next()
+  } else {
+    if (storage.getToken()) {
+      next()
+    } else {
+      Message.error('身份过期或未登录')
+      next('/login')
+    }
+  }
 })
 // 路由跳转之后
 router.afterEach((to, from) => {

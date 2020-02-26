@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 export default {
   name: 'layout-header',
   data () {
@@ -47,7 +46,7 @@ export default {
   },
   methods: {
     toggleLang (lang) {
-      Vue.config.lang = lang
+      this.$switchLang(lang)
       this.lang = lang === 'en' ? 'English' : '中文'
     }
   }
