@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import '@/style/variable/theme.scss'
-
+// import 'element-ui/lib/theme-chalk/index.css'
 // 覆盖样式
 import '@/style/base.less'
 import '@/style/main.less'

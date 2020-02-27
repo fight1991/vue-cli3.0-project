@@ -107,9 +107,6 @@ export default {
     top: 0;
   }
 }
-.el-scrollbar {
-  height: 100%;
-}
 .test {
   height: 1000px;
 }

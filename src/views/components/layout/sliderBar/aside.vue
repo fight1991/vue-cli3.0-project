@@ -60,9 +60,6 @@ export default {
 .sidebar-container {
   height: 100%;
   position: relative;
-  .el-scrollbar {
-    height: 100%;
-  }
   .pull-button {
     cursor: pointer;
     border-radius: 5px 0 0 5px;
