@@ -3,6 +3,7 @@ import store from '@/store'
 
 import Error from '@/views/error'
 import Login from '@/views/login/index.js'
+import Product from '@/views/product'
 import Inverter from '@/views/inverter'
 import businessRouter from '@/views/pages/index.js'
 import storage from '@/util/storage'
@@ -28,9 +29,12 @@ const routes = [
     children: [...businessRouter]
   }
 ]
+
 routes.push(...Error)
 routes.push(...Inverter)
+routes.push(...Product)
 routes.push(Login)
+
 const router = new VueRouter({
   mode: 'history',
   routes
@@ -50,7 +54,7 @@ router.beforeEach((to, from, next) => {
 })
 // 路由跳转之后
 router.afterEach((to, from) => {
-  document.title = to.meta.title || 'powerView'
+  document.title = to.meta.title || 'FoxEss'
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
   if (store.state.tabView && to.meta.component) {
