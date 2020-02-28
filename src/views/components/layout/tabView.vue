@@ -8,6 +8,7 @@
           :key="item.tabId"
           :label="item.title"
           :name="item.tabId">
+          <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
             <div class="tab-content" v-if="isReLoad">
               <component :is="item.components[item.components.length-1]"></component>
@@ -19,7 +20,7 @@
     <div class="tab-right">
       <el-dropdown trigger="click" @command="closeTab">
         <span class="el-dropdown-link">
-          关闭<i class="el-icon-arrow-down el-icon--right"></i>
+          <i class="iconfont icon-caidan"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="closeAllTab">关闭全部</el-dropdown-item>
@@ -91,6 +92,15 @@ export default {
 //   overflow-y: scroll;
 //   overflow-x: auto;
 // }
+.el-dropdown-link i{
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 36px;
+}
+.el-icon-s-home {
+  font-size: 20px;
+  line-height: 30px;
+}
 .tab-container {
   position: relative;
   #pane-tab-index {
@@ -98,9 +108,9 @@ export default {
     position: relative;
   }
   .tab-right {
-    width: 60px;
+    width: 40px;
     border-left: 1px solid #E4E7ED;
-    line-height: 40px;
+    line-height: 35px;
     text-align: center;
     position: absolute;
     right: 0;

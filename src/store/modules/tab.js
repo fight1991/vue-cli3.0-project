@@ -6,7 +6,7 @@ export default {
     tabList: [
       {
         tabId: 'tab-index',
-        title: '首页',
+        title: 'home',
         path: '/index',
         isShow: true,
         components: [Home],
