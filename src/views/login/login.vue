@@ -1,9 +1,9 @@
 <template>
   <div class="login">
-    <div class="tab-header">
+    <!-- <div class="tab-header">
       <div @click="toggleClick('code')" :class="{'tab-item':true, 'active': isCode}">验证码登录</div>
       <div @click="toggleClick('pw')" :class="{'tab-item':true, 'active': isPw}">密码登录</div>
-    </div>
+    </div> -->
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
@@ -46,8 +46,8 @@ export default {
       codeText: '获取验证码',
       timer: null,
       loginType: 'code',
-      isCode: true,
-      isPw: false,
+      isCode: false,
+      isPw: true,
       isValid: false, // 校验节流阀
       dataForm: {
         mobile: '',

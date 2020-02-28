@@ -95,7 +95,7 @@ export default {
 .el-dropdown-link i{
   cursor: pointer;
   font-size: 20px;
-  line-height: 36px;
+  line-height: 35px;
 }
 .el-icon-s-home {
   font-size: 20px;
