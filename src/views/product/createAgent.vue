@@ -6,11 +6,17 @@
     :visible.sync="dialogVisible"
     width="700px">
     <div class="content">
-      <create-form :tag="2"></create-form>
+      <create-form :tag="2" :next="isNext"></create-form>
     </div>
     <div class="foot-btn flex-center">
-      <el-button size="mini" @click="dialogVisible=false">cancel</el-button>
-      <el-button size="mini" type="primary">next</el-button>
+      <template v-if="isNext">
+        <el-button size="mini" @click="dialogVisible=false">cancel</el-button>
+        <el-button size="mini" type="primary" @click="isNext=false">next</el-button>
+      </template>
+      <template v-else>
+        <el-button size="mini" @click="isNext=true">last</el-button>
+        <el-button size="mini" type="primary">register</el-button>
+      </template>
     </div>
   </el-dialog>
 </template>
@@ -22,6 +28,7 @@ export default {
   },
   data () {
     return {
+      isNext: true,
       dialogVisible: false,
       dataForm: {
         aa: ''
