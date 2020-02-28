@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-scrollbar wrap-class="tab-scrollbar-wrapper">
+    <el-scrollbar wrap-class="scrollbar-wrapper">
       <!-- 头部区域 -->
       <div class="header flex-between">
         <div class="header-left flex-start">
@@ -27,7 +27,13 @@
         </div>
       </div>
       <!-- 轮播区域 -->
-      <div class="banner" style="height:1000px"></div>
+      <div class="banner" style="height:1000px">
+        <el-carousel :interval="3000" :autoplay="false">
+          <el-carousel-item v-for="item in bannerList" :key="'item'+item">
+            <img :src="item" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
       <!-- 内容区域 -->
       <div class="content">
         <div class="banxin"></div>
@@ -35,48 +41,17 @@
       <!-- 底部区域 -->
       <div class="footer"></div>
     </el-scrollbar>
-    <!-- 终端用户注册 -->
-    <el-dialog
-      class="sys-dialog"
-      title="End Customer Register"
-      :visible.sync="endVisible"
-      width="700px">
-      <div class="content">
-        <end-register @close:dialog="closeDialog('endVisible')"></end-register>
-      </div>
-      <div class="foot-btn flex-center">
-        <el-button size="mini">取消</el-button>
-        <el-button size="mini" type="primary">注册</el-button>
-      </div>
-    </el-dialog>
-    <!-- 新建安装商 -->
-    <el-dialog
-      title="installer Register"
-      :visible.sync="addInstallVisible"
-      width="600px">
-      <add-installer @close:dialog="closeDialog('addInstallVisible')"></add-installer>
-    </el-dialog>
-    <!-- 加入安装商 -->
-    <el-dialog
-      title="Join Installer"
-      :visible.sync="joinInstallVisible"
-      width="600px">
-      <join-installer @close:dialog="closeDialog('joinInstallVisible')"></join-installer>
-    </el-dialog>
-    <!-- 新建代理商 -->
-    <el-dialog
-      title="Agent Register"
-      :visible.sync="addAgentVisible"
-      width="600px">
-      <add-agent @close:dialog="closeDialog('addAgentVisible')"></add-agent>
-    </el-dialog>
-    <!-- 加入代理商 -->
-    <el-dialog
-      title="Join Agent"
-      :visible.sync="joinAgentVisible"
-      width="600px">
-      <join-agent @close:dialog="closeDialog('joinAgentVisible')"></join-agent>
-    </el-dialog>
+
+    <!-- 终端用户注册dialog -->
+    <end-register :visible.sync="endVisible"></end-register>
+    <!-- 新建安装商dialog -->
+    <add-installer :visible.sync="addInstallVisible"></add-installer>
+    <!-- 加入安装商dialog -->
+    <join-installer :visible.sync="joinInstallVisible"></join-installer>
+    <!-- 新建代理商dialog -->
+    <add-agent :visible.sync="addAgentVisible"></add-agent>
+    <!-- 加入代理商dialog -->
+    <join-agent :visible.sync="joinAgentVisible"></join-agent>
   </div>
 </template>
 
@@ -101,13 +76,11 @@ export default {
       joinInstallVisible: false,
       addAgentVisible: false,
       joinAgentVisible: false,
-      logoImg: require('@/assets/logo.png')
+      logoImg: require('@/assets/logo.png'),
+      bannerList: [require('@/assets/banner-test.jpg'), require('@/assets/banner-test2.jpg')]
     }
   },
   methods: {
-    closeDialog (dialogType) {
-      this[dialogType] = false
-    },
     installerClick (command) {
       this[command + 'InstallVisible'] = true
     },
@@ -119,13 +92,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.banner img {
+  width: 100%;
+}
 .container {
+  background-color: #fff;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   .header {
     background-color: #ebebeb;
     padding: 0 40px;
+    border-bottom: 1px solid #ccc;
   }
   .company-name {
     margin-left: 10px;
