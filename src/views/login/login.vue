@@ -9,18 +9,18 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.mobile" placeholder="手机号/邮箱"></el-input>
+              <el-input v-model="dataForm.mobile" placeholder="用户名/手机号/邮箱"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="isCode">
-            <el-form-item prop="code">
+            <!-- <el-form-item prop="code">
               <el-input v-model="dataForm.code" placeholder="验证码"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
-            </el-form-item>
+            </el-form-item> -->
           </el-col>
           <el-col :span="24" v-if="isPw">
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.passWord" placeholder="密码">
+              <el-input :type="pwType" v-model="dataForm.password" placeholder="密码">
                 <i slot="suffix" @click="showPw" class="el-input__icon el-icon-view"></i>
               </el-input>
             </el-form-item>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5'
 export default {
   data () {
     return {
@@ -50,11 +51,18 @@ export default {
       isPw: true,
       isValid: false, // 校验节流阀
       dataForm: {
-        mobile: '',
-        code: '',
-        passWord: ''
+        account: '',
+        passWord: '',
+        accountType: '' //  user, email, phone
       },
-      loginRules: {}
+      loginRules: {},
+      regRules: {
+        email: /^([A-Za-z0-9_\-\\.])+\\@([A-Za-z0-9_\-\\.])+\.([A-Za-z]{2,4})$/, // 邮箱
+        phone: /\d+/, // 手机号
+        user: /^[A-Za-z][A-Za-z0-9_-]{5,7}$/, // 以字母开头的6-8位用户名
+        password: /^[A-Za-z0-9_&$#]{6,}$/ // 至少六位数密码
+        // code: /\d+{4}/ // 验证码
+      }
     }
   },
   methods: {
@@ -68,19 +76,23 @@ export default {
         this.isPw = true
       }
     },
-    // 登录输入框校验
-    validPass () {
+    // 判断是邮箱/手机号/用户名
+    getAcountType (account) {
+      if (this.regRules.email.test(account)) return 'email'
+      if (this.regRules.phone.test(account)) return 'phone'
+      if (this.regRules.user.test(account)) return 'user'
+      return false
+    },
+    // 密码登录输入框校验
+    passwordValid () {
       // 手机或邮箱正则
-      let { mobile, code } = this.dataForm
-      let regM = /\d+|^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
-      let regC = /\d{4}/
-      console.log(regM.test('001Abc@@lenovo'))
-      if (!regM.test(mobile)) {
-        this.$message.error('请填写正确格式的手机号/邮箱')
+      let { account, passWord } = this.dataForm
+      if (!this.getAcountType(account)) {
+        this.$message.error('请填写正确格式的用户名/手机号/邮箱')
         return false
       }
-      if (this.isCode && !regC.test(code)) {
-        this.$message.error('请填写4位数验证码')
+      if (this.regRules.test(passWord)) {
+        this.$message.error('请填写至少6位包含字母数字特殊字符的密码')
         return false
       }
       return true
@@ -96,8 +108,17 @@ export default {
     // 登录
     goLogin () {
       // 自定义表单校验
-      let isPass = this.validPass()
+      let isPass = this.passwordValid()
       if (!isPass) return false
+      this.dataForm.accountType = this.getAcountType()
+      this.dataForm.password = md5(this.dataForm.password)
+      this.$post({
+        url: '/user/login',
+        data: this.dataForm,
+        success: res => {
+          console.log(res)
+        }
+      })
     },
     // 获取验证码
     getCode () {
