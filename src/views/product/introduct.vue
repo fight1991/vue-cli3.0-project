@@ -9,18 +9,18 @@
         </div>
         <div class="header-right flex-start">
           <div class="join-us">JOIN US</div>
-          <div class="item" @click="endVisible=true">The end customer</div>
+          <div class="item" @click="endCustomerVisible=true">The end customer</div>
           <el-dropdown @command="installerClick">
             <div class="item">Installer</div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="add">Add</el-dropdown-item>
+              <el-dropdown-item command="create">Add</el-dropdown-item>
               <el-dropdown-item command="join">Join</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <el-dropdown @command="agentClick">
             <div class="item">Agent</div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="add">Add</el-dropdown-item>
+              <el-dropdown-item command="create">Add</el-dropdown-item>
               <el-dropdown-item command="join">Join</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -43,38 +43,38 @@
     </el-scrollbar>
 
     <!-- 终端用户注册dialog -->
-    <end-register :visible.sync="endVisible"></end-register>
+    <create-end-customer :visible.sync="endCustomerVisible"></create-end-customer>
     <!-- 新建安装商dialog -->
-    <add-installer :visible.sync="addInstallVisible"></add-installer>
+    <create-installer :visible.sync="createInstallVisible"></create-installer>
     <!-- 加入安装商dialog -->
     <join-installer :visible.sync="joinInstallVisible"></join-installer>
     <!-- 新建代理商dialog -->
-    <add-agent :visible.sync="addAgentVisible"></add-agent>
+    <create-agent :visible.sync="createAgentVisible"></create-agent>
     <!-- 加入代理商dialog -->
     <join-agent :visible.sync="joinAgentVisible"></join-agent>
   </div>
 </template>
 
 <script>
-import endRegister from './endRegister'
-import addInstaller from './addInstaller'
+import createEndCustomer from './createEndCustomer'
+import createInstaller from './createInstaller'
 import joinInstaller from './joinInstaller'
-import addAgent from './addAgent'
+import createAgent from './createAgent'
 import joinAgent from './joinAgent'
 export default {
   components: {
-    endRegister,
-    addInstaller,
+    createEndCustomer,
+    createInstaller,
     joinInstaller,
-    addAgent,
+    createAgent,
     joinAgent
   },
   data () {
     return {
-      endVisible: false,
-      addInstallVisible: false,
+      endCustomerVisible: false,
+      createInstallVisible: false,
       joinInstallVisible: false,
-      addAgentVisible: false,
+      createAgentVisible: false,
       joinAgentVisible: false,
       logoImg: require('@/assets/logo.png'),
       bannerList: [require('@/assets/banner-test.jpg'), require('@/assets/banner-test2.jpg')]
