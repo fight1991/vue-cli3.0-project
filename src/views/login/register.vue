@@ -4,28 +4,47 @@
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
           <el-col :span="24">
-            <el-form-item prop="mobile">
-              <el-input v-model="dataForm.mobile" placeholder="手机号/邮箱"></el-input>
+            <el-form-item prop="account">
+              <el-popover
+                trigger="focus"
+                popper-class="login-pop"
+                width="200"
+                placement="bottom-start">
+                <span>Make sure it starts width a letter and it's at least 6 characters including a number and a letter</span>
+                <el-input slot="reference" v-model="dataForm.account" placeholder="Username"></el-input>
+              </el-popover>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item prop="code">
-              <el-input v-model="dataForm.code" placeholder="验证码"></el-input>
-              <span class="get-code" @click="getCode">{{codeText}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24" >
+           <el-col :span="24" >
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.passWord" placeholder="密码">
-                <i slot="suffix" @click="showPw('pwType')" class="el-input__icon el-icon-view"></i>
-              </el-input>
+              <el-popover
+                trigger="focus"
+                popper-class="login-pop"
+                width="200"
+                placement="bottom-start">
+                <span>Make sure it's at least 6 characters including a number and a letter</span>
+                <el-input slot="reference" :type="pwType" v-model="dataForm.passWord" placeholder="Password">
+                  <i slot="suffix" @click="showPw('pwType')" class="el-input__icon el-icon-view"></i>
+                </el-input>
+              </el-popover>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="pageFlag==='reg'">
             <el-form-item>
-              <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="确认密码">
+              <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="Verify password">
                 <i slot="suffix" @click="showPw('confirmPwType')" class="el-input__icon el-icon-view"></i>
               </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item prop="contact">
+              <el-input v-model="dataForm.contact" placeholder="Mobile Phone / Email"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item prop="code">
+              <el-input v-model="dataForm.captcha" placeholder="Code"></el-input>
+              <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -33,36 +52,39 @@
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
       <el-checkbox v-model="isAgreen" v-if="pageFlag==='reg'">
-        <span class="agree-text">同意</span>
-        <span class="user-agree">《用户协议》</span>
+        <span class="agree-text">Agree</span>
+        <span class="user-agree">《user agreement》</span>
       </el-checkbox>
       <span v-if="pageFlag==='pw'"></span>
-      <span @click="backLogin">返回登录</span>
+      <span @click="backLogin">Back</span>
     </el-row>
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goRegister">{{pageFlag==='pw' ? '重置密码' : '免费注册'}}</el-button>
+      <el-button class="login-click" type="primary" @click="goRegister">{{pageFlag==='pw' ? 'Reset password' : 'Sign up'}}</el-button>
     </el-row>
   </div>
 </template>
 
 <script>
+import mixins from './mixin'
+import md5 from 'js-md5'
 export default {
+  mixins: [mixins],
   data () {
     return {
       pwType: 'password',
       confirmPwType: 'password',
-      codeText: '获取验证码',
-      timer: null,
       isAgreen: true,
       loginType: 'code',
       isCode: true,
       isPw: false,
       isValid: false, // 校验节流阀
       dataForm: {
-        mobile: '',
-        code: '',
-        passWord: '',
-        confirmWord: ''
+        account: '', // 用户名
+        password: '', // 密码
+        contactType: '', // 类型 email, phone
+        contact: '', // 联系方式
+        captcha: '', // 验证码
+        confirmWord: '' // 密码确认
       },
       loginRules: {}
     }
@@ -76,20 +98,21 @@ export default {
     // 登录输入框校验
     validPass () {
       // 手机或邮箱正则
-      let { mobile, code, passWord, confirmWord } = this.dataForm
-      let regM = /\d+|^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
-      let regC = /\d{4}/
-      console.log(regM.test('001Abc@@lenovo'))
-      if (!regM.test(mobile)) {
-        this.$message.error('请填写正确格式的手机号/邮箱')
+      let { account, password, confirmWord, contact, captcha } = this.dataForm
+      if (!this.regRules.user.test(account)) {
+        this.$message.error('请填写正确格式的用户名')
         return false
       }
-      if (regC.test(code)) {
-        this.$message.error('请填写4位数验证码')
-        return false
-      }
-      if (confirmWord !== passWord) {
+      if (confirmWord !== password) {
         this.$message.error('两次输入的密码不一致')
+        return false
+      }
+      if (!this.regRules.phone.test(contact) || !this.regRules.email.test(contact)) {
+        this.$message.error('请填写正确格式的手机号或邮箱')
+        return false
+      }
+      if (!this.regRules.code.test(captcha)) {
+        this.$message.error('请填写4位数验证码')
         return false
       }
       if (!this.isAgreen) {
@@ -101,37 +124,21 @@ export default {
     showPw (type) {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
-    // 登录按钮
+    // 注册按钮
     goRegister () {
       // 自定义表单校验
-      let isPass = this.validPass()
-      if (!isPass) return false
-    },
-    // 获取验证码
-    getCode () {
-      // 发送验证码请求
-      if (this.timer) return false
-      let secs = 11
-      this.codeText = secs + 's'
-      this.timer = setInterval(() => {
-        secs--
-        if (secs < 10 && secs > 0) {
-          this.codeText = '0' + secs + 's'
-        } else {
-          this.codeText = secs + 's'
+      if (!this.validPass()) return false
+      this.contactType = this.getAcountType(this.dataForm.contact)
+      this.$post({
+        url: '/user/register',
+        data: {
+          ...this.dataForm,
+          password: md5(this.dataForm.password)
+        },
+        success: res => {
+          console.log(res)
         }
-        if (secs < 0) {
-          this.clearTime()
-        }
-      }, 1000)
-    },
-    // 清除定时器
-    clearTime () {
-      if (this.timer) {
-        clearInterval(this.timer)
-        this.timer = null
-        this.codeText = '获取验证码'
-      }
+      })
     }
   }
 }

@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" placeholder="用户名/手机号/邮箱"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Username/Mobile phone/Email"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="isCode">
@@ -20,7 +20,7 @@
           </el-col>
           <el-col :span="24" v-if="isPw">
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.password" placeholder="密码">
+              <el-input :type="pwType" v-model="dataForm.password" placeholder="Password">
                 <i slot="suffix" @click="showPw" class="el-input__icon el-icon-view"></i>
               </el-input>
             </el-form-item>
@@ -29,23 +29,23 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span @click="registerBtn('pw')">忘记密码?</span>
-      <span @click="registerBtn('reg')">立即注册</span>
+      <span @click="registerBtn('pw')">Forget password?</span>
+      <span @click="registerBtn('reg')">Sign up</span>
     </el-row>
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goLogin">登录</el-button>
+      <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
     </el-row>
   </div>
 </template>
 
 <script>
 import md5 from 'js-md5'
+import mixins from './mixin'
 export default {
+  mixins: [mixins],
   data () {
     return {
       pwType: 'password',
-      codeText: '获取验证码',
-      timer: null,
       loginType: 'code',
       isCode: false,
       isPw: true,
@@ -55,14 +55,7 @@ export default {
         password: '',
         accountType: '' //  user, email, phone
       },
-      loginRules: {},
-      regRules: {
-        email: /^([A-Za-z0-9_\-\\.])+\\@([A-Za-z0-9_\-\\.])+\.([A-Za-z]{2,4})$/, // 邮箱
-        phone: /\d+/, // 手机号
-        user: /^[A-Za-z][A-Za-z0-9_-]{5,7}$/, // 以字母开头的6-8位用户名
-        password: /^[A-Za-z0-9_&$#]{6,}$/ // 至少六位数密码
-        // code: /\d+{4}/ // 验证码
-      }
+      loginRules: {}
     }
   },
   methods: {
@@ -75,13 +68,6 @@ export default {
         this.isCode = false
         this.isPw = true
       }
-    },
-    // 判断是邮箱/手机号/用户名
-    getAcountType (account) {
-      if (this.regRules.email.test(account)) return 'email'
-      if (this.regRules.phone.test(account)) return 'phone'
-      if (this.regRules.user.test(account)) return 'user'
-      return false
     },
     // 密码登录输入框校验
     passwordValid () {
@@ -108,8 +94,7 @@ export default {
     // 登录
     goLogin () {
       // 自定义表单校验
-      let isPass = this.passwordValid()
-      if (!isPass) return false
+      if (!this.passwordValid()) return false
       this.dataForm.accountType = this.getAcountType(this.dataForm.account)
       this.$post({
         url: '/user/login',
@@ -121,32 +106,6 @@ export default {
           console.log(res)
         }
       })
-    },
-    // 获取验证码
-    getCode () {
-      // 发送验证码请求
-      if (this.timer) return false
-      let secs = 11
-      this.codeText = secs + 's'
-      this.timer = setInterval(() => {
-        secs--
-        if (secs < 10 && secs > 0) {
-          this.codeText = '0' + secs + 's'
-        } else {
-          this.codeText = secs + 's'
-        }
-        if (secs < 0) {
-          this.clearTime()
-        }
-      }, 1000)
-    },
-    // 清除定时器
-    clearTime () {
-      if (this.timer) {
-        clearInterval(this.timer)
-        this.timer = null
-        this.codeText = '获取验证码'
-      }
     }
   }
 }
