@@ -91,7 +91,7 @@ export default {
         this.$message.error('请填写正确格式的用户名/手机号/邮箱')
         return false
       }
-      if (this.regRules.password.test(password)) {
+      if (!this.regRules.password.test(password)) {
         this.$message.error('请填写至少6位包含字母数字特殊字符的密码')
         return false
       }
@@ -107,15 +107,16 @@ export default {
     },
     // 登录
     goLogin () {
-      console.log(process.env)
       // 自定义表单校验
       let isPass = this.passwordValid()
       if (!isPass) return false
-      this.dataForm.accountType = this.getAcountType()
-      this.dataForm.password = md5(this.dataForm.password)
+      this.dataForm.accountType = this.getAcountType(this.dataForm.account)
       this.$post({
         url: '/user/login',
-        data: this.dataForm,
+        data: {
+          ...this.dataForm,
+          password: md5(this.dataForm.password)
+        },
         success: res => {
           console.log(res)
         }

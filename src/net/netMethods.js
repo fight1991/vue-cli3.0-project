@@ -23,7 +23,7 @@ const request = {
         success && success(res)
       })
       .catch(err => {
-        console.log(err)
+        console.dir(err)
         error && error(err)
       })
       .finally(() => {

@@ -10,13 +10,7 @@ export default {
     // ajax异步请求
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
     let token = localStorage.getItem('token')
-    config.headers['ssoToken'] = token || ''
-    let temp = config.data
-    config.data = {
-      appWebFlag: '1',
-      reqData: temp,
-      sysId: 'CCBA'
-    }
+    config.headers['token'] = token || ''
     return config
   },
   // 请求发送失败之前
