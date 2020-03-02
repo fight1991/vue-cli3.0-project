@@ -24,7 +24,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item prop="code">
-              <el-input v-model="dataForm.captcha" placeholder="4-digit verification code"></el-input>
+              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col>

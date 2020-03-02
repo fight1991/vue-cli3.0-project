@@ -1,16 +1,12 @@
 <template>
   <div class="login login-register">
-    <div class="tab-header">
-      <div @click="toggleClick('phone')" :class="{'tab-item':true, 'active': isPhone}">Mobile number</div>
-      <div @click="toggleClick('email')" :class="{'tab-item':true, 'active': isEmail}">Email</div>
-    </div>
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
           <el-col :span="24">
             <el-form-item prop="account">
               <el-popover
-                trigger="click"
+                trigger="focus"
                 popper-class="login-pop"
                 width="200"
                 placement="right-end">
@@ -33,26 +29,32 @@
               </el-popover>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="24" class="password">
-            <el-form-item>
-              <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="Verify password">
-                <i slot="suffix" @click="showPw('confirmPwType')" :class="confirmPwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
-              </el-input>
-            </el-form-item>
-          </el-col> -->
-          <el-col :span="24" v-if="isPhone">
+          <el-col class="forgot-pw" align="right">
+            <span v-if="isEmail" @click="toggleClick">Mobile number sign up</span>
+            <span v-else @click="toggleClick">Email sign up</span>
+          </el-col>
+          <el-col :span="24" v-if="isEmail">
             <el-form-item prop="contact">
-              <el-input v-model="dataForm.contact" placeholder="Mobile number"></el-input>
+              <el-input v-model="dataForm.contact" placeholder="Email address"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-else>
-            <el-form-item prop="contact">
-              <el-input v-model="dataForm.contact" placeholder="Email"></el-input>
-            </el-form-item>
-          </el-col>
+          <div v-else>
+            <el-col :span="6" class="phone-area">
+              <el-form-item>
+                <el-select v-model="dataForm.area">
+                  <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="18" >
+              <el-form-item prop="contact">
+                <el-input v-model="dataForm.contact" placeholder="Mobile number"></el-input>
+              </el-form-item>
+            </el-col>
+          </div>
           <el-col :span="24">
             <el-form-item prop="captcha">
-              <el-input v-model="dataForm.captcha" placeholder="4-digit verification code"></el-input>
+              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col>
@@ -64,7 +66,7 @@
         <span class="agree-text">Agree</span>
         <span class="user-agree">《Terms of Service》</span>
       </el-checkbox>
-      <span @click="backLogin">Back</span>
+      <span @click="backLogin" class="color-blue">Back</span>
     </el-row>
     <!-- 注册按钮 -->
     <el-row class="login-btn">
@@ -88,7 +90,9 @@ export default {
       loginType: 'code',
       isPhone: true,
       isEmail: false,
+      areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
+        area: '+86',
         account: '', // 用户名
         password: '', // 密码
         contactType: '', // 类型 email, phone
@@ -106,16 +110,8 @@ export default {
   },
   props: ['pageFlag'],
   methods: {
-    toggleClick (type) {
-      if (type === 'phone' && this.isPhone) return false
-      if (type === 'email' && this.isEmail) return false
-      if (type === 'phone') {
-        this.isPhone = true
-        this.isEmail = false
-      } else {
-        this.isPhone = false
-        this.isEmail = true
-      }
+    toggleClick () {
+      this.isEmail = !this.isEmail
       this.$refs.dataForm.clearValidate('contact')
       this.dataForm.contact = ''
     },

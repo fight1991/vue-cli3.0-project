@@ -7,16 +7,33 @@
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
-          <el-col :span="24">
+          <el-col :span="24" v-if="isEmail">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" placeholder="Username/Mobile number/Email address"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Email address or Username"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="isCode">
-            <!-- <el-form-item prop="code">
+          <div v-else>
+            <el-col :span="6" class="phone-area">
+              <el-form-item>
+                <el-select v-model="dataForm.area">
+                  <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="18" >
+              <el-form-item prop="mobile">
+                <el-input v-model="dataForm.account" placeholder="Mobile number"></el-input>
+              </el-form-item>
+            </el-col>
+          </div>
+          <!-- <el-col :span="24" v-if="isCode">
+            <el-form-item prop="code">
               <el-input v-model="dataForm.code" placeholder="验证码"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
-            </el-form-item> -->
+            </el-form-item>
+          </el-col> -->
+          <el-col class="forgot-pw" align="right">
+            <span @click="registerBtn('resetPw')">Forgot password?</span>
           </el-col>
           <el-col :span="24" v-if="isPw" class="password">
             <el-form-item prop="pw">
@@ -29,7 +46,8 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span @click="registerBtn('resetPw')">Forgot password?</span>
+      <span v-if="isEmail" @click="isEmail=false">Mobile number sign in</span>
+      <span v-else @click="isEmail=true">Email sign in</span>
       <span @click="registerBtn('register')">Sign up</span>
     </el-row>
     <el-row class="login-btn">
@@ -51,7 +69,10 @@ export default {
       loginType: 'code',
       isCode: false,
       isPw: true,
+      isEmail: false,
+      areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
+        area: '+86',
         account: '',
         password: '',
         accountType: '' //  user, email, phone
@@ -113,4 +134,11 @@ export default {
 </script>
 <style lang="less" scoped>
   @import './public';
+  .find-btn {
+    color: #08c;
+    font-size: 12px;
+  }
+  .phone-area {
+    border-right: none;
+  }
 </style>
