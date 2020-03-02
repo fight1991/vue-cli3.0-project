@@ -88,7 +88,6 @@ export default {
       confirmPwType: 'password',
       isAgreen: true,
       loginType: 'code',
-      isPhone: true,
       isEmail: false,
       areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
@@ -121,7 +120,7 @@ export default {
     },
     // 手机/邮箱校验
     contactValid (rule, value, callback) {
-      let typeValue = this.isPhone ? 'phone' : 'email'
+      let typeValue = this.isEmail ? 'email' : 'phone'
       if (!valid[typeValue].rule.test(value)) {
         callback(new Error(valid[typeValue].message))
       } else {
