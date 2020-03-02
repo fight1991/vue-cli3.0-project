@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.mobile" placeholder="用户名/手机号/邮箱"></el-input>
+              <el-input v-model="dataForm.account" placeholder="用户名/手机号/邮箱"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="isCode">
@@ -52,7 +52,7 @@ export default {
       isValid: false, // 校验节流阀
       dataForm: {
         account: '',
-        passWord: '',
+        password: '',
         accountType: '' //  user, email, phone
       },
       loginRules: {},
@@ -86,12 +86,12 @@ export default {
     // 密码登录输入框校验
     passwordValid () {
       // 手机或邮箱正则
-      let { account, passWord } = this.dataForm
+      let { account, password } = this.dataForm
       if (!this.getAcountType(account)) {
         this.$message.error('请填写正确格式的用户名/手机号/邮箱')
         return false
       }
-      if (this.regRules.test(passWord)) {
+      if (this.regRules.password.test(password)) {
         this.$message.error('请填写至少6位包含字母数字特殊字符的密码')
         return false
       }
@@ -107,6 +107,7 @@ export default {
     },
     // 登录
     goLogin () {
+      console.log(process.env)
       // 自定义表单校验
       let isPass = this.passwordValid()
       if (!isPass) return false
