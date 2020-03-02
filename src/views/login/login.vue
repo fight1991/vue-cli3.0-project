@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" placeholder="Username/Mobile phone/Email"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Username/Mobile phone/Email address"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="isCode">
@@ -18,10 +18,10 @@
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item> -->
           </el-col>
-          <el-col :span="24" v-if="isPw">
+          <el-col :span="24" v-if="isPw" class="password">
             <el-form-item prop="pw">
               <el-input :type="pwType" v-model="dataForm.password" placeholder="Password">
-                <i slot="suffix" @click="showPw" class="el-input__icon el-icon-view"></i>
+                <i slot="suffix" @click="showPw" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
           </el-col>
@@ -29,7 +29,7 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span @click="registerBtn('pw')">Forget password?</span>
+      <span @click="registerBtn('pw')">Forgot password?</span>
       <span @click="registerBtn('reg')">Sign up</span>
     </el-row>
     <el-row class="login-btn">

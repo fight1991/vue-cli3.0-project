@@ -15,7 +15,7 @@
               </el-popover>
             </el-form-item>
           </el-col>
-           <el-col :span="24" >
+           <el-col :span="24" class="password">
             <el-form-item prop="pw">
               <el-popover
                 trigger="focus"
@@ -24,15 +24,15 @@
                 placement="bottom-start">
                 <span>Make sure it's at least 6 characters including a number and a letter</span>
                 <el-input slot="reference" :type="pwType" v-model="dataForm.passWord" placeholder="Password">
-                  <i slot="suffix" @click="showPw('pwType')" class="el-input__icon el-icon-view"></i>
+                  <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
                 </el-input>
               </el-popover>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="pageFlag==='reg'">
+          <el-col :span="24" v-if="pageFlag==='reg'" class="password">
             <el-form-item>
               <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="Verify password">
-                <i slot="suffix" @click="showPw('confirmPwType')" class="el-input__icon el-icon-view"></i>
+                <i slot="suffix" @click="showPw('confirmPwType')" :class="confirmPwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
           </el-col>
@@ -53,7 +53,7 @@
     <el-row class="find-btn" type="flex" justify="space-between">
       <el-checkbox v-model="isAgreen" v-if="pageFlag==='reg'">
         <span class="agree-text">Agree</span>
-        <span class="user-agree">《user agreement》</span>
+        <span class="user-agree">《Terms of Service》</span>
       </el-checkbox>
       <span v-if="pageFlag==='pw'"></span>
       <span @click="backLogin">Back</span>
