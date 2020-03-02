@@ -5,7 +5,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="account">
-              <el-input v-model="dataForm.account" placeholder="Mobile phone/Email address"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Mobile number/Email address"></el-input>
             </el-form-item>
           </el-col>
            <el-col :span="24" class="password">
@@ -75,7 +75,7 @@ export default {
       // 手机或邮箱正则
       let { account, newPassword, captcha } = this.dataForm
       if (!valid.phone.rule.test(account) || !valid.email.rule.test(account)) {
-        this.$message.error('Mobile phone or Email is invalid')
+        this.$message.error('Mobile number or Email is invalid')
         return false
       }
       if (!valid.password.rule.test(newPassword)) {

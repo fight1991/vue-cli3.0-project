@@ -3,12 +3,12 @@ export default {
   monitor: 'Monitor System',
   chooseDate: 'Choose Date',
   register: 'Sing up',
-  account: 'Username/Email/Mobile phone',
+  account: 'Username/Email/Mobile number',
   pw: 'password',
   forgetPw: 'Forgot password',
   back: 'Back',
   verPw: 'Verify password',
-  ePhone: 'Mobile phone/Email',
+  ePhone: 'Mobile number/Email',
   server: 'Terms of Service',
   agree: '同意'
 }

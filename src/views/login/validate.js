@@ -5,7 +5,7 @@ export default {
   },
   phone: {
     rule: /\d+/, // 手机号
-    message: 'Mobile phone is invalid'
+    message: 'Mobile number is invalid'
   },
   user: {
     rule: /^[A-Za-z][A-Za-z0-9_-]{5,7}$/, // 以字母开头的6-8位用户名

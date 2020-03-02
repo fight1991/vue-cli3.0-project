@@ -1,7 +1,7 @@
 <template>
   <div class="login login-register">
     <div class="tab-header">
-      <div @click="toggleClick('phone')" :class="{'tab-item':true, 'active': isPhone}">Mobile Phone</div>
+      <div @click="toggleClick('phone')" :class="{'tab-item':true, 'active': isPhone}">Mobile number</div>
       <div @click="toggleClick('email')" :class="{'tab-item':true, 'active': isEmail}">Email</div>
     </div>
     <div class="form">
@@ -42,7 +42,7 @@
           </el-col> -->
           <el-col :span="24" v-if="isPhone">
             <el-form-item prop="contact">
-              <el-input v-model="dataForm.contact" placeholder="Mobile Phone"></el-input>
+              <el-input v-model="dataForm.contact" placeholder="Mobile number"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-else>

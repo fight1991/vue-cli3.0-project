@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" placeholder="Username/Mobile phone/Email address"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Username/Mobile number/Email address"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="isCode">
@@ -75,7 +75,7 @@ export default {
       // 手机或邮箱正则
       let { account, password } = this.dataForm
       if (!this.getAcountType(account)) {
-        this.$message.error('Username/Mobile phone/Email is invalid')
+        this.$message.error('Username/Mobile number/Email is invalid')
         return false
       }
       if (!valid.password.rule.test(password)) {
