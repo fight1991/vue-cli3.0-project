@@ -26,9 +26,9 @@
     </div>
     <div class="content">
       <transition name="zoom">
-        <component :is="isLogin" @toggleStatus="toggleStatus" :pageFlag="pageFlag"></component>
-        <!-- <login v-show="isLogin" @toggleStatus="toggleStatus"></login> -->
-        <!-- <register v-else @toggleStatus="toggleStatus"></register> -->
+        <keep-alive>
+          <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
+        </keep-alive>
       </transition>
     </div>
   </div>
@@ -37,24 +37,23 @@
 <script>
 import login from './login'
 import register from './register'
+import resetPw from './resetPw'
 export default {
   components: {
     login,
-    register
+    register,
+    resetPw
   },
   data () {
     return {
-      pageFlag: '', // 注册和密码公用页面
-      isLogin: 'login', // 登录还是注册
+      pageFlag: 'login', // 注册和密码公用页面
       lang: '中文'
     }
   },
   methods: {
     // 切换登录还是注册
     toggleStatus (typeStatus) {
-      this.isLogin = typeStatus.type
-      this.pageFlag = typeStatus.page
-      // this.isLogin = !this.isLogin
+      this.pageFlag = typeStatus
     },
     toggleLang (lang) {
       this.$witchLang(lang)

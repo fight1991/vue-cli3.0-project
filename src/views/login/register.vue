@@ -23,13 +23,13 @@
                 width="200"
                 placement="bottom-start">
                 <span>Make sure it's at least 6 characters including a number and a letter</span>
-                <el-input slot="reference" :type="pwType" v-model="dataForm.passWord" placeholder="Password">
+                <el-input slot="reference" :type="pwType" v-model="dataForm.password" placeholder="Password">
                   <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
                 </el-input>
               </el-popover>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="pageFlag==='reg'" class="password">
+          <el-col :span="24" class="password">
             <el-form-item>
               <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="Verify password">
                 <i slot="suffix" @click="showPw('confirmPwType')" :class="confirmPwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
@@ -43,7 +43,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item prop="code">
-              <el-input v-model="dataForm.captcha" placeholder="Code"></el-input>
+              <el-input v-model="dataForm.captcha" placeholder="4-digit verification code"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col>
@@ -51,15 +51,15 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <el-checkbox v-model="isAgreen" v-if="pageFlag==='reg'">
+      <el-checkbox v-model="isAgreen">
         <span class="agree-text">Agree</span>
         <span class="user-agree">《Terms of Service》</span>
       </el-checkbox>
-      <span v-if="pageFlag==='pw'"></span>
       <span @click="backLogin">Back</span>
     </el-row>
+    <!-- 注册按钮 -->
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goRegister">{{pageFlag==='pw' ? 'Reset password' : 'Sign up'}}</el-button>
+      <el-button class="login-click" type="primary" @click="goRegister">Sign up</el-button>
     </el-row>
   </div>
 </template>
@@ -68,6 +68,7 @@
 import mixins from './mixin'
 import md5 from 'js-md5'
 export default {
+  name: 'register',
   mixins: [mixins],
   data () {
     return {
@@ -77,7 +78,6 @@ export default {
       loginType: 'code',
       isCode: true,
       isPw: false,
-      isValid: false, // 校验节流阀
       dataForm: {
         account: '', // 用户名
         password: '', // 密码
@@ -93,30 +93,30 @@ export default {
   methods: {
     // 返回登录模块
     backLogin () {
-      this.$emit('toggleStatus', { type: 'login' })
+      this.$emit('toggleStatus', 'login')
     },
     // 登录输入框校验
     validPass () {
       // 手机或邮箱正则
       let { account, password, confirmWord, contact, captcha } = this.dataForm
       if (!this.regRules.user.test(account)) {
-        this.$message.error('请填写正确格式的用户名')
+        this.$message.error(`Username ${account} is not available`)
         return false
       }
       if (confirmWord !== password) {
-        this.$message.error('两次输入的密码不一致')
+        this.$message.error('The passwords entered twice are inconsistent')
         return false
       }
       if (!this.regRules.phone.test(contact) || !this.regRules.email.test(contact)) {
-        this.$message.error('请填写正确格式的手机号或邮箱')
+        this.$message.error('Mobile phone or Email is invalid')
         return false
       }
       if (!this.regRules.code.test(captcha)) {
-        this.$message.error('请填写4位数验证码')
+        this.$message.error('Please enter 4-digit verification code')
         return false
       }
       if (!this.isAgreen) {
-        this.$message.error('请勾选用户协议')
+        this.$message.error('Please check our Terms of Service')
         return false
       }
       return true
@@ -134,6 +134,21 @@ export default {
         data: {
           ...this.dataForm,
           password: md5(this.dataForm.password)
+        },
+        success: res => {
+          console.log(res)
+        }
+      })
+    },
+    // 重置密码
+    resetPassword () {
+      if (!this.validPass()) return false
+      this.contactType = this.getAcountType(this.dataForm.contact)
+      this.$post({
+        url: '/user/register',
+        data: {
+          ...this.dataForm,
+          newPassword: md5(this.dataForm.password)
         },
         success: res => {
           console.log(res)

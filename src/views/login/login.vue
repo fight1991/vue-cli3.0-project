@@ -29,8 +29,8 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span @click="registerBtn('pw')">Forgot password?</span>
-      <span @click="registerBtn('reg')">Sign up</span>
+      <span @click="registerBtn('resetPw')">Forgot password?</span>
+      <span @click="registerBtn('register')">Sign up</span>
     </el-row>
     <el-row class="login-btn">
       <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
@@ -42,6 +42,7 @@
 import md5 from 'js-md5'
 import mixins from './mixin'
 export default {
+  name: 'login',
   mixins: [mixins],
   data () {
     return {
@@ -49,7 +50,6 @@ export default {
       loginType: 'code',
       isCode: false,
       isPw: true,
-      isValid: false, // 校验节流阀
       dataForm: {
         account: '',
         password: '',
@@ -74,11 +74,11 @@ export default {
       // 手机或邮箱正则
       let { account, password } = this.dataForm
       if (!this.getAcountType(account)) {
-        this.$message.error('请填写正确格式的用户名/手机号/邮箱')
+        this.$message.error('Username/Mobile phone/Email is invalid')
         return false
       }
       if (!this.regRules.password.test(password)) {
-        this.$message.error('请填写至少6位包含字母数字特殊字符的密码')
+        this.$message.error('password is invalid')
         return false
       }
       return true
@@ -87,9 +87,9 @@ export default {
       this.pwType = this.pwType === 'text' ? 'password' : 'text'
     },
     // 打开注册组件/密码找回
-    registerBtn (page) {
+    registerBtn (type) {
       this.clearTime()
-      this.$emit('toggleStatus', { page, type: 'register' })
+      this.$emit('toggleStatus', type)
     },
     // 登录
     goLogin () {
