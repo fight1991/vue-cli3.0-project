@@ -1,27 +1,31 @@
 <template>
-  <div class="login">
+  <div class="login login-register">
+    <div class="tab-header">
+      <div @click="toggleClick('phone')" :class="{'tab-item':true, 'active': isPhone}">Mobile Phone</div>
+      <div @click="toggleClick('email')" :class="{'tab-item':true, 'active': isEmail}">Email</div>
+    </div>
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
           <el-col :span="24">
             <el-form-item prop="account">
               <el-popover
-                trigger="focus"
+                trigger="click"
                 popper-class="login-pop"
                 width="200"
-                placement="bottom-start">
+                placement="right-end">
                 <span>Make sure it starts width a letter and it's at least 6 characters including a number and a letter</span>
                 <el-input slot="reference" v-model="dataForm.account" placeholder="Username"></el-input>
               </el-popover>
             </el-form-item>
           </el-col>
            <el-col :span="24" class="password">
-            <el-form-item prop="pw">
+            <el-form-item prop="password">
               <el-popover
                 trigger="focus"
                 popper-class="login-pop"
                 width="200"
-                placement="bottom-start">
+                placement="right">
                 <span>Make sure it's at least 6 characters including a number and a letter</span>
                 <el-input slot="reference" :type="pwType" v-model="dataForm.password" placeholder="Password">
                   <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
@@ -29,20 +33,25 @@
               </el-popover>
             </el-form-item>
           </el-col>
-          <el-col :span="24" class="password">
+          <!-- <el-col :span="24" class="password">
             <el-form-item>
               <el-input :type="confirmPwType" v-model="dataForm.confirmWord" placeholder="Verify password">
                 <i slot="suffix" @click="showPw('confirmPwType')" :class="confirmPwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="24">
+          </el-col> -->
+          <el-col :span="24" v-if="isPhone">
             <el-form-item prop="contact">
-              <el-input v-model="dataForm.contact" placeholder="Mobile Phone / Email"></el-input>
+              <el-input v-model="dataForm.contact" placeholder="Mobile Phone"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24" v-else>
+            <el-form-item prop="contact">
+              <el-input v-model="dataForm.contact" placeholder="Email"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item prop="code">
+            <el-form-item prop="captcha">
               <el-input v-model="dataForm.captcha" placeholder="4-digit verification code"></el-input>
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
@@ -67,6 +76,7 @@
 <script>
 import mixins from './mixin'
 import md5 from 'js-md5'
+import valid from './validate'
 export default {
   name: 'register',
   mixins: [mixins],
@@ -76,8 +86,8 @@ export default {
       confirmPwType: 'password',
       isAgreen: true,
       loginType: 'code',
-      isCode: true,
-      isPw: false,
+      isPhone: true,
+      isEmail: false,
       dataForm: {
         account: '', // 用户名
         password: '', // 密码
@@ -86,40 +96,41 @@ export default {
         captcha: '', // 验证码
         confirmWord: '' // 密码确认
       },
-      loginRules: {}
+      loginRules: {
+        account: [{ required: true, pattern: valid.user.rule, message: valid.user.message, trigger: 'blur' }],
+        password: [{ required: true, pattern: valid.password.rule, message: valid.password.message, trigger: 'blur' }],
+        contact: [{ required: true, validator: this.contactValid, trigger: 'blur' }],
+        captcha: [{ required: true, pattern: valid.code.rule, message: valid.code.message, trigger: 'blur' }]
+      }
     }
   },
   props: ['pageFlag'],
   methods: {
+    toggleClick (type) {
+      if (type === 'phone' && this.isPhone) return false
+      if (type === 'email' && this.isEmail) return false
+      if (type === 'phone') {
+        this.isPhone = true
+        this.isEmail = false
+      } else {
+        this.isPhone = false
+        this.isEmail = true
+      }
+      this.$refs.dataForm.clearValidate('contact')
+      this.dataForm.contact = ''
+    },
     // 返回登录模块
     backLogin () {
       this.$emit('toggleStatus', 'login')
     },
-    // 登录输入框校验
-    validPass () {
-      // 手机或邮箱正则
-      let { account, password, confirmWord, contact, captcha } = this.dataForm
-      if (!this.regRules.user.test(account)) {
-        this.$message.error(`Username ${account} is not available`)
-        return false
+    // 手机/邮箱校验
+    contactValid (rule, value, callback) {
+      let typeValue = this.isPhone ? 'phone' : 'email'
+      if (!valid[typeValue].rule.test(value)) {
+        callback(new Error(valid[typeValue].message))
+      } else {
+        callback()
       }
-      if (confirmWord !== password) {
-        this.$message.error('The passwords entered twice are inconsistent')
-        return false
-      }
-      if (!this.regRules.phone.test(contact) || !this.regRules.email.test(contact)) {
-        this.$message.error('Mobile phone or Email is invalid')
-        return false
-      }
-      if (!this.regRules.code.test(captcha)) {
-        this.$message.error('Please enter 4-digit verification code')
-        return false
-      }
-      if (!this.isAgreen) {
-        this.$message.error('Please check our Terms of Service')
-        return false
-      }
-      return true
     },
     showPw (type) {
       this[type] = this[type] === 'text' ? 'password' : 'text'
@@ -128,7 +139,11 @@ export default {
     goRegister () {
       // 自定义表单校验
       if (!this.validPass()) return false
-      this.contactType = this.getAcountType(this.dataForm.contact)
+      let contactType = 'phone'
+      if (this.isEmail) {
+        contactType = 'email'
+      }
+      this.dataForm.contactType = contactType
       this.$post({
         url: '/user/register',
         data: {

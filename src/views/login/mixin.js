@@ -2,14 +2,7 @@ export default {
   data () {
     return {
       timer: null,
-      codeText: 'Send',
-      regRules: {
-        email: /^([A-Za-z0-9_\-\\.])+\\@([A-Za-z0-9_\-\\.])+\.([A-Za-z]{2,4})$/, // 邮箱
-        phone: /\d+/, // 手机号
-        user: /^[A-Za-z][A-Za-z0-9_-]{5,7}$/, // 以字母开头的6-8位用户名
-        password: /^[A-Za-z0-9_&$#]{6,}$/, // 至少六位数密码
-        code: /[0-9]{4}/ // 验证码
-      }
+      codeText: 'Send'
     }
   },
   methods: {

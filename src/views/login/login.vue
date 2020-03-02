@@ -41,6 +41,7 @@
 <script>
 import md5 from 'js-md5'
 import mixins from './mixin'
+import valid from './validate'
 export default {
   name: 'login',
   mixins: [mixins],
@@ -77,8 +78,8 @@ export default {
         this.$message.error('Username/Mobile phone/Email is invalid')
         return false
       }
-      if (!this.regRules.password.test(password)) {
-        this.$message.error('password is invalid')
+      if (!valid.password.rule.test(password)) {
+        this.$message.error(valid.password.message)
         return false
       }
       return true

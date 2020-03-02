@@ -43,6 +43,7 @@
 <script>
 import mixins from './mixin'
 import md5 from 'js-md5'
+import valid from './validate'
 export default {
   name: 'resetPw',
   mixins: [mixins],
@@ -73,16 +74,16 @@ export default {
     validPass () {
       // 手机或邮箱正则
       let { account, newPassword, captcha } = this.dataForm
-      if (!this.regRules.phone.test(account) || !this.regRules.email.test(account)) {
+      if (!valid.phone.rule.test(account) || !valid.email.rule.test(account)) {
         this.$message.error('Mobile phone or Email is invalid')
         return false
       }
-      if (!this.regRules.password.test(newPassword)) {
-        this.$message.error('password is invalid')
+      if (!valid.password.rule.test(newPassword)) {
+        this.$message.error(valid.password.message)
         return false
       }
-      if (!this.regRules.code.test(captcha)) {
-        this.$message.error('Please enter 4-digit verification code')
+      if (!valid.code.rule.test(captcha)) {
+        this.$message.error(valid.code.message)
         return false
       }
       return true
