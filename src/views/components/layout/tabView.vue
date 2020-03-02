@@ -110,7 +110,7 @@ export default {
   .tab-right {
     width: 40px;
     border-left: 1px solid #E4E7ED;
-    line-height: 35px;
+    line-height: 32px;
     text-align: center;
     position: absolute;
     right: 0;
