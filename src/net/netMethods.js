@@ -29,6 +29,9 @@ const request = {
     }).finally(() => {
       store.commit('changeLoading', false)
     })
+    return commonInstance.get(url, {
+      params: data
+    })
   },
   $post ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
@@ -43,6 +46,7 @@ const request = {
       .finally(() => {
         store.commit('changeLoading', false)
       })
+    return commonInstance.post(url, data)
   },
   $upload ({ url, data = {}, success, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)

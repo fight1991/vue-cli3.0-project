@@ -37,7 +37,7 @@
           </el-col>
           <el-col :span="24" v-if="isPw" class="password">
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.password" placeholder="Password">
+              <el-input :type="pwType" v-model="dataForm.password" placeholder="Password" @keyup.native.enter="goLogin">
                 <i slot="suffix" @click="showPw" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
@@ -79,6 +79,16 @@ export default {
         accountType: '' //  user, email, phone
       },
       loginRules: {}
+    }
+  },
+  created () {
+    if (this.isEmail) {
+      this.dataForm.account = storage.getUserInfo('username')
+    } else {
+      let phone = storage.getUserInfo('phone')
+      if (!phone) return
+      this.dataForm.account = phone.split('-')[1]
+      this.dataForm.area = phone.split('-')[0]
     }
   },
   methods: {
@@ -126,12 +136,31 @@ export default {
           ...this.dataForm,
           password: md5(this.dataForm.password)
         },
-        success: res => {
-          storage.setToken(res.result.token)
-          this.$router.push('/dataView')
-          console.log(res.result)
+        success: ({ result }) => {
+          storage.setToken(result.token)
+          // 存储用户信息
+          this.getUserInfo()
+          let path = '/'
+          if (result.access === 0) { // 游客
+            path = '/product/index'
+          } else {
+            path = this.$route.query.redirect || '/dataView'
+          }
+          this.$router.push(path)
+        },
+        other: res => {
+          // 用户没有注册,则打开注册页面
+          // 验证码过期,则清空验证码输入框
         }
       })
+    },
+    // 获取用户信息
+    async getUserInfo () {
+      let { result } = await this.$post({ url: '/user/info' })
+      if (result) {
+        this.$store.commit('setUserInfo', result)
+        storage.setUserInfo(result)
+      }
     }
   }
 }

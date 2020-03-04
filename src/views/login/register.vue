@@ -70,7 +70,7 @@
     </el-row>
     <!-- 注册按钮 -->
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goRegister">Sign up</el-button>
+      <el-button :disabled="!isAgreen" class="login-click" type="primary" @click="goRegister">Sign up</el-button>
     </el-row>
   </div>
 </template>
@@ -155,6 +155,8 @@ export default {
           password: md5(this.dataForm.password)
         },
         success: res => {
+          // 1.注册成功, 调用自动登录接口2. 跳转到产品介绍页面
+          this.$router.push('/product/index')
           console.log(res)
         }
       })

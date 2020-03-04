@@ -113,6 +113,7 @@ export default {
         },
         success: res => {
           console.log(res)
+          // 自动登录
         }
       })
     }

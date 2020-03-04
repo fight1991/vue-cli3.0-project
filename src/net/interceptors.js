@@ -1,4 +1,5 @@
 import router from '@/router/index'
+import storage from '@/util/storage'
 import { Message } from 'element-ui'
 /**
  * 请求拦截器 onRequestResolve
@@ -9,8 +10,7 @@ export default {
   onRequestResolve: function (config) {
     // ajax异步请求
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
-    let token = localStorage.getItem('token')
-    config.headers['token'] = token || ''
+    config.headers['token'] = storage.getToken()
     return config
   },
   // 请求发送失败之前
@@ -27,7 +27,8 @@ export default {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          // 清除用户登录信息
+          // 清除token
+          storage.removeToken()
           router.replace({
             path: '/login',
             query: {

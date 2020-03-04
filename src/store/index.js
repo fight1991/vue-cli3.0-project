@@ -11,6 +11,16 @@ export default new Vuex.Store({
       pageSize: 10,
       pageIndex: 1,
       total: 0
+    },
+    userInfo: {
+      name: '',
+      phone: '',
+      email: '',
+      country: '',
+      address: '',
+      postcode: '',
+      introduction: '',
+      note: ''
     }
   },
   mutations: {
@@ -22,6 +32,16 @@ export default new Vuex.Store({
     },
     toggleLang (state, payLoad) {
       state.lang = payLoad
+    },
+    setUserInfo (state, payLoad) {
+      state.userInfo.name = payLoad.name || ''
+      state.userInfo.phone = payLoad.phone || ''
+      state.userInfo.email = payLoad.email || ''
+      state.userInfo.country = payLoad.country || ''
+      state.userInfo.address = payLoad.address || ''
+      state.userInfo.postcode = payLoad.postcode || ''
+      state.userInfo.introduction = payLoad.introduction || ''
+      state.userInfo.note = payLoad.note || ''
     }
   },
   actions: {
