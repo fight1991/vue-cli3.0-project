@@ -14,8 +14,22 @@ export default {
       if (valid.user.rule.test(account)) return 'user'
       return false
     },
-    // 获取验证码
-    getCode () {
+    // 发送验证码
+    sendCode ({ contact, contactType }, callback) {
+      this.$post({
+        url: '/user/sendcaptcha',
+        data: {
+          contact,
+          contactType
+        },
+        success () {
+          callback && callback()
+          this.$message.success('send successful')
+        }
+      })
+    },
+    // 验证码按钮
+    codeBtn () {
       // 发送验证码请求
       if (this.timer) return false
       let secs = 11

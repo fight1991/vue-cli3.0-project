@@ -4,28 +4,37 @@ import Method from './netConfig'
 
 let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
 let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
+
+// 响应200时 业务状态码处理
+function bussinessBundle (code, res, other, success) {
+  if (code === store.state.successCode) {
+    success && success(res)
+    return
+  }
+  if (other) {
+    other(res)
+    return
+  }
+  Vue.prototype.$message.error(res.errno)
+}
 const request = {
-  $get ({ url, data = {}, success, error, isLoad = true }) {
+  $get ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
     commonInstance.get(url, {
       params: data
     }).then(res => {
-      if (res.errno === store.state.successCode) {
-        success && success(res)
-      } else {
-        Vue.prototype.$message.error(res.errno)
-      }
+      bussinessBundle(res.errno, res, other, success)
     }).catch(err => {
       error && error(err)
     }).finally(() => {
       store.commit('changeLoading', false)
     })
   },
-  $post ({ url, data = {}, success, error, isLoad = true }) {
+  $post ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
     commonInstance.post(url, data)
       .then(res => {
-        success && success(res)
+        bussinessBundle(res.errno, res, other, success)
       })
       .catch(err => {
         console.dir(err)

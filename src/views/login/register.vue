@@ -130,35 +130,29 @@ export default {
     showPw (type) {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
+    // 获取验证码
+    getCode () {
+      this.$refs.dataForm.validateField('contact', (valid) => {
+        if (!valid) {
+          this.sendCode({
+            contact: this.dataForm.contact,
+            contactType: this.isEmail ? 'email' : 'phone'
+          }, this.codeBtn)
+        }
+      })
+    },
     // 注册按钮
     goRegister () {
       // 自定义表单校验
-      if (!this.validPass()) return false
-      let contactType = 'phone'
-      if (this.isEmail) {
-        contactType = 'email'
-      }
-      this.dataForm.contactType = contactType
+      let isPass = true
+      this.$refs.dataForm.validate(valid => (isPass = valid))
+      if (!isPass) return
+      this.dataForm.contactType = this.isEmail ? 'email' : 'phone'
       this.$post({
         url: '/user/register',
         data: {
           ...this.dataForm,
           password: md5(this.dataForm.password)
-        },
-        success: res => {
-          console.log(res)
-        }
-      })
-    },
-    // 重置密码
-    resetPassword () {
-      if (!this.validPass()) return false
-      this.contactType = this.getAcountType(this.dataForm.contact)
-      this.$post({
-        url: '/user/register',
-        data: {
-          ...this.dataForm,
-          newPassword: md5(this.dataForm.password)
         },
         success: res => {
           console.log(res)

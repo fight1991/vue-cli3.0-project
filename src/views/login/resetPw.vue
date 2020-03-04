@@ -91,10 +91,20 @@ export default {
     showPw (type) {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
+    getCode () {
+      this.$refs.dataForm.validateField('account', (valid) => {
+        if (!valid) {
+          this.sendCode({
+            contact: this.dataForm.account,
+            contactType: this.getAcountType(this.dataForm.account)
+          }, this.codeBtn)
+        }
+      })
+    },
     // 重置密码
     resetPassword () {
       if (!this.validPass()) return false
-      this.accountType = this.getAcountType(this.dataForm.accountType)
+      this.accountType = this.getAcountType(this.dataForm.account)
       this.$post({
         url: '/user/reset',
         data: {

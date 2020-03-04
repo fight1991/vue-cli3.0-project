@@ -97,7 +97,8 @@ export default {
       // 手机或邮箱正则
       let { account, password } = this.dataForm
       if (!this.getAcountType(account)) {
-        this.$message.error('Username/Mobile number/Email is invalid')
+        let erroMsg = this.isEmail ? 'Username or Email is invalid' : 'Mobile number is invalid'
+        this.$message.error(erroMsg)
         return false
       }
       if (!valid.password.rule.test(password)) {
