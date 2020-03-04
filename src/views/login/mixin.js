@@ -1,3 +1,4 @@
+import valid from './validate'
 export default {
   data () {
     return {
@@ -8,9 +9,9 @@ export default {
   methods: {
     // 判断是邮箱/手机号/用户名
     getAcountType (account) {
-      if (this.regRules.email.test(account)) return 'email'
-      if (this.regRules.phone.test(account)) return 'phone'
-      if (this.regRules.user.test(account)) return 'user'
+      if (valid.email.rule.test(account)) return 'email'
+      if (valid.phone.rule.test(account)) return 'phone'
+      if (valid.user.rule.test(account)) return 'user'
       return false
     },
     // 获取验证码
@@ -36,7 +37,7 @@ export default {
       if (this.timer) {
         clearInterval(this.timer)
         this.timer = null
-        this.codeText = 'send'
+        this.codeText = 'Send'
       }
     }
   }

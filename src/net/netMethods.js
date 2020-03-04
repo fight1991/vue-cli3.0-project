@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import store from '@/store'
 import Method from './netConfig'
+
 let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
 let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
 const request = {
@@ -9,7 +10,11 @@ const request = {
     commonInstance.get(url, {
       params: data
     }).then(res => {
-      success && success(res)
+      if (res.errno === store.state.successCode) {
+        success && success(res)
+      } else {
+        Vue.prototype.$message.error(res.errno)
+      }
     }).catch(err => {
       error && error(err)
     }).finally(() => {

@@ -60,6 +60,7 @@
 import md5 from 'js-md5'
 import mixins from './mixin'
 import valid from './validate'
+import storage from '@/util/storage'
 export default {
   name: 'login',
   mixins: [mixins],
@@ -125,7 +126,9 @@ export default {
           password: md5(this.dataForm.password)
         },
         success: res => {
-          console.log(res)
+          storage.setToken(res.result.token)
+          this.$router.push('/dataView')
+          console.log(res.result)
         }
       })
     }

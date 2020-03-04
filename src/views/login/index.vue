@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" v-loading="$store.state.loading">
     <div class="header">
       <el-dropdown
         @command="toggleLang"

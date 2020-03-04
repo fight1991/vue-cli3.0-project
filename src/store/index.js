@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import tab from './modules/tab' // 页签管理模块
 export default new Vuex.Store({
   state: {
+    successCode: 0,
     lang: 'zh', // 语言
     collapse: false, // 是否折叠
     loading: false,

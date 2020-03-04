@@ -4,7 +4,7 @@ export default {
     message: 'Email is invalid'
   },
   phone: {
-    rule: /\d+/, // 手机号
+    rule: /^\d+$/, // 手机号
     message: 'Mobile number is invalid'
   },
   user: {
@@ -16,7 +16,7 @@ export default {
     message: 'Password is invalid'
   },
   code: {
-    rule: /[0-9]{4}/, // 验证码
+    rule: /^\d{4}$/, // 验证码
     message: 'Please enter 4-digit verification code'
   }
 }
