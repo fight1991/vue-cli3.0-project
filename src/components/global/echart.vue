@@ -28,35 +28,30 @@ export default {
   },
   watch: {
     'datas': function () {
-      this.$nextTick(() => {
-        this.initEchart()
-      })
+      this.asyncInit()
     },
     'reset': function () {
-      this.$nextTick(() => {
-        this.initEchart()
-      })
+      this.asyncInit()
     }
   },
   data () {
     return {}
   },
   created () {
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', this.asyncInit)
+  },
+  mounted () {
+    this.asyncInit()
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.asyncInit)
+  },
+  methods: {
+    asyncInit () {
       this.$nextTick(() => {
         this.initEchart()
       })
-    })
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.initEchart()
-    })
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize')
-  },
-  methods: {
+    },
     initEchart () {
       // 获取DOM节点并初始化
       let chart = echarts.init(this.$refs.echart)
