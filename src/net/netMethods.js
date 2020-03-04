@@ -18,6 +18,9 @@ function bussinessBundle (code, res, other, success) {
   Vue.prototype.$message.error(res.errno)
 }
 const request = {
+  $axios ({ url, data = {}, method = 'post' }) {
+    return commonInstance({ method, url, data })
+  },
   $get ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
     commonInstance.get(url, {
@@ -28,9 +31,6 @@ const request = {
       error && error(err)
     }).finally(() => {
       store.commit('changeLoading', false)
-    })
-    return commonInstance.get(url, {
-      params: data
     })
   },
   $post ({ url, data = {}, success, other, error, isLoad = true }) {
@@ -46,7 +46,6 @@ const request = {
       .finally(() => {
         store.commit('changeLoading', false)
       })
-    return commonInstance.post(url, data)
   },
   $upload ({ url, data = {}, success, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)

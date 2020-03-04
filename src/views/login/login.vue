@@ -127,6 +127,7 @@ export default {
     },
     // 登录
     goLogin () {
+      this.getUserInfo()
       // 自定义表单校验
       if (!this.passwordValid()) return false
       this.dataForm.accountType = this.getAcountType(this.dataForm.account)
@@ -156,7 +157,7 @@ export default {
     },
     // 获取用户信息
     async getUserInfo () {
-      let { result } = await this.$post({ url: '/user/info' })
+      let { result } = await this.$axios({ url: '/user/info' })
       if (result) {
         this.$store.commit('setUserInfo', result)
         storage.setUserInfo(result)

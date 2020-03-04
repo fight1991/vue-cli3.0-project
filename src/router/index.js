@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
     if (storage.getToken()) {
       next()
     } else {
-      Message.error('身份过期或未登录')
+      Message.error('No permission')
       next('/login')
     }
   }

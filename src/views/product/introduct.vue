@@ -39,7 +39,8 @@
         <div class="banxin"></div>
       </div>
       <!-- 底部区域 -->
-      <div class="footer"></div>
+      <div class="footer">
+      </div>
     </el-scrollbar>
 
     <!-- 终端用户注册dialog -->
