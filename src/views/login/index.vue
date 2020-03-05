@@ -88,16 +88,17 @@ export default {
       flex: 1;
       position: relative;
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
     }
     .login {
       position: absolute;
+      right: 20%;
       // top: 50%;
       // left: 50%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       transform-origin: center;
-      width: 400px;
+      width: 410px;
       box-sizing: border-box;
       background-color: #fff;
       padding: 20px;

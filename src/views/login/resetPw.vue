@@ -32,7 +32,7 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="end">
-      <span @click="backLogin">Back</span>
+      <span class="f12" @click="backLogin">Back sign in</span>
     </el-row>
     <el-row class="login-btn">
       <el-button class="login-click" type="primary" @click="resetPassword">Reset password</el-button>

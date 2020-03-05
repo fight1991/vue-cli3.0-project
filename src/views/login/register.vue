@@ -29,10 +29,6 @@
               </el-popover>
             </el-form-item>
           </el-col>
-          <el-col class="forgot-pw" align="right">
-            <span v-if="isEmail" @click="toggleClick">Mobile number sign up</span>
-            <span v-else @click="toggleClick">Email sign up</span>
-          </el-col>
           <el-col :span="24" v-if="isEmail">
             <el-form-item prop="contact">
               <el-input v-model="dataForm.contact" placeholder="Email address"></el-input>
@@ -63,14 +59,18 @@
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
       <el-checkbox v-model="isAgreen">
-        <span class="agree-text">Agree</span>
-        <span class="user-agree">《Terms of Service》</span>
+        <span class="agree-text f12">Agree</span>
+        <span class="user-agree f12">《Terms of Service》</span>
       </el-checkbox>
-      <span @click="backLogin" class="color-blue">Back</span>
+      <span class="f12" v-if="isEmail" @click="toggleClick">Mobile number sign up</span>
+      <span class="f12" v-else @click="toggleClick">Email sign up</span>
     </el-row>
     <!-- 注册按钮 -->
     <el-row class="login-btn">
       <el-button :disabled="!isAgreen" class="login-click" type="primary" @click="goRegister">Sign up</el-button>
+    </el-row>
+    <el-row class="f12" type="flex" justify="end">
+      <span @click="backLogin">Back sign in</span>
     </el-row>
   </div>
 </template>
@@ -168,8 +168,5 @@ export default {
   @import './public';
   .user-agree {
     color: @sys-main-header;
-  }
-  .agree-text {
-    color: #4c4c4c;
   }
 </style>

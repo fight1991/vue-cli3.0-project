@@ -32,9 +32,6 @@
               <span class="get-code" @click="getCode">{{codeText}}</span>
             </el-form-item>
           </el-col> -->
-          <el-col class="forgot-pw" align="right">
-            <span @click="registerBtn('resetPw')">Forgot password?</span>
-          </el-col>
           <el-col :span="24" v-if="isPw" class="password">
             <el-form-item prop="pw">
               <el-input :type="pwType" v-model="dataForm.password" placeholder="Password" @keyup.native.enter="goLogin">
@@ -42,16 +39,19 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col class="forgot-pw" align="right">
+            <span @click="registerBtn('resetPw')">Forgot password?</span>
+          </el-col>
         </el-row>
       </el-form>
     </div>
+    <el-row class="login-btn">
+      <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
+    </el-row>
     <el-row class="find-btn" type="flex" justify="space-between">
       <span v-if="isEmail" @click="isEmail=false">Mobile number sign in</span>
       <span v-else @click="isEmail=true">Email sign in</span>
       <span @click="registerBtn('register')">Sign up</span>
-    </el-row>
-    <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
     </el-row>
   </div>
 </template>
@@ -169,7 +169,7 @@ export default {
 <style lang="less" scoped>
   @import './public';
   .find-btn {
-    color: #08c;
+    color: #4c4c4c;
     font-size: 12px;
   }
   .phone-area {
