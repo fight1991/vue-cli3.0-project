@@ -9,7 +9,7 @@
         </div>
         <div class="header-right flex-start">
           <div class="join-us">JOIN US</div>
-          <div class="item" @click="endCustomerVisible=true">The end customer</div>
+          <div class="item" @click="endCustomerVisible=true">User</div>
           <el-dropdown @command="installerClick">
             <div class="item">Installer</div>
             <el-dropdown-menu slot="dropdown">

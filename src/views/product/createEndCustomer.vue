@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    title="End Customer Register"
+    title="New User"
     @close="$emit('update:visible')"
     :visible.sync="dialogVisible"
     width="700px">

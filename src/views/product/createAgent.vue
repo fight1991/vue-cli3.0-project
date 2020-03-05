@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    title="new agent"
+    title="New Agent"
     @close="$emit('update:visible')"
     :visible.sync="dialogVisible"
     width="700px">

@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    :title="isNext ? 'new installer':'personal information'"
+    :title="isNext ? 'New Installer':'Personal Information'"
     @close="$emit('update:visible')"
     :visible.sync="dialogVisible"
     width="700px">

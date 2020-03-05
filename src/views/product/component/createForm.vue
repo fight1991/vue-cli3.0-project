@@ -15,13 +15,13 @@
       </el-col>
       <!-- 选择代理商 -->
       <el-col :span="12" v-if="tag===1">
-        <el-form-item label="Authorizer" prop="aa">
+        <el-form-item label="Authorizer" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa" placeholder="Authorized Company or Authorizer"></el-input>
         </el-form-item>
       </el-col>
       <!-- 厂商联系人 -->
       <el-col :span="12" v-if="tag===2">
-        <el-form-item label="Authorizer" prop="aa">
+        <el-form-item label="Authorizer" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa" placeholder="Authorized Company or Authorizer"></el-input>
         </el-form-item>
       </el-col>
@@ -32,13 +32,13 @@
       </el-col>
       <!-- 安装商简称 -->
       <el-col :span="12" v-if="tag===1">
-        <el-form-item label="Short Name" prop="aa">
+        <el-form-item label="Short Name" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa"></el-input>
         </el-form-item>
       </el-col>
       <!-- 代理商简称 -->
       <el-col :span="12" v-if="tag===2">
-        <el-form-item label="Short Name" prop="aa">
+        <el-form-item label="Short Name" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa"></el-input>
         </el-form-item>
       </el-col>
@@ -53,7 +53,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Email" prop="aa">
+        <el-form-item label="Email" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa"></el-input>
         </el-form-item>
       </el-col>
@@ -63,7 +63,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="MP" prop="aa">
+        <el-form-item label="MP" prop="aa" label-width="110px">
           <el-input v-model="dataForm.aa" placeholder="mobile number"></el-input>
         </el-form-item>
       </el-col>
