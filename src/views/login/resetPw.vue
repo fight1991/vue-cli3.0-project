@@ -11,6 +11,7 @@
            <el-col :span="24" class="password">
             <el-form-item prop="pw">
               <el-popover
+                :visible-arrow="false"
                 trigger="focus"
                 popper-class="login-pop"
                 width="200"

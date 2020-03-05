@@ -6,6 +6,7 @@
           <el-col :span="24">
             <el-form-item prop="account">
               <el-popover
+                :visible-arrow="false"
                 trigger="focus"
                 popper-class="login-pop"
                 width="200"
@@ -18,6 +19,7 @@
            <el-col :span="24" class="password">
             <el-form-item prop="password">
               <el-popover
+                :visible-arrow="false"
                 trigger="focus"
                 popper-class="login-pop"
                 width="200"
