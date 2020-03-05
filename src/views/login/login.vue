@@ -149,8 +149,14 @@ export default {
           this.$router.push(path)
         },
         other: res => {
-          // 用户没有注册,则打开注册页面
-          // 验证码过期,则清空验证码输入框
+          // 41805 账号不存在 打开注册页面
+          // 41807 用户名或密码错误
+          this.$message.warning(res.errno)
+          if (res.errno === 41805) {
+            this.registerBtn('register')
+            return false
+          }
+          // 若验证码登录则 41900 41901 41902验证码已失效, 验证码错误 验证码不存在
         }
       })
     },
