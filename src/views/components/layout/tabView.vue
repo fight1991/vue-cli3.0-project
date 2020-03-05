@@ -65,10 +65,10 @@ export default {
       console.log(this.activeTabName)
       let { path, query, params } = this.tabList.find(v => v.tabId === tabInfo.name)
       if (path === this.$route.path) return
-      if (tabInfo.name === 'tab-index') {
-        this.$store.commit('setCurrentTab', 'tab-index')
-        return
-      }
+      // if (tabInfo.name === 'tab-index') {
+      //   this.$store.commit('setCurrentTab', 'tab-index')
+      //   return
+      // }
       // 路由跳转
       this.$router.push({
         path,

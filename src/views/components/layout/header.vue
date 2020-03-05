@@ -19,6 +19,7 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-dropdown
+        @command="userOption"
         trigger="click"
         placement="top-start">
         <span class="user-name">
@@ -27,7 +28,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item divided>退出</el-dropdown-item>
+          <el-dropdown-item command="logout" divided @click="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span class="info"><i class="el-icon-message-solid"></i></span>
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import storage from '@/util/storage'
 export default {
   name: 'layout-header',
   data () {
@@ -48,6 +50,28 @@ export default {
     toggleLang (lang) {
       this.$switchLang(lang)
       this.lang = lang === 'en' ? 'English' : '中文'
+    },
+    userOption (op) {
+      if (op === 'logout') {
+        this.logout()
+      }
+    },
+    // 注销登录
+    async logout () {
+      let res = await this.$confirm('Are you sure you want to log out?', 'tip', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      }).then(() => true).catch(() => false)
+      if (!res) return
+      this.$post({
+        url: '/user/logout',
+        success () {
+          storage.romoveToken()
+          storage.romoveLoginInfo()
+          this.$router.push('/login')
+        }
+      })
     }
   }
 }

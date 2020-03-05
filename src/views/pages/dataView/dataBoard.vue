@@ -1,20 +1,28 @@
 <template>
   <section class="sys-bus-container">
-    <div class="left">
-      <div class="top-item flex-between mg-b10">
-        <div class="items">电站总数</div>
-        <div class="items">正常电站</div>
-        <div class="items">离线电站</div>
-        <div class="items">故障电站</div>
-      </div>
-      <div class="status-count bg-c mg-b10">
-        <div class="title">状态统计</div>
-        <div class="content flex">
-          <div class="content-item">1</div>
-          <div class="content-item">2</div>
-          <div class="content-item">3</div>
+    <div class="container-top mg-b10">
+      <div class="left">
+        <div class="top-item flex-between mg-b10">
+          <div class="items">电站总数</div>
+          <div class="items">正常电站</div>
+          <div class="items">离线电站</div>
+          <div class="items">故障电站</div>
+        </div>
+        <div class="status-count bg-c">
+          <div class="title">状态统计</div>
+          <div class="content flex">
+            <div class="content-item">1</div>
+            <div class="content-item">2</div>
+            <div class="content-item">3</div>
+          </div>
         </div>
       </div>
+      <div class="right bg-c">
+        <div class="weather-content">天气</div>
+        <div id="map-content" style="width:100%;"></div>
+      </div>
+    </div>
+    <div class="powerList">
       <div class="power bg-c">
         <div class="header flex-between pd10">
           <div class="btn">
@@ -27,10 +35,6 @@
           <el-echart :datas="chartData"></el-echart>
         </div>
       </div>
-    </div>
-    <div class="right bg-c">
-      <div class="weather-content">天气</div>
-      <div id="map-content" style="width:100%;height:245px;"></div>
     </div>
   </section>
 </template>
@@ -84,13 +88,17 @@ export default {
 <style lang="less" scoped>
 .sys-bus-container {
   padding: 5px;
+}
+#map-content {
+  width: 100%;
+  height: calc(100% - 120px);
+}
+.container-top {
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  height: 100%;
   .left {
     flex: 1;
-    height: 100%;
     margin-right: 5px;
     .top-item {
       .items {
