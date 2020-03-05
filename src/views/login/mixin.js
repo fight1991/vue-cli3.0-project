@@ -16,13 +16,14 @@ export default {
     },
     // 发送验证码
     sendCode ({ contact, contactType }, callback) {
+      if (this.timer) return
       this.$post({
         url: '/user/sendcaptcha',
         data: {
           contact,
           contactType
         },
-        success () {
+        success: () => {
           callback && callback()
           this.$message.success('send successful')
         }

@@ -50,10 +50,11 @@
               </el-form-item>
             </el-col>
           </div>
-          <el-col :span="24">
+          <el-col :span="24" class="code-area">
             <el-form-item prop="captcha">
-              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code"></el-input>
-              <span class="get-code" @click="getCode">{{codeText}}</span>
+              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code">
+                <el-button slot="append" @click="getCode">{{codeText}}</el-button>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
