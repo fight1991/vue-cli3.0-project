@@ -1,4 +1,5 @@
-import Vue from 'vue'
+
+import { Message } from 'element-ui'
 import store from '@/store'
 import Method from './netConfig'
 
@@ -6,8 +7,8 @@ let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
 let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
 
 // 响应200时 业务状态码处理
-function bussinessBundle (code, res, other, success) {
-  if (code === store.state.successCode) {
+function bussinessBundle (res, other, success) {
+  if (res.errno === store.state.successCode) {
     success && success(res)
     return
   }
@@ -15,10 +16,11 @@ function bussinessBundle (code, res, other, success) {
     other(res)
     return
   }
-  Vue.prototype.$message.error(res.errno)
+  Message.error(res.errno)
 }
-const request = {
-  $axios ({ url, data = {}, method = 'post' }) {
+
+const requests = {
+  $axios ({ url, data = {}, method = 'get' }) {
     return commonInstance({ method, url, data })
   },
   $get ({ url, data = {}, success, other, error, isLoad = true }) {
@@ -26,8 +28,9 @@ const request = {
     commonInstance.get(url, {
       params: data
     }).then(res => {
-      bussinessBundle(res.errno, res, other, success)
+      bussinessBundle(res, other, success)
     }).catch(err => {
+      if (process.env.NODE_ENV === 'development') console.log('api is ' + url, err)
       error && error(err)
     }).finally(() => {
       store.commit('changeLoading', false)
@@ -37,10 +40,10 @@ const request = {
     if (isLoad) store.commit('changeLoading', true)
     commonInstance.post(url, data)
       .then(res => {
-        bussinessBundle(res.errno, res, other, success)
+        bussinessBundle(res, other, success)
       })
       .catch(err => {
-        console.dir(err)
+        if (process.env.NODE_ENV === 'development') console.log('api is ' + url, err)
         error && error(err)
       })
       .finally(() => {
@@ -62,7 +65,11 @@ const request = {
     })
   }
 }
-// 绑定vue原型
-Object.keys(request).forEach(key => {
-  Vue.prototype[key] = request[key]
-})
+
+export default {
+  install (Vue) {
+    Object.keys(requests).forEach(key => {
+      Vue.prototype[key] = requests[key]
+    })
+  }
+}

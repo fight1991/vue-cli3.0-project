@@ -127,7 +127,6 @@ export default {
     },
     // 登录
     goLogin () {
-      this.getUserInfo()
       // 自定义表单校验
       if (!this.passwordValid()) return false
       this.dataForm.accountType = this.getAcountType(this.dataForm.account)

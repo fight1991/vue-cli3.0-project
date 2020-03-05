@@ -11,7 +11,6 @@ export default {
     // ajax异步请求
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
     config.headers['token'] = storage.getToken()
-    console.log(config)
     return config
   },
   // 请求发送失败之前
@@ -20,7 +19,18 @@ export default {
   },
   // 响应成功
   onResponseResolve: function (response) {
-    return response.data
+    // 41808 token失效 ; 41809 不合法token ; 41810 用户名已在其他地方登录
+    if ([41808, 41809, 41810].includes(response.data.errno)) {
+      Message.error(response.data.errno)
+      router.replace({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
+    } else {
+      return response.data
+    }
   },
   // 响应失败
   onResponseReject: function (error) {
@@ -69,9 +79,6 @@ export default {
         default:
           router.push('/error/5xx')
       }
-      console.log(error.response.data)
-      console.log(error.response.status)
-      console.log(error.response.headers)
       return Promise.reject(error.response)
     } else {
       // Something happened in setting up the request that triggered an Error

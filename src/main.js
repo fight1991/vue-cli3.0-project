@@ -9,28 +9,18 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/style/base.less'
 import '@/style/main.less'
 
-// 封装网路请求
-import '@/net/netMethods'
-
-// 注册全局组件,指令,过滤器,引入语言包
-import MyComponents from '@/components'
-import MyDirectives from '@/derectives'
-import * as filters from '@/filters'
-import langs from '@/i18n'
-
-Vue.use(MyComponents)
-Vue.use(MyDirectives)
-Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
-
-// 语言切换
-Vue.config.lang = store.state.lang
-Vue.prototype.$switchLang = function (lang) {
-  this.config.lang = lang
-  store.commit('toggleLang', lang)
-}.bind(Vue)
-Object.keys(langs).forEach(key => Vue.locale(key, langs[key]))
+import Request from '@/net/netMethods' // 网路请求
+import Filters from '@/filters' // 过滤器
+import MyComponents from '@/components' // 自定义全局组件
+import MyDirectives from '@/derectives' // 自定义指令
+import Langs from '@/i18n' // 语言包
 
 Vue.use(ElementUI)
+Vue.use(Request)
+Vue.use(Filters)
+Vue.use(MyComponents)
+Vue.use(MyDirectives)
+Vue.use(Langs)
 
 Vue.config.productionTip = false
 

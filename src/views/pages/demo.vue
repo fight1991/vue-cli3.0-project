@@ -8,6 +8,7 @@
       type="date"
       :placeholder="$t('chooseDate')">
     </el-date-picker>
+    <router-link to="/login">返回登录</router-link>
   </div>
 </template>
 
