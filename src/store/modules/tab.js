@@ -1,5 +1,5 @@
+import router from '@/router'
 let Home = () => import(/* webpackChunkName: "home" */ '@/views/pages/home')
-
 export default {
   state: {
     currentTab: 'tab-index',
@@ -41,8 +41,13 @@ export default {
       let index = state.tabList.findIndex(v => v.tabId === (tabId || state.currentTab))
       let activeTabInfo = state.tabList[index + 1] || state.tabList[index - 1]
       state.tabList.splice(index, 1)
-      if (tabId === state.currentTab) { // 如果关闭的是当前活动的页签
-        this.commit('setCurrentTab', activeTabInfo['tabId'])
+      if (tabId === state.currentTab) { // 如果关闭的是当前活动的页签,激活相邻页签(路由跳转)
+        let { path, query, params } = activeTabInfo
+        router.push({
+          path,
+          query,
+          params
+        })
       }
     },
     // 关闭所有页签

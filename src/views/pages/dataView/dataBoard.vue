@@ -30,7 +30,7 @@
     </div>
     <div class="right bg-c">
       <div class="weather-content">天气</div>
-      <div id="map-content" style="width:100%;height:600px;"></div>
+      <div id="map-content" style="width:100%;height:245px;"></div>
     </div>
   </section>
 </template>
@@ -129,7 +129,6 @@ export default {
       margin-bottom: 10px;
     }
     width: 250px;
-    height: 716px;
     padding: 5px;
     box-sizing: border-box;
   }
