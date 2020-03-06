@@ -2,7 +2,7 @@
   <el-dialog
     class="sys-dialog"
     :title="title"
-    @opened="openDialog"
+    @opened="cancelForm"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
@@ -55,24 +55,22 @@ export default {
     closeDialog () {
       this.$emit('update:visible', false)
     },
-    openDialog () {
-      this.$refs.form.clearValidate()
-    },
     cancelForm () {
+      this.$refs.form.clearValidate()
       this.$refs.form.cancel()
-      this.dialogVisible = false
     },
+    // 创建 installer agent // 加入user agent installer
     register () {
       let flag = true
       this.$refs.form.$refs.dataForm.validate(valid => {
         flag = valid
       })
       if (!flag) return
-      // 创建安装商/代理商
       let submitData = this.$refs.form.dataForm
       submitData.organType = this.tag
+      let url = this.tag === 'add' ? '/organs/register' : '/organs/join'
       this.$post({
-        url: '/organs/register',
+        url: url,
         data: submitData,
         success: res => {
           this.$message.success('successful')
