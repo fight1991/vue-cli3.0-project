@@ -12,10 +12,12 @@
           <el-input v-model="dataForm.sn"></el-input>
         </el-form-item>
       </el-col>
-      <!-- 选择安装商/选择代理商 -->
+      <!-- 安装商选择安装商 / 代理商选择代理商 -->
       <el-col :span="12" v-else>
         <el-form-item label="Authorizer" prop="organName" label-width="100px">
-          <el-input v-model="dataForm.organName" placeholder="Authorized Company or Authorizer"></el-input>
+          <el-select v-model="dataForm.organName" placeholder="Authorized Company or Authorizer" style="width:100%;">
+            <el-option v-for="(item, index) in organList" :value="item" :key="'index' + index" :label="item"></el-option>
+          </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -60,6 +62,7 @@
 export default {
   data () {
     return {
+      organList: [],
       dialogVisible: false,
       dataForm: {
         organName: '',
@@ -77,20 +80,23 @@ export default {
         }
       },
       rules: {
-        organName: [{ required: true, message: '' }],
+        organName: [{ required: true, message: '', trigger: 'change' }],
         sn: [{ required: true, validator: this.snValid, message: 'SN is required', trigger: 'blur' }],
-        'details.name': [{ required: true, message: 'name is required' }],
-        'details.phone': [{ required: true, message: 'phone is required' }],
-        'details.email': [{ required: true, message: 'email is required' }],
-        'details.country': [{ required: true, message: 'country is required' }],
-        'details.address': [{ required: true, message: 'address is required' }],
-        'details.postcode': [{ required: true, message: 'postcode is required' }],
-        'details.introduction': [{ required: true, message: 'introduction is required' }],
-        'details.note': [{ required: true, message: 'note is required' }]
+        'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
+        'details.phone': [{ required: true, message: 'phone is required', trigger: 'blur' }],
+        'details.email': [{ required: true, message: 'email is required', trigger: 'blur' }],
+        'details.country': [{ required: true, message: 'country is required', trigger: 'blur' }],
+        'details.address': [{ required: true, message: 'address is required', trigger: 'blur' }],
+        'details.postcode': [{ required: true, message: 'postcode is required', trigger: 'blur' }],
+        'details.introduction': [{ required: true, message: 'introduction is required', trigger: 'blur' }],
+        'details.note': [{ required: true, message: 'note is required', trigger: 'blur' }]
       }
     }
   },
   props: ['tag'],
+  created () {
+    this.getOrgansList()
+  },
   methods: {
     copyForm () {
       return {
@@ -141,6 +147,11 @@ export default {
       } else {
         return true
       }
+    },
+    // 获取组织列表
+    async getOrgansList () {
+      let { result } = this.$axios({ url: '/organs/list', data: { organType: this.tag } })
+      this.organList = result || []
     }
   }
 }

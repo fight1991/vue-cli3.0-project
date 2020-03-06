@@ -21,7 +21,12 @@ function bussinessBundle (res, other, success) {
 
 const requests = {
   $axios ({ url, data = {}, method = 'get' }) {
-    return commonInstance({ method, url, data })
+    if (method === 'get') {
+      return commonInstance.get(url, { params: data })
+    }
+    if (method === 'post') {
+      return commonInstance.post(url, data)
+    }
   },
   $get ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)

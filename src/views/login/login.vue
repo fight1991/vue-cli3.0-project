@@ -140,6 +140,8 @@ export default {
           storage.setToken(result.token)
           // 存储用户信息
           this.getUserInfo()
+          // 存储权限信息
+          this.$store.commit('setAccess', result.access)
           let path = '/'
           if (result.access === 0) { // 游客
             path = '/product/index'

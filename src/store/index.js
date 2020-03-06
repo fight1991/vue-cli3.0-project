@@ -12,6 +12,7 @@ export default new Vuex.Store({
       pageIndex: 1,
       total: 0
     },
+    access: 0, // 0 游客 1 安装商 2 代理商 255 厂商
     userInfo: {
       name: '',
       phone: '',
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     toggleLang (state, payLoad) {
       state.lang = payLoad
+    },
+    setAccess (state, payLoad) { // 用户权限
+      state.access = payLoad
     },
     setUserInfo (state, payLoad) {
       state.userInfo.name = payLoad.name || ''
