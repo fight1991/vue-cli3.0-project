@@ -9,18 +9,18 @@
         </div>
         <div class="header-right flex-start">
           <div class="join-us">JOIN US</div>
-          <div class="item" @click="endCustomerVisible=true">User</div>
+          <div class="item" @click="userClick">User</div>
           <el-dropdown @command="installerClick">
             <div class="item">Installer</div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="create">Add</el-dropdown-item>
+              <el-dropdown-item command="add">Add</el-dropdown-item>
               <el-dropdown-item command="join">Join</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <el-dropdown @command="agentClick">
             <div class="item">Agent</div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="create">Add</el-dropdown-item>
+              <el-dropdown-item command="add">Add</el-dropdown-item>
               <el-dropdown-item command="join">Join</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -42,51 +42,50 @@
       <div class="footer">
       </div>
     </el-scrollbar>
-
-    <!-- 终端用户注册dialog -->
-    <create-end-customer :visible.sync="endCustomerVisible"></create-end-customer>
-    <!-- 新建安装商dialog -->
-    <create-installer :visible.sync="createInstallVisible"></create-installer>
-    <!-- 加入安装商dialog -->
-    <join-installer :visible.sync="joinInstallVisible"></join-installer>
-    <!-- 新建代理商dialog -->
-    <create-agent :visible.sync="createAgentVisible"></create-agent>
-    <!-- 加入代理商dialog -->
-    <join-agent :visible.sync="joinAgentVisible"></join-agent>
+    <!-- 注册或加入 -->
+    <submit-dialog
+      :visible.sync="dialogVisible"
+      :title="dialogTitle"
+      :tag="tag"
+      :type="opType">
+    </submit-dialog>
   </div>
 </template>
 
 <script>
-import createEndCustomer from './createEndCustomer'
-import createInstaller from './createInstaller'
-import joinInstaller from './joinInstaller'
-import createAgent from './createAgent'
-import joinAgent from './joinAgent'
+import submitDialog from './submitDialog'
 export default {
   components: {
-    createEndCustomer,
-    createInstaller,
-    joinInstaller,
-    createAgent,
-    joinAgent
+    submitDialog
   },
   data () {
     return {
-      endCustomerVisible: false,
-      createInstallVisible: false,
-      joinInstallVisible: false,
-      createAgentVisible: false,
-      joinAgentVisible: false,
+      dialogTitle: '',
+      tag: '', // user agent installer
+      opType: 'add',
+      dialogVisible: false,
       logoImg: require('@/assets/logo.png'),
       bannerList: [require('@/assets/banner-test.jpg'), require('@/assets/banner-test2.jpg')]
     }
   },
   methods: {
+    userClick () {
+      this.dialogTitle = 'New User'
+      this.tag = 'user'
+      this.opType = 'join'
+      this.dialogVisible = true
+    },
     installerClick (command) {
-      this[command + 'InstallVisible'] = true
+      this.dialogTitle = command === 'add' ? 'New Installer' : 'Existing Installer'
+      this.tag = 'installer'
+      this.opType = command
+      this.dialogVisible = true
     },
     agentClick (command) {
-      this[command + 'AgentVisible'] = true
+      this.dialogTitle = command === 'add' ? 'New Agent' : 'Existing Agent'
+      this.tag = 'agent'
+      this.opType = command
+      this.dialogVisible = true
     }
   }
 }
