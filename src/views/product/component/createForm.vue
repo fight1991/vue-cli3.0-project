@@ -138,7 +138,7 @@ export default {
     // 获取组织列表
     async getOrgansList (tag) {
       let { result } = this.$axios({ url: '/organs/list', data: { organType: tag } })
-      this.organList = result || []
+      this.organList = result || [1]
     }
   }
 }
