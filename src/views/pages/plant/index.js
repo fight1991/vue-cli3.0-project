@@ -14,7 +14,7 @@ export default {
       name: 'plant-add',
       meta: {
         title: '创建电站',
-        component: () => import(/* webpackChunkName: "plant-add" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "plant-add" */ '@/views/pages/plant/createPlant')
       }
     },
     {
@@ -23,7 +23,7 @@ export default {
       name: 'plant-view',
       meta: {
         title: '电站显示',
-        component: () => import(/* webpackChunkName: "plant-view" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "plant-view" */ '@/views/pages/plant/showPlant')
       }
     }
   ]

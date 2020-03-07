@@ -1,3 +1,57 @@
+// 兼容1024 1280显示屏
+// 小于1030的屏占一整行 暂时定为900
+@media only screen and(max-width:900px) {
+  .el-col-24 {
+    width: 100%
+  }
+}
+// 大于900的屏显示2列
+@media only screen and(min-width:900px) {
+  .el-col-lg-12 {
+    width: 50%
+  }
+}
+// 大于1285的屏显示4列或3列
+@media only screen and(min-width:1285px) {
+  .el-col-lg-6 {
+    width: 25%
+  }
+  .el-col-lg-8 {
+    width: 33.33333%;
+  }
+}
+.el-input__inner {
+  border-radius: 2px;
+  padding: 0 8px;
+  border: 1px solid @sys-border-input;
+  &:focus {
+    border-color: @sys-border-input;
+  }
+}
+.el-form-item__label {
+  line-height: 26px!important;
+  padding: 0 8px 0 0;
+  color: #4c4c4c;
+}
+.sys-main { // 页面主要样式
+  padding: 5px;
+  .title {
+    position: relative;
+    text-indent: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    &.border-line::after {
+      content: '';
+      height: 12px;
+      width: 2px;
+      background-color: @sys-main-header;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(0,-50%);
+    }
+  }
+}
 .el-loading-mask {
   background-color: rgba(0, 0, 0, .2);
 }
@@ -93,9 +147,6 @@
   .login {
     .el-input__inner {
       border-radius: 0px;
-    }
-    .el-input__inner:focus {
-      border-color: #DCDFE6;
     }
     .login-click {
       width: 100%;

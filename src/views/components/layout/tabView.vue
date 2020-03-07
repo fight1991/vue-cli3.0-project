@@ -12,6 +12,7 @@
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
             <div class="tab-content" v-if="isReLoad">
               <component :is="item.components[item.components.length-1]"></component>
+              <div class="copy-right" v-text="rightText"></div>
             </div>
           </el-scrollbar>
         </el-tab-pane>
@@ -36,7 +37,8 @@ export default {
   data () {
     return {
       activeTabName: this.$store.state.tab.currentTab,
-      isReLoad: true
+      isReLoad: true,
+      rightText: 'Copyrights © 2010-2020'
     }
   },
   provide () {
@@ -115,5 +117,12 @@ export default {
 }
 .test {
   height: 1000px;
+}
+.copy-right {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 20px;
+  text-align: center;
+
 }
 </style>

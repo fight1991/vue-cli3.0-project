@@ -1,5 +1,5 @@
 <template>
-  <section class="sys-bus-container">
+  <section class="sys-main">
     <div class="container-top mg-b10">
       <div class="left">
         <div class="top-item flex-between mg-b10">
@@ -86,9 +86,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.sys-bus-container {
-  padding: 5px;
-}
 #map-content {
   width: 100%;
   height: calc(100% - 120px);
