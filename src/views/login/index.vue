@@ -93,15 +93,17 @@ export default {
     }
     .login {
       position: absolute;
-      right: 20%;
+      right: 15%;
       // top: 50%;
       // left: 50%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       transform-origin: center;
-      width: 410px;
+      width: 470px;
       box-sizing: border-box;
-      background-color: #fff;
-      padding: 20px;
+      background-color: #7DACC8;
+      opacity: 0.9;
+      border-radius: 10px;
+      padding: 40px;
       color: #999;
       .form {
         margin-top: 20px;
@@ -128,7 +130,7 @@ export default {
       }
     }
     .find-btn {
-      color: #4c4c4c;
+      color: #fff;
       span {
         &:hover {
           color: @sys-main-header;
