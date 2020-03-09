@@ -12,7 +12,7 @@
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
             <div class="tab-content" v-if="isReLoad">
               <component :is="item.components[item.components.length-1]"></component>
-              <div class="copy-right" v-text="rightText"></div>
+              <div v-show="index>0" class="copy-right" v-text="rightText"></div>
             </div>
           </el-scrollbar>
         </el-tab-pane>
