@@ -83,6 +83,9 @@ export default {
       .lang {
         margin-right: 10px;
       }
+      .iconfont {
+        font-size: 40px;
+      }
     }
     .content {
       flex: 1;
