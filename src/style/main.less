@@ -35,6 +35,27 @@
 }
 .sys-main { // 页面主要样式
   padding: 5px;
+  .pagination {
+    padding: 10px;
+    font-size: 12px;
+    .el-pager {
+      .number {
+        border-radius: 50%;
+      }
+    }
+  }
+  .function-container {
+    .el-table__header th>.cell{
+      text-align: center;
+      color: @sys-main-text;
+      font-size: 12px;
+    }
+    .el-table__body td .cell {
+      font-weight: normal;
+      font-size: 12px;
+      color: @sys-main-text;
+    }
+  }
   .title {
     position: relative;
     text-indent: 10px;

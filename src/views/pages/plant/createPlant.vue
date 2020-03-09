@@ -72,8 +72,8 @@
       </div>
     </el-form>
     <el-row class="foot-btn" type="flex" justify="center">
-      <el-button size="mini">取消</el-button>
-      <el-button size="mini" type="primary">创建</el-button>
+      <el-button size="mini" @click="cancel">取消</el-button>
+      <el-button size="mini" @click="createAdd" type="primary">创建</el-button>
     </el-row>
   </section>
 </template>
@@ -88,6 +88,17 @@ export default {
         aa: [{ required: true, message: '' }]
       },
       powerList: []
+    }
+  },
+  created () {
+
+  },
+  methods: {
+    cancel () {
+
+    },
+    createAdd () {
+
     }
   }
 }
