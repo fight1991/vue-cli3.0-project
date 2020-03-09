@@ -100,8 +100,7 @@ export default {
       transform-origin: center;
       width: 470px;
       box-sizing: border-box;
-      background-color: #7DACC8;
-      opacity: 0.9;
+      background-color:rgba(125, 172, 200, 0.7);
       border-radius: 10px;
       padding: 40px;
       color: #999;
