@@ -8,7 +8,7 @@ export default {
     message: 'Mobile number is invalid'
   },
   user: {
-    rule: /^[A-Za-z][A-Za-z0-9_-]{5,7}$/, // 以字母开头的6-8位用户名
+    rule: /^[A-Za-z][A-Za-z0-9_-]{5,}$/, // 以字母开头的6-8位用户名
     message: 'Username is not available'
   },
   password: {

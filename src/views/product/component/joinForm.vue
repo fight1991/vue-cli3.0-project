@@ -95,7 +95,7 @@ export default {
   },
   props: ['tag'],
   created () {
-    this.getOrgansList()
+
   },
   methods: {
     copyForm () {
@@ -147,11 +147,6 @@ export default {
       } else {
         return true
       }
-    },
-    // 获取组织列表
-    async getOrgansList () {
-      let { result } = this.$axios({ url: '/organs/list', data: { organType: this.tag } })
-      this.organList = result || []
     }
   }
 }

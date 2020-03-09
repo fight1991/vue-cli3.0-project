@@ -2,13 +2,13 @@
   <el-dialog
     class="sys-dialog"
     :title="title"
-    @opened="cancelForm"
+    @opened="dialogOpen"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
     <div class="content">
-      <create-form ref="form" :tag="tag" v-if="type=='add'"></create-form>
-      <join-form ref="form" :tag="tag" v-else></join-form>
+      <create-form ref="form" :tag="$attrs.tag" :organList="organList" v-if="type=='add'"></create-form>
+      <join-form ref="form" :tag="$attrs.tag" :organList="organList" v-else></join-form>
     </div>
     <div class="foot-btn flex-center">
       <el-button size="mini" @click="cancelForm">cancel</el-button>
@@ -27,8 +27,11 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      rules: {
-        aa: [{ required: true, message: '' }]
+      organList: [], // 组织列表
+      access: {
+        user: 1,
+        installer: 2,
+        agent: 3
       }
     }
   },
@@ -37,9 +40,6 @@ export default {
       default: false
     },
     title: {
-      default: ''
-    },
-    tag: {
       default: ''
     },
     type: {
@@ -55,9 +55,21 @@ export default {
     closeDialog () {
       this.$emit('update:visible', false)
     },
+    dialogOpen () {
+      // 查询代理商
+      if (this.$attrs.tag === 'installer') {
+        this.getOrgansList('agent')
+      }
+      this.cancelForm()
+    },
     cancelForm () {
       this.$refs.form.clearValidate()
       this.$refs.form.cancel()
+    },
+    // 获取组织列表
+    async getOrgansList (tag) {
+      let { result } = await this.$axios({ url: '/organs/list', data: { organType: tag } })
+      this.organList = result || []
     },
     // 创建 installer agent // 加入user agent installer
     register () {
@@ -67,12 +79,14 @@ export default {
       })
       if (!flag) return
       let submitData = this.$refs.form.dataForm
-      submitData.organType = this.tag
-      let url = this.tag === 'add' ? '/organs/register' : '/organs/join'
+      submitData.organType = this.$attrs.tag
+      let url = this.type === 'add' ? '/organs/register' : '/organs/join'
       this.$post({
         url: url,
         data: submitData,
         success: res => {
+          let access = this.access[this.$attrs.tag]
+          this.$store.commit('setAccess', access)
           this.$message.success('successful')
           this.dialogVisible = false
         }

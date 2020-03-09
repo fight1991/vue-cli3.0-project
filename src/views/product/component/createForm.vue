@@ -85,7 +85,6 @@ export default {
         organType: '', // 组织类型 user, installer, agent
         parentOrgan: '' // 父组织,如果是代理商则填厂商联系人，安装商则填代理商组织
       },
-      organList: [],
       rules: {
         organName: [{ required: true, message: '', trigger: 'blur' }],
         parentOrgan: [{ required: true, message: '', trigger: this.tag === 'installer' ? 'change' : 'blur' }],
@@ -103,12 +102,15 @@ export default {
   props: {
     tag: {
       default: 'agent'
+    },
+    organList: {
+      default: []
     }
   },
   created () {
-    if (this.tag === 'installer') {
-      this.getOrgansList('agent')
-    }
+    // if (this.tag === 'installer') {
+    //   this.getOrgansList('agent')
+    // }
   },
   methods: {
     copyForm () {
@@ -120,13 +122,14 @@ export default {
           phone: '',
           email: '',
           country: '',
-          address: '11',
+          address: '',
           postcode: '',
           introduction: '',
           note: ''
         },
         organType: '',
-        parentOrgan: ''
+        parentOrgan: '',
+        organList: []
       }
     },
     cancel () {
@@ -134,11 +137,6 @@ export default {
     },
     clearValidate () {
       this.$refs.dataForm.clearValidate()
-    },
-    // 获取组织列表
-    async getOrgansList (tag) {
-      let { result } = this.$axios({ url: '/organs/list', data: { organType: tag } })
-      this.organList = result || [1]
     }
   }
 }

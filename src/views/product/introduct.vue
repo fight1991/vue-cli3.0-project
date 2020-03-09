@@ -54,6 +54,7 @@
 
 <script>
 import submitDialog from './submitDialog'
+import { mapState } from 'vuex'
 export default {
   components: {
     submitDialog
@@ -68,20 +69,37 @@ export default {
       bannerList: [require('@/assets/banner-test.jpg'), require('@/assets/banner-test2.jpg')]
     }
   },
+  computed: {
+    ...mapState({
+      access: state => state.access
+    })
+  },
   methods: {
     userClick () {
+      if (this.access) {
+        this.$message.warning('You have created the organization')
+        return
+      }
       this.dialogTitle = 'New User'
       this.tag = 'user'
       this.opType = 'join'
       this.dialogVisible = true
     },
     installerClick (command) {
+      if (this.access) {
+        this.$message.warning('You have created the organization')
+        return
+      }
       this.dialogTitle = command === 'add' ? 'New Installer' : 'Existing Installer'
       this.tag = 'installer'
       this.opType = command
       this.dialogVisible = true
     },
     agentClick (command) {
+      if (this.access) {
+        this.$message.warning('You have created the organization')
+        return
+      }
       this.dialogTitle = command === 'add' ? 'New Agent' : 'Existing Agent'
       this.tag = 'agent'
       this.opType = command
