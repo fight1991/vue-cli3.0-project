@@ -1,6 +1,7 @@
-import router from '@/router/index'
+import router from '@/router'
 import storage from '@/util/storage'
 import { Message } from 'element-ui'
+
 /**
  * 请求拦截器 onRequestResolve
  * @param {*} config
@@ -19,18 +20,16 @@ export default {
   },
   // 响应成功
   onResponseResolve: function (response) {
-    // 41808 token失效 ; 41809 不合法token ; 41810 用户名已在其他地方登录
-    if ([41808, 41809, 41810].includes(response.data.errno)) {
-      Message.error(response.data.errno)
+    if ([41808, 41809, 41810].includes(response.data.errno)) { // token不合法的业务码
+      Message.error('error' + response.data.errno)
       router.replace({
         path: '/login',
         query: {
           redirect: router.currentRoute.fullPath
         }
       })
-    } else {
-      return response.data
     }
+    return response.data
   },
   // 响应失败
   onResponseReject: function (error) {

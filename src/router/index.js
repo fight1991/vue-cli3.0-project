@@ -45,6 +45,14 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     if (storage.getToken()) {
+      // 获取用户信息及权限
+      console.log('哈哈')
+      // router.app.$get({
+      //   url: '/user/info',
+      //   success: () => {
+      //     console.log('家')
+      //   }
+      // })
       next()
     } else {
       Message.error('No permission')

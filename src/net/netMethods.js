@@ -2,7 +2,6 @@
 import { Message } from 'element-ui'
 import store from '@/store'
 import Method from './netConfig'
-
 let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
 let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
 
@@ -16,7 +15,7 @@ function bussinessBundle (res, other, success) {
     other(res)
     return
   }
-  Message.error(res.errno.toString())
+  Message.error('error' + res.errno)
 }
 
 const requests = {
