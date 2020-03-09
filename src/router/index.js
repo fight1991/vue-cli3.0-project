@@ -39,24 +39,36 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
-// 登陆放行
+// 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     next()
   } else {
-    if (storage.getToken()) {
-      // 获取用户信息及权限
-      console.log('哈哈')
-      // router.app.$get({
-      //   url: '/user/info',
-      //   success: () => {
-      //     console.log('家')
-      //   }
-      // })
-      next()
-    } else {
+    if (!storage.getToken()) {
       Message.error('No permission')
       next('/login')
+    } else {
+      next()
+      let _this = router.app
+      // 用户信息查询
+      _this.$get({
+        url: '/user/info',
+        success: ({ result }) => {
+          if (result) {
+            _this.$store.commit('setUserInfo', result)
+            storage.setUserInfo(result)
+          }
+        }
+      })
+      // 权限查询
+      _this.$get({
+        url: '/user/access',
+        success: ({ result }) => {
+          if (result) {
+            _this.$store.commit('setAccess', result.access)
+          }
+        }
+      })
     }
   }
 })

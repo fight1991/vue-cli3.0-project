@@ -21,7 +21,7 @@ export default {
   // 响应成功
   onResponseResolve: function (response) {
     if ([41808, 41809, 41810].includes(response.data.errno)) { // token不合法的业务码
-      Message.error('error' + response.data.errno)
+      // Message.error('error' + response.data.errno)
       router.replace({
         path: '/login',
         query: {
