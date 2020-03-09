@@ -16,7 +16,7 @@ function bussinessBundle (res, other, success) {
     other(res)
     return
   }
-  Message.error(res.errno)
+  Message.error(res.errno.toString())
 }
 
 const requests = {

@@ -153,7 +153,8 @@ export default {
         other: res => {
           // 41805 账号不存在 打开注册页面
           // 41807 用户名或密码错误
-          this.$message.warning(res.errno)
+          console.log(res)
+          this.$message.warning(res.errno.toString())
           if (res.errno === 41805) {
             this.registerBtn('register')
             return false
