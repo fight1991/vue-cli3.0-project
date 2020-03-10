@@ -79,6 +79,8 @@ export default {
       })
       if (!flag) return
       let submitData = this.$refs.form.dataForm
+      let phone = submitData.details.area + '-' + submitData.details.phone
+      submitData.details.phone = phone
       submitData.organType = this.$attrs.tag
       let url = this.type === 'add' ? '/organs/register' : '/organs/join'
       this.$post({

@@ -78,7 +78,7 @@ export default {
         organName: '', // 组织名称
         organShortName: '', // 组织简称
         details: {
-          area: '',
+          area: '+86',
           name: '',
           phone: '',
           email: '',
@@ -125,6 +125,7 @@ export default {
         organName: '',
         organShortName: '',
         details: {
+          area: '+86',
           name: '',
           phone: '',
           email: '',

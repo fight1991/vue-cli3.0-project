@@ -74,7 +74,7 @@ export default {
         organType: '',
         sn: '', // 验证sn号
         details: {
-          area: '',
+          area: '+86',
           name: '',
           phone: '',
           email: '',
@@ -111,6 +111,7 @@ export default {
         organType: '',
         sn: '', // 验证sn号
         details: {
+          area: '+86',
           name: '',
           phone: '',
           email: '',
