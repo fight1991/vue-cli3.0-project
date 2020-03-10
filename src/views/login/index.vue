@@ -56,7 +56,7 @@ export default {
       this.pageFlag = typeStatus
     },
     toggleLang (lang) {
-      this.$witchLang(lang)
+      this.$switchLang(lang)
       this.lang = lang === 'en' ? 'English' : '中文'
     }
   }
