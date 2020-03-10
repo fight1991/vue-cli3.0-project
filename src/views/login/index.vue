@@ -4,7 +4,7 @@
       <el-dropdown
         @command="toggleLang"
         placement="top-start">
-        <span class="lang">
+        <span class="lang flex-center">
           <i class="iconfont icon-yuyan"></i>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -15,7 +15,7 @@
       </el-dropdown>
       <el-dropdown
         placement="top-start">
-        <span class="app-downLoad">
+        <span class="app-downLoad flex-center">
           <i class="iconfont icon-app"></i>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -84,7 +84,7 @@ export default {
         margin-right: 10px;
       }
       .iconfont {
-        font-size: 40px;
+        font-size: 32px;
       }
     }
     .content {
