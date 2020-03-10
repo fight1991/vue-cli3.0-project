@@ -20,7 +20,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="18" >
+            <el-col :span="18">
               <el-form-item prop="mobile">
                 <el-input v-model="dataForm.account" placeholder="Mobile number"></el-input>
               </el-form-item>

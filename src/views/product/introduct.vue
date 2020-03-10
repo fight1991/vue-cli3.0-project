@@ -89,10 +89,10 @@ export default {
       this.dialogVisible = true
     },
     installerClick (command) {
-      if (this.access) {
-        this.tips()
-        return
-      }
+      // if (this.access) {
+      //   this.tips()
+      //   return
+      // }
       this.dialogTitle = command === 'add' ? 'New Installer' : 'Existing Installer'
       this.tag = 'installer'
       this.opType = command

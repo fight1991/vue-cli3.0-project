@@ -41,8 +41,13 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="MP" prop="details.phone" label-width="90px">
-          <el-input v-model="dataForm.details.phone" placeholder="mobile number"></el-input>
+        <el-form-item label="MP" prop="details.phone" label-width="100px">
+          <div class="flex">
+            <el-select v-model="dataForm.details.area" style="width:30%">
+              <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
+            </el-select>
+            <el-input style="width:70%" v-model="dataForm.details.phone" placeholder="mobile number"></el-input>
+          </div>
         </el-form-item>
       </el-col>
       <el-col :span="24">
@@ -69,6 +74,7 @@ export default {
         organType: '',
         sn: '', // 验证sn号
         details: {
+          area: '',
           name: '',
           phone: '',
           email: '',
@@ -79,6 +85,7 @@ export default {
           note: ''
         }
       },
+      areaNum: [ { num: '+86', contry: 'china' } ],
       rules: {
         organName: [{ required: true, message: '', trigger: 'change' }],
         sn: [{ required: true, validator: this.snValid, message: 'SN is required', trigger: 'blur' }],

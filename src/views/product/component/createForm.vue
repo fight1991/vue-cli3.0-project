@@ -49,7 +49,12 @@
       </el-col>
       <el-col :span="12">
         <el-form-item label="MP" prop="details.phone" label-width="110px">
-          <el-input v-model="dataForm.details.phone" placeholder="mobile number"></el-input>
+          <div class="flex">
+            <el-select v-model="dataForm.details.area" style="width:30%">
+              <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
+            </el-select>
+            <el-input style="width:70%" v-model="dataForm.details.phone" placeholder="mobile number"></el-input>
+          </div>
         </el-form-item>
       </el-col>
       <el-col :span="24">
@@ -73,6 +78,7 @@ export default {
         organName: '', // 组织名称
         organShortName: '', // 组织简称
         details: {
+          area: '',
           name: '',
           phone: '',
           email: '',
@@ -85,6 +91,7 @@ export default {
         organType: '', // 组织类型 user, installer, agent
         parentOrgan: '' // 父组织,如果是代理商则填厂商联系人，安装商则填代理商组织
       },
+      areaNum: [ { num: '+86', contry: 'china' } ],
       rules: {
         organName: [{ required: true, message: '', trigger: 'blur' }],
         parentOrgan: [{ required: true, message: '', trigger: this.tag === 'installer' ? 'change' : 'blur' }],
