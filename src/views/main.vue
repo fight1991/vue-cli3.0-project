@@ -32,6 +32,9 @@ export default {
 
     }
   },
+  created () {
+
+  },
   methods: {
     btnClick () {
       this.$post({

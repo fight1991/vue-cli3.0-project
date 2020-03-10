@@ -37,11 +37,17 @@ export default {
             tips = false
           }
         })
+        let sysParams = {}
+        console.log(router.currentRoute)
+        if (router.currentRoute.name) { // 说明路由初始化完成,可以拿到当前路由信息
+          sysParams.redirect = router.currentRoute.fullPath
+        } else {
+          sysParams.redirect = location.pathname + location.search
+        }
+        console.log(sysParams)
         router.replace({
           path: '/login',
-          query: {
-            redirect: router.currentRoute.fullPath
-          }
+          query: sysParams
         })
       } else { // 其他业务报错
         Message.error('error: ' + response.data.errno)
