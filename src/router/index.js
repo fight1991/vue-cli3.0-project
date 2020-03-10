@@ -5,7 +5,7 @@ import Error from '@/views/error'
 import Login from '@/views/login/index.js'
 import Product from '@/views/product'
 import Inverter from '@/views/inverter'
-import businessRouter from '@/views/pages/index.js'
+import BusinessRouter from '@/views/pages/index.js'
 import storage from '@/util/storage'
 import { Message } from 'element-ui'
 
@@ -26,7 +26,7 @@ const routes = [
     path: '/index',
     name: 'index',
     component: Main,
-    children: [...businessRouter]
+    children: [...BusinessRouter]
   }
 ]
 
@@ -41,7 +41,7 @@ const router = new VueRouter({
 })
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
+  if (to.meta.requiresAuth === false) { // 不需权限,直接放行 /login,/error-xx等
     next()
   } else {
     if (!storage.getToken()) {
@@ -49,26 +49,6 @@ router.beforeEach((to, from, next) => {
       next('/login')
     } else {
       next()
-      let _this = router.app
-      // 用户信息查询
-      _this.$get({
-        url: '/user/info',
-        success: ({ result }) => {
-          if (result) {
-            _this.$store.commit('setUserInfo', result)
-            storage.setUserInfo(result)
-          }
-        }
-      })
-      // 权限查询
-      _this.$get({
-        url: '/user/access',
-        success: ({ result }) => {
-          if (result) {
-            _this.$store.commit('setAccess', result.access)
-          }
-        }
-      })
     }
   }
 })

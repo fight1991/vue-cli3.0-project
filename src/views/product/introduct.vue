@@ -74,10 +74,13 @@ export default {
       access: state => state.access
     })
   },
+  created () {
+
+  },
   methods: {
     userClick () {
       if (this.access) {
-        this.$message.warning('You have created the organization')
+        this.tips()
         return
       }
       this.dialogTitle = 'New User'
@@ -87,7 +90,7 @@ export default {
     },
     installerClick (command) {
       if (this.access) {
-        this.$message.warning('You have created the organization')
+        this.tips()
         return
       }
       this.dialogTitle = command === 'add' ? 'New Installer' : 'Existing Installer'
@@ -97,13 +100,21 @@ export default {
     },
     agentClick (command) {
       if (this.access) {
-        this.$message.warning('You have created the organization')
+        this.tips()
         return
       }
       this.dialogTitle = command === 'add' ? 'New Agent' : 'Existing Agent'
       this.tag = 'agent'
       this.opType = command
       this.dialogVisible = true
+    },
+    tips () {
+      this.$notify({
+        title: 'warning',
+        message: 'You have created the organization',
+        offset: 100,
+        type: 'warning'
+      })
     }
   }
 }

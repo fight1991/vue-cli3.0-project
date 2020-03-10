@@ -1,4 +1,5 @@
 import router from '@/router'
+import store from '@/store'
 import storage from '@/util/storage'
 import { Message } from 'element-ui'
 
@@ -6,6 +7,7 @@ import { Message } from 'element-ui'
  * 请求拦截器 onRequestResolve
  * @param {*} config
  */
+let tips = false
 export default {
   // 请求发送成功之前
   onRequestResolve: function (config) {
@@ -20,14 +22,30 @@ export default {
   },
   // 响应成功
   onResponseResolve: function (response) {
-    if ([41808, 41809, 41810].includes(response.data.errno)) { // token不合法的业务码
-      // Message.error('error' + response.data.errno)
-      router.replace({
-        path: '/login',
-        query: {
-          redirect: router.currentRoute.fullPath
-        }
-      })
+    // 业务报错
+    if (response.data.errno !== store.state.successCode) {
+      // token不合法的报错
+      if ([41808, 41809, 41810].includes(response.data.errno)) {
+        // message只提示一次
+        if (tips) return response.data
+        tips = true
+        Message({
+          type: 'error',
+          message: 'error: ' + response.data.errno,
+          duration: 2000,
+          onClose: () => {
+            tips = false
+          }
+        })
+        router.replace({
+          path: '/login',
+          query: {
+            redirect: router.currentRoute.fullPath
+          }
+        })
+      } else { // 其他业务报错
+        Message.error('error: ' + response.data.errno)
+      }
     }
     return response.data
   },

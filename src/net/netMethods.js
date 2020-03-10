@@ -1,5 +1,4 @@
 
-import { Message } from 'element-ui'
 import store from '@/store'
 import Method from './netConfig'
 let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
@@ -13,12 +12,11 @@ function bussinessBundle (res, other, success) {
   }
   if (other) {
     other(res)
-    return
   }
-  Message.error('error' + res.errno)
 }
 
 const requests = {
+  // 返回 promise
   $axios ({ url, data = {}, method = 'get' }) {
     if (method === 'get') {
       return commonInstance.get(url, { params: data })
@@ -27,6 +25,7 @@ const requests = {
       return commonInstance.post(url, data)
     }
   },
+  // 自定义请求
   $get ({ url, data = {}, success, other, error, isLoad = true }) {
     if (isLoad) store.commit('changeLoading', true)
     commonInstance.get(url, {
