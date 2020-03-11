@@ -63,6 +63,21 @@ export default {
       state.tabList.splice(1)
       if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
+    },
+    // 关闭当前页签,并打开指定的路由
+    backGo ({ state }, routerInfo) {
+      let index = state.tabList.findIndex(v => v.tabId === state.currentTab)
+      state.tabList.splice(index, 1)
+      if (typeof routerInfo === 'string') {
+        router.push(routerInfo)
+      }
+      if (typeof routerInfo === 'object') {
+        router.push({
+          name: routerInfo.name,
+          query: routerInfo.query || {},
+          params: routerInfo.params || {}
+        })
+      }
     }
   }
 }
