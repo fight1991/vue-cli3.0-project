@@ -1,12 +1,12 @@
 <template>
   <div class="error">
     <h2>
-      出错了
+      Error
       <small>{{status}}</small>
     </h2>
     <div>
       <span>{{content}}</span>
-      <el-link type="primary" @click="gotoHome()">返回首页</el-link>
+      <el-link type="primary" @click="gotoHome()">Back home</el-link>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     gotoHome () {
+      this.$router.push('/')
     }
   }
 }

@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       status: '404',
-      content: '页面找不到了, 请和管理员联系！!'
+      content: 'HTTP-404 Not Found !'
     }
   }
 }

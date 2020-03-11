@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       status: '401',
-      content: '请联系管理员!'
+      content: 'HTTP-401 Unauthorized !'
     }
   }
 }

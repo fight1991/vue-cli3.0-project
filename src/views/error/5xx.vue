@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       status: '5xx',
-      content: '请和管理员联系！!'
+      content: 'HTTP-500 Error !'
     }
   }
 }

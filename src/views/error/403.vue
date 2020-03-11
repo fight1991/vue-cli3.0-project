@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       status: '403',
-      content: '您的权限不足, 请联系管理员!'
+      content: 'HTTP-403 Forbidden !'
     }
   }
 }
