@@ -1,8 +1,8 @@
 export default {
   permission: '',
   icon: 'icon-power',
-  path: '/plant',
-  name: 'plant',
+  path: '/bus/plant',
+  name: 'bus-plant',
   // hidden: true,
   meta: {
     title: '电站管理'
@@ -10,20 +10,20 @@ export default {
   children: [
     {
       permission: '',
-      path: '/plant/add',
-      name: 'plant-add',
+      path: '/bus/plant/add',
+      name: 'bus-plant-add',
       meta: {
         title: '创建电站',
-        component: () => import(/* webpackChunkName: "plant-add" */ '@/views/pages/plant/createPlant')
+        component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
       }
     },
     {
       permission: '',
-      path: '/plant/view',
-      name: 'plant-view',
+      path: '/bus/plant/view',
+      name: 'bus-plant-view',
       meta: {
         title: '电站显示',
-        component: () => import(/* webpackChunkName: "plant-view" */ '@/views/pages/plant/showPlant')
+        component: () => import(/* webpackChunkName: "bus-plant-view" */ '@/views/pages/plant/showPlant')
       }
     }
   ]

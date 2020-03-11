@@ -82,7 +82,7 @@ export default {
       this.$store.commit('closeTab', name)
     },
     closeTab (type) {
-      this.$store.commit(type)
+      this.$store.dispatch(type)
     }
   }
 }

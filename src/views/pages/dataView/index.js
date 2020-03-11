@@ -1,10 +1,10 @@
 export default {
   permission: '',
   icon: 'icon-dashboard',
-  path: '/dataView',
-  name: 'data-view',
+  path: '/bus/dataView',
+  name: 'bus-data-view',
   meta: {
     title: '数据概览',
-    component: () => import(/* webpackChunkName: "data-view" */ '@/views/pages/dataView/dataBoard')
+    component: () => import(/* webpackChunkName: "bus-data-view" */ '@/views/pages/dataView/dataBoard')
   }
 }

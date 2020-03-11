@@ -1,10 +1,10 @@
 export default {
   permission: '',
   icon: 'icon-ssh',
-  path: '/upgrade',
-  name: 'upgrade',
+  path: '/bus/upgrade',
+  name: 'bus-upgrade',
   meta: {
     title: '远程升级',
-    component: () => import(/* webpackChunkName: "upgrade" */ '@/views/pages/demo')
+    component: () => import(/* webpackChunkName: "bus-upgrade" */ '@/views/pages/demo')
   }
 }

@@ -1,10 +1,10 @@
 export default {
   permission: '',
   icon: 'icon-log',
-  path: '/relog',
-  name: 'relog',
+  path: '/bus/relog',
+  name: 'bus-relog',
   meta: {
     title: '日志系统',
-    component: () => import(/* webpackChunkName: "relog" */ '@/views/pages/demo')
+    component: () => import(/* webpackChunkName: "bus-relog" */ '@/views/pages/demo')
   }
 }

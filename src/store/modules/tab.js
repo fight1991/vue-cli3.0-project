@@ -7,7 +7,7 @@ export default {
       {
         tabId: 'tab-index',
         title: 'home',
-        path: '/index',
+        path: '/bus/index',
         isShow: true,
         components: [Home],
         query: {},
@@ -49,21 +49,20 @@ export default {
           params
         })
       }
-    },
+    }
+  },
+  actions: {
     // 关闭所有页签
-    closeAllTab (state) {
+    closeAllTab ({ state, commit }) {
       state.tabList.splice(1)
-      this.commit('setCurrentTab', 'tab-index')
+      commit('setCurrentTab', 'tab-index')
     },
     // 关闭非当前页签的所有页签
-    closeOtherTab (state) {
-      let temp = { ...this.getters.currentTabInfo }
+    closeOtherTab ({ state, getters }) {
+      let temp = { ...getters.currentTabInfo }
       state.tabList.splice(1)
       if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
     }
-  },
-  actions: {
-
   }
 }

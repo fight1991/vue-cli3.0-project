@@ -8,12 +8,12 @@ import Inverter from '@/views/inverter'
 import BusinessRouter from '@/views/pages/index.js'
 import storage from '@/util/storage'
 
-const Main = () => import(/* webpackChunkName: "main" */ '../views/main.vue')
+const Main = () => import(/* webpackChunkName: "bus-main" */ '../views/main.vue')
 
 const routes = [
   {
     path: '/',
-    redirect: '/index'
+    redirect: '/bus/index'
   },
   {
     path: '*',
@@ -22,8 +22,8 @@ const routes = [
     }
   },
   {
-    path: '/index',
-    name: 'index',
+    path: '/bus/index',
+    name: 'bus-index',
     component: Main,
     children: [...BusinessRouter]
   }

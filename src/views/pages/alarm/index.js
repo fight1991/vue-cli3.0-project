@@ -1,28 +1,28 @@
 export default {
   permission: '',
   icon: 'icon-alarm',
-  path: '/alarm',
-  name: 'alarm',
+  path: '/bus/alarm',
+  name: 'bus-alarm',
   meta: {
     title: '告警管理'
   },
   children: [
     {
       permission: '',
-      path: '/alarm/realTime',
-      name: 'alarm-realTime',
+      path: '/bus/alarm/realTime',
+      name: 'bus-alarm-realTime',
       meta: {
         title: '实时警告',
-        component: () => import(/* webpackChunkName: "alarm-realTime" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-alarm-realTime" */ '@/views/pages/demo')
       }
     },
     {
       permission: '',
-      path: '/alarm/history',
-      name: 'alarm-history',
+      path: '/bus/alarm/history',
+      name: 'bus-alarm-history',
       meta: {
         title: '历史告警查询',
-        component: () => import(/* webpackChunkName: "alarm-history" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-alarm-history" */ '@/views/pages/demo')
       }
     }
   ]

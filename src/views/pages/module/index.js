@@ -1,10 +1,10 @@
 export default {
   permission: '',
   icon: 'icon-module',
-  path: '/module',
-  name: 'module',
+  path: '/bus/module',
+  name: 'bus-module',
   meta: {
     title: '模块管理',
-    component: () => import(/* webpackChunkName: "module" */ '@/views/pages/demo')
+    component: () => import(/* webpackChunkName: "bus-module" */ '@/views/pages/demo')
   }
 }

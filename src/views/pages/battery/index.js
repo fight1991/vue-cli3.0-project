@@ -1,10 +1,10 @@
 export default {
   permission: '',
   icon: 'icon-dianchi',
-  path: '/battery',
-  name: 'battery',
+  path: '/bus/battery',
+  name: 'bus-battery',
   meta: {
     title: '电池管理',
-    component: () => import(/* webpackChunkName: "battery" */ '@/views/pages/demo')
+    component: () => import(/* webpackChunkName: "bus-battery" */ '@/views/pages/demo')
   }
 }
