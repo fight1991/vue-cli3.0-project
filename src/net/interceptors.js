@@ -44,7 +44,6 @@ export default {
         } else {
           sysParams.redirect = location.pathname + location.search
         }
-        console.log(sysParams)
         router.replace({
           path: '/login',
           query: sysParams

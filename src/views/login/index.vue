@@ -104,7 +104,7 @@ export default {
       width: 470px;
       box-sizing: border-box;
       background-color:rgba(125, 172, 200, 0.7);
-      border-radius: 10px;
+      border-radius: 6px;
       padding: 40px;
       color: #999;
       .form {
