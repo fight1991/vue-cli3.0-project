@@ -159,13 +159,15 @@ export default {
         },
         success: res => {
           // 1.注册成功, 调用自动登录接口 ? 2. 跳转到产品介绍页面
-          this.$router.push('/product/index')
+          // this.$router.push('/product/index')
+          this.$message.success('sign up success')
+          this.backLogin()
         },
         other: res => {
-          this.$message.error(res.errno)
           // 41801 用户名/邮箱/手机号已被注册
           if (res.errno === 41801) {
             this.dataForm.account = ''
+            this.dataForm.contact = ''
           }
           // 若验证码注册则 41900 41901 41902 验证码已失效, 验证码错误 验证码不存在
           if ([41900, 41901, 41902].includes(res.errno)) {
