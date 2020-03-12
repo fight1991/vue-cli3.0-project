@@ -1,4 +1,24 @@
 const path = require('path')
+const SpritesmithPlugin = require('webpack-spritesmith') // 雪碧图插件
+const templateFunc = function (data) {
+  var shared = '.icon { display: inline-block; vertical-align: middle; background-image: url(I) }'.replace(
+    'I',
+    data.sprites[0].image
+  )
+
+  var perSprite = data.sprites
+    .map(function (sprite) {
+      return '.icon-N { width: Wpx; height: Hpx; background-position: Xpx Ypx; }'
+        .replace('N', sprite.name)
+        .replace('W', sprite.width)
+        .replace('H', sprite.height)
+        .replace('X', sprite.offset_x)
+        .replace('Y', sprite.offset_y)
+    })
+    .join('\n')
+
+  return shared + '\n' + perSprite
+}
 module.exports = {
   publicPath: '/', // 应用部署路径
   outputDir: 'dist', // 生产环境构建目录
@@ -38,7 +58,31 @@ module.exports = {
     }
   },
   configureWebpack: { // 配置webpack
-    plugins: [],
+    plugins: [
+      new SpritesmithPlugin({
+        src: {
+          cwd: './src/assets/plantIcon',
+          glob: '*.png'
+        },
+        target: {
+          image: path.resolve(__dirname, './src/assets/sprite/sprite.png'),
+          css: [
+            [
+              path.resolve(__dirname, './src/style/sprite.less'),
+              {
+                format: 'function_based_template'
+              }
+            ]
+          ]
+        },
+        apiOptions: {
+          cssImageRef: '../assets/sprite/sprite.png'
+        },
+        customTemplates: {
+          function_based_template: templateFunc
+        }
+      })
+    ],
     externals: {
       // 'element-ui': 'ELEMENT',
       'vue-i18n': 'VueI18n',

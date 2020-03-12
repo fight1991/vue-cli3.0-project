@@ -69,8 +69,7 @@ export default {
       tag: '', // user agent installer
       opType: 'add',
       dialogVisible: false,
-      logoImg: require('@/assets/logo.png'),
-      bannerList: [require('@/assets/banner-test.jpg'), require('@/assets/banner-test2.jpg')]
+      logoImg: require('@/assets/logo.png')
     }
   },
   computed: {
