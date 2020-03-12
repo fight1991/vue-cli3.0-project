@@ -1,47 +1,50 @@
 <template>
   <div class="container">
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <!-- 头部区域 -->
-      <div class="header flex-between">
-        <div class="header-left flex-start">
-          <img :src="logoImg" alt="">
-          <span class="company-name">FoxEss</span>
-        </div>
-        <div class="header-right flex-start">
-          <div class="join-us">JOIN US</div>
-          <div class="item" @click="userClick">User</div>
-          <el-dropdown @command="installerClick">
-            <div class="item">Installer</div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="add">Add</el-dropdown-item>
-              <el-dropdown-item command="join">Join</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown @command="agentClick">
-            <div class="item">Agent</div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="add">Add</el-dropdown-item>
-              <el-dropdown-item command="join">Join</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+    <!-- 头部区域 -->
+    <div class="header flex-between">
+      <div class="header-left flex-start">
+        <img :src="logoImg" alt="">
+        <span class="company-name">FoxEss</span>
       </div>
-      <!-- 轮播区域 -->
-      <div class="banner" style="height:1000px">
-        <el-carousel :interval="3000" :autoplay="false">
-          <el-carousel-item v-for="item in bannerList" :key="'item'+item">
-            <img :src="item" alt="">
-          </el-carousel-item>
-        </el-carousel>
+      <div class="header-right flex-start">
+        <div class="join-us"><i class="iconfont icon-hand-right"></i>JOIN US</div>
       </div>
-      <!-- 内容区域 -->
-      <div class="content">
-        <div class="banxin"></div>
+    </div>
+    <!-- 内容区域 -->
+    <div class="content">
+      <div class="banxin">
+        <el-card shadow="always">
+        <el-collapse v-model="activeName" accordion>
+          <el-collapse-item name="1">
+            <template slot="title">
+              <span class="collape-item user"><i class="iconfont icon-end-user"></i> User</span>
+            </template>
+            <div class="op-click" @click="userClick"><i class="iconfont icon-new"></i> New</div>
+          </el-collapse-item>
+          <el-collapse-item title="Installer" name="2">
+            <template slot="title">
+              <span class="collape-item installer"><i class="iconfont icon-installer"></i> installer</span>
+            </template>
+            <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> New</div>
+            <div class="op-click" @click="installerClick('join')"><i class="iconfont icon-join"></i> Join</div>
+          </el-collapse-item>
+          <el-collapse-item title="Agent" name="3">
+            <template slot="title">
+              <span class="collape-item agent"><i class="iconfont icon-agent"></i> Agent</span>
+            </template>
+            <div class="op-click" @click="agentClick('add')"><i class="iconfont icon-new"></i> New</div>
+            <div class="op-click" @click="agentClick('join')"><i class="iconfont icon-join"></i> Join</div>
+          </el-collapse-item>
+        </el-collapse>
+        </el-card>
       </div>
-      <!-- 底部区域 -->
-      <div class="footer">
+    </div>
+    <!-- 底部区域 -->
+    <div class="footer">
+      <div class="rights-info">
+        Copyright ©2008-2020 江苏麦田能源有限公司, All Rights Reserved.
       </div>
-    </el-scrollbar>
+    </div>
     <!-- 注册或加入 -->
     <submit-dialog
       :visible.sync="dialogVisible"
@@ -61,6 +64,7 @@ export default {
   },
   data () {
     return {
+      activeName: '1',
       dialogTitle: '',
       tag: '', // user agent installer
       opType: 'add',
@@ -129,31 +133,78 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  // background-color: rgba(125, 172, 200);
   .header {
-    background-color: #ebebeb;
-    padding: 0 40px;
-    border-bottom: 1px solid #ccc;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 40px;
+    margin-bottom: 20px;
+  }
+  .header-right {
+    .iconfont {
+      font-size: 22px;
+      margin-right: 10px;
+    }
+    padding-right: 15px;
+    font-size: 1.5rem;
+  }
+  .header-left {
+    img {
+      width: 50px;
+    }
   }
   .company-name {
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 1.5rem;
   }
   .join-us {
-    padding: 0 15px;
-    margin-right: 5px;
-    border-right: 2px solid @sys-main-header;
+    font-weight: bold;
+    color: @sys-main-header;
   }
-  .header-right {
-    padding-right: 40px;
-    .item {
-      line-height: 48px;
-      cursor: pointer;
-      padding: 0 10px;
-      &:hover {
-        color: @sys-main-header;
-        background-color: #feefeb;
-        box-shadow: 0px 0px 1px 0px #ccc;
-      }
+  .collape-item {
+    font-size: 16px;
+    font-weight: bold;
+    .iconfont {
+      font-size: 22px;
+      margin-right: 5px;
+    }
+    &.user {
+      color: #E6A23C;
+    }
+    &.installer {
+      color: #67C23A;
+    }
+    &.agent {
+      color: #F56C6C;
+    }
+  }
+  .op-click {
+    text-indent: 30px;
+    cursor: pointer;
+    padding: 8px 0;
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #009BE2;
+    background:linear-gradient(to right,#99bae4 0% #009BE2 5%,#99bae4 80%, #fff 100%);
+  }
+  .content {
+    flex: 1;
+    .banxin {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  .footer {
+    height: 100px;
+    background-color: #fff;
+    text-align: center;
+    .rights-info {
+      padding-top: 20px;
+      opacity: 0.5
     }
   }
 }
