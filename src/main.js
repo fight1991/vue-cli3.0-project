@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 覆盖样式
 import '@/style/base.less'
 import '@/style/main.less'
+// 雪碧图
+import '@/style/sprite.less'
 
 import Request from '@/net/netMethods' // 网路请求
 import Filters from '@/filters' // 过滤器
