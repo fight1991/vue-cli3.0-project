@@ -21,9 +21,9 @@
             </template>
             <div class="op-click" @click="userClick"><i class="iconfont icon-new"></i> New</div>
           </el-collapse-item>
-          <el-collapse-item title="Installer" name="2">
+          <el-collapse-item name="2">
             <template slot="title">
-              <span class="collape-item installer"><i class="iconfont icon-installer"></i> installer</span>
+              <span class="collape-item installer"><i class="iconfont icon-installer"></i> Installer</span>
             </template>
             <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> New</div>
             <div class="op-click" @click="installerClick('join')"><i class="iconfont icon-join"></i> Join</div>
