@@ -33,7 +33,7 @@ export default {
     codeBtn () {
       // 发送验证码请求
       if (this.timer) return false
-      let secs = 11
+      let secs = 60
       this.codeText = secs + 's'
       this.timer = setInterval(() => {
         secs--

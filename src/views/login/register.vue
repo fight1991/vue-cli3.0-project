@@ -4,7 +4,7 @@
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
           <el-col :span="24">
-            <el-form-item prop="account">
+            <el-form-item prop="user">
               <el-popover
                 :visible-arrow="false"
                 trigger="focus"
@@ -12,7 +12,7 @@
                 width="200"
                 placement="right-end">
                 <span>Make sure it starts width a letter and it's at least 6 characters including a number and a letter</span>
-                <el-input slot="reference" v-model="dataForm.account" placeholder="Username"></el-input>
+                <el-input slot="reference" v-model="dataForm.user" placeholder="Username"></el-input>
               </el-popover>
             </el-form-item>
           </el-col>
@@ -95,7 +95,7 @@ export default {
       areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
         area: '+86',
-        account: '', // 用户名
+        user: '', // 用户名
         password: '', // 密码
         contactType: '', // 类型 email, phone
         contact: '', // 联系方式
@@ -103,7 +103,7 @@ export default {
         confirmWord: '' // 密码确认
       },
       loginRules: {
-        account: [{ required: true, pattern: valid.user.rule, message: valid.user.message, trigger: 'blur' }],
+        user: [{ required: true, pattern: valid.user.rule, message: valid.user.message, trigger: 'blur' }],
         password: [{ required: true, pattern: valid.password.rule, message: valid.password.message, trigger: 'blur' }],
         contact: [{ required: true, validator: this.contactValid, trigger: 'blur' }],
         captcha: [{ required: true, pattern: valid.code.rule, message: valid.code.message, trigger: 'blur' }]

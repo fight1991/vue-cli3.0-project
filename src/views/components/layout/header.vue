@@ -66,9 +66,9 @@ export default {
       if (!res) return
       this.$post({
         url: '/user/logout',
-        success () {
-          storage.romoveToken()
-          storage.romoveLoginInfo()
+        success: () => {
+          storage.removeToken()
+          storage.removeLoginInfo()
           this.$router.push('/login')
         }
       })
