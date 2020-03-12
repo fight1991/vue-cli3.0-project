@@ -15,8 +15,8 @@
             <el-input v-model="searchForm.bb" placeholder="电站名称"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="search">重置</el-button>
-            <el-button type="primary" size="mini" @click="search">搜索</el-button>
+            <el-button size="mini" @click="search">reset</el-button>
+            <el-button type="primary" size="mini" @click="search">search</el-button>
           </el-form-item>
         </el-form>
       </search-bar>
