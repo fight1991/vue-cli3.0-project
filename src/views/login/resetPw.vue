@@ -3,11 +3,25 @@
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
-          <el-col :span="24">
+          <el-col :span="24" v-if="isEmail">
             <el-form-item prop="account">
-              <el-input v-model="dataForm.account" placeholder="Mobile number/Email address"></el-input>
+              <el-input v-model="dataForm.account" placeholder="Email address"></el-input>
             </el-form-item>
           </el-col>
+          <div v-else>
+            <el-col :span="6" class="phone-area">
+              <el-form-item>
+                <el-select v-model="dataForm.area">
+                  <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="18">
+              <el-form-item prop="account">
+                <el-input v-model="dataForm.account" placeholder="Mobile number"></el-input>
+              </el-form-item>
+            </el-col>
+          </div>
            <el-col :span="24" class="password">
             <el-form-item prop="pw">
               <el-popover
@@ -33,7 +47,9 @@
         </el-row>
       </el-form>
     </div>
-    <el-row class="find-btn" type="flex" justify="end">
+    <el-row class="find-btn" type="flex" justify="space-between">
+      <span v-if="isEmail" @click="toggleEmail">Mobile number</span>
+      <span v-else @click="toggleEmail">Email</span>
       <span class="f12" @click="backLogin">Back sign in</span>
     </el-row>
     <el-row class="login-btn">
@@ -54,31 +70,59 @@ export default {
       pwType: 'password',
       confirmPwType: 'password',
       isAgreen: true,
-      loginType: 'code',
-      isCode: true,
-      isPw: false,
+      isEmail: false,
+      areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
+        area: '+86',
         account: '', // 账号
         newPassword: '', // 密码
-        contactType: '', // 类型 email, phone
+        accountType: '', // 类型 email, phone
         captcha: '' // 验证码
       },
-      loginRules: {}
+      loginRules: {
+        account: [{ required: true, validator: this.accountValid, trigger: 'blur' }]
+      }
+    }
+  },
+  computed: {
+    accountType () {
+      return this.isEmail ? 'email' : 'phone'
     }
   },
   props: ['pageFlag'],
   methods: {
+    toggleEmail () {
+      this.isEmail = !this.isEmail
+      this.dataForm.account = ''
+      this.$refs.dataForm.clearValidate('account')
+    },
     // 返回登录模块
     backLogin () {
       this.$emit('toggleStatus', 'login')
     },
-    // 登录输入框校验
+    // 手机/邮箱校验
+    accountValid (rule, value, callback) {
+      let typeValue = this.isEmail ? 'email' : 'phone'
+      if (!valid[typeValue].rule.test(value)) {
+        callback(new Error(valid[typeValue].message))
+      } else {
+        callback()
+      }
+    },
+    // 输入框校验
     validPass () {
       // 手机或邮箱正则
       let { account, newPassword, captcha } = this.dataForm
-      if (!valid.phone.rule.test(account) || !valid.email.rule.test(account)) {
-        this.$message.error('Mobile number or Email is invalid')
-        return false
+      if (this.isEmail) {
+        if (!valid.email.rule.test(account)) {
+          this.$message.error('Email is invalid')
+          return false
+        }
+      } else {
+        if (!valid.phone.rule.test(account)) {
+          this.$message.error('Mobile number is invalid')
+          return false
+        }
       }
       if (!valid.password.rule.test(newPassword)) {
         this.$message.error(valid.password.message)
@@ -97,8 +141,8 @@ export default {
       this.$refs.dataForm.validateField('account', (valid) => {
         if (!valid) {
           this.sendCode({
-            contact: this.dataForm.account,
-            contactType: this.getAcountType(this.dataForm.account)
+            contact: this.dataForm.area + '-' + this.dataForm.account,
+            accountType: this.accountType
           }, this.codeBtn)
         }
       })
@@ -106,16 +150,21 @@ export default {
     // 重置密码
     resetPassword () {
       if (!this.validPass()) return false
-      this.accountType = this.getAcountType(this.dataForm.account)
+      this.dataForm.accountType = this.accountType
+      let tempData = { ...this.dataForm }
+      if (this.accountType === 'phone') {
+        let { area, account } = this.dataForm
+        tempData.account = area + '-' + account
+      }
       this.$post({
         url: '/user/reset',
         data: {
-          ...this.dataForm,
-          newPassword: md5(this.dataForm.newPassword)
+          ...tempData,
+          newPassword: md5(tempData.newPassword)
         },
         success: res => {
-          console.log(res)
-          // 自动登录
+          this.$message.success('Reset successful')
+          this.backLogin()
         }
       })
     }

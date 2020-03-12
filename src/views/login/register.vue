@@ -111,6 +111,11 @@ export default {
     }
   },
   props: ['pageFlag'],
+  computed: {
+    contactType () {
+      return this.isEmail ? 'email' : 'phone'
+    }
+  },
   methods: {
     toggleClick () {
       this.isEmail = !this.isEmail
@@ -138,8 +143,8 @@ export default {
       this.$refs.dataForm.validateField('contact', (valid) => {
         if (!valid) {
           this.sendCode({
-            contact: this.dataForm.contact,
-            contactType: this.isEmail ? 'email' : 'phone'
+            contact: this.dataForm.area + '-' + this.dataForm.contact,
+            contactType: this.contactType
           }, this.codeBtn)
         }
       })
@@ -150,12 +155,17 @@ export default {
       let isPass = true
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
-      this.dataForm.contactType = this.isEmail ? 'email' : 'phone'
+      this.dataForm.contactType = this.contactType
+      let tempData = { ...this.dataForm }
+      if (this.contactType === 'phone') {
+        let { area, contact } = this.dataForm
+        tempData.contact = area + '-' + contact
+      }
       this.$post({
         url: '/user/register',
         data: {
-          ...this.dataForm,
-          password: md5(this.dataForm.password)
+          ...tempData,
+          password: md5(tempData.password)
         },
         success: res => {
           // 1.注册成功, 调用自动登录接口 ? 2. 跳转到产品介绍页面

@@ -39,18 +39,18 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col class="forgot-pw" align="right">
-            <span @click="registerBtn('resetPw')">Forgot password?</span>
-          </el-col>
         </el-row>
       </el-form>
     </div>
+    <el-row class="forgot-pw" type="flex" justify="space-between">
+      <span v-if="isEmail" @click="toggleEmail">Mobile number sign in</span>
+      <span v-else @click="toggleEmail">Email sign in</span>
+      <span @click="registerBtn('resetPw')">Forgot password?</span>
+    </el-row>
     <el-row class="login-btn">
       <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
     </el-row>
-    <el-row class="find-btn" type="flex" justify="space-between">
-      <span v-if="isEmail" @click="isEmail=false">Mobile number sign in</span>
-      <span v-else @click="isEmail=true">Email sign in</span>
+    <el-row class="find-btn" type="flex" justify="end">
       <span @click="registerBtn('register')">Sign up</span>
     </el-row>
   </div>
@@ -91,6 +91,11 @@ export default {
       this.dataForm.area = phone.split('-')[0]
     }
   },
+  computed: {
+    accountType () {
+      return this.getAcountType(this.dataForm.account)
+    }
+  },
   methods: {
     toggleClick (type) {
       this.loginType = 'code'
@@ -101,6 +106,10 @@ export default {
         this.isCode = false
         this.isPw = true
       }
+    },
+    toggleEmail () {
+      this.isEmail = !this.isEmail
+      this.dataForm.account = ''
     },
     // 密码登录输入框校验
     passwordValid () {
@@ -129,12 +138,17 @@ export default {
     goLogin () {
       // 自定义表单校验
       if (!this.passwordValid()) return false
-      this.dataForm.accountType = this.getAcountType(this.dataForm.account)
+      this.dataForm.accountType = this.accountType
+      let tempData = { ...this.dataForm }
+      if (this.accountType === 'phone') {
+        let { account, area } = this.dataForm
+        tempData.account = area + '-' + account
+      }
       this.$post({
         url: '/user/login',
         data: {
-          ...this.dataForm,
-          password: md5(this.dataForm.password)
+          ...tempData,
+          password: md5(tempData.password)
         },
         success: ({ result }) => {
           storage.setToken(result.token)

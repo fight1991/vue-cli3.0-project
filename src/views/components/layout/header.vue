@@ -24,7 +24,7 @@
         placement="top-start">
         <span class="user-name">
           <i class="user-logo el-icon-user-solid"></i>
-          <span>张三</span>
+          <span>{{userInfo.name || ''}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>修改密码</el-dropdown-item>
@@ -38,6 +38,7 @@
 
 <script>
 import storage from '@/util/storage'
+import { mapState } from 'vuex'
 export default {
   name: 'layout-header',
   data () {
@@ -45,6 +46,14 @@ export default {
       lang: '中文',
       logoSrc: require('@/assets/logo.png')
     }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
+  created () {
+    console.log(this.userInfo)
   },
   methods: {
     toggleLang (lang) {
@@ -70,6 +79,10 @@ export default {
           storage.removeToken()
           storage.removeLoginInfo()
           this.$router.push('/login')
+          let obj = this.$router.resolve({
+            path: '/login'
+          })
+          console.log(obj)
         }
       })
     }
