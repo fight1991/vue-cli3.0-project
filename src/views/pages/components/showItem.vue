@@ -2,15 +2,51 @@
   <div class="container-top mg-b10">
     <div class="left">
       <div class="top-item flex-between mg-b10">
-        <div class="items">电站总数</div>
-        <div class="items">正常电站</div>
-        <div class="items">离线电站</div>
-        <div class="items">故障电站</div>
+        <div class="items flex-around">
+          <i class="iconfont icon-sum"></i>
+          <div class="items-right">
+            <div>Total</div>
+            <div>
+              <span class="num">12</span>
+              <span class="pcs">PCS</span>
+            </div>
+          </div>
+        </div>
+        <div class="items flex-around">
+          <i class="iconfont icon-normal"></i>
+          <div class="items-right">
+            <div>Normal</div>
+            <div>
+              <span class="num">12222</span>
+              <span class="pcs">PCS</span>
+            </div>
+          </div>
+        </div>
+        <div class="items flex-around">
+          <i class="iconfont icon-offline"></i>
+          <div class="items-right">
+            <div>Offline</div>
+            <div>
+              <span class="num">132</span>
+              <span class="pcs">PCS</span>
+            </div>
+          </div>
+        </div>
+        <div class="items flex-around">
+          <i class="iconfont icon-fault"></i>
+          <div class="items-right">
+            <div>Glitch</div>
+            <div>
+              <span class="num">12</span>
+              <span class="pcs">PCS</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="status-count bg-c">
         <div class="title border-line">状态统计</div>
         <div class="content flex">
-          <div class="content-item flex-center">
+          <!-- <div class="content-item flex-center">
             <div class="my-pg">
               <el-progress type="circle" color="#67C23A" :show-text="false" :percentage="25" :stroke-width="10"></el-progress>
               <div class="progress-txt">
@@ -18,9 +54,51 @@
                 <div class="f12">当前功率</div>
               </div>
             </div>
+          </div> -->
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-day"></i>
+            <div class="plant-text">
+              <p><span>Electric (kwh)</span></p>
+              <p><span>Income ($)</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">333</span></p>
+              <p><span class="money">333</span></p>
+            </div>
           </div>
-          <div class="content-item">2</div>
-          <div class="content-item">3</div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-month"></i>
+            <div class="plant-text">
+              <p><span>Electric (kwh)</span></p>
+              <p><span>Income ($)</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">333</span></p>
+              <p><span class="money">333</span></p>
+            </div>
+          </div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-year"></i>
+            <div class="plant-text">
+              <p><span>Electric (kwh)</span></p>
+              <p><span>Income ($)</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">333</span></p>
+              <p><span class="money">333</span></p>
+            </div>
+          </div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-total"></i>
+            <div class="plant-text">
+              <p><span>Electric (kwh)</span></p>
+              <p><span>Income ($)</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">333</span></p>
+              <p><span class="money">333</span></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -77,9 +155,37 @@ export default {
     margin-right: 5px;
     .top-item {
       .items {
+        padding: 10px 20px;
         background-color: #fff;
+        box-sizing: border-box;
         width: 24%;
-        height: 100px;
+        .iconfont {
+          font-size: 36px;
+          color: #2AC6FC;
+        }
+        .icon-normal {
+          color: #67C23A;
+        }
+        .icon-offline {
+          color: #ccc;
+        }
+        .icon-fault {
+          color: #FFC245;
+        }
+        .items-right {
+          padding-left: 30px;
+          text-align: right;
+          .num {
+            font-size: 16px;
+            margin-right: 10px;
+          }
+          .pcs {
+            font-size: 12px;
+          }
+          div {
+            padding: 2px;
+          }
+        }
       }
     }
     .status-count {
@@ -91,13 +197,24 @@ export default {
       .content {
         border-top: 1px solid #f5f5f5;
         padding: 5px 10px;
+        flex-wrap: wrap;
       }
       .content-item {
-        width: 33.3%;
-        height: 200px;
-        border-right:1px solid #f5f5f5;
-        &:last-child {
-          border-right: none;
+        padding: 10px 0;
+        width: 50%;
+        box-sizing: border-box;
+        &:nth-child(2n+1) {
+          border-right: 1px solid #f5f5f5;
+        }
+        .plant-money {
+          .num {
+            color: #FFC245;
+            font-weight: bold;
+          }
+          .money {
+            color: #67C23A;
+            font-weight: bold;
+          }
         }
       }
     }
