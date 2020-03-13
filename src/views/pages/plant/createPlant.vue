@@ -1,27 +1,6 @@
 <template>
   <section class="sys-main bg-c">
     <el-form size="mini" :model="dataForm" :rules="rules" label-position="left" label-width="100px">
-      <div class="title border-line">绑定设备</div>
-      <div class="col-container device">
-        <el-row :gutter="40" v-for="(item, index) in dataForm.device" :key="'index'+index">
-          <el-col :span="10">
-            <el-form-item label="设备序列号" :prop="'device.'+index+'.aa'" :rules="{required:true,trigger: 'blur',message:'aa is invalid'}">
-              <el-input v-model="item.aa"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="设备注册码" :prop="'device.'+index+'.aa'" :rules="{required:true,trigger: 'blur',message:'aa is invalid'}">
-              <el-input v-model="item.aa"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4" style="padding-left:0px">
-            <span class="op-icon">
-              <i class="iconfont icon-delete" @click="deviceDelete(index)" v-show="!(index==0 && deleteBtn)"></i>
-              <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i>
-            </span>
-          </el-col>
-        </el-row>
-      </div>
       <div class="title border-line">电站设置</div>
       <div class="col-container">
         <el-row :gutter="40">
@@ -71,6 +50,27 @@
                 <el-option v-for="item in powerList" :key="item.id" :value="item.id" :label="item.name"></el-option>
               </el-select>
             </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="title border-line">绑定设备</div>
+      <div class="col-container device">
+        <el-row :gutter="40" v-for="(item, index) in dataForm.device" :key="'index'+index">
+          <el-col :span="10">
+            <el-form-item label="设备序列号" :prop="'device.'+index+'.aa'" :rules="{required:true,trigger: 'blur',message:'aa is invalid'}">
+              <el-input v-model="item.aa"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="设备注册码" :prop="'device.'+index+'.aa'" :rules="{required:true,trigger: 'blur',message:'aa is invalid'}">
+              <el-input v-model="item.aa"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4" style="padding-left:0px">
+            <span class="op-icon">
+              <i class="iconfont icon-delete" @click="deviceDelete(index)" v-show="!(index==0 && deleteBtn)"></i>
+              <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i>
+            </span>
           </el-col>
         </el-row>
       </div>

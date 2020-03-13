@@ -23,16 +23,6 @@
           </div>
         </div>
         <div class="items flex-around">
-          <i class="iconfont icon-offline"></i>
-          <div class="items-right">
-            <div>Offline</div>
-            <div>
-              <span class="num">132</span>
-              <span class="pcs">PCS</span>
-            </div>
-          </div>
-        </div>
-        <div class="items flex-around">
           <i class="iconfont icon-fault"></i>
           <div class="items-right">
             <div>Glitch</div>
@@ -152,13 +142,13 @@ export default {
   box-sizing: border-box;
   .left {
     flex: 1;
-    margin-right: 5px;
+    margin-right: 10px;
     .top-item {
       .items {
         padding: 10px 20px;
         background-color: #fff;
         box-sizing: border-box;
-        width: 24%;
+        width: 32%;
         .iconfont {
           font-size: 36px;
           color: #2AC6FC;

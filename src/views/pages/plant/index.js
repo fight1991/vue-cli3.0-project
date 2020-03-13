@@ -25,6 +25,16 @@ export default {
         title: '电站显示',
         component: () => import(/* webpackChunkName: "bus-plant-view" */ '@/views/pages/plant/showPlant')
       }
+    },
+    {
+      permission: '',
+      path: '/bus/plant/detail',
+      name: 'bus-plant-detail',
+      hidden: true,
+      meta: {
+        title: '电站详情',
+        component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
+      }
     }
   ]
 }
