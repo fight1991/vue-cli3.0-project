@@ -10,7 +10,7 @@ let {
 export default class Method {
   constructor (baseURL) {
     this.instance = axios.create({
-      baseURL: baseURL,
+      baseURL: process.env.NODE_ENV === 'development' ? '/api' : baseURL, // vue.config.js已配置了跨域
       timeout: 5000
     })
     this.instance.interceptors.request.use(onRequestResolve, onRequestReject)

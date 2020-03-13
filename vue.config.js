@@ -1,5 +1,7 @@
 const path = require('path')
 const SpritesmithPlugin = require('webpack-spritesmith') // 雪碧图插件
+console.log('哈哈')
+console.log(process.env.VUE_APP_API)
 const templateFunc = function (data) {
   var shared = '.icon { display: inline-block; vertical-align: middle; background-image: url(I) }'.replace(
     'I',
@@ -44,7 +46,17 @@ module.exports = {
     host: '127.0.0.1',
     port: 9000,
     https: false,
-    hotOnly: false
+    hotOnly: false,
+    proxy: { // 设置代理
+      '/api': { // =>相当于 http://127.0.0.1:9000/api(需要将axios配置的baseUrl='/api')接口以api开头的需要代理防止html, css, js静态资源也用了代理
+        target: process.env.VUE_APP_API, // => 代理到 http://192.168.10.118:8000/c/v0
+        ws: true,
+        changeOrigin: true, // 允许跨域
+        pathRewrite: {
+          '^/api': '' // 替代/api(因为接口地址没有/api)
+        }
+      }
+    }
   },
   chainWebpack: config => { // npm run build --report查看打包后的文件结构
     if (process.env.NODE_ENV === 'production') {
