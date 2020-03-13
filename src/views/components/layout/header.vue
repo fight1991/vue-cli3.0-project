@@ -76,13 +76,11 @@ export default {
       this.$post({
         url: '/user/logout',
         success: () => {
-          storage.removeToken()
           storage.removeLoginInfo()
-          this.$router.push('/login')
-          let obj = this.$router.resolve({
+          let { href } = this.$router.resolve({
             path: '/login'
           })
-          console.log(obj)
+          window.open(href, '_self')
         }
       })
     }

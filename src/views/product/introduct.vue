@@ -4,7 +4,7 @@
     <div class="header flex-between">
       <div class="header-left flex-start">
         <img :src="logoImg" alt="">
-        <span class="company-name">FoxEss</span>
+        <span class="company-name">FoxESS</span>
       </div>
       <div class="header-right flex-start">
         <div class="join-us"><i class="iconfont icon-hand-right"></i>JOIN US</div>

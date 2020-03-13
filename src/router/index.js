@@ -41,6 +41,7 @@ const router = new VueRouter({
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth === false) { // 不需权限,直接放行 /login,/error-xx等
+    to.path === '/login' && storage.removeToken('token')
     next()
   } else {
     if (!storage.getToken()) {
@@ -69,7 +70,7 @@ router.beforeEach(async (to, from, next) => {
 })
 // 路由跳转之后
 router.afterEach((to, from) => {
-  document.title = to.meta.title || 'FoxEss'
+  document.title = to.meta.title || 'FoxESS'
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
   if (store.state.tabView && to.meta.component) {

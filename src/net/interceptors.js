@@ -38,7 +38,6 @@ export default {
           }
         })
         let sysParams = {}
-        console.log(router.currentRoute)
         if (router.currentRoute.name) { // 说明路由初始化完成,可以拿到当前路由信息
           sysParams.redirect = router.currentRoute.fullPath
         } else {
@@ -58,12 +57,8 @@ export default {
   onResponseReject: function (error) {
     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
     if (error.response) {
-      console.log(error)
-      console.log(error.response)
       switch (error.response.status) {
         case 401:
-          // 清除token
-          storage.removeToken()
           router.replace({
             path: '/login',
             query: {
