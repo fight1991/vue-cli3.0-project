@@ -58,6 +58,8 @@ export default {
   onResponseReject: function (error) {
     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
     if (error.response) {
+      console.log(error)
+      console.log(error.response)
       switch (error.response.status) {
         case 401:
           // 清除token
@@ -71,7 +73,7 @@ export default {
           break
         case 403:
           router.push({
-            path: '/error/403',
+            path: '/error/403', // 禁止访问
             query: {
               redirect: router.currentRoute.fullPath
             }
@@ -79,8 +81,8 @@ export default {
           break
         case 404:
           Message({
-            message: `path:${error.response.data.path} ${
-              error.response.data.error
+            message: `status:${error.response.status} ${
+              'Api Not Found'
             }`,
             type: 'error',
             duration: 5 * 1000
@@ -88,8 +90,8 @@ export default {
           break
         case 405:
           Message({
-            message: `path:${error.response.data.path} ${
-              error.response.data.error
+            message: `status:${error.response.status} ${
+              error.response.statusText
             }`,
             type: 'error',
             duration: 5 * 1000

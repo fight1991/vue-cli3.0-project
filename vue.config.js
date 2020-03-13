@@ -1,26 +1,7 @@
 const path = require('path')
 const SpritesmithPlugin = require('webpack-spritesmith') // 雪碧图插件
-console.log('哈哈')
-console.log(process.env.VUE_APP_API)
-const templateFunc = function (data) {
-  var shared = '.icon { display: inline-block; vertical-align: middle; background-image: url(I) }'.replace(
-    'I',
-    data.sprites[0].image
-  )
+const templateFunc = require(path.join(__dirname, './spriteTemplate')) // 雪碧图文件模板
 
-  var perSprite = data.sprites
-    .map(function (sprite) {
-      return '.icon-N { width: Wpx; height: Hpx; background-position: Xpx Ypx; }'
-        .replace('N', sprite.name)
-        .replace('W', sprite.width)
-        .replace('H', sprite.height)
-        .replace('X', sprite.offset_x)
-        .replace('Y', sprite.offset_y)
-    })
-    .join('\n')
-
-  return shared + '\n' + perSprite
-}
 module.exports = {
   publicPath: '/', // 应用部署路径
   outputDir: 'dist', // 生产环境构建目录
