@@ -59,6 +59,11 @@ export default {
         ]
       },
       powerData: { // 当前功率
+        title: {
+          text: '哈哈',
+          bottom: '10%',
+          left: 'center'
+        },
         tooltip: {
           formatter: '{a} <br/>{b} : {c}%'
         },
@@ -66,11 +71,16 @@ export default {
           {
             name: '业务指标',
             type: 'gauge',
+            axisLine: {
+              lineStyle: {
+                color: [[0.5, '#63869e'], [1, '#67c23a']]
+              }
+            },
             detail: {
               formatter: '{value}%'
             },
             data: [
-              { value: 50, name: 'watts' }
+              { value: 10, name: 'watts' }
             ]
           }
         ]

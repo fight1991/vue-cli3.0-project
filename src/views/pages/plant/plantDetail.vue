@@ -2,37 +2,68 @@
   <section class="sys-main">
     <div class="block mg-b15">
       <el-row :gutter="15">
-        <el-col :span="8">
+        <el-col :span="7">
           <el-card shadow="never">
             <div class="title border-line" slot="header">Today's abnormal</div>
-            <el-echart :datas="normalData" height="250px"></el-echart>
+            <el-echart :datas="normalData" height="200px"></el-echart>
           </el-card>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <el-card shadow="never">
             <div class="title border-line" slot="header">Power station condition</div>
-            <el-echart :datas="powerData" height="250px"></el-echart>
+            <!-- <el-echart :datas="powerData" height="200px"></el-echart> -->
+            <div class="current-kw flex-around">
+              <div class="my-pg">
+                <el-progress type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
+                <div class="progress-txt">
+                  <div class="number">66KW</div>
+                  <div class="f12">当前功率</div>
+                </div>
+              </div>
+              <div class="details">
+                <el-radio-group v-model="powerRadio" class="create-plant">
+                  <el-radio label="day">Day</el-radio>
+                  <el-radio label="month">Month</el-radio>
+                  <el-radio label="year">Year</el-radio>
+                  <el-radio label="total">Total</el-radio>
+                </el-radio-group>
+                <div class="top flex-center">
+                  <i class="iconfont icon-energy"></i>
+                  <div class="plant-text">
+                    <p>Electric (kwh)</p>
+                    <p>3333</p>
+                  </div>
+                </div>
+                <div class="bottom flex-center">
+                  <i class="iconfont icon-earnings"></i>
+                  <div class="plant-text">
+                    <p>Income ($)</p>
+                    <p>3333</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </el-card>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="7">
           <el-card shadow="never">
             <div class="title border-line" slot="header">Device status</div>
             <div class="progress-container">
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>Normal</span><span style="color:#67c23a">8</span></div>
-                <el-progress class="progress" :show-text="false" :stroke-width="18" :percentage="33" color="#67c23a"></el-progress>
+                <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="33" color="#67c23a"></el-progress>
               </div>
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>Alarm</span><span style="color:#e6a23c">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#e6a23c"></el-progress>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#e6a23c"></el-progress>
               </div>
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>Abnormal</span><span style="color:#f56c6c">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#f56c6c"></el-progress>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#f56c6c"></el-progress>
               </div>
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#909399"></el-progress>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#909399"></el-progress>
               </div>
             </div>
           </el-card>
@@ -85,6 +116,7 @@ export default {
   },
   data () {
     return {
+      powerRadio: 'day',
       dateValue: '',
       dateType: 'Day',
       echartType: 'power' // 默认显示功率图表
@@ -141,7 +173,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .progress-container {
-  height: 250px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -159,6 +191,44 @@ export default {
   .arrow {
     cursor: pointer;
     margin: 0 8px;
+  }
+}
+.my-pg {
+  position: relative;
+  .el-progress {
+    vertical-align: top
+  }
+  .progress-txt {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    color: #999;
+    .number {
+      color: #67C23A;
+    }
+  }
+}
+.current-kw {
+  height: 200px;
+  .details {
+    flex: 1;
+    padding-left: 20px;
+    .iconfont {
+      width: 40px;
+      font-size: 36px;
+    }
+    .icon-energy {
+      color: #FFC245;
+    }
+    .icon-earnings {
+      color: #40B463;
+    }
+  }
+  .plant-text {
+    flex:1;
+    margin-left: 20px;
   }
 }
 </style>

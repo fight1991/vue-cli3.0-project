@@ -36,15 +36,6 @@
       <div class="status-count bg-c">
         <div class="title border-line">状态统计</div>
         <div class="content flex">
-          <!-- <div class="content-item flex-center">
-            <div class="my-pg">
-              <el-progress type="circle" color="#67C23A" :show-text="false" :percentage="25" :stroke-width="10"></el-progress>
-              <div class="progress-txt">
-                <div class="number">66KW</div>
-                <div class="f12">当前功率</div>
-              </div>
-            </div>
-          </div> -->
           <div class="content-item flex-around">
             <i class="icon icon-plant-day"></i>
             <div class="plant-text">
@@ -217,23 +208,6 @@ export default {
     width: 250px;
     padding: 5px;
     box-sizing: border-box;
-  }
-}
-.my-pg {
-  position: relative;
-  .el-progress {
-    vertical-align: top
-  }
-  .progress-txt {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    color: #999;
-    .number {
-      color: #67C23A;
-    }
   }
 }
 </style>
