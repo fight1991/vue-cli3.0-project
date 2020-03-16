@@ -43,13 +43,33 @@
       <div class="power bg-c">
         <div class="header flex-between pd10">
           <div class="btn">
-            <el-button size="mini" type="primary">功率</el-button>
-            <el-button size="mini">电量统计</el-button>
+            <el-radio-group v-model="echartType" size="mini" @change="echartChange">
+              <el-radio-button label="power">功率</el-radio-button>
+              <el-radio-button label="elec">电量统计</el-radio-button>
+            </el-radio-group>
           </div>
-          <div class="date"></div>
+          <div class="date" v-show="echartType=='elec'">
+            <el-dropdown size="mini" split-button @command="selectDateType">
+              {{dateType}}
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="Day">Day</el-dropdown-item>
+                <el-dropdown-item command="Month">Month</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <span class="date-area">
+              <i class="arrow el-icon-arrow-left" @click="computeDate('reduce')"></i>
+              <el-date-picker
+                size="mini"
+                style="width:110px"
+                v-model="dateValue"
+                :type="dateType=='Day' ? 'month':'year'">
+              </el-date-picker>
+              <i class="arrow el-icon-arrow-right" @click="computeDate('add')"></i>
+              </span>
+          </div>
         </div>
         <div class="chart">
-          <el-echart :datas="chartData" height="300px"></el-echart>
+          <el-echart :datas="echartData[echartType]" height="300px"></el-echart>
         </div>
       </div>
     </div>
@@ -57,6 +77,7 @@
 </template>
 <script>
 import echartData from './echartData'
+import { formatDate } from '@/util'
 export default {
   mixins: [echartData],
   components: {
@@ -64,17 +85,57 @@ export default {
   },
   data () {
     return {
-
+      dateValue: '',
+      dateType: 'Day',
+      echartType: 'power' // 默认显示功率图表
+    }
+  },
+  computed: {
+    disabledDate () {
+      return this.dateValue.getTime() > Date.now()
     }
   },
   created () {
-
+    this.setDefaultTime()
   },
   mounted () {
 
   },
   methods: {
+    echartChange (type) {
 
+    },
+    selectDateType (command) {
+      this.dateType = command
+      this.setDefaultTime()
+    },
+    setDefaultTime () {
+      let dateP = this.dateType === 'Day' ? 'yyyy-MM' : 'yyyy'
+      this.dateValue = formatDate(new Date(), dateP)
+    },
+    computeDate (type) {
+      let currentTime = new Date(this.dateValue)
+      if (this.dateType === 'Day') { // 月份增减
+        let tempMonth = type === 'reduce' ? currentTime.getMonth() - 1 : currentTime.getMonth() + 1
+        let temp = currentTime.setMonth(tempMonth)
+        let lastDate = new Date(temp)
+        let lastYear = lastDate.getFullYear()
+        let lastMonth = this.checkMonth(lastDate.getMonth() + 1)
+        let showDate = lastYear + '-' + lastMonth
+        if (new Date(showDate).getTime() > Date.now()) return
+        this.dateValue = showDate
+      } else { // 年份增减
+        let tempYear = type === 'reduce' ? currentTime.getFullYear() - 1 : currentTime.getFullYear() + 1
+        if (tempYear > new Date().getFullYear()) return
+        this.dateValue = tempYear.toString()
+      }
+    },
+    checkMonth (i) {
+      if (i < 10) {
+        i = '0' + i
+      }
+      return i
+    }
   }
 }
 </script>
@@ -91,6 +152,13 @@ export default {
 .power {
   .header {
     border-bottom: 1px solid #f5f5f5;
+  }
+}
+.date-area {
+  margin-left: 20px;
+  .arrow {
+    cursor: pointer;
+    margin: 0 8px;
   }
 }
 </style>

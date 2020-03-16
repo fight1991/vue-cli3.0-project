@@ -75,22 +75,49 @@ export default {
           }
         ]
       },
-      chartData: { // 折线图表
-        tooltip: {
-          trigger: 'axis',
-          showContent: true
+      echartData: {
+        power: { // 折线图表
+          tooltip: {
+            trigger: 'axis',
+            showContent: true
+          },
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+          }]
         },
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        elec: { // 柱状图
+          legend: {
+            bottom: 0
+          },
+          tooltip: {},
+          dataset: {
+            dimensions: ['product', '发电量', '并网发电量', '负载损耗', '电网损耗'],
+            source: [
+              { product: '01', '发电量': 43.3, '并网发电量': 85.8, '负载损耗': 93.7, '电网损耗': 93.7 },
+              { product: '02', '发电量': 83.1, '并网发电量': 73.4, '负载损耗': 55.1, '电网损耗': 93.7 },
+              { product: '03', '发电量': 86.4, '并网发电量': 65.2, '负载损耗': 82.5, '电网损耗': 93.7 },
+              { product: '04', '发电量': 72.4, '并网发电量': 53.9, '负载损耗': 39.1, '电网损耗': 93.7 }
+            ]
+          },
+          xAxis: { type: 'category' },
+          yAxis: {},
+          // Declare several bar series, each will be mapped
+          // to a column of dataset.source by default.
+          series: [
+            { type: 'bar' },
+            { type: 'bar' },
+            { type: 'bar' },
+            { type: 'bar' }
+          ]
+        }
       }
     }
   }
