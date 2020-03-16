@@ -10,12 +10,31 @@
         </el-col>
         <el-col :span="8">
           <el-card shadow="never">
-            总是显示
+            <div class="title border-line" slot="header">Power station condition</div>
+            <el-echart :datas="powerData" height="250px"></el-echart>
           </el-card>
         </el-col>
         <el-col :span="8">
           <el-card shadow="never">
-            总是显示
+            <div class="title border-line" slot="header">Device status</div>
+            <div class="progress-container">
+              <div class="progress-line">
+                <div class="status-text f12 flex-between"><span>Normal</span><span style="color:#67c23a">8</span></div>
+                <el-progress class="progress" :show-text="false" :stroke-width="18" :percentage="33" color="#67c23a"></el-progress>
+              </div>
+              <div class="progress-line">
+                <div class="status-text f12 flex-between"><span>Alarm</span><span style="color:#e6a23c">12</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#e6a23c"></el-progress>
+              </div>
+              <div class="progress-line">
+                <div class="status-text f12 flex-between"><span>Abnormal</span><span style="color:#f56c6c">12</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#f56c6c"></el-progress>
+              </div>
+              <div class="progress-line">
+                <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">12</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="18" :percentage="45" color="#909399"></el-progress>
+              </div>
+            </div>
           </el-card>
         </el-col>
       </el-row>
@@ -30,84 +49,22 @@
           <div class="date"></div>
         </div>
         <div class="chart">
-          <el-echart :datas="chartData"></el-echart>
+          <el-echart :datas="chartData" height="300px"></el-echart>
         </div>
       </div>
     </div>
   </section>
 </template>
 <script>
+import echartData from './echartData'
 export default {
+  mixins: [echartData],
   components: {
 
   },
   data () {
     return {
-      normalData: {
-        color: ['#F96867', '#FDC70D'],
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
-        },
-        legend: {
-          orient: 'vertical',
-          right: 10,
-          top: 'center',
-          data: ['Alarm', 'Glitch'],
-          formatter: function (name) {
-            return name
-          }
-        },
-        series: [
-          {
-            name: 'abnormal',
-            type: 'pie',
-            radius: ['50%', '70%'],
-            right: '50px',
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: true,
-                position: 'inside',
-                formatter: '{c}'
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              }
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: [
-              { value: 3, name: 'Alarm' },
-              { value: 7, name: 'Glitch' }
-            ]
-          }
-        ]
-      },
-      chartData: {
-        tooltip: {
-          trigger: 'axis',
-          showContent: true
-        },
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
-      }
+
     }
   },
   created () {
@@ -122,6 +79,15 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.progress-container {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.status-text {
+  padding: 2px 5px;
+}
 .power {
   .header {
     border-bottom: 1px solid #f5f5f5;
