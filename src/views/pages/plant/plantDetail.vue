@@ -2,50 +2,13 @@
   <section class="sys-main">
     <div class="block mg-b15">
       <el-row :gutter="15">
-        <el-col :span="7">
+        <el-col :span="12">
           <el-card shadow="never">
             <div class="title border-line" slot="header">Today's abnormal</div>
             <el-echart :datas="normalData" height="200px"></el-echart>
           </el-card>
         </el-col>
-        <el-col :span="10">
-          <el-card shadow="never">
-            <div class="title border-line" slot="header">Power station condition</div>
-            <!-- <el-echart :datas="powerData" height="200px"></el-echart> -->
-            <div class="current-kw flex-around">
-              <div class="my-pg">
-                <el-progress type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
-                <div class="progress-txt">
-                  <div class="number">66KW</div>
-                  <div class="f12">当前功率</div>
-                </div>
-              </div>
-              <div class="details">
-                <el-radio-group v-model="powerRadio" class="create-plant">
-                  <el-radio label="day">Day</el-radio>
-                  <el-radio label="month">Month</el-radio>
-                  <el-radio label="year">Year</el-radio>
-                  <el-radio label="total">Total</el-radio>
-                </el-radio-group>
-                <div class="top flex-center">
-                  <i class="iconfont icon-energy"></i>
-                  <div class="plant-text">
-                    <p>Electric (kwh)</p>
-                    <p>3333</p>
-                  </div>
-                </div>
-                <div class="bottom flex-center">
-                  <i class="iconfont icon-earnings"></i>
-                  <div class="plant-text">
-                    <p>Income ($)</p>
-                    <p>3333</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="7">
+        <el-col :span="12">
           <el-card shadow="never">
             <div class="title border-line" slot="header">Device status</div>
             <div class="progress-container">
@@ -64,6 +27,67 @@
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">12</span></div>
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#909399"></el-progress>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="24" style="margin-top:15px">
+          <el-card shadow="never">
+            <div class="title border-line" slot="header">Power station condition</div>
+            <!-- <el-echart :datas="powerData" height="200px"></el-echart> -->
+            <div class="current-kw flex-around">
+              <div class="my-pg">
+                <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
+                <div class="progress-txt">
+                  <div class="number">66KW</div>
+                  <div class="f12">当前功率</div>
+                </div>
+              </div>
+              <div class="details flex">
+                <div class="content-item flex-around">
+                <i class="icon icon-plant-day"></i>
+                <div class="plant-text">
+                  <p><span>Electric (kwh)</span></p>
+                  <p><span>Income ($)</span></p>
+                </div>
+                <div class="plant-money">
+                  <p><span class="num">333</span></p>
+                  <p><span class="money">333</span></p>
+                </div>
+              </div>
+              <div class="content-item flex-around">
+                <i class="icon icon-plant-month"></i>
+                <div class="plant-text">
+                  <p><span>Electric (kwh)</span></p>
+                  <p><span>Income ($)</span></p>
+                </div>
+                <div class="plant-money">
+                  <p><span class="num">333</span></p>
+                  <p><span class="money">333</span></p>
+                </div>
+              </div>
+              <div class="content-item flex-around">
+                <i class="icon icon-plant-year"></i>
+                <div class="plant-text">
+                  <p><span>Electric (kwh)</span></p>
+                  <p><span>Income ($)</span></p>
+                </div>
+                <div class="plant-money">
+                  <p><span class="num">333</span></p>
+                  <p><span class="money">333</span></p>
+                </div>
+              </div>
+              <div class="content-item flex-around">
+                <i class="icon icon-plant-total"></i>
+                <div class="plant-text">
+                  <p><span>Electric (kwh)</span></p>
+                  <p><span>Income ($)</span></p>
+                </div>
+                <div class="plant-money">
+                  <p><span class="num">333</span></p>
+                  <p><span class="money">333</span></p>
+                </div>
+              </div>
               </div>
             </div>
           </el-card>
@@ -195,6 +219,7 @@ export default {
 }
 .my-pg {
   position: relative;
+  margin-right: 15px;
   .el-progress {
     vertical-align: top
   }
@@ -213,22 +238,26 @@ export default {
 .current-kw {
   height: 200px;
   .details {
-    flex: 1;
-    padding-left: 20px;
-    .iconfont {
-      width: 40px;
-      font-size: 36px;
-    }
-    .icon-energy {
-      color: #FFC245;
-    }
-    .icon-earnings {
-      color: #40B463;
-    }
+    flex-wrap: wrap;
   }
-  .plant-text {
-    flex:1;
-    margin-left: 20px;
+}
+.content-item {
+  padding: 10px 0;
+  width: 50%;
+  box-sizing: border-box;
+  &:nth-child(2n+1) {
+    border-right: 1px solid #f5f5f5;
+    border-left: 1px solid #f5f5f5;
+  }
+  .plant-money {
+    .num {
+      color: #FFC245;
+      font-weight: bold;
+    }
+    .money {
+      color: #67C23A;
+      font-weight: bold;
+    }
   }
 }
 </style>
