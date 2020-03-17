@@ -9,9 +9,9 @@ export default new Vuex.Store({
     loading: false,
     tabView: true, // 是否开启页签模式
     pagination: {
-      pageSize: 10,
-      pageIndex: 1,
-      total: 0
+      pageSize: 0,
+      currentPage: 0,
+      totalPages: 0
     },
     access: 0, // 0 游客， 1 终端用户 ，2 安装商 3 代理商 ，255 厂商
     userInfo: {

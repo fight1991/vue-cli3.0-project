@@ -14,6 +14,18 @@ export default {
       name: 'bus-plant-add',
       meta: {
         title: '创建电站',
+        opType: 'add',
+        component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
+      }
+    },
+    {
+      permission: '',
+      path: '/bus/plant/edit',
+      name: 'bus-plant-edit',
+      hidden: true,
+      meta: {
+        title: '编辑电站',
+        opType: 'edit',
         component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
       }
     },

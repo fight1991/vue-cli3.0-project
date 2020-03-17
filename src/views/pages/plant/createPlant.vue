@@ -114,7 +114,14 @@ export default {
     }
   },
   created () {
-
+    let { opType } = this.$route.meta
+    if (opType) {
+      this.opType = opType || this.$route.query.opType
+    }
+    if (this.opType !== 'add') {
+      this.stationID = this.$route.query.plantId
+      this.getStationInfo(this.stationID)
+    }
   },
   computed: {
     deleteBtn () { // 绑定的设备length为1 且 设备序列号或注册码为空不显示删除按钮
@@ -167,17 +174,20 @@ export default {
       this.dataForm = this.copyData()
       this.$refs.dataForm.clearValidate()
     },
-    // 新建电站
+    // 新建电站 / 编辑电站
     createAdd () {
-      this.backRoute('bus-plant-view')
       // 表单必填项校验
       let isPass = true
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
       // 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
+      let url = this.opType === 'add' ? '/plant/create' : '/plant/update'
       this.$post({
-        url: '/plant/create',
-        data: this.dataForm,
+        url: url,
+        data: {
+          ...this.dataForm,
+          stationID: this.stationID
+        },
         success: async ({ result }) => {
           this.$message.success('successful')
           this.backRoute('bus-plant-view')
@@ -219,11 +229,11 @@ export default {
       })
     },
     // 查询电站信息
-    async getStationInfo () {
+    async getStationInfo (stationID) {
       let { result } = await this.$axios({
         url: '/plant​/get',
         data: {
-          stationID: this.stationID
+          stationID
         }
       })
       this.dataForm = result || this.copyData()

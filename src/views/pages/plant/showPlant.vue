@@ -7,12 +7,12 @@
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
-            <el-select v-model="searchForm.aa">
-              <el-option label="所有" :value="1" :key="1"></el-option>
+            <el-select v-model="searchForm.status" placeholder="choose">
+              <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.bb" placeholder="电站名称"></el-input>
+            <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="search">reset</el-button>
@@ -22,27 +22,36 @@
       </search-bar>
       <func-bar>
         <el-table :data="tableData" :max-height="400" size="mini">
-          <el-table-column align="center" label="状态" width="50px" prop="name">
-            <template>
-              <i class="el-icon-warning"></i>
-              <i class="el-icon-success"></i>
+          <!-- 实时数据开始 -->
+          <el-table-column align="center" label="status" width="60px" prop="name">
+            <template slot-scope="scope">
+              <i class="el-icon-warning" v-show="scope.row.status === 1"></i>
+              <i class="el-icon-success" v-show="scope.row.status === 2"></i>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="电站" prop="age"></el-table-column>
-          <el-table-column align="center" label="账户" prop="age"></el-table-column>
-          <el-table-column align="center" label="国家" prop="age"></el-table-column>
-          <el-table-column align="center" label="城市" prop="age"></el-table-column>
-          <el-table-column align="center" label="设备数量" prop="age"></el-table-column>
-          <el-table-column align="center" label="装机容量" prop="age"></el-table-column>
-          <el-table-column align="center" label="发电功率" prop="age"></el-table-column>
-          <el-table-column align="center" label="今日发电量" prop="age"></el-table-column>
-          <el-table-column align="center" label="建站时间" prop="age"></el-table-column>
-          <el-table-column align="center" label="操作" prop="age" width="100px" fixed="right">
+          <!-- 实时数据结束 -->
+          <el-table-column align="center" label="name" prop="name" width="60"></el-table-column>
+          <el-table-column align="center" label="account" prop="owner" width="80"></el-table-column>
+          <el-table-column align="center" label="country" prop="country" width="80"></el-table-column>
+          <el-table-column align="center" label="city" prop="city" width="80"></el-table-column>
+          <el-table-column align="center" label="equipment quantity" prop="quantity" min-width="80" :render-header="renderHead">
+          </el-table-column>
+          <el-table-column align="center" label="installed capacity" prop="capacity" min-width="80" :render-header="renderHead"></el-table-column>
+          <!-- 实时数据开始-->
+          <el-table-column align="center" label="generating power" prop="power" min-width="80" :render-header="renderHead"></el-table-column>
+          <el-table-column align="center" label="generation today" prop="generationToday" min-width="80" :render-header="renderHead"></el-table-column>
+          <!-- 实时数据结束 -->
+          <el-table-column align="center" label="station time" prop="createdDate" min-width="150">
+            <template slot-scope="scope">
+              {{ scope.row.createdDate | formatDate }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="operation" width="100px" fixed="right">
             <template slot-scope="scope">
               <div class="flex-between table-op-btn">
-                <i title="look" class="iconfont icon-look" @click="goToDetail('look',scope.row.id)"></i>
-                <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',scope.row.id)"></i>
-                <i title="delete" class="iconfont icon-delete" @click="deletePlant(scope.row.id)"></i>
+                <i title="look" class="iconfont icon-look" @click="goToDetail('look',scope.row.stationID)"></i>
+                <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',scope.row.stationID)"></i>
+                <i title="delete" class="iconfont icon-delete" @click="deletePlant(scope.row.stationID)"></i>
               </div>
             </template>
           </el-table-column>
@@ -52,7 +61,7 @@
         <span><i class="el-icon-success"></i> Normal: 8</span>
         <span><i class="el-icon-warning"></i> Glitch: 8</span>
       </div>
-      <page-box :pagination="pagination"></page-box>
+      <page-box :pagination="pagination" @change="getPlantList"></page-box>
     </div>
   </section>
 </template>
@@ -64,14 +73,19 @@ export default {
   },
   data () {
     return {
+      statusList: [
+        { status: 0, label: 'all' },
+        { status: 1, label: 'normal' },
+        { status: 2, label: 'abnormal' }
+      ],
       searchForm: {
-        aa: '',
-        bb: ''
+        status: 0, // 0 全部 ，1 正常， 2 异常
+        name: ''
       },
       pagination: {
         pageSize: 10,
-        pageIndex: 1,
-        total: 40
+        currentPage: 1,
+        totalPages: 40
       },
       tableData: [
         {
@@ -86,11 +100,33 @@ export default {
     }
   },
   created () {
-    console.log('哈哈')
+
   },
   methods: {
     search () {
-
+      this.getPlantList(this.$store.pagination)
+    },
+    reset () {
+      this.searchForm = {
+        status: 0,
+        name: ''
+      }
+    },
+    // 获取电站列表
+    getPlantList (pagination) {
+      this.$post({
+        url: '/plant/list',
+        data: {
+          ...pagination,
+          condition: this.searchForm
+        },
+        success: ({ result }) => {
+          if (result) {
+            this.pagination.totalPages = result.totalPages
+            this.tableData = result.stations || []
+          }
+        }
+      })
     },
     // 电站删除
     async deletePlant (id) {
@@ -108,17 +144,34 @@ export default {
         this.$router.push({
           name: 'bus-plant-detail',
           query: {
-            id: id
+            plantId: id,
+            opType: 'look',
+            setId: this.$route.name + 'look' + id
           }
         })
       } else {
         this.$router.push({
-          name: 'bus-plant-add',
+          name: 'bus-plant-edit',
           query: {
-            id: id
+            plantId: id,
+            opType: 'edit',
+            setId: this.$route.name + 'edit' + id
           }
         })
       }
+    },
+    // 定义表头
+    renderHead (h, { column }) {
+      return (
+        <el-tooltip
+          class="text-cut"
+          effect="dark"
+          content={column.label}
+          placement="top"
+        >
+          <div>{column.label}</div>
+        </el-tooltip>
+      )
     }
   }
 }

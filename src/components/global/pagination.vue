@@ -1,17 +1,17 @@
 <template>
   <div class="pagination flex-between">
-    <span>显示第{{pagination.pageIndex}}-{{pagination.pageSize}}条结果,共{{pagination.total}}条(每页显示{{pagination.pageSize}}条)</span>
+    <span>显示第{{pagination.currentPage}}-{{pagination.pageSize}}条结果,共{{pagination.totalPages}}条(每页显示{{pagination.pageSize}}条)</span>
     <el-pagination
-      v-if='pagination.total != 0'
+      v-if='pagination.totalPages != 0'
       background
       :small="small"
       :pager-count= "5"
       @current-change="currentChange"
       @size-change="sizeChange"
-      :current-page.sync="pagination.pageIndex"
+      :current-page.sync="pagination.currentPage"
       :page-sizes="pageSizes"
       :page-size="pagination.pageSize"
-      :total="pagination.total"
+      :total="pagination.totalPages"
       :layout="layout">
     </el-pagination>
   </div>
@@ -53,14 +53,14 @@ export default {
   },
   methods: {
     currentChange (page) {
-      this.pagination.pageIndex = page
+      this.pagination.currentPage = page
       this.$emit('change', this.pagination)
       this.$emit('update:pagination', this.pagination)
     },
     sizeChange (size) {
       this.pagination.pageSize = size
-      if ((this.pagination.pageIndex - 1) * size > this.pagination.total) {
-        this.pagination.pageIndex = 1
+      if ((this.pagination.currentPage - 1) * size > this.pagination.totalPages) {
+        this.pagination.currentPage = 1
       }
       this.$emit('change', this.pagination)
       this.$emit('update:pagination', this.pagination)
