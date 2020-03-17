@@ -103,7 +103,7 @@ export default {
     }
   },
   created () {
-
+    console.log(this.test)
   },
   methods: {
     search () {

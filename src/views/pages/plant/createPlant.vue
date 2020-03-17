@@ -185,8 +185,7 @@ export default {
       this.$post({
         url: url,
         data: {
-          ...this.dataForm,
-          stationID: this.stationID
+          ...this.dataForm
         },
         success: async ({ result }) => {
           this.$message.success('successful')

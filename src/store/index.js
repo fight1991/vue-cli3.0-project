@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import tab from './modules/tab' // 页签管理模块
 export default new Vuex.Store({
   state: {
+    tableH: 320, // 表格高度
     successCode: 0, // 业务成功状态码
     isFirst: true, // 是否第一次进入系统
     lang: 'zh', // 语言
