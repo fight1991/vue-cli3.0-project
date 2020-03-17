@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     gotoHome () {
-      this.$router.push('/')
+      this.$router.push('/bus/index')
     }
   }
 }

@@ -85,6 +85,9 @@ export default {
       ]
     }
   },
+  created () {
+    console.log('哈哈')
+  },
   methods: {
     search () {
 

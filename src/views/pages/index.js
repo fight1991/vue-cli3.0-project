@@ -10,7 +10,7 @@ import Upgrade from './upgrade'
 import Message from './message'
 import Relog from './relog'
 const Home = {
-  path: '/index',
+  path: '/bus/index',
   hidden: true,
   name: 'tab-index',
   meta: {
