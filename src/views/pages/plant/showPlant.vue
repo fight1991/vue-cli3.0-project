@@ -90,11 +90,14 @@ export default {
       tableData: [
         {
           name: 'zs',
-          age: 18
+          age: 18,
+          stationID: '1'
+
         },
         {
           name: 'ls',
-          age: 133
+          age: 133,
+          stationID: '2'
         }
       ]
     }
@@ -146,7 +149,7 @@ export default {
           query: {
             plantId: id,
             opType: 'look',
-            setId: this.$route.name + 'look' + id
+            tabId: this.$route.name + 'look' + id
           }
         })
       } else {
@@ -155,7 +158,7 @@ export default {
           query: {
             plantId: id,
             opType: 'edit',
-            setId: this.$route.name + 'edit' + id
+            tabId: this.$route.name + 'edit' + id
           }
         })
       }
