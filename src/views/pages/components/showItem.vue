@@ -7,7 +7,7 @@
           <div class="items-right">
             <div>Total</div>
             <div>
-              <span class="num">12</span>
+              <span class="num">{{plantStatus.total}}</span>
               <span class="pcs">PCS</span>
             </div>
           </div>
@@ -17,7 +17,7 @@
           <div class="items-right">
             <div>Normal</div>
             <div>
-              <span class="num">12222</span>
+              <span class="num">{{plantStatus.normal}}</span>
               <span class="pcs">PCS</span>
             </div>
           </div>
@@ -25,9 +25,9 @@
         <div class="items flex-around">
           <i class="iconfont icon-fault"></i>
           <div class="items-right">
-            <div>Glitch</div>
+            <div>Abnormal</div>
             <div>
-              <span class="num">12</span>
+              <span class="num">{{plantStatus.abnormal}}</span>
               <span class="pcs">PCS</span>
             </div>
           </div>
@@ -95,6 +95,12 @@ export default {
   name: 'show-item',
   data () {
     return {
+      plantStatus: {
+        total: 0,
+        normal: 0,
+        abnormal: 0
+      },
+      incomeList: [],
       mapId: '' // 地图容器 若id相同的话只渲染一次
     }
   },
@@ -110,6 +116,17 @@ export default {
       let mp = new BMap.Map(this.mapId)
       mp.centerAndZoom(new BMap.Point(-118.24532, 34.05349), 11)
       mp.enableScrollWheelZoom(true)
+    },
+    // 获取所有电站正常 非正常 故障个数
+    async getPlantStatus () {
+      let { result } = await this.$axios({
+        url: '/plant/status/all'
+      })
+      if (result) {
+        this.plantStatus.total = result.total || 0
+        this.plantStatus.normal = result.normal || 0
+        this.plantStatus.abnormal = result.abnormal || 0
+      }
     }
   },
   asyncInit () {

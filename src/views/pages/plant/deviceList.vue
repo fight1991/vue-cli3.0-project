@@ -5,12 +5,12 @@
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
-            <el-select v-model="searchForm.aa">
-              <el-option label="所有" :value="1" :key="1"></el-option>
+            <el-select v-model="searchForm.status" placeholder="choose">
+              <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.bb" placeholder="电站名称"></el-input>
+            <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="search">reset</el-button>
@@ -45,9 +45,14 @@ export default {
   mixins: [deviceTableHead],
   data () {
     return {
+      statusList: [
+        { status: 0, label: 'all' },
+        { status: 1, label: 'normal' },
+        { status: 2, label: 'abnormal' }
+      ],
       searchForm: {
-        aa: '',
-        bb: ''
+        status: 0, // 0 全部 ，1 正常， 2 异常
+        name: ''
       },
       pagination: {
         pageSize: 10,

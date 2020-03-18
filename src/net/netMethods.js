@@ -17,12 +17,18 @@ function bussinessBundle (res, other, success) {
 
 const requests = {
   // 返回 promise
-  $axios ({ url, data = {}, method = 'get' }) {
-    if (method === 'get') {
-      return commonInstance.get(url, { params: data })
-    }
-    if (method === 'post') {
-      return commonInstance.post(url, data)
+  async $axios ({ url, data = {}, method = 'get', isLoad = true }) {
+    let params = method === 'get' ? { params: data } : data
+    // 无论resolve还是reject都返回一个结果
+    try {
+      if (isLoad) store.commit('changeLoading', true)
+      let res = await commonInstance[method](url, params)
+      if (isLoad) store.commit('changeLoading', false)
+      return res
+    } catch (err) {
+      // console.log(err)
+      if (isLoad) store.commit('changeLoading', false)
+      return {}
     }
   },
   // 自定义请求

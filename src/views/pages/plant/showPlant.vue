@@ -1,6 +1,6 @@
 <template>
   <section class="sys-main">
-    <show-item></show-item>
+    <show-item ref="plantStatus"></show-item>
     <!-- 表格区域 -->
     <div class="list-container bg-c">
       <div class="title border-line">电站列表</div>
@@ -87,7 +87,10 @@ export default {
     }
   },
   created () {
-    console.log(this.test)
+
+  },
+  mounted () {
+    this.$refs.plantStatus.getPlantStatus()
   },
   methods: {
     search () {

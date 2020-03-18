@@ -143,13 +143,21 @@ export default {
       powerRadio: 'day',
       dateValue: '',
       dateType: 'Day',
-      echartType: 'power' // 默认显示功率图表
+      echartType: 'power', // 默认显示功率图表
+      abnormal: {
+        warning: 0,
+        fault: 0
+      },
+      device: {
+        normal: 0,
+        warning: 0,
+        fault: 0,
+        offline: 0
+      }
     }
   },
   computed: {
-    disabledDate () {
-      return this.dateValue.getTime() > Date.now()
-    }
+
   },
   created () {
     this.setDefaultTime()
@@ -161,14 +169,17 @@ export default {
     echartChange (type) {
 
     },
+    // 切换日期控件类型
     selectDateType (command) {
       this.dateType = command
       this.setDefaultTime()
     },
+    // 设置默认事件
     setDefaultTime () {
       let dateP = this.dateType === 'Day' ? 'yyyy-MM' : 'yyyy'
       this.dateValue = formatDate(new Date(), dateP)
     },
+    // 计算月份 年份
     computeDate (type) {
       let currentTime = new Date(this.dateValue)
       if (this.dateType === 'Day') { // 月份增减
@@ -186,11 +197,23 @@ export default {
         this.dateValue = tempYear.toString()
       }
     },
+    // 小于10补0
     checkMonth (i) {
       if (i < 10) {
         i = '0' + i
       }
       return i
+    },
+    // 获取单个电站的状态
+    async getSingleStatus (id) {
+      let { result } = await this.$axios({
+        url: '/plant/status/single',
+        data: {
+          stationID: id
+        }
+      })
+      this.abnormal = result.abnormal
+      this.device = result.device
     }
   }
 }

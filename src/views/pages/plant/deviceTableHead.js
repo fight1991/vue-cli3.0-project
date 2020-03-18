@@ -57,7 +57,8 @@ export default {
           label: '设备状态',
           prop: 'status',
           checked: true,
-          slotName: 'status'
+          slotName: 'status',
+          fixed: 'right'
         }
       ]
     }
