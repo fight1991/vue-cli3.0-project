@@ -52,9 +52,9 @@ router.beforeEach(async (to, from, next) => {
       let _this = router.app
       if (!_this.$options.store.state.isFirst) return
       // 用户信息查询
-      let { result: userInfo } = await _this.$axios({ url: '/user/info' })
+      let { result: userInfo } = await _this.$axios({ url: '/v0/user/info' })
       // 权限查询
-      let { result: accessStatus } = await _this.$axios({ url: '/user/access' })
+      let { result: accessStatus } = await _this.$axios({ url: '/v0/user/access' })
       if (userInfo) {
         _this.$options.store.commit('setUserInfo', userInfo)
         storage.setUserInfo(userInfo)

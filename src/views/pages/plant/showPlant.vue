@@ -105,7 +105,7 @@ export default {
     // 获取电站列表
     getPlantList (pagination) {
       this.$post({
-        url: '/plant/list',
+        url: '/v0/plant/list',
         data: {
           ...pagination,
           condition: this.searchForm
@@ -127,7 +127,7 @@ export default {
       }).then(() => true).catch(() => false)
       if (!res) return
       this.$post({
-        url: '/plant/delete',
+        url: '/v0/plant/delete',
         data: {
           stationID: id
         },

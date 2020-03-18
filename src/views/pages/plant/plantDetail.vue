@@ -13,20 +13,20 @@
             <div class="title border-line" slot="header">Device status</div>
             <div class="progress-container">
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Normal</span><span style="color:#67c23a">8</span></div>
-                <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="33" color="#67c23a"></el-progress>
+                <div class="status-text f12 flex-between"><span>Normal</span><span style="color:#67c23a">{{device.normal}}</span></div>
+                <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="percentMethod(device.normal)" color="#67c23a"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Alarm</span><span style="color:#e6a23c">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#e6a23c"></el-progress>
+                <div class="status-text f12 flex-between"><span>Alarm</span><span style="color:#e6a23c">{{device.warning}}</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.warning)" color="#e6a23c"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Abnormal</span><span style="color:#f56c6c">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#f56c6c"></el-progress>
+                <div class="status-text f12 flex-between"><span>Abnormal</span><span style="color:#f56c6c">{{device.fault}}</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.fault)" color="#f56c6c"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">12</span></div>
-                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="45" color="#909399"></el-progress>
+                <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">{{device.offline}}</span></div>
+                <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.offline)" color="#909399"></el-progress>
               </div>
             </div>
           </el-card>
@@ -140,32 +140,50 @@ export default {
   },
   data () {
     return {
+      plantId: '',
       powerRadio: 'day',
       dateValue: '',
       dateType: 'Day',
       echartType: 'power', // 默认显示功率图表
-      abnormal: {
-        warning: 0,
-        fault: 0
-      },
       device: {
         normal: 0,
         warning: 0,
         fault: 0,
         offline: 0
+      },
+      echartUrl: {
+        day: '/v0/plant/history/single/report/day', // 日报表url
+        month: '/v0/plant/history/single/report/month', // 月报表url
+        year: '/v0/plant/history/single/report/year' // 年报表url
       }
     }
   },
   computed: {
-
+    deviceTotal () {
+      let total = 0
+      Object.values(this.device).forEach(value => {
+        total += Number(value)
+      })
+      return total
+    }
   },
   created () {
+    let { plantId } = this.$route.query
+    if (plantId) {
+      this.plantId = plantId
+      this.getSingleStatus(plantId)
+    }
     this.setDefaultTime()
   },
   mounted () {
 
   },
   methods: {
+    // 百分比取整数
+    percentMethod (value) {
+      if (this.deviceTotal === 0) return 0
+      return (value / this.deviceTotal) * 100
+    },
     echartChange (type) {
 
     },
@@ -207,13 +225,56 @@ export default {
     // 获取单个电站的状态
     async getSingleStatus (id) {
       let { result } = await this.$axios({
-        url: '/plant/status/single',
+        url: '/v0/plant/status/single',
         data: {
           stationID: id
         }
       })
-      this.abnormal = result.abnormal
-      this.device = result.device
+      if (result && result.abnormal) {
+        let { warning, fault } = result.abnormal
+        this.normalData.title.text = warning + fault
+        this.normalData.series[0].data = [
+          { value: warning, name: 'Alarm' },
+          { value: fault, name: 'Glitch' }
+        ]
+      }
+      if (result && result.device) {
+        this.device = result.device
+      }
+    },
+    // 折现图表数据
+    async getLineData () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/history/single/raw/day',
+        method: 'post',
+        data: {
+          year: new Date().getFullYear(),
+          month: new Date().getMonth(),
+          day: new Date().getDate(),
+          parameters: ['power']
+        }
+      })
+      if (result && result.data && result.data.length > 0) {
+        let xAxis = result.data.map(v => v.datetime)
+        let value = result.data.map(v => v.value)
+        this.echartData.power.xAxis.data = xAxis
+        this.echartData.power.series[0].data = value
+      }
+    },
+    // 柱状图表数据
+    async getBarData (type) {
+      let { result } = this.$axios({
+        url: this.echartUrl[type],
+        data: {
+          year: new Date().getFullYear(),
+          month: new Date().getMonth(),
+          day: new Date().getDate(),
+          parameters: ['generation', 'feed-in', 'loads', 'grid-consumption']
+        }
+      })
+      if (result && result.data && result.data.length > 0) {
+        this.echartData.elec.dataset.source = result.data
+      }
     }
   }
 }

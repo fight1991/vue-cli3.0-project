@@ -162,7 +162,7 @@ export default {
         tempData.contact = area + '-' + contact
       }
       this.$post({
-        url: '/user/register',
+        url: '/v0/user/register',
         data: {
           ...tempData,
           password: md5(tempData.password)

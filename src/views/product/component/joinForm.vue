@@ -144,7 +144,7 @@ export default {
     },
     async checkSN (value) {
       let { result } = await this.$axios({
-        url: '/device/checksn',
+        url: '/v0/device/checksn',
         method: 'post',
         data: {
           sn: [value]

@@ -145,7 +145,7 @@ export default {
         tempData.account = area + '-' + account
       }
       this.$post({
-        url: '/user/login',
+        url: '/v0/user/login',
         data: {
           ...tempData,
           password: md5(tempData.password)
@@ -178,7 +178,7 @@ export default {
     },
     // 获取用户信息
     async getUserInfo () {
-      let { result } = await this.$axios({ url: '/user/info' })
+      let { result } = await this.$axios({ url: '/v0/user/info' })
       if (result) {
         this.$store.commit('setUserInfo', result)
         storage.setUserInfo(result)

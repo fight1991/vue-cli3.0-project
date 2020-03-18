@@ -18,7 +18,7 @@ export default {
     sendCode ({ contact, contactType }, callback) {
       if (this.timer) return
       this.$post({
-        url: '/user/sendcaptcha',
+        url: '/v0/user/sendcaptcha',
         data: {
           contact,
           contactType

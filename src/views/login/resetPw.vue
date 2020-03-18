@@ -157,7 +157,7 @@ export default {
         tempData.account = area + '-' + account
       }
       this.$post({
-        url: '/user/reset',
+        url: '/v0/user/reset',
         data: {
           ...tempData,
           newPassword: md5(tempData.newPassword)

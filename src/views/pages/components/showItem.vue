@@ -120,7 +120,7 @@ export default {
     // 获取所有电站正常 非正常 故障个数
     async getPlantStatus () {
       let { result } = await this.$axios({
-        url: '/plant/status/all'
+        url: '/v0/plant/status/all'
       })
       if (result) {
         this.plantStatus.total = result.total || 0

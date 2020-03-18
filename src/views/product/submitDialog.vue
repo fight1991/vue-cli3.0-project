@@ -68,7 +68,7 @@ export default {
     },
     // 获取组织列表
     async getOrgansList (tag) {
-      let { result } = await this.$axios({ url: '/organs/list', data: { organType: tag } })
+      let { result } = await this.$axios({ url: '/v0/organs/list', data: { organType: tag } })
       this.organList = result || []
     },
     // 创建 installer agent // 加入user agent installer
@@ -82,7 +82,7 @@ export default {
       let phone = submitData.details.area + '-' + submitData.details.phone
       submitData.details.phone = phone
       submitData.organType = this.$attrs.tag
-      let url = this.type === 'add' ? '/organs/register' : '/organs/join'
+      let url = this.type === 'add' ? 'v0/organs/register' : 'v0/organs/join'
       this.$post({
         url: url,
         data: submitData,

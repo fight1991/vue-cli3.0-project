@@ -74,7 +74,7 @@ export default {
       }).then(() => true).catch(() => false)
       if (!res) return
       this.$post({
-        url: '/user/logout',
+        url: '/v0/user/logout',
         success: () => {
           storage.removeLoginInfo()
           let { href } = this.$router.resolve({

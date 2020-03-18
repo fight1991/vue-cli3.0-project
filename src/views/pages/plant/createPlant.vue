@@ -181,7 +181,7 @@ export default {
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
       // 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
-      let url = this.opType === 'add' ? '/plant/create' : '/plant/update'
+      let url = this.opType === 'add' ? '/v0/plant/create' : '/v0/plant/update'
       this.$post({
         url: url,
         data: {
@@ -212,7 +212,7 @@ export default {
     remoteSN (item) {
       return new Promise((resolve, reject) => {
         this.$post({
-          url: '/device/checksn',
+          url: '/v0/device/checksn',
           data: [item],
           success: ({ result }) => {
             if (result && result[0].errno === 0) {
@@ -230,7 +230,7 @@ export default {
     // 查询电站信息
     async getStationInfo (stationID) {
       let { result } = await this.$axios({
-        url: '/plant​/get',
+        url: '/v0/plant​/get',
         data: {
           stationID
         }

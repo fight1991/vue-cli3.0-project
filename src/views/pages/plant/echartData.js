@@ -3,7 +3,7 @@ export default {
     return {
       normalData: { // 今日异常统计
         title: {
-          text: '10',
+          text: 0,
           textAlign: 'center',
           textStyle: {
             color: '#666'
@@ -52,8 +52,8 @@ export default {
               }
             },
             data: [
-              { value: 3, name: 'Alarm' },
-              { value: 7, name: 'Glitch' }
+              { value: 0, name: 'Alarm' },
+              { value: 0, name: 'Glitch' }
             ]
           }
         ]
@@ -109,12 +109,12 @@ export default {
           },
           tooltip: {},
           dataset: {
-            dimensions: ['product', '发电量', '并网发电量', '负载损耗', '电网损耗'],
+            dimensions: ['axis', 'generation', 'feed-in', 'loads', 'grid consumption'],
             source: [
-              { product: '01', '发电量': 43.3, '并网发电量': 85.8, '负载损耗': 93.7, '电网损耗': 93.7 },
-              { product: '02', '发电量': 83.1, '并网发电量': 73.4, '负载损耗': 55.1, '电网损耗': 93.7 },
-              { product: '03', '发电量': 86.4, '并网发电量': 65.2, '负载损耗': 82.5, '电网损耗': 93.7 },
-              { product: '04', '发电量': 72.4, '并网发电量': 53.9, '负载损耗': 39.1, '电网损耗': 93.7 }
+              { axis: '01', 'generation': 43.3, 'feed-in': 85.8, 'loads': 93.7, 'grid consumption': 93.7 },
+              { axis: '02', 'generation': 83.1, 'feed-in': 73.4, 'loads': 55.1, 'grid consumption': 93.7 },
+              { axis: '03', 'generation': 86.4, 'feed-in': 65.2, 'loads': 82.5, 'grid consumption': 93.7 },
+              { axis: '04', 'generation': 72.4, 'feed-in': 53.9, 'loads': 39.1, 'grid consumption': 93.7 }
             ]
           },
           xAxis: { type: 'category' },
