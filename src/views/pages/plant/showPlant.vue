@@ -21,41 +21,22 @@
         </el-form>
       </search-bar>
       <func-bar>
-        <el-table :data="tableData" :max-height="400" size="mini">
-          <!-- 实时数据开始 -->
-          <el-table-column align="center" label="status" width="60px" prop="name">
-            <template slot-scope="scope">
-              <i class="el-icon-warning" v-show="scope.row.status === 1"></i>
-              <i class="el-icon-success" v-show="scope.row.status === 2"></i>
+        <common-table :tableHeadData="tableHeadData" :border="false" :tableList="resultList">
+          <template v-slot:status="{row}">
+            <i class="el-icon-warning" v-show="row.status === 1"></i>
+            <i class="el-icon-success" v-show="row.status === 2"></i>
+          </template>
+          <template v-slot:createdDate="{row}">
+              {{ row.createdDate | formatDate }}
             </template>
-          </el-table-column>
-          <!-- 实时数据结束 -->
-          <el-table-column align="center" label="name" prop="name" width="60"></el-table-column>
-          <el-table-column align="center" label="account" prop="owner" width="80"></el-table-column>
-          <el-table-column align="center" label="country" prop="country" width="80"></el-table-column>
-          <el-table-column align="center" label="city" prop="city" width="80"></el-table-column>
-          <el-table-column align="center" label="equipment quantity" prop="quantity" min-width="80" :render-header="renderHead">
-          </el-table-column>
-          <el-table-column align="center" label="installed capacity" prop="capacity" min-width="80" :render-header="renderHead"></el-table-column>
-          <!-- 实时数据开始-->
-          <el-table-column align="center" label="generating power" prop="power" min-width="80" :render-header="renderHead"></el-table-column>
-          <el-table-column align="center" label="generation today" prop="generationToday" min-width="80" :render-header="renderHead"></el-table-column>
-          <!-- 实时数据结束 -->
-          <el-table-column align="center" label="station time" prop="createdDate" min-width="150">
-            <template slot-scope="scope">
-              {{ scope.row.createdDate | formatDate }}
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="operation" width="100px" fixed="right">
-            <template slot-scope="scope">
-              <div class="flex-between table-op-btn">
-                <i title="look" class="iconfont icon-look" @click="goToDetail('look',scope.row.stationID)"></i>
-                <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',scope.row.stationID)"></i>
-                <i title="delete" class="iconfont icon-delete" @click="deletePlant(scope.row.stationID)"></i>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
+          <template v-slot:op="{row}">
+            <div class="flex-between table-op-btn">
+              <i title="look" class="iconfont icon-look" @click="goToDetail('look',row.stationID)"></i>
+              <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',row.stationID)"></i>
+              <i title="delete" class="iconfont icon-delete" @click="deletePlant(row.stationID)"></i>
+            </div>
+          </template>
+        </common-table>
       </func-bar>
       <div class="states-row flex-between">
         <span><i class="el-icon-success"></i> Normal: 8</span>
@@ -67,10 +48,12 @@
 </template>
 <script>
 import showItem from '../components/showItem'
+import tableHead from './tableHead'
 export default {
   components: {
     showItem
   },
+  mixins: [tableHead],
   data () {
     return {
       statusList: [
@@ -87,10 +70,11 @@ export default {
         currentPage: 1,
         totalPages: 40
       },
-      tableData: [
+      resultList: [
         {
           name: 'zs',
           age: 18,
+          city: 33333,
           stationID: '1'
 
         },
@@ -163,7 +147,7 @@ export default {
         })
       }
     },
-    // 定义表头
+    // 定义表头溢出省略号
     renderHead (h, { column }) {
       return (
         <el-tooltip
@@ -175,6 +159,10 @@ export default {
           <div>{column.label}</div>
         </el-tooltip>
       )
+    },
+    // 普通显示
+    renderCommon (h, { column }) {
+      return column.label
     }
   }
 }

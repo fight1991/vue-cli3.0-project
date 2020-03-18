@@ -28,7 +28,8 @@
           :prop="item.prop || ''"
           :label="item.label"
           :align="item.align || 'center'"
-          :min-width="item.width || '100'"
+          :min-width="item.width || '80'"
+          :render-header="item.renderHeader ? renderHead : renderCommon"
         ></el-table-column>
         <el-table-column v-else
           :key="'table' + index"
@@ -36,7 +37,8 @@
           :prop="item.prop || ''"
           :label="item.label"
           :align="item.align || 'center'"
-          :min-width="item.width || '100'">
+          :min-width="item.width || '80'"
+          :render-header="item.renderHeader ? renderHead : renderCommon">
           <template slot-scope="scope">
             <!-- 具名插槽 -->
             <slot :name="item.slotName || 'default'" :row="scope.row"></slot>
@@ -80,7 +82,7 @@ export default {
     checked: {
       type: Boolean,
       default: () => {
-        return true
+        return false
       }
     },
     clearSelection: {
@@ -92,7 +94,7 @@ export default {
     selectBox: {
       type: Boolean,
       default: () => {
-        return true
+        return false
       }
     },
     tableHeadData: {
@@ -139,6 +141,23 @@ export default {
         this.selection.push(row)
       }
       this.$emit('select', this.selection)
+    },
+    // 定义表头溢出省略号
+    renderHead (h, { column }) {
+      return (
+        <el-tooltip
+          class="text-cut"
+          effect="dark"
+          content={column.label}
+          placement="top"
+        >
+          <div>{column.label}</div>
+        </el-tooltip>
+      )
+    },
+    // 普通显示
+    renderCommon (h, { column }) {
+      return column.label
     }
   }
 }
