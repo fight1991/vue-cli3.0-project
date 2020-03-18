@@ -21,7 +21,7 @@
         </el-form>
       </search-bar>
       <func-bar>
-        <common-table :tableHeadData="tableHeadData" :border="false" :tableList="resultList">
+        <common-table :tableHeadData="plantTableHead" :border="false" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-warning" v-show="row.status === 1"></i>
             <i class="el-icon-success" v-show="row.status === 2"></i>
@@ -48,12 +48,12 @@
 </template>
 <script>
 import showItem from '../components/showItem'
-import tableHead from './tableHead'
+import plantTableHead from './plantTableHead'
 export default {
   components: {
     showItem
   },
-  mixins: [tableHead],
+  mixins: [plantTableHead],
   data () {
     return {
       statusList: [
@@ -123,7 +123,16 @@ export default {
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
-      console.log('删除api')
+      this.$post({
+        url: '/plant/delete',
+        data: {
+          stationID: id
+        },
+        success: () => {
+          this.$message.success('succcessful')
+          this.search()
+        }
+      })
     },
     // 页面跳转
     goToDetail (type, id) {

@@ -20,35 +20,14 @@
       </search-bar>
       <!-- 列表查询区域 -->
       <func-bar>
-        <el-table :data="tableData" :max-height="400" size="mini">
-          <el-table-column align="center" label="逆变器sn" prop="age"></el-table-column>
-          <el-table-column align="center" label="模块sn" prop="age"></el-table-column>
-          <el-table-column align="center" label="电站" prop="age"></el-table-column>
-          <el-table-column align="center" label="账户" prop="age"></el-table-column>
-          <el-table-column align="center" label="机型" prop="age"></el-table-column>
-          <el-table-column align="center" label="发电功率" prop="age"></el-table-column>
-          <el-table-column align="center" label="近日发电量" prop="age"></el-table-column>
-          <el-table-column align="center" label="累计发电量" prop="age"></el-table-column>
-          <el-table-column align="center" label="并网时间" prop="age"></el-table-column>
-          <el-table-column align="center" label="国家" prop="age"></el-table-column>
-          <el-table-column align="center" label="设备状态" prop="age">
-            <template>
-              <i class="el-icon-warning"></i>
-              <i class="el-icon-success"></i>
-              <i class="el-icon-error"></i>
-              <i class="el-icon-remove"></i>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="操作" prop="age" width="100px" fixed="right">
-            <template slot-scope="scope">
-              <div class="flex-between table-op-btn">
-                <i title="look" class="iconfont icon-look" @click="goToDetail('look',scope.row.id)"></i>
-                <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',scope.row.id)"></i>
-                <i title="delete" class="iconfont icon-delete" @click="deletePlant(scope.row.id)"></i>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
+        <common-table :tableHeadData="deviceTableHead" :border="false" :tableList="resultList">
+          <template v-slot:status="{row}">
+            <i class="el-icon-warning"></i>
+            <i class="el-icon-success"></i>
+            <i class="el-icon-error"></i>
+            <i class="el-icon-remove"></i>
+          </template>
+        </common-table>
       </func-bar>
       <div class="states-row flex-between">
         <span><i class="el-icon-success"></i> Normal: 8</span>
@@ -61,10 +40,9 @@
   </section>
 </template>
 <script>
+import deviceTableHead from './deviceTableHead'
 export default {
-  components: {
-
-  },
+  mixins: [deviceTableHead],
   data () {
     return {
       searchForm: {
@@ -73,10 +51,10 @@ export default {
       },
       pagination: {
         pageSize: 10,
-        pageIndex: 1,
-        total: 40
+        currentPage: 1,
+        totalPages: 40
       },
-      tableData: [
+      resultList: [
         {
           name: 'zs',
           age: 18

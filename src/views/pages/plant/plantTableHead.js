@@ -1,7 +1,8 @@
+
 export default {
   data () {
     return {
-      tableHeadData: [
+      plantTableHead: [
         { // 实时数据 状态
           label: 'status',
           prop: 'status',
