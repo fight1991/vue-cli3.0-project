@@ -152,9 +152,9 @@ export default {
         offline: 0
       },
       echartUrl: {
-        day: '/v0/plant/history/single/report/day', // 日报表url
-        month: '/v0/plant/history/single/report/month', // 月报表url
-        year: '/v0/plant/history/single/report/year' // 年报表url
+        Hours: '/v0/plant/history/single/report/day', // 日报表url // 获取每个小时
+        Day: '/v0/plant/history/single/report/month', // 月报表url 获取每天数据
+        Month: '/v0/plant/history/single/report/year' // 年报表url 获取每个月内数据
       }
     }
   },
@@ -172,6 +172,8 @@ export default {
     if (plantId) {
       this.plantId = plantId
       this.getSingleStatus(plantId)
+      this.getLineData()
+      this.getBarData(this.dateType)
     }
     this.setDefaultTime()
   },
@@ -191,6 +193,7 @@ export default {
     selectDateType (command) {
       this.dateType = command
       this.setDefaultTime()
+      this.getBarData(command)
     },
     // 设置默认事件
     setDefaultTime () {
@@ -214,6 +217,8 @@ export default {
         if (tempYear > new Date().getFullYear()) return
         this.dateValue = tempYear.toString()
       }
+      // 发送请求
+      this.getBarData(this.dateType)
     },
     // 小于10补0
     checkMonth (i) {
@@ -251,6 +256,7 @@ export default {
           year: new Date().getFullYear(),
           month: new Date().getMonth(),
           day: new Date().getDate(),
+          stationID: this.plantId,
           parameters: ['power']
         }
       })
@@ -263,12 +269,15 @@ export default {
     },
     // 柱状图表数据
     async getBarData (type) {
+      let dateArr = this.dateValue.split('-')
       let { result } = this.$axios({
         url: this.echartUrl[type],
+        method: 'post',
         data: {
-          year: new Date().getFullYear(),
-          month: new Date().getMonth(),
-          day: new Date().getDate(),
+          year: dateArr[0],
+          month: dateArr[1] || '',
+          day: dateArr[2] || '',
+          stationID: this.plantId,
           parameters: ['generation', 'feed-in', 'loads', 'grid-consumption']
         }
       })
