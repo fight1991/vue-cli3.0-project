@@ -67,7 +67,6 @@
 export default {
   data () {
     return {
-      organList: [],
       dialogVisible: false,
       dataForm: {
         organName: '',
@@ -100,7 +99,7 @@ export default {
       }
     }
   },
-  props: ['tag'],
+  props: ['tag', 'organList'],
   created () {
 
   },

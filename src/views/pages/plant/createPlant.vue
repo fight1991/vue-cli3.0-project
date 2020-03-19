@@ -1,31 +1,31 @@
 <template>
   <section class="sys-main bg-c">
-    <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="100px">
-      <div class="title border-line">电站设置</div>
+    <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="120px">
+      <div class="title border-line">Plant</div>
       <div class="col-container">
         <el-row :gutter="40">
           <el-col :lg="12" :md="24">
-            <el-form-item label="电站名称" prop="details.name">
+            <el-form-item label="Plant name" prop="details.name">
               <el-input v-model="dataForm.details.name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="电站类型" prop="details.type">
+            <el-form-item label="Station type" prop="details.type">
               <el-input v-model="dataForm.details.type"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="国家" prop="details.country">
+            <el-form-item label="Country" prop="details.country">
               <el-input v-model="dataForm.details.country"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="城市" prop="details.city">
+            <el-form-item label="City" prop="details.city">
               <el-input v-model="dataForm.details.city"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="地址" prop="details.address">
+            <el-form-item label="Site address" prop="details.address">
               <el-input v-model="dataForm.details.address"></el-input>
             </el-form-item>
           </el-col>
@@ -40,31 +40,32 @@
             </el-form-item>
           </el-col> -->
           <el-col :lg="12" :md="24">
-            <el-form-item label="电价" prop="details.price">
+            <el-form-item label="Electricity price" prop="details.price">
               <el-select v-model="dataForm.details.price" style="width:100%">
-                <el-option v-for="item in powerList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+                <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </div>
-      <div class="title border-line">绑定设备</div>
+      <div class="title equipment border-line">Equipment <i class="el-add-icon el-icon-circle-plus-outline" @click="deviceAdd"></i></div>
       <div class="col-container devices">
         <el-row :gutter="40" v-for="(item, index) in dataForm.devices" :key="'index'+index">
           <el-col :span="10">
-            <el-form-item label="设备序列号" :prop="'devices.'+index+'.sn'" :rules="{required:true, validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')}, trigger: 'blur'}">
+            <el-form-item label="SN" label-width="60px" :prop="'devices.'+index+'.sn'" :rules="{required:true, validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')}, trigger: 'blur'}">
               <el-input v-model="item.sn"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="设备注册码" :prop="'devices.'+index+'.key'" :rules="{required:true, validator:(rule, value, callback)=>{checkSN(rule, value, callback, 'key', item)},trigger: 'blur'}">
+            <el-form-item label="Key" label-width="60px" :prop="'devices.'+index+'.key'" :rules="{required:true, validator:(rule, value, callback)=>{checkSN(rule, value, callback, 'key', item)},trigger: 'blur'}">
               <el-input v-model="item.key"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4" style="padding-left:0px">
             <span class="op-icon">
-              <i class="iconfont icon-delete" @click="deviceDelete(index)" v-show="!(index==0 && deleteBtn)"></i>
-              <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i>
+              <i class="iconfont icon-delete" @click="deviceDelete(index)"></i>
+              <!-- <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i> -->
+              <!-- v-show="!(index==0 && deleteBtn)" -->
             </span>
           </el-col>
         </el-row>
@@ -114,6 +115,7 @@ export default {
     }
   },
   created () {
+    this.getPriceList()
     let { opType } = this.$route.meta
     if (opType) {
       this.opType = opType || this.$route.query.opType
@@ -149,15 +151,26 @@ export default {
     deviceAdd () {
       this.dataForm.devices.push({ ...this.templateDevice })
     },
+    // 获取电价列表
+    async getPriceList () {
+      let { result } = await this.$axios({
+        url: '/plant/statistics/pricelist'
+      })
+      if (result && result.length > 0) {
+        this.powerList = result
+      }
+    },
     // 设备删除
     async deviceDelete (index) {
       if (index === 0 && this.dataForm.devices.length === 1) {
-        let res = await this.$confirm('Are you sure you want to delete it?', 'tip', {
-          confirmButtonText: 'confirm',
-          cancelButtonText: 'cancel',
-          type: 'warning'
-        }).then(() => true).catch(() => false)
-        if (!res) return
+        if (this.dataForm.devices[0].sn) {
+          let res = await this.$confirm('Are you sure you want to delete it?', 'tip', {
+            confirmButtonText: 'confirm',
+            cancelButtonText: 'cancel',
+            type: 'warning'
+          }).then(() => true).catch(() => false)
+          if (!res) return
+        }
         this.dataForm.devices = [{ ...this.templateDevice }]
       } else {
         this.dataForm.devices.splice(index, 1)
@@ -196,12 +209,12 @@ export default {
     // 校验sn
     async checkSN (rule, value, callback, type, item) {
       if (!value) {
-        callback(new Error(type + 'is invalid'))
+        callback(new Error(type + ' is invalid'))
         return
       }
       if (type === 'key') { // 远程校验sn是否合法
         let res = await this.remoteSN(item)
-        if (!res) {
+        if (!res.errno === 0) {
           callback(new Error('sn or key is invalid'))
         }
         return
@@ -265,7 +278,26 @@ export default {
     cursor: pointer;
     &:hover {
       background-color: #f5f5f5;
+      transform: scale(1.2);
+      transform-origin: center;
     }
+  }
+}
+.equipment {
+  display: flex;
+  align-items: center;
+}
+.el-add-icon {
+  text-indent: 0px;
+  font-size: 18px;
+  color: @sys-main-header;
+  padding: 0 2px;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: all .5s;
+  &:hover {
+    transform: scale(1.5);
+    transform-origin: center;
   }
 }
 .sn-key {

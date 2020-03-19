@@ -4,7 +4,10 @@
       <el-row :gutter="15">
         <el-col :span="12">
           <el-card shadow="never">
-            <div class="title border-line" slot="header">Today's abnormal</div>
+            <div class="title border-line" slot="header">
+              Today's abnormal
+              <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
+            </div>
             <el-echart :datas="normalData" height="200px"></el-echart>
           </el-card>
         </el-col>
@@ -128,18 +131,21 @@
         </div>
       </div>
     </div>
+    <today-abnormal :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
 import echartData from './echartData'
 import { formatDate } from '@/util'
+import todayAbnormal from './todayAbnormal'
 export default {
   mixins: [echartData],
   components: {
-
+    todayAbnormal
   },
   data () {
     return {
+      abnormalVisible: false,
       plantId: '',
       powerRadio: 'day',
       dateValue: '',
@@ -352,5 +358,10 @@ export default {
       font-weight: bold;
     }
   }
+}
+.el-icon-more {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>

@@ -56,9 +56,9 @@ export default {
       this.$emit('update:visible', false)
     },
     dialogOpen () {
-      // 查询代理商
+      // 新增安装商,查询代理商, 加入安装商,查询安装商
       if (this.$attrs.tag === 'installer') {
-        this.getOrgansList('agent')
+        this.type === 'add' ? this.getOrgansList('agent') : this.getOrgansList('installer')
       }
       this.cancelForm()
     },
@@ -89,8 +89,9 @@ export default {
         success: res => {
           let access = this.access[this.$attrs.tag]
           this.$store.commit('setAccess', access)
-          this.$message.success('successful')
+          this.$message.success('successful, require a re-login')
           this.dialogVisible = false
+          this.$router.push('/login')
         }
       })
     }
