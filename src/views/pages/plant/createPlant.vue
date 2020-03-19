@@ -51,13 +51,14 @@
       <div class="title equipment border-line">Equipment <i class="el-add-icon el-icon-circle-plus-outline" @click="deviceAdd"></i></div>
       <div class="col-container devices">
         <el-row :gutter="40" v-for="(item, index) in dataForm.devices" :key="'index'+index">
+          <!-- validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')} -->
           <el-col :span="10">
-            <el-form-item label="SN" label-width="60px" :prop="'devices.'+index+'.sn'" :rules="{required:true, validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')}, trigger: 'blur'}">
+            <el-form-item label="SN" label-width="60px" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
               <el-input v-model="item.sn"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="Key" label-width="60px" :prop="'devices.'+index+'.key'" :rules="{required:true, validator:(rule, value, callback)=>{checkSN(rule, value, callback, 'key', item)},trigger: 'blur'}">
+            <el-form-item label="Key" label-width="60px" :prop="'devices.'+index+'.key'" :rules="{required:true, message: 'key is invalid', trigger: 'blur'}">
               <el-input v-model="item.key"></el-input>
             </el-form-item>
           </el-col>
@@ -66,6 +67,7 @@
               <i class="iconfont icon-delete" @click="deviceDelete(index)"></i>
               <!-- <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i> -->
               <!-- v-show="!(index==0 && deleteBtn)" -->
+              <i class="el-icon-error" v-show="item.isPass !== 1"></i>
             </span>
           </el-col>
         </el-row>
@@ -73,8 +75,17 @@
     </el-form>
     <el-row class="foot-btn" type="flex" justify="center" v-if="opType!=='look'">
       <el-button size="mini" @click="cancel">Cancel</el-button>
-      <el-button size="mini" @click="createAdd" type="primary">{{opType=='add'?'New':'Edit'}}</el-button>
+      <el-button size="mini" @click="confirmBtn" type="primary">{{opType=='add'?'New':'Edit'}}</el-button>
     </el-row>
+    <el-dialog
+      title="Error List"
+      :visible.sync="errVisible">
+      <div v-for="(item, index) in errorList" :key="'index'+index">{{item.sn}}</div>
+      <el-row type="flex" justify="center">
+        <el-button size="mini" @click="dialogCancel">Cancel</el-button>
+        <el-button size="mini" type="primary" @click="dialogConfirm">Go on</el-button>
+      </el-row>
+    </el-dialog>
   </section>
 </template>
 <script>
@@ -84,9 +95,11 @@ export default {
       opType: 'add', // 记录操作类型 add创建, look查看 edit编辑
       stationID: '', // 电站id
       snIsPass: true,
+      errVisible: false,
+      snResult: [], // sn校验的结果
       dataForm: {
         devices: [
-          { sn: '', key: '' }
+          { sn: '', key: '', isPass: 1 }
         ],
         details: {
           name: '',
@@ -99,7 +112,8 @@ export default {
       },
       templateDevice: {
         sn: '',
-        key: ''
+        key: '',
+        isPass: 1
       },
       rules: {
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
@@ -128,6 +142,12 @@ export default {
   computed: {
     deleteBtn () { // 绑定的设备length为1 且 设备序列号或注册码为空不显示删除按钮
       return this.dataForm.devices.length === 1 && !this.dataForm.devices[0].sn
+    },
+    isAllPass () { // 所有sn校验成功
+      return this.snResult.length > 0 && this.snResult.every(v => v.errno === 0)
+    },
+    errorList () {
+      return this.snResult.filter(v => v.errno !== 0)
     }
   },
   methods: {
@@ -176,6 +196,20 @@ export default {
         this.dataForm.devices.splice(index, 1)
       }
     },
+    // dialog取消
+    dialogCancel () {
+      this.snResult.forEach((v, i) => {
+        if (v.errno !== 0) {
+          this.dataForm.devices[i].isPass = 0
+        }
+      })
+      this.errVisible = false
+    },
+    // dialog中的确认
+    dialogConfirm () {
+      this.errVisible = false
+      this.creatPlant()
+    },
     // 取消按钮
     async cancel () {
       let res = await this.$confirm('Are you sure you want to cancel?', 'tip', {
@@ -188,19 +222,29 @@ export default {
       this.$refs.dataForm.clearValidate()
     },
     // 新建电站 / 编辑电站
-    createAdd () {
+    async confirmBtn () {
       // 表单必填项校验
       let isPass = true
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
-      // 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
+      await this.remoteSN(...this.dataForm.devices)
+      // 有的sn校验失败
+      console.log(this.isAllPass)
+      if (!this.isAllPass) {
+        this.errVisible = true
+      } else {
+        this.creatPlant()
+      }
+    },
+    // 创建电站
+    creatPlant () {
       let url = this.opType === 'add' ? '/v0/plant/create' : '/v0/plant/update'
       this.$post({
         url: url,
         data: {
           ...this.dataForm
         },
-        success: async ({ result }) => {
+        success: ({ result }) => {
           this.$message.success('successful')
           this.backRoute('bus-plant-view')
         }
@@ -221,24 +265,17 @@ export default {
       }
       callback()
     },
-    // 远程校验sn
-    remoteSN (item) {
-      return new Promise((resolve, reject) => {
-        this.$post({
-          url: '/v0/device/checksn',
-          data: [item],
-          success: ({ result }) => {
-            if (result && result[0].errno === 0) {
-              resolve(true)
-            } else {
-              // eslint-disable-next-line prefer-promise-reject-errors
-              resolve(false)
-            }
-          },
-          other: reject,
-          error: reject
-        })
+    // 远程校验sn 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
+    async remoteSN (item) {
+      let { result } = await this.$axios({
+        method: 'post',
+        url: '/v0/device/checksn',
+        data: [item]
       })
+      if (result && result.length > 0) {
+        this.snResult = result
+      }
+      return true
     },
     // 查询电站信息
     async getStationInfo (stationID) {
@@ -282,6 +319,12 @@ export default {
       transform-origin: center;
     }
   }
+}
+.el-icon-error {
+  font-size: 20px;
+  line-height: 28px;
+  padding: 0 2px;
+  color: #F56C6C;
 }
 .equipment {
   display: flex;
