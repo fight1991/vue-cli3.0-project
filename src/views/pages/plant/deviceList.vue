@@ -31,9 +31,9 @@
       </func-bar>
       <div class="states-row flex-between">
         <span><i class="el-icon-success"></i> Normal: 8</span>
-        <span><i class="el-icon-warning"></i> alarm: 8</span>
+        <span><i class="el-icon-warning"></i> Alarm: 8</span>
         <span><i class="el-icon-error"></i> Glitch: 8</span>
-        <span><i class="el-icon-remove"></i> offline: 8</span>
+        <span><i class="el-icon-remove"></i> Offline: 8</span>
       </div>
       <page-box :pagination="pagination"></page-box>
     </div>
@@ -87,7 +87,7 @@ export default {
 .states-row {
   width: 300px;
   font-size: 12px;
-  padding: 10px;
+  padding: 10px 0 0 10px;
 }
 .el-icon-warning {
   color: #E6A23C;

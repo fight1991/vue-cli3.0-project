@@ -40,7 +40,7 @@
       </func-bar>
       <div class="states-row flex-between">
         <span><i class="el-icon-success"></i> Normal: 8</span>
-        <span><i class="el-icon-warning"></i> Glitch: 8</span>
+        <span><i class="el-icon-warning"></i> Abnormal: 8</span>
       </div>
       <page-box :pagination="pagination" @change="getPlantList"></page-box>
     </div>
@@ -186,9 +186,9 @@ export default {
   border-bottom: 1px solid #f5f5f5;
 }
 .states-row {
-  width: 150px;
+  width: 170px;
   font-size: 12px;
-  padding: 10px;
+  padding: 10px 0 0 10px;
 }
 .el-icon-warning {
   color: #E6A23C;
