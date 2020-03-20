@@ -274,7 +274,10 @@ export default {
       let { result } = await this.$axios({
         method: 'post',
         url: '/v0/device/checksn',
-        data: [item]
+        data: {
+          type: 1,
+          devices: [item]
+        }
       })
       if (result && result.length > 0) {
         this.snResult = result

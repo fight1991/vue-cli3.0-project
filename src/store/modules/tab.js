@@ -69,7 +69,9 @@ export default {
       let index = state.tabList.findIndex(v => v.tabId === state.currentTab)
       state.tabList.splice(index, 1)
       if (typeof routerInfo === 'string') {
-        router.push(routerInfo)
+        router.push({
+          name: routerInfo
+        })
       }
       if (typeof routerInfo === 'object') {
         router.push({

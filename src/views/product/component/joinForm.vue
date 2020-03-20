@@ -8,9 +8,16 @@
       </el-col>
       <!-- 终端用户sn号 -->
       <el-col :span="12" v-if="tag=='user'">
-        <el-form-item label="SN" prop="sn" label-width="100px">
-          <el-input v-model="dataForm.sn"></el-input>
-        </el-form-item>
+        <el-col :span="16" style="padding:0px">
+          <el-form-item label="SN-Key" prop="sn" label-width="100px">
+            <el-input v-model="dataForm.sn" placeholder="sn"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8" style="padding:0px 0px 0px 5px">
+          <el-form-item prop="key" label-width="0px">
+            <el-input v-model="dataForm.key" placeholder="key"></el-input>
+          </el-form-item>
+        </el-col>
       </el-col>
       <!-- 安装商选择安装商 / 代理商选择代理商 -->
       <el-col :span="12" v-else>
@@ -71,7 +78,8 @@ export default {
       dataForm: {
         organName: '',
         organType: '',
-        sn: '', // 验证sn号
+        sn: '', // 验证sn-key号
+        key: '',
         details: {
           area: '+86',
           name: '',
@@ -87,7 +95,8 @@ export default {
       areaNum: [ { num: '+86', contry: 'china' } ],
       rules: {
         organName: [{ required: true, message: '', trigger: 'change' }],
-        sn: [{ required: true, validator: this.snValid, message: 'SN is required', trigger: 'blur' }],
+        sn: [{ required: true, message: 'SN is required', trigger: 'blur' }],
+        key: [{ required: true, validator: this.snValid, message: 'key is required', trigger: 'blur' }],
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
         'details.phone': [{ required: true, message: 'phone is required', trigger: 'blur' }],
         'details.email': [{ required: true, message: 'email is required', trigger: 'blur' }],
@@ -131,28 +140,30 @@ export default {
     // 验证sn
     snValid (rule, value, callback) {
       if (!value) {
-        callback(new Error('SN is required'))
+        callback(new Error('SN or key is required'))
         return false
       }
-      let res = this.checkSN(value)
+      let res = this.checkSN(this.dataForm.sn, value)
       if (!res) {
-        callback(new Error('SN is invalid'))
+        callback(new Error('SN or key is invalid'))
         return false
       }
       callback()
     },
-    async checkSN (value) {
+    async checkSN (sn, key) {
+      if (!sn) return false
       let { result } = await this.$axios({
         url: '/v0/device/checksn',
         method: 'post',
         data: {
-          sn: [value]
+          type: 0,
+          devices: [{ sn, key }]
         }
       })
-      if (result[0] && result[0].errno > 0) { // sn验证错误
-        return false
+      if (result) {
+        return result[0] && result[0].errno === 0
       } else {
-        return true
+        return false
       }
     }
   }
