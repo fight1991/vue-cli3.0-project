@@ -79,9 +79,13 @@
     </el-row>
     <el-dialog
       title="Error List"
+      width="300px"
+      :show-close="false"
       :visible.sync="errVisible">
-      <div v-for="(item, index) in errorList" :key="'index'+index">{{item.sn}}</div>
-      <el-row type="flex" justify="center">
+      <div v-for="(item, index) in errorList" :key="'index'+index">
+        {{item.sn + ' - ' + item.key}}
+      </div>
+      <el-row slot="footer" type="flex" justify="center">
         <el-button size="mini" @click="dialogCancel">Cancel</el-button>
         <el-button size="mini" type="primary" @click="dialogConfirm">Go on</el-button>
       </el-row>
@@ -151,8 +155,12 @@ export default {
     isAllPass () { // 所有sn校验成功
       return this.snResult.length > 0 && this.snResult.every(v => v.errno === 0)
     },
+    isAllError () { // 全部错误
+      return this.snResult.length > 0 && this.snResult.every(v => v.errno !== 0)
+    },
     errorList () {
-      return this.snResult.filter(v => v.errno !== 0)
+      let temp = this.snResult.filter(v => v.errno !== 0)
+      return temp.map(v => v.device)
     }
   },
   methods: {
@@ -206,6 +214,8 @@ export default {
       this.snResult.forEach((v, i) => {
         if (v.errno !== 0) {
           this.dataForm.devices[i].isPass = 0
+        } else {
+          this.dataForm.devices[i].isPass = 1
         }
       })
       this.errVisible = false
@@ -232,12 +242,20 @@ export default {
       let isPass = true
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
-      await this.remoteSN(...this.dataForm.devices)
-      // 有的sn校验失败
+      await this.remoteSN(this.dataForm.devices)
+      // 全部错误 不弹框直接标识
+      if (this.isAllError) {
+        this.dialogCancel()
+        return
+      }
+      // 全部正确
+      if (this.isAllPass) {
+        this.creatPlant()
+        return
+      }
+      // 有的sn校验失败显示弹框
       if (!this.isAllPass) {
         this.errVisible = true
-      } else {
-        this.creatPlant()
       }
     },
     // 创建电站
@@ -254,21 +272,6 @@ export default {
         }
       })
     },
-    // 校验sn
-    async checkSN (rule, value, callback, type, item) {
-      if (!value) {
-        callback(new Error(type + ' is invalid'))
-        return
-      }
-      if (type === 'key') { // 远程校验sn是否合法
-        let res = await this.remoteSN(item)
-        if (!res.errno === 0) {
-          callback(new Error('sn or key is invalid'))
-        }
-        return
-      }
-      callback()
-    },
     // 远程校验sn 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
     async remoteSN (item) {
       let { result } = await this.$axios({
@@ -276,7 +279,7 @@ export default {
         url: '/v0/device/checksn',
         data: {
           type: 1,
-          devices: [item]
+          devices: item
         }
       })
       if (result && result.length > 0) {
