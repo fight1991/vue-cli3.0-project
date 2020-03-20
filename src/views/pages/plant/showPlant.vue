@@ -87,7 +87,7 @@ export default {
     }
   },
   created () {
-
+    this.search()
   },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()

@@ -4,57 +4,59 @@ export default {
     return {
       deviceTableHead: [
         {
-          label: '逆变器sn',
+          label: 'Inverter SN',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'DataCollector SN',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Battery SN',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Type',
           prop: 'age',
           checked: true
         },
         {
-          label: '模块sn',
+          label: 'Gernerating power',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Gerneration today',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Gerneration Total',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Grid-connected time',
+          prop: 'age',
+          checked: true,
+          renderHeader: true
+        },
+        {
+          label: 'Country',
           prop: 'age',
           checked: true
         },
         {
-          label: '电站',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '账户',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '机型',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '发电功率',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '近日发电量',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '累计发电量',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '并网时间',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '国家',
-          prop: 'age',
-          checked: true
-        },
-        {
-          label: '设备状态',
+          label: 'Status',
           prop: 'status',
           checked: true,
           slotName: 'status',

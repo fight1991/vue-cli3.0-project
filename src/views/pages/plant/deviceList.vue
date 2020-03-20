@@ -10,7 +10,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
+            <el-input v-model="searchForm.name" placeholder="inverter sn"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="search">reset</el-button>

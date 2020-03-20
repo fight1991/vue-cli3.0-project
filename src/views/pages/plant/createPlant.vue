@@ -67,7 +67,7 @@
               <i class="iconfont icon-delete" @click="deviceDelete(index)"></i>
               <!-- <i class="fr iconfont icon-add" @click="deviceAdd" v-show="index==0"></i> -->
               <!-- v-show="!(index==0 && deleteBtn)" -->
-              <i class="el-icon-error" v-show="item.isPass !== 1"></i>
+              <i class="el-icon-error" v-show="item.isPass === 0"></i>
             </span>
           </el-col>
         </el-row>
@@ -107,7 +107,12 @@ export default {
           country: '',
           city: '',
           address: '',
-          price: ''
+          price: '',
+          capacity: '',
+          quantity: '',
+          stationID: '',
+          owner: '',
+          createdDate: ''
         }
       },
       templateDevice: {
@@ -229,7 +234,6 @@ export default {
       if (!isPass) return
       await this.remoteSN(...this.dataForm.devices)
       // 有的sn校验失败
-      console.log(this.isAllPass)
       if (!this.isAllPass) {
         this.errVisible = true
       } else {
