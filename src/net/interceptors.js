@@ -48,6 +48,7 @@ export default {
           query: sysParams
         })
       } else { // 其他业务报错
+        if (tips) return response.data
         Message.error('error: ' + response.data.errno)
       }
     }
