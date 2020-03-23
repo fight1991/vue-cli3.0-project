@@ -96,7 +96,7 @@ export default {
     })
   },
   mounted () {
-    this.$refs.plantStatus.getPlantStatus()
+    // this.$refs.plantStatus.getPlantStatus()
   },
   methods: {
     search () {

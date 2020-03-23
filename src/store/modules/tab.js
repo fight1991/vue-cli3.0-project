@@ -23,15 +23,18 @@ export default {
   mutations: {
     // 添加新页签
     addTab (state, payLoad) {
+      console.log(payLoad)
       if (!payLoad) return
       // 是否已经存在相同的tabId
-      let isExist = state.tabList.some(tab => tab.tabId === payLoad.tabId && tab.isShow)
+      let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId && tab.isShow) || tab.path === payLoad.path)
       if (!isExist) {
         state.tabList.push(payLoad)
       }
       // 存在相同的tabId并且需要刷新
       if (isExist && payLoad.params.refresh) {
-        let index = state.tabList.findIndex(tab => tab.tabId === payLoad.tabId && tab.isShow)
+        let index = state.tabList.findIndex(tab => tab.path === payLoad.path)
+        // let tempId = payLoad.tabId, 改变列表绑定的key值才会刷新
+        payLoad.tabId = Date.now().toString()
         state.tabList.splice(index, 1, payLoad)
       }
       // 激活当前页签
@@ -82,9 +85,9 @@ export default {
         })
       }
       if (typeof routerInfo === 'object') {
-        let params = {}
+        let params = { refresh: true }
         if (routerInfo.params !== '{}') {
-          params = { ...routerInfo.params, refresh: true }
+          params = Object.assign(params, routerInfo.params)
         }
         router.push({
           name: routerInfo.name,
