@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     search () {
-      this.getPlantList(this.$store.pagination)
+      this.getPlantList(this.$store.state.pagination)
     },
     reset () {
       this.searchForm = {
@@ -113,7 +113,7 @@ export default {
         success: ({ result }) => {
           if (result) {
             this.pagination.totalPages = result.totalPages
-            this.tableData = result.stations || []
+            this.resultList = result.plants || []
           }
         }
       })
