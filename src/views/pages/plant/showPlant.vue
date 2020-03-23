@@ -30,7 +30,7 @@
               {{ row.createdDate | formatDate }}
             </template>
           <template v-slot:op="{row}">
-            <div class="flex-between table-op-btn">
+            <div class="flex-center table-op-btn">
               <i title="look" class="iconfont icon-look" @click="goToDetail('look',row.stationID)"></i>
               <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',row.stationID)"></i>
               <i title="delete" class="iconfont icon-delete" @click="deletePlant(row.stationID)"></i>
@@ -39,16 +39,17 @@
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal: 8</span>
-        <span><i class="el-icon-warning"></i> Abnormal: 8</span>
+        <span><i class="el-icon-success"></i> Normal</span>
+        <span><i class="el-icon-warning"></i> Abnormal</span>
       </div>
-      <page-box :pagination="pagination" @change="getPlantList"></page-box>
+      <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
     </div>
   </section>
 </template>
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
+import { mapState } from 'vuex'
 export default {
   components: {
     showItem
@@ -88,6 +89,11 @@ export default {
   },
   created () {
     this.search()
+  },
+  computed: {
+    ...mapState({
+      username: state => state.userInfo.user
+    })
   },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
@@ -186,7 +192,7 @@ export default {
   border-bottom: 1px solid #f5f5f5;
 }
 .states-row {
-  width: 170px;
+  width: 150px;
   font-size: 12px;
   padding: 10px 0 0 10px;
 }

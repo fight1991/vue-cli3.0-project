@@ -24,7 +24,7 @@
         placement="top-start">
         <span class="user-name">
           <i class="user-logo el-icon-user-solid"></i>
-          <span>{{userInfo.name || ''}}</span>
+          <span>{{userInfo.user || ''}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>修改密码</el-dropdown-item>

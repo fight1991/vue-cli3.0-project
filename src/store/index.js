@@ -10,12 +10,14 @@ export default new Vuex.Store({
     loading: false,
     tabView: true, // 是否开启页签模式
     pagination: {
-      pageSize: 1,
-      currentPage: 10,
+      pageSize: 10,
+      currentPage: 1,
       totalPages: 0
     },
     access: 0, // 0 游客， 1 终端用户 ，2 安装商 3 代理商 ，255 厂商
+    username: '',
     userInfo: {
+      user: '', // 当前登录的用户名
       name: '',
       phone: '',
       email: '',
@@ -48,6 +50,9 @@ export default new Vuex.Store({
       state.userInfo.postcode = payLoad.postcode || ''
       state.userInfo.introduction = payLoad.introduction || ''
       state.userInfo.note = payLoad.note || ''
+    },
+    setUsername (state, payLoad) {
+      state.username = payLoad
     },
     changeFirst (state, payLoad) {
       state.isFirst = payLoad

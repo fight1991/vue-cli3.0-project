@@ -29,6 +29,11 @@ export default {
       if (!isExist) {
         state.tabList.push(payLoad)
       }
+      // 存在相同的tabId并且需要刷新
+      if (isExist && payLoad.params.refresh) {
+        let index = state.tabList.findIndex(tab => tab.tabId === payLoad.tabId && tab.isShow)
+        state.tabList.splice(index, 1, payLoad)
+      }
       // 激活当前页签
       this.commit('setCurrentTab', payLoad.tabId)
     },
@@ -64,20 +69,27 @@ export default {
       if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
     },
-    // 关闭当前页签,并打开指定的路由
+    // 关闭当前页签,并打开指定的路由, 用name做跳转,当path和params共用时会失效
     backGo ({ state }, routerInfo) {
       let index = state.tabList.findIndex(v => v.tabId === state.currentTab)
       state.tabList.splice(index, 1)
       if (typeof routerInfo === 'string') {
         router.push({
-          name: routerInfo
+          name: routerInfo,
+          params: {
+            refresh: true
+          }
         })
       }
       if (typeof routerInfo === 'object') {
+        let params = {}
+        if (routerInfo.params !== '{}') {
+          params = { ...routerInfo.params, refresh: true }
+        }
         router.push({
           name: routerInfo.name,
           query: routerInfo.query || {},
-          params: routerInfo.params || {}
+          params: params
         })
       }
     }

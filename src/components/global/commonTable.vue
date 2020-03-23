@@ -15,7 +15,7 @@
       @select-all="selectAllBox"
       @row-click="selectRow"
       :data="tableList"
-      :max-height="tableHeight"
+      :max-height="maxHeight"
       size="mini"
       highlight-current-row
       :border="border">
@@ -62,11 +62,15 @@ export default {
   name: 'common-table',
   data () {
     return {
-      tableHeight: window.innerHeight - this.$store.state.tableH,
       selection: []
     }
   },
   props: {
+    maxHeight: {
+      default () {
+        return window.innerHeight - this.$store.state.tableH
+      }
+    },
     tableList: {
       type: Array,
       default: () => {
