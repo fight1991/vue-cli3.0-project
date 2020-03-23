@@ -25,17 +25,17 @@ export default {
     addTab (state, payLoad) {
       console.log(payLoad)
       if (!payLoad) return
-      // 是否已经存在相同的tabId
+      // 是否已经存在相同的tabId或path
       let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId && tab.isShow) || tab.path === payLoad.path)
       if (!isExist) {
         state.tabList.push(payLoad)
       }
-      // 存在相同的tabId并且需要刷新
+      // 存在相同的tabId或相同的path并且需要刷新
       if (isExist && payLoad.params.refresh) {
-        let index = state.tabList.findIndex(tab => tab.path === payLoad.path)
-        // let tempId = payLoad.tabId, 改变列表绑定的key值才会刷新
-        payLoad.tabId = Date.now().toString()
-        state.tabList.splice(index, 1, payLoad)
+        let existTab = state.tabList.find(tab => tab.path === payLoad.path)
+        // 改变列表绑定的key值才会刷新
+        let newTabId = Date.now().toString()
+        existTab.tabId = payLoad.tabId = newTabId
       }
       // 激活当前页签
       this.commit('setCurrentTab', payLoad.tabId)
