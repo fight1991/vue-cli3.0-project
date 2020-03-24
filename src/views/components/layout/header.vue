@@ -23,7 +23,7 @@
         trigger="click"
         placement="top-start">
         <span class="user-name">
-          <i class="user-logo el-icon-user-solid"></i>
+          <i class="user-logo iconfont icon-user"></i>
           <span>{{userInfo.user || ''}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -31,7 +31,7 @@
           <el-dropdown-item command="logout" divided @click="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span class="info"><i class="el-icon-message-solid"></i></span>
+      <span class="info"><i class="iconfont icon-info"></i></span>
     </div>
   </div>
 </template>
