@@ -42,6 +42,7 @@ export default new Vuex.Store({
       state.access = payLoad
     },
     setUserInfo (state, payLoad) {
+      state.userInfo.user = payLoad.user
       state.userInfo.name = payLoad.name || ''
       state.userInfo.phone = payLoad.phone || ''
       state.userInfo.email = payLoad.email || ''

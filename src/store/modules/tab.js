@@ -23,7 +23,6 @@ export default {
   mutations: {
     // 添加新页签
     addTab (state, payLoad) {
-      console.log(payLoad)
       if (!payLoad) return
       // 是否已经存在相同的tabId或path
       let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId && tab.isShow) || tab.path === payLoad.path)
