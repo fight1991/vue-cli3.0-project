@@ -124,6 +124,7 @@ export default {
         key: '',
         isPass: 1
       },
+      editInfo: {},
       rules: {
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
         'details.type': [{ required: true, message: 'type is required', trigger: 'blur' }],
@@ -233,7 +234,11 @@ export default {
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
-      this.dataForm = this.copyData()
+      if (this.opType === 'edit') {
+        this.dataForm = this.editInfo
+      } else {
+        this.dataForm = this.copyData()
+      }
       this.$refs.dataForm.clearValidate()
     },
     // 新建电站 / 编辑电站
@@ -290,12 +295,20 @@ export default {
     // 查询电站信息
     async getStationInfo (stationID) {
       let { result } = await this.$axios({
-        url: '/v0/plant​/get',
+        url: '/v0/plant/get',
         data: {
           stationID
         }
       })
-      this.dataForm = result || this.copyData()
+      if (result) {
+        if (!result.devices) {
+          result.devices = [this.templateDevice]
+        }
+        this.dataForm = result
+      } else {
+        this.dataForm = this.copyData()
+      }
+      this.editInfo = JSON.parse(JSON.stringify(this.dataForm))
       return true
     }
   }

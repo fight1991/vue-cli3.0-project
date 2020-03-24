@@ -57,7 +57,7 @@ export default {
       pagination: {
         pageSize: 10,
         currentPage: 1,
-        totalPages: 40
+        total: 40
       },
       resultList: [
         {
