@@ -23,11 +23,11 @@
       <func-bar>
         <common-table :tableHeadData="plantTableHead" :maxHeight="400" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="row.status === 0"></i>
-            <i class="el-icon-success" v-show="row.status === 1"></i>
+            <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
+            <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
           </template>
           <template v-slot:createdDate="{row}">
-              {{ row.createdDate | formatDate('yyyy-MM-dd HH:mm') }}
+              {{ Number(row.createdDate) | formatDate('yyyy-MM-dd HH:mm') }}
             </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
@@ -119,6 +119,8 @@ export default {
         success: ({ result }) => {
           if (result) {
             this.pagination.total = result.total
+            this.pagination.currentPage = result.currentPage
+            this.pagination.pageSize = result.pageSize
             this.resultList = result.plants || []
           }
         }
@@ -164,23 +166,6 @@ export default {
           }
         })
       }
-    },
-    // 定义表头溢出省略号
-    renderHead (h, { column }) {
-      return (
-        <el-tooltip
-          class="text-cut"
-          effect="dark"
-          content={column.label}
-          placement="top"
-        >
-          <div>{column.label}</div>
-        </el-tooltip>
-      )
-    },
-    // 普通显示
-    renderCommon (h, { column }) {
-      return column.label
     }
   }
 }
