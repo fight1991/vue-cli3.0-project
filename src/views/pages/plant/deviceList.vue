@@ -20,7 +20,7 @@
       </search-bar>
       <!-- 列表查询区域 -->
       <func-bar>
-        <common-table :tableHeadData="deviceTableHead" :border="false" :tableList="resultList">
+        <common-table :tableHeadData="deviceTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-warning"></i>
             <i class="el-icon-success"></i>

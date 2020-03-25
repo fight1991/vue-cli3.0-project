@@ -102,8 +102,9 @@
         <div class="header flex-between pd10">
           <div class="btn">
             <el-radio-group v-model="echartType" size="mini" @change="echartChange">
-              <el-radio-button label="power">功率</el-radio-button>
-              <el-radio-button label="elec">电量统计</el-radio-button>
+              <el-radio-button label="power">Power</el-radio-button>
+              <el-radio-button label="elec">Generation</el-radio-button>
+              <el-radio-button label="list">Device list</el-radio-button>
             </el-radio-group>
           </div>
           <div class="date" v-show="echartType=='elec'">
@@ -126,9 +127,12 @@
               </span>
           </div>
         </div>
-        <div class="chart">
+        <!-- 图表 -->
+        <div class="chart" v-show="echartType!=='list'">
           <el-echart :datas="echartData[echartType]" height="300px"></el-echart>
         </div>
+        <!-- 设备列表 -->
+        <device-list v-show="echartType==='list'"></device-list>
       </div>
     </div>
     <today-abnormal :visible.sync="abnormalVisible"></today-abnormal>
@@ -138,10 +142,12 @@
 import echartData from './echartData'
 import { formatDate } from '@/util'
 import todayAbnormal from './todayAbnormal'
+import deviceList from './deviceList'
 export default {
   mixins: [echartData],
   components: {
-    todayAbnormal
+    todayAbnormal,
+    deviceList
   },
   data () {
     return {

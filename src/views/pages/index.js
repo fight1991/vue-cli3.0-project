@@ -1,8 +1,7 @@
 import DataView from './dataView'
 import Plant from './plant'
-import Inverter from './inverter'
-import Module from './module'
-import Battery from './battery'
+import Device from './device'
+import DataReport from './dataReport'
 import Alarm from './alarm'
 import Factory from './factory'
 import AfterSale from './afterSale'
@@ -22,9 +21,8 @@ export default [
   Home,
   DataView,
   Plant,
-  Inverter,
-  Module,
-  Battery,
+  Device,
+  DataReport,
   Alarm,
   Factory,
   AfterSale,
