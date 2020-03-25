@@ -24,10 +24,17 @@ export default {
     // 添加新页签
     addTab (state, payLoad) {
       if (!payLoad) return
-      // 是否已经存在相同的tabId
-      let isExist = state.tabList.some(tab => tab.tabId === payLoad.tabId && tab.isShow)
+      // 是否已经存在相同的tabId或path
+      let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId && tab.isShow) || tab.path === payLoad.path)
       if (!isExist) {
         state.tabList.push(payLoad)
+      }
+      // 存在相同的tabId或相同的path并且需要刷新
+      if (isExist && payLoad.params.refresh) {
+        let existTab = state.tabList.find(tab => tab.path === payLoad.path)
+        // 改变列表绑定的key值才会刷新
+        let newTabId = Date.now().toString()
+        existTab.tabId = payLoad.tabId = newTabId
       }
       // 激活当前页签
       this.commit('setCurrentTab', payLoad.tabId)
@@ -64,20 +71,27 @@ export default {
       if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
     },
-    // 关闭当前页签,并打开指定的路由
+    // 关闭当前页签,并打开指定的路由, 用name做跳转,当path和params共用时会失效
     backGo ({ state }, routerInfo) {
       let index = state.tabList.findIndex(v => v.tabId === state.currentTab)
       state.tabList.splice(index, 1)
       if (typeof routerInfo === 'string') {
         router.push({
-          name: routerInfo
+          name: routerInfo,
+          params: {
+            refresh: true
+          }
         })
       }
       if (typeof routerInfo === 'object') {
+        let params = { refresh: true }
+        if (routerInfo.params !== '{}') {
+          params = Object.assign(params, routerInfo.params)
+        }
         router.push({
           name: routerInfo.name,
           query: routerInfo.query || {},
-          params: routerInfo.params || {}
+          params: params
         })
       }
     }

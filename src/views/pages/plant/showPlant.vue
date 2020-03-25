@@ -21,34 +21,35 @@
         </el-form>
       </search-bar>
       <func-bar>
-        <common-table :tableHeadData="plantTableHead" :border="false" :tableList="resultList">
+        <common-table :tableHeadData="plantTableHead" :maxHeight="400" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="row.status === 1"></i>
-            <i class="el-icon-success" v-show="row.status === 2"></i>
+            <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
+            <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
           </template>
           <template v-slot:createdDate="{row}">
-              {{ row.createdDate | formatDate }}
+              {{ Number(row.createdDate) | formatDate('yyyy-MM-dd HH:mm') }}
             </template>
           <template v-slot:op="{row}">
-            <div class="flex-between table-op-btn">
+            <div class="flex-center table-op-btn">
               <i title="look" class="iconfont icon-look" @click="goToDetail('look',row.stationID)"></i>
-              <i title="edit" class="iconfont icon-edit" @click="goToDetail('edit',row.stationID)"></i>
-              <i title="delete" class="iconfont icon-delete" @click="deletePlant(row.stationID)"></i>
+              <i title="edit" class="iconfont icon-edit" v-if="username==row.owner" @click="goToDetail('edit',row.stationID)"></i>
+              <i title="delete" class="iconfont icon-delete" v-if="username==row.owner" @click="deletePlant(row.stationID)"></i>
             </div>
           </template>
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal: 8</span>
-        <span><i class="el-icon-warning"></i> Abnormal: 8</span>
+        <span><i class="el-icon-success"></i> Normal</span>
+        <span><i class="el-icon-warning"></i> Abnormal</span>
       </div>
-      <page-box :pagination="pagination" @change="getPlantList"></page-box>
+      <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
     </div>
   </section>
 </template>
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
+import { mapState } from 'vuex'
 export default {
   components: {
     showItem
@@ -68,7 +69,7 @@ export default {
       pagination: {
         pageSize: 10,
         currentPage: 1,
-        totalPages: 40
+        total: 40
       },
       resultList: [
         {
@@ -89,12 +90,17 @@ export default {
   created () {
     this.search()
   },
+  computed: {
+    ...mapState({
+      username: state => state.userInfo.user
+    })
+  },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
   },
   methods: {
     search () {
-      this.getPlantList(this.$store.pagination)
+      this.getPlantList(this.$store.state.pagination)
     },
     reset () {
       this.searchForm = {
@@ -112,8 +118,10 @@ export default {
         },
         success: ({ result }) => {
           if (result) {
-            this.pagination.totalPages = result.totalPages
-            this.tableData = result.stations || []
+            this.pagination.total = result.total
+            this.pagination.currentPage = result.currentPage
+            this.pagination.pageSize = result.pageSize
+            this.resultList = result.plants || []
           }
         }
       })
@@ -158,23 +166,6 @@ export default {
           }
         })
       }
-    },
-    // 定义表头溢出省略号
-    renderHead (h, { column }) {
-      return (
-        <el-tooltip
-          class="text-cut"
-          effect="dark"
-          content={column.label}
-          placement="top"
-        >
-          <div>{column.label}</div>
-        </el-tooltip>
-      )
-    },
-    // 普通显示
-    renderCommon (h, { column }) {
-      return column.label
     }
   }
 }
@@ -186,7 +177,7 @@ export default {
   border-bottom: 1px solid #f5f5f5;
 }
 .states-row {
-  width: 170px;
+  width: 150px;
   font-size: 12px;
   padding: 10px 0 0 10px;
 }

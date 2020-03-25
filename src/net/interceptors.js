@@ -76,6 +76,7 @@ export default {
           })
           break
         case 404:
+          console.log(error.response)
           Message({
             message: `status:${error.response.status} ${
               'Api Not Found'
