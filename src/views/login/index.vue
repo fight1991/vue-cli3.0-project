@@ -67,8 +67,11 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: url("../../assets/login-bg.jpg") no-repeat center;
     background-size: cover;
+    height: 600px;
+    background-color: #00a0e9;
+    position: relative;
+    transform: translateY(20%);
     .header {
       display: flex;
       justify-content: flex-end;
@@ -91,28 +94,25 @@ export default {
       flex: 1;
       position: relative;
       display: flex;
+      background: url("../../assets/login-bg.jpg") no-repeat center;
       // justify-content: center;
       align-items: center;
+      transform: translateY(-6%);
     }
     .login {
       position: absolute;
-      right: 15%;
+      right: 20%;
       // top: 50%;
       // left: 50%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       transform-origin: center;
       width: 470px;
       box-sizing: border-box;
-      background-color:rgba(125, 172, 200, 0.7);
+      // background-color:rgba(125, 172, 200, 0.7);
+      background-color: #99D9F6;
       border-radius: 6px;
       padding: 40px;
       color: #999;
-      .form {
-        margin-top: 20px;
-        .el-form-item {
-          margin-bottom: 18px;
-        }
-      }
     }
     .tab-header {
       display: flex;
