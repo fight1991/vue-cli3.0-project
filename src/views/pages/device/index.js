@@ -13,7 +13,7 @@ export default {
       name: 'bus-device-inverter',
       meta: {
         title: '逆变器管理',
-        component: () => import(/* webpackChunkName: "bus-device-inverter" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-device-inverter" */ '@/views/pages/device/inverterList')
       }
     },
     {

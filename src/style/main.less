@@ -37,14 +37,6 @@
   padding: 5px 0;
   margin-left: 5px;
   margin-right: 10px;
-  .table-op-btn {
-    .iconfont {
-      font-size: 20px;
-      margin: 0 5px;
-      cursor: pointer;
-      color: @sys-main-header;
-    }
-  }
   .pagination {
     padding: 10px;
     font-size: 12px;
@@ -77,6 +69,25 @@
       font-weight: normal;
       font-size: 12px;
       color: @sys-main-text;
+    }
+    // 表格上方操作按钮
+    .table-btn {
+      margin-bottom: 12px;
+      .el-button {
+        padding: 6px 7px;
+        margin: 0 0 0 5px;
+        font-size: 12px;
+        border-radius: 2px;
+      }
+    }
+    // 表格内操作
+    .table-op-btn {
+      .iconfont {
+        font-size: 20px;
+        margin: 0 5px;
+        cursor: pointer;
+        color: @sys-main-header;
+      }
     }
   }
   .title {
