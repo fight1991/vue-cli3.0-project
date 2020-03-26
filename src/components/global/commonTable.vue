@@ -28,7 +28,7 @@
           :prop="item.prop || ''"
           :label="item.label"
           :align="item.align || 'center'"
-          :min-width="item.width || '80'"
+          :width="item.width || '80'"
           :render-header="item.renderHeader ? renderHead : renderCommon"
         ></el-table-column>
         <el-table-column v-else
@@ -37,7 +37,7 @@
           :prop="item.prop || ''"
           :label="item.label"
           :align="item.align || 'center'"
-          :min-width="item.width || '80'"
+          :width="item.width || '80'"
           :render-header="item.renderHeader ? renderHead : renderCommon">
           <template slot-scope="scope">
             <!-- 具名插槽 -->

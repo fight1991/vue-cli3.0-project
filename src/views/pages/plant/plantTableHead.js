@@ -61,7 +61,7 @@ export default {
           label: 'station time',
           prop: 'createdDate',
           checked: true,
-          width: '110',
+          width: '130',
           renderHeader: true,
           slotName: 'createdDate'
         },
