@@ -33,6 +33,16 @@ export default {
         title: '模块管理',
         component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/demo')
       }
+    },
+    {
+      permission: '',
+      path: '/bus/device/inverter/:id',
+      name: 'bus-device-inverterDetail',
+      hidden: true,
+      meta: {
+        title: '逆变器详情',
+        component: () => import(/* webpackChunkName: "bus-device-inverterDetail" */ '@/views/pages/device/inverterDetail')
+      }
     }
   ]
 }

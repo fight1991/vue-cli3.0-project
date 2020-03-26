@@ -1,4 +1,6 @@
+
 <template>
+<!-- eslint-disable vue/valid-v-bind -->
   <div style="position:relative">
   <!--  自定义表头显示项目数 -->
     <el-popover popper-class="tableBtn-popper" v-if="checked">
@@ -19,7 +21,7 @@
       size="mini"
       highlight-current-row
       :border="border">
-      <el-table-column v-if="selectBox" type="selection" width="40"></el-table-column>
+      <el-table-column v-if="selectBox" type="selection" align="center" width="40"></el-table-column>
       <el-table-column v-if="showNum" type="index" width="50" label="NO." align="center"></el-table-column>
       <template v-for="(item,index) in trueTableHead">
         <el-table-column

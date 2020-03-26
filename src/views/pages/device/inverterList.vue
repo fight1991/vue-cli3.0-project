@@ -57,6 +57,11 @@
             <i class="el-icon-error"></i>
             <i class="el-icon-remove"></i>
           </template>
+          <template v-slot:op="{row}">
+            <div class="flex-center table-op-btn">
+              <i title="look" class="iconfont icon-look" @click="goToDetail"></i>
+            </div>
+          </template>
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
@@ -89,12 +94,18 @@ export default {
         currentPage: 1,
         total: 40
       },
-      resultList: []
+      resultList: [
+        { age: 11 },
+        { age: 11 }
+      ]
     }
   },
   methods: {
     search () {
 
+    },
+    goToDetail (id) {
+      this.$router.push('/bus/device/inverter/1111')
     }
   }
 }
