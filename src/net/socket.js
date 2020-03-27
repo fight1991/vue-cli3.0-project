@@ -17,6 +17,7 @@ export default class socket {
       this.reconnect()
     }
     this.ws.onerror = () => { // 发生异常
+      console.log('error')
       // 重新连接
       this.reconnect()
     }
@@ -31,15 +32,16 @@ export default class socket {
       getData && getData(res)
     }
   }
-  closeLink (e) {
-    this.ws.close(e)
+  closeLink () {
+    this.ws.close()
   }
   reconnect () {
+    console.log('哈哈')
     let that = this
     // 设置节流,避免重连请求重复
     if (this.isConnect) return
     this.isConnect = setTimeout(() => {
-      that.createSocket()
+      that.startLink()
       clearTimeout(that.isConnect)
       that.isConnect = null
     }, 4000)

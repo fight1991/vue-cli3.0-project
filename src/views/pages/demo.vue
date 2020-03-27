@@ -10,21 +10,29 @@
     </el-date-picker>
     <router-link to="/login">返回登录</router-link>
     <div class="line"></div>
+    <el-button type="primary" @click="closeWebsocket">关闭连接</el-button>
   </div>
 </template>
 
 <script>
+import Socket from '@/net/socket'
 export default {
   data () {
     return {
-      value2: ''
+      value2: '',
+      socket: null
     }
   },
   created () {
-
+    this.socket = new Socket('ws://192.168.10.118:8000/c/v0/websocket')
+    this.socket.startLink('hah', (res) => {
+      console.log(res)
+    })
   },
   methods: {
-
+    closeWebsocket () {
+      this.socket.closeLink()
+    }
   }
 }
 </script>
