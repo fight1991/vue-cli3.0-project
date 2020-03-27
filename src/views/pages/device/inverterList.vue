@@ -159,12 +159,23 @@ export default {
       })
     },
     // 获取所有逆变器状态
-    getStatusAll () {
-      let { result } = this.$axios({
+    async getStatusAll () {
+      let { result } = await this.$axios({
         url: 'v0/device/status/all'
       })
       if (result) {
-        this.statusAll = result
+        // this.statusAll = result
+      }
+    },
+    // 删除逆变器
+    async deleteInverter () {
+      let { result } = await this.$axios({
+        url: '​/device​/delete',
+        method: 'post',
+        data: {}
+      })
+      if (result) {
+        this.$message.success('successful')
       }
     }
   }

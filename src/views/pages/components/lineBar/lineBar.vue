@@ -133,7 +133,7 @@ export default {
     // 柱状图表数据
     async getBarData (type) {
       let dateArr = this.dateValue.split('-')
-      let { result } = this.$axios({
+      let { result } = await this.$axios({
         url: this.echartUrl[type],
         method: 'post',
         data: {

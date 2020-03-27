@@ -24,11 +24,15 @@ const requests = {
       if (isLoad) store.commit('changeLoading', true)
       let res = await commonInstance[method](url, params)
       if (isLoad) store.commit('changeLoading', false)
-      return res
+      if (res.errno === store.state.successCode) {
+        return { result: res.result }
+      } else {
+        return { other: res.result }
+      }
     } catch (err) {
       // console.log(err)
       if (isLoad) store.commit('changeLoading', false)
-      return {}
+      return { error: err }
     }
   },
   // 自定义请求
