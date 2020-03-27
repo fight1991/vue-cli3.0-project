@@ -14,31 +14,31 @@
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
+                <el-input v-model="searchForm.plantName" placeholder="plant name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.name" placeholder="inverter sn"></el-input>
+                <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.name" placeholder="module sn"></el-input>
+                <el-input v-model="searchForm.moduleSN" placeholder="module sn"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.name" placeholder="country"></el-input>
+                <el-input v-model="searchForm.country" placeholder="country"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.name" placeholder="type"></el-input>
+                <el-input v-model="searchForm.deviceType" placeholder="type"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">
-              <el-button size="mini" @click="search">reset</el-button>
+              <el-button size="mini" @click="reset">reset</el-button>
               <el-button type="primary" size="mini" @click="search">search</el-button>
             </el-col>
           </el-row>
@@ -52,10 +52,13 @@
         </el-row>
         <common-table :tableHeadData="inverterTableHead" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning"></i>
-            <i class="el-icon-success"></i>
-            <i class="el-icon-error"></i>
-            <i class="el-icon-remove"></i>
+            <i class="el-icon-warning" v-show="row.status==3"></i>
+            <i class="el-icon-success" v-show="row.status==1"></i>
+            <i class="el-icon-error" v-show="row.status==2"></i>
+            <i class="el-icon-remove" v-show="row.status==4"></i>
+          </template>
+          <template v-slot:feedinDate="{row}">
+            {{Number(row.feedinDate )| formatDate('yyyy-MM-dd')}}
           </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
@@ -65,12 +68,12 @@
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal: 8</span>
-        <span><i class="el-icon-warning"></i> Alarm: 8</span>
-        <span><i class="el-icon-error"></i> Glitch: 8</span>
-        <span><i class="el-icon-remove"></i> Offline: 8</span>
+        <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
+        <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
+        <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
+        <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
       </div>
-      <page-box :pagination="pagination"></page-box>
+      <page-box :pagination="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>
@@ -83,11 +86,17 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'abnormal' }
+        { status: 2, label: 'fault' },
+        { status: 3, label: 'alarm' },
+        { status: 4, label: 'offline' }
       ],
       searchForm: {
-        status: 0, // 0 全部 ，1 正常， 2 异常
-        name: ''
+        status: 0,
+        plantName: '',
+        deviceSN: '',
+        moduleSN: '',
+        country: '',
+        deviceType: ''
       },
       pagination: {
         pageSize: 10,
@@ -97,15 +106,66 @@ export default {
       resultList: [
         { age: 11 },
         { age: 11 }
-      ]
+      ],
+      statusAll: {
+        normal: 0,
+        warning: 0,
+        fault: 0,
+        offline: 0
+      }
     }
   },
+  created () {
+    this.search()
+    this.getStatusAll()
+  },
   methods: {
+    resetSearchForm () {
+      this.searchForm = {
+        status: 0,
+        plantName: '',
+        deviceSN: '',
+        moduleSN: '',
+        country: '',
+        deviceType: ''
+      }
+    },
+    reset () {
+      this.resetSearchForm()
+      this.search()
+    },
     search () {
-
+      this.getInverterList(this.$store.state.pagination)
     },
     goToDetail (id) {
       this.$router.push('/bus/device/inverter/1111')
+    },
+    // 获取列表
+    getInverterList (pagination) {
+      this.$post({
+        url: '/v0/device/list',
+        data: {
+          ...pagination,
+          condition: this.searchForm
+        },
+        success: ({ result }) => {
+          if (result) {
+            this.pagination.total = result.total
+            this.pagination.currentPage = result.currentPage
+            this.pagination.pageSize = result.pageSize
+            this.resultList = result.devices || []
+          }
+        }
+      })
+    },
+    // 获取所有逆变器状态
+    getStatusAll () {
+      let { result } = this.$axios({
+        url: 'v0/device/status/all'
+      })
+      if (result) {
+        this.statusAll = result
+      }
     }
   }
 }
