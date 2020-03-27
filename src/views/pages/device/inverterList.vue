@@ -50,7 +50,7 @@
           <el-button size="mini" icon="el-icon-plus">New</el-button>
           <el-button size="mini" icon="el-icon-delete">Delete</el-button>
         </el-row>
-        <common-table :tableHeadData="inverterTableHead" :selectBox="true" :tableList="resultList">
+        <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-warning" v-show="row.status==3"></i>
             <i class="el-icon-success" v-show="row.status==1"></i>
@@ -83,6 +83,7 @@ export default {
   mixins: [inverterTableHead],
   data () {
     return {
+      selection: [],
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
@@ -115,11 +116,19 @@ export default {
       }
     }
   },
+  computed: {
+    deviceId () {
+      return this.selection.map(v => v.deviceID)
+    }
+  },
   created () {
     this.search()
     this.getStatusAll()
   },
   methods: {
+    getSelection (select) {
+      this.selection = select
+    },
     resetSearchForm () {
       this.searchForm = {
         status: 0,
@@ -169,10 +178,14 @@ export default {
     },
     // 删除逆变器
     async deleteInverter () {
+      if (this.deviceId.length === 0) {
+        this.$message.warning('Please check an option')
+        return
+      }
       let { result } = await this.$axios({
         url: '​/device​/delete',
         method: 'post',
-        data: {}
+        data: this.deviceId
       })
       if (result) {
         this.$message.success('successful')
