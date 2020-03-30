@@ -36,12 +36,22 @@ export default {
     },
     {
       permission: '',
-      path: '/bus/device/inverter/:id',
+      path: '/bus/device/inverter/inverterDetail',
       name: 'bus-device-inverterDetail',
       hidden: true,
       meta: {
         title: '逆变器详情',
         component: () => import(/* webpackChunkName: "bus-device-inverterDetail" */ '@/views/pages/device/inverterDetail')
+      }
+    },
+    {
+      permission: '',
+      path: '/bus/device/inverter/remoteSetting',
+      name: 'bus-device-remoteSetting',
+      hidden: true,
+      meta: {
+        title: '远程设置',
+        component: () => import(/* webpackChunkName: "bus-device-remoteSetting" */ '@/views/pages/device/remoteSetting')
       }
     }
   ]

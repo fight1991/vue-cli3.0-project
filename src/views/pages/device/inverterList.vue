@@ -62,7 +62,8 @@
           </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail"></i>
+              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.id)"></i>
+              <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.id)"></i>
             </div>
           </template>
         </common-table>
@@ -146,8 +147,22 @@ export default {
     search () {
       this.getInverterList(this.$store.state.pagination)
     },
-    goToDetail (id) {
-      this.$router.push('/bus/device/inverter/1111')
+    goToDetail (page, id) {
+      if (page === 'look') {
+        this.$router.push({
+          name: 'bus-device-inverterDetail',
+          query: {
+            tabId: this.$router.name + page + id
+          }
+        })
+      } else {
+        this.$router.push({
+          name: 'bus-device-remoteSetting',
+          query: {
+            tabId: this.$router.name + page + id
+          }
+        })
+      }
     },
     // 获取列表
     getInverterList (pagination) {
