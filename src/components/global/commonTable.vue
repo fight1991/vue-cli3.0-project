@@ -25,6 +25,7 @@
       <el-table-column v-if="showNum" type="index" width="50" label="NO." align="center"></el-table-column>
       <template v-for="(item,index) in trueTableHead">
         <el-table-column
+          show-overflow-tooltip
           v-if="!item.slotName"
           :key="'table' + index"
           :fixed="item.fixed || false"
@@ -35,6 +36,7 @@
           :render-header="item.renderHeader ? renderHead : renderCommon"
         ></el-table-column>
         <el-table-column v-else
+          show-overflow-tooltip
           :key="'table' + index"
           :fixed="item.fixed || false"
           :prop="item.prop || ''"

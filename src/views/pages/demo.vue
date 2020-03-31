@@ -11,6 +11,13 @@
     <router-link to="/login">返回登录</router-link>
     <div class="line"></div>
     <el-button type="primary" @click="closeWebsocket">关闭连接</el-button>
+    <el-table :data="[{age:'1111111111111111111111111111'}]" border>
+      <el-table-column prop="age" width="200" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="age" min-width="20" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="age" min-width="20"></el-table-column>
+      <el-table-column prop="age" min-width="20"></el-table-column>
+      <el-table-column prop="age" min-width="20"></el-table-column>
+    </el-table>
   </div>
 </template>
 
