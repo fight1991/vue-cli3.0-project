@@ -30,8 +30,8 @@
                 popper-class="login-pop"
                 width="200"
                 placement="bottom-start">
-                <span>Make sure it's at least 6 characters including a number and a letter</span>
-                <el-input slot="reference" :type="pwType" v-model="dataForm.newPassword" placeholder="Password">
+                <span>{{$t('login.tips2')}}</span>
+                <el-input slot="reference" :type="pwType" v-model="dataForm.newPassword" :placeholder="$t('login.pw')">
                   <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
                 </el-input>
               </el-popover>
@@ -39,7 +39,7 @@
           </el-col>
           <el-col :span="24" class="code-area">
             <el-form-item prop="code">
-              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code">
+              <el-input v-model="dataForm.captcha" :maxlength="4" :placeholder="$t('login.code')">
                 <el-button slot="append" @click="getCode">{{codeText}}</el-button>
               </el-input>
             </el-form-item>
@@ -48,12 +48,12 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <span v-if="isEmail" @click="toggleEmail">Mobile number</span>
-      <span v-else @click="toggleEmail">Email</span>
-      <span class="f12" @click="backLogin">Back sign in</span>
+      <span v-if="isEmail" @click="toggleEmail">{{$t('login.phone')}}</span>
+      <span v-else @click="toggleEmail">{{$t('login.em')}}</span>
+      <span class="f12" @click="backLogin">{{$t('login.back')}}</span>
     </el-row>
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="resetPassword">Reset password</el-button>
+      <el-button class="login-click" type="primary" @click="resetPassword">{{$t('login.resetPw')}}</el-button>
     </el-row>
   </div>
 </template>
@@ -104,7 +104,7 @@ export default {
     accountValid (rule, value, callback) {
       let typeValue = this.isEmail ? 'email' : 'phone'
       if (!valid[typeValue].rule.test(value)) {
-        callback(new Error(valid[typeValue].message))
+        callback(this.$t(new Error(valid[typeValue].message)))
       } else {
         callback()
       }
@@ -115,21 +115,21 @@ export default {
       let { account, newPassword, captcha } = this.dataForm
       if (this.isEmail) {
         if (!valid.email.rule.test(account)) {
-          this.$message.error('Email is invalid')
+          this.$message.error(this.$t('login.errorMg3'))
           return false
         }
       } else {
         if (!valid.phone.rule.test(account)) {
-          this.$message.error('Mobile number is invalid')
+          this.$message.error(this.$t('login.errorMg2'))
           return false
         }
       }
       if (!valid.password.rule.test(newPassword)) {
-        this.$message.error(valid.password.message)
+        this.$message.error(this.$t(valid.password.message))
         return false
       }
       if (!valid.code.rule.test(captcha)) {
-        this.$message.error(valid.code.message)
+        this.$message.error(this.$t(valid.code.message))
         return false
       }
       return true
@@ -163,7 +163,7 @@ export default {
           newPassword: md5(tempData.newPassword)
         },
         success: res => {
-          this.$message.success('Reset successful')
+          this.$message.success(this.$t('login.successMg2'))
           this.backLogin()
         }
       })

@@ -20,7 +20,7 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>app下载</el-dropdown-item>
+          <el-dropdown-item>app-downLoad</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
