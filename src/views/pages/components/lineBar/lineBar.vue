@@ -28,7 +28,7 @@
     </div>
     <!-- 图表 -->
     <div class="chart" v-show="echartType!=='list'">
-      <el-echart :datas="echartData[echartType]" height="300px"></el-echart>
+      <el-echart :datas="echartData[echartType]" height="350px"></el-echart>
     </div>
     <div v-show="echartType==='list'">
       <slot name="other"></slot>
