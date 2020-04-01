@@ -1,4 +1,12 @@
 export default {
+  common: {
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    tip: 'Tip',
+    success: 'successful',
+    fail: 'failure',
+    select: 'please select'
+  },
   login: {
     mobile: 'Mobile number sign in',
     mobileSp: 'Mobile number sign up',
@@ -38,6 +46,7 @@ export default {
     sn: 'SN',
     key: 'KEY',
     plantSet: 'Plant',
+    epBind: 'Equipment',
     name: 'Plant name',
     type: 'Station type',
     country: 'Country',
@@ -47,7 +56,9 @@ export default {
     price: 'Electricity price',
     cancel: 'Cancel',
     new: 'New',
-    edit: 'Edit'
+    edit: 'Edit',
+    goOn: 'Go on',
+    tips1: 'Are you sure you want to cancel it?'
   },
   monitor: 'Monitor System',
   chooseDate: 'Choose Date'

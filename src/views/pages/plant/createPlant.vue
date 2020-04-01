@@ -1,31 +1,31 @@
 <template>
   <section class="sys-main bg-c">
     <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="120px">
-      <div class="title border-line">Plant</div>
+      <div class="title border-line">{{$t('plant.plantSet')}}</div>
       <div class="col-container">
         <el-row :gutter="40">
           <el-col :lg="12" :md="24">
-            <el-form-item label="Plant name" prop="details.name">
+            <el-form-item :label="$t('plant.name')" prop="details.name">
               <el-input v-model="dataForm.details.name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="Station type" prop="details.type">
+            <el-form-item :label="$t('plant.type')" prop="details.type">
               <el-input v-model="dataForm.details.type"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="Country" prop="details.country">
+            <el-form-item :label="$t('plant.country')" prop="details.country">
               <el-input v-model="dataForm.details.country"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="City" prop="details.city">
+            <el-form-item :label="$t('plant.city')" prop="details.city">
               <el-input v-model="dataForm.details.city"></el-input>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
-            <el-form-item label="Site address" prop="details.address">
+            <el-form-item :label="$t('plant.address')" prop="details.address">
               <el-input v-model="dataForm.details.address"></el-input>
             </el-form-item>
           </el-col>
@@ -40,25 +40,25 @@
             </el-form-item>
           </el-col> -->
           <el-col :lg="12" :md="24">
-            <el-form-item label="Electricity price" prop="details.price">
-              <el-select v-model="dataForm.details.price" style="width:100%">
+            <el-form-item :label="$t('plant.price')" prop="details.price">
+              <el-select v-model="dataForm.details.price" style="width:100%" :placeholder="$t('common.select')">
                 <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </div>
-      <div class="title equipment border-line">Equipment <i class="el-add-icon el-icon-circle-plus-outline" @click="deviceAdd"></i></div>
+      <div class="title equipment border-line">{{$t('plant.epBind')}} <i class="el-add-icon el-icon-circle-plus-outline" @click="deviceAdd"></i></div>
       <div class="col-container devices">
         <el-row :gutter="40" v-for="(item, index) in dataForm.devices" :key="'index'+index">
           <!-- validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')} -->
           <el-col :span="10">
-            <el-form-item label="SN" label-width="60px" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
+            <el-form-item :label="$t('plant.sn')" label-width="70px" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
               <el-input v-model="item.sn"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="Key" label-width="60px" :prop="'devices.'+index+'.key'" :rules="{required:true, message: 'key is invalid', trigger: 'blur'}">
+            <el-form-item :label="$t('plant.key')" label-width="70px" :prop="'devices.'+index+'.key'" :rules="{required:true, message: 'key is invalid', trigger: 'blur'}">
               <el-input v-model="item.key"></el-input>
             </el-form-item>
           </el-col>
@@ -74,8 +74,8 @@
       </div>
     </el-form>
     <el-row class="foot-btn" type="flex" justify="center" v-if="opType!=='look'">
-      <el-button size="mini" @click="cancel">Cancel</el-button>
-      <el-button size="mini" @click="confirmBtn" type="primary">{{opType=='add'?'New':'Edit'}}</el-button>
+      <el-button size="mini" @click="cancel">{{$t('plant.cancel')}}</el-button>
+      <el-button size="mini" @click="confirmBtn" type="primary">{{opType=='add'?$t('plant.new'):$t('plant.edit')}}</el-button>
     </el-row>
     <el-dialog
       title="Error List"
@@ -86,8 +86,8 @@
         {{item.sn + ' - ' + item.key}}
       </div>
       <el-row slot="footer" type="flex" justify="center">
-        <el-button size="mini" @click="dialogCancel">Cancel</el-button>
-        <el-button size="mini" type="primary" @click="dialogConfirm">Go on</el-button>
+        <el-button size="mini" @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
+        <el-button size="mini" type="primary" @click="dialogConfirm">{{$t('plant.goOn')}}</el-button>
       </el-row>
     </el-dialog>
   </section>
@@ -228,9 +228,9 @@ export default {
     },
     // 取消按钮
     async cancel () {
-      let res = await this.$confirm('Are you sure you want to cancel?', 'tip', {
-        confirmButtonText: 'confirm',
-        cancelButtonText: 'cancel',
+      let res = await this.$confirm(this.$t('plant.tips1'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
@@ -272,7 +272,7 @@ export default {
           ...this.dataForm
         },
         success: ({ result }) => {
-          this.$message.success('successful')
+          this.$message.success(this.$t('common.success'))
           this.backRoute('bus-plant-view')
         }
       })

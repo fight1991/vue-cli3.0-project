@@ -1,4 +1,12 @@
 export default {
+  common: {
+    cancel: '取消',
+    confirm: '确定',
+    tip: '提示',
+    success: '操作成功',
+    fail: '操作失败',
+    select: '请选择'
+  },
   login: {
     mobile: '手机号登录',
     mobileSp: '手机号注册',
@@ -35,9 +43,10 @@ export default {
   },
   plant: {
     crePlant: '创建电站',
-    sn: '设备序列号',
-    key: '设备注册码',
+    sn: '序列号',
+    key: '注册码',
     plantSet: '电站设置',
+    epBind: '设备绑定',
     name: '电站名称',
     type: '电站类型',
     country: '国家',
@@ -47,7 +56,9 @@ export default {
     price: '电价',
     cancel: '取消',
     new: '创建',
-    edit: '编辑'
+    edit: '编辑',
+    goOn: '继续绑定',
+    tips1: '您确定要取消吗?'
   },
   monitor: '监控系统',
   chooseDate: '选择日期'
