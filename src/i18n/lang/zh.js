@@ -33,6 +33,22 @@ export default {
     successMg1: '注册成功',
     successMg2: '重置成功'
   },
+  plant: {
+    crePlant: '创建电站',
+    sn: '设备序列号',
+    key: '设备注册码',
+    plantSet: '电站设置',
+    name: '电站名称',
+    type: '电站类型',
+    country: '国家',
+    city: '城市',
+    address: '地址',
+    map: '地图',
+    price: '电价',
+    cancel: '取消',
+    new: '创建',
+    edit: '编辑'
+  },
   monitor: '监控系统',
   chooseDate: '选择日期'
 }

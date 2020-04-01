@@ -33,6 +33,22 @@ export default {
     successMg1: 'sign up successfully',
     successMg2: 'Reset successfully'
   },
+  plant: {
+    crePlant: 'New plant',
+    sn: 'SN',
+    key: 'KEY',
+    plantSet: 'Plant',
+    name: 'Plant name',
+    type: 'Station type',
+    country: 'Country',
+    city: 'City',
+    address: 'Site address',
+    map: 'map',
+    price: 'Electricity price',
+    cancel: 'Cancel',
+    new: 'New',
+    edit: 'Edit'
+  },
   monitor: 'Monitor System',
   chooseDate: 'Choose Date'
 }
