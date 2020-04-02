@@ -24,7 +24,8 @@ export default {
     gPower: '发电功率',
     gCon: '并网功率',
     pDiss: '电网损耗功率',
-    currentP: '当前功率'
+    currentP: '当前功率',
+    total: '总数'
   },
   login: {
     mobile: '手机号登录',

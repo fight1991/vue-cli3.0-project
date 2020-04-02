@@ -1,6 +1,38 @@
 <template>
   <section class="sys-main">
-    <div class="block mg-b15">
+    <div class="block bg-c mg-b15">
+      <div class="plant-head clearfix">
+        <div class="plant-name flex-center fl">
+          <i class="iconfont icon-fadianzhan"></i>
+          <div>
+            <span>电站名称 :</span>
+            <span>国家 :</span>
+            <span>城市 :</span>
+          </div>
+          <div class="select-area">
+            <el-select size="mini" v-model="plantName">
+              <el-option label="232" value="32" key="3"></el-option>
+            </el-select>
+          </div>
+        </div>
+        <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
+        <i @click="collapse=!collapse" v-show="collapse" class="arrow-right fr el-icon-arrow-down"></i>
+      </div>
+      <div :class="{'plant-item':true, 'height-0':!collapse}">
+        <el-row :gutter="30">
+          <el-col :span="6">国家 :</el-col>
+          <el-col :span="6">城市 :</el-col>
+          <el-col :span="6">安装商 :</el-col>
+          <el-col :span="6">联系方式 :</el-col>
+          <el-col :span="6">用户 :</el-col>
+          <el-col :span="6">联系方式 :</el-col>
+          <el-col :span="6">电站类型 :</el-col>
+          <el-col :span="6">时间 :</el-col>
+          <el-col :span="6">地址 :</el-col>
+        </el-row>
+      </div>
+    </div>
+    <div class="block">
       <el-row :gutter="15">
         <el-col :span="12">
           <el-card shadow="never">
@@ -16,6 +48,10 @@
             <div class="title border-line" slot="header">{{$t('plant.deviceS')}}</div>
             <div class="progress-container">
               <div class="progress-line">
+                <div class="status-text f12 flex-between"><span>{{$t('common.total')}}</span><span style="color:#00BFFF">{{device.total}}</span></div>
+                <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="percentMethod(device.total)" color="#67c23a"></el-progress>
+              </div>
+              <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>{{$t('common.normal')}}</span><span style="color:#67c23a">{{device.normal}}</span></div>
                 <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="percentMethod(device.normal)" color="#67c23a"></el-progress>
               </div>
@@ -24,7 +60,7 @@
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.warning)" color="#e6a23c"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>{{$t('common.abnormal')}}</span><span style="color:#f56c6c">{{device.fault}}</span></div>
+                <div class="status-text f12 flex-between"><span>{{$t('common.glitch')}}</span><span style="color:#f56c6c">{{device.fault}}</span></div>
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.fault)" color="#f56c6c"></el-progress>
               </div>
               <div class="progress-line">
@@ -34,12 +70,12 @@
             </div>
           </el-card>
         </el-col>
-        <el-col :span="24" style="margin-top:15px">
-          <plant-status :title="$t('plant.plantS')"></plant-status>
-        </el-col>
       </el-row>
     </div>
-    <div class="container-bottom">
+    <div class="block">
+      <plant-status :title="$t('plant.plantS')"></plant-status>
+    </div>
+    <div class="block">
       <line-bar>
         <template v-slot:radioBtn>
           <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
@@ -71,9 +107,12 @@ export default {
   },
   data () {
     return {
+      plantName: '',
+      collapse: false,
       abnormalVisible: false,
       plantId: '',
       device: {
+        total: 0,
         normal: 0,
         warning: 0,
         fault: 0,
@@ -138,5 +177,41 @@ export default {
 }
 .status-text {
   padding: 2px 5px;
+}
+.plant-head {
+  padding: 10px;
+  .arrow-right {
+    padding: 10px;
+    cursor: pointer;
+  }
+}
+.plant-item {
+  transition: all .2s;
+  overflow: hidden;
+  max-height: 98px;
+  &.height-0 {
+    max-height: 0px;
+  }
+  .el-row {
+    border-top: 1px solid #f5f5f5;
+    padding: 10px 0 0 50px;
+  }
+  .el-col {
+    padding-bottom: 10px;
+  }
+}
+.select-area {
+  background-color: pink;
+  padding: 0 20px;
+}
+.plant-name {
+  .iconfont {
+    color: @sys-main-header;
+    font-size: 32px;
+    margin-right: 10px;
+  }
+  span {
+    margin-right: 40px;
+  }
 }
 </style>

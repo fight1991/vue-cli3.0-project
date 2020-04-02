@@ -24,7 +24,8 @@ export default {
     gPower: 'generating power',
     gCon: 'grid-connect',
     pDiss: 'power dissipation',
-    currentP: 'Current power'
+    currentP: 'Current power',
+    total: 'Total'
   },
   login: {
     mobile: 'Mobile number sign in',
