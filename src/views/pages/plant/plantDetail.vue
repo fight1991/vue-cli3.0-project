@@ -4,17 +4,20 @@
       <div class="plant-head clearfix">
         <div class="plant-name flex-center fl">
           <i class="iconfont icon-fadianzhan"></i>
-          <div>
+          <div v-if="pageFlag==='detail'">
             <span>电站名称 :</span>
             <span>国家 :</span>
             <span>城市 :</span>
           </div>
-          <div class="select-area flex-center">
-            <i class="arrow el-icon-caret-left"></i>
+          <div v-else>
+            <span>电站名称 </span>
+          </div>
+          <div class="select-area flex-center" v-if="pageFlag==='board'">
+            <i class="arrow el-icon-caret-left" @click="switchPlant('reduce')"></i>
             <el-select size="mini" v-model="plantName">
               <el-option v-for="item in plantList" :label="item.name" :value="item.plantId" :key="item.plantId"></el-option>
             </el-select>
-            <i class="arrow el-icon-caret-right"></i>
+            <i class="arrow el-icon-caret-right" @click="switchPlant('add')"></i>
           </div>
         </div>
         <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -22,8 +25,8 @@
       </div>
       <div :class="{'plant-item':true, 'height-0':!collapse}">
         <el-row :gutter="30">
-          <el-col :span="6">国家 :</el-col>
-          <el-col :span="6">城市 :</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">国家 :</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">城市 :</el-col>
           <el-col :span="6">安装商 :</el-col>
           <el-col :span="6">联系方式 :</el-col>
           <el-col :span="6">用户 :</el-col>
@@ -109,6 +112,8 @@ export default {
   },
   data () {
     return {
+      pageFlag: 'detail',
+      switch: false, // 节流
       plantName: '',
       collapse: false,
       abnormalVisible: false,
@@ -133,14 +138,26 @@ export default {
         total += Number(value)
       })
       return total
+    },
+    plantIndex () {
+      return this.plantList.findIndex(v => v.plantId === this.plantName)
     }
   },
-  created () {
-    let { plantId } = this.$route.query
-    if (plantId) {
-      this.plantId = plantId
-      this.getSingleStatus(plantId)
+  async created () {
+    console.log(this.$route)
+    let { query: { plantId }, meta: { page } } = this.$route
+    if (page === 'detail') { // 电站详情页面
+      if (plantId) {
+        this.plantId = plantId
+        this.getSingleStatus(plantId)
+      }
+    } else { // dashboard页面
+      // 获取plantList列表
+      await this.getPlantList()
+      // 截取plantList第一项
+      this.plantName = this.plantList[0].plantId
     }
+    this.pageFlag = page
   },
   mounted () {
 
@@ -170,6 +187,21 @@ export default {
       if (result && result.device) {
         this.device = result.device
       }
+    },
+    async getPlantList () {
+      // let { result } = await this.$axios()
+      return true
+    },
+    switchPlant (type) {
+      if (this.switch) return
+      this.switch = true
+      // 获取当前索引
+      let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
+      if (index < 0 || index > this.plantList.length - 1) return
+      this.plantName = this.plantList[index].plantId
+      // 发送请求
+      // this.$all
+      this.switch = false
     }
   }
 }

@@ -5,6 +5,7 @@ export default {
   name: 'bus-data-view',
   meta: {
     title: '数据概览',
-    component: () => import(/* webpackChunkName: "bus-data-view" */ '@/views/pages/dataView/dataBoard')
+    page: 'board',
+    component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
   }
 }

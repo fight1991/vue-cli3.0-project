@@ -45,6 +45,7 @@ export default {
       hidden: true,
       meta: {
         title: '电站详情',
+        page: 'detail',
         component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
       }
     }
