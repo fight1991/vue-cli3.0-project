@@ -52,14 +52,9 @@
       <div class="col-container devices">
         <el-row :gutter="40" v-for="(item, index) in dataForm.devices" :key="'index'+index">
           <!-- validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')} -->
-          <el-col :span="10">
-            <el-form-item :label="$t('plant.sn')" label-width="70px" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
+          <el-col :span="12">
+            <el-form-item :label="$t('plant.sn')" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
               <el-input v-model="item.sn"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item :label="$t('plant.key')" label-width="70px" :prop="'devices.'+index+'.key'" :rules="{required:true, message: 'key is invalid', trigger: 'blur'}">
-              <el-input v-model="item.key"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4" style="padding-left:0px">
@@ -121,7 +116,6 @@ export default {
       },
       templateDevice: {
         sn: '',
-        key: '',
         isPass: 1
       },
       editInfo: {},
@@ -169,7 +163,7 @@ export default {
     copyData () {
       return {
         devices: [
-          { sn: '', key: '' }
+          { sn: '' }
         ],
         details: {
           name: '',
@@ -198,9 +192,9 @@ export default {
     async deviceDelete (index) {
       if (index === 0 && this.dataForm.devices.length === 1) {
         if (this.dataForm.devices[0].sn) {
-          let res = await this.$confirm('Are you sure you want to delete it?', 'tip', {
-            confirmButtonText: 'confirm',
-            cancelButtonText: 'cancel',
+          let res = await this.$confirm(this.$t('   s2'), this.$t('common.tip'), {
+            confirmButtonText: this.$t('common.confirm'),
+            cancelButtonText: this.$t('common.cancel'),
             type: 'warning'
           }).then(() => true).catch(() => false)
           if (!res) return
@@ -228,7 +222,7 @@ export default {
     },
     // 取消按钮
     async cancel () {
-      let res = await this.$confirm(this.$t('plant.tips1'), this.$t('common.tips'), {
+      let res = await this.$confirm(this.$t('common.tips1'), this.$t('common.tip'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
@@ -323,9 +317,6 @@ export default {
 }
 .col-container {
   padding: 0 50px;
-  &.devices {
-    padding-right: 90px;
-  }
 }
 .op-icon {
   display: block;

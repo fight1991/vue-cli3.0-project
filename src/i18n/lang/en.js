@@ -5,7 +5,11 @@ export default {
     tip: 'Tip',
     success: 'successful',
     fail: 'failure',
-    select: 'please select'
+    select: 'please select',
+    tips1: 'Are you sure you want to cancel it?',
+    tips2: 'Are you sure you want to delete it?',
+    reset: 'Reset',
+    search: 'Search'
   },
   login: {
     mobile: 'Mobile number sign in',
@@ -57,8 +61,7 @@ export default {
     cancel: 'Cancel',
     new: 'New',
     edit: 'Edit',
-    goOn: 'Go on',
-    tips1: 'Are you sure you want to cancel it?'
+    goOn: 'Go on'
   },
   monitor: 'Monitor System',
   chooseDate: 'Choose Date'

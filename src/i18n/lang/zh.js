@@ -5,7 +5,11 @@ export default {
     tip: '提示',
     success: '操作成功',
     fail: '操作失败',
-    select: '请选择'
+    select: '请选择',
+    tips1: '您确定要取消吗?',
+    tips2: '您确定要删除吗?',
+    reset: '重置',
+    search: '查询'
   },
   login: {
     mobile: '手机号登录',
@@ -57,8 +61,7 @@ export default {
     cancel: '取消',
     new: '创建',
     edit: '编辑',
-    goOn: '继续绑定',
-    tips1: '您确定要取消吗?'
+    goOn: '继续绑定'
   },
   monitor: '监控系统',
   chooseDate: '选择日期'
