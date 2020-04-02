@@ -12,7 +12,7 @@
           <div class="select-area flex-center">
             <i class="arrow el-icon-caret-left"></i>
             <el-select size="mini" v-model="plantName">
-              <el-option label="232" value="32" key="3"></el-option>
+              <el-option v-for="item in plantList" :label="item.name" :value="item.plantId" :key="item.plantId"></el-option>
             </el-select>
             <i class="arrow el-icon-caret-right"></i>
           </div>
@@ -113,6 +113,10 @@ export default {
       collapse: false,
       abnormalVisible: false,
       plantId: '',
+      plantList: [
+        { plantId: '12', name: '大亚湾' },
+        { plantId: '33', name: '秦山' }
+      ],
       device: {
         total: 0,
         normal: 0,
