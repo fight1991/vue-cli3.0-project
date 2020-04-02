@@ -197,7 +197,13 @@ export default {
       this.switch = true
       // 获取当前索引
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
-      if (index < 0 || index > this.plantList.length - 1) return
+      console.log(index)
+      if (index < 0) {
+        index = 0
+      }
+      if (index > this.plantList.length - 1) {
+        index = this.plantList.length - 1
+      }
       this.plantName = this.plantList[index].plantId
       // 发送请求
       // this.$all
