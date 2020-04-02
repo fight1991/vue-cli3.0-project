@@ -9,10 +9,12 @@
             <span>国家 :</span>
             <span>城市 :</span>
           </div>
-          <div class="select-area">
+          <div class="select-area flex-center">
+            <i class="arrow el-icon-caret-left"></i>
             <el-select size="mini" v-model="plantName">
               <el-option label="232" value="32" key="3"></el-option>
             </el-select>
+            <i class="arrow el-icon-caret-right"></i>
           </div>
         </div>
         <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -201,8 +203,15 @@ export default {
   }
 }
 .select-area {
-  background-color: pink;
   padding: 0 20px;
+  .arrow {
+    cursor: pointer;
+    margin: 0 3px;
+    font-size: 20px;
+    &:hover {
+      background-color: #eee;
+    }
+  }
 }
 .plant-name {
   .iconfont {
