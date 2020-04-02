@@ -9,7 +9,22 @@ export default {
     tips1: '您确定要取消吗?',
     tips2: '您确定要删除吗?',
     reset: '重置',
-    search: '查询'
+    search: '查询',
+    normal: '正常',
+    abnormal: '非正常',
+    alarm: '告警',
+    glitch: '故障',
+    offline: '离线',
+    elec: '发电',
+    income: '收益',
+    power: '功率',
+    gene: '统计',
+    all: '所有',
+    status: '状态',
+    gPower: '发电功率',
+    gCon: '并网功率',
+    pDiss: '电网损耗功率',
+    currentP: '当前功率'
   },
   login: {
     mobile: '手机号登录',
@@ -61,7 +76,11 @@ export default {
     cancel: '取消',
     new: '创建',
     edit: '编辑',
-    goOn: '继续绑定'
+    goOn: '继续绑定',
+    todayAb: '今日异常',
+    deviceS: '设备状态',
+    plantS: '电站状态',
+    deviceL: '设备列表'
   },
   monitor: '监控系统',
   chooseDate: '选择日期'

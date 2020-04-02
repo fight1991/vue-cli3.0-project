@@ -9,7 +9,22 @@ export default {
     tips1: 'Are you sure you want to cancel it?',
     tips2: 'Are you sure you want to delete it?',
     reset: 'Reset',
-    search: 'Search'
+    search: 'Search',
+    normal: 'Normal',
+    abnormal: 'Abnormal',
+    alarm: 'Alarm',
+    glitch: 'Glitch',
+    offline: 'Offline',
+    elec: 'Electric',
+    income: 'Income',
+    power: 'Power',
+    gene: 'Generation',
+    all: 'All',
+    status: 'Status',
+    gPower: 'generating power',
+    gCon: 'grid-connect',
+    pDiss: 'power dissipation',
+    currentP: 'Current power'
   },
   login: {
     mobile: 'Mobile number sign in',
@@ -61,7 +76,11 @@ export default {
     cancel: 'Cancel',
     new: 'New',
     edit: 'Edit',
-    goOn: 'Go on'
+    goOn: 'Go on',
+    todayAb: `Today's abnormal`,
+    deviceS: 'Device status',
+    plantS: 'Power station condition',
+    deviceL: 'Device list'
   },
   monitor: 'Monitor System',
   chooseDate: 'Choose Date'

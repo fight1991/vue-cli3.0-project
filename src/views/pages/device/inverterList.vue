@@ -48,7 +48,7 @@
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
           <el-button size="mini" icon="el-icon-plus">New</el-button>
-          <el-button size="mini" icon="el-icon-delete">Delete</el-button>
+          <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">Delete</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">

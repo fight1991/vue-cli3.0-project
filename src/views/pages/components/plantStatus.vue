@@ -6,15 +6,15 @@
         <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
         <div class="progress-txt">
           <div class="number">{{power + 'kw'}}</div>
-          <div class="f12">当前功率</div>
+          <div class="f12">{{$t('common.currentP')}}</div>
         </div>
       </div>
       <div class="details flex">
         <div class="content-item flex-around">
         <i class="icon icon-plant-day"></i>
         <div class="plant-text">
-          <p><span>Electric (kwh)</span></p>
-          <p><span>Income ($)</span></p>
+          <p><span>{{$t('common.elec')}} (kwh)</span></p>
+          <p><span>{{$t('common.income')}} ($)</span></p>
         </div>
         <div class="plant-money">
           <p><span class="num">333</span></p>
@@ -24,8 +24,8 @@
       <div class="content-item flex-around">
         <i class="icon icon-plant-month"></i>
         <div class="plant-text">
-          <p><span>Electric (kwh)</span></p>
-          <p><span>Income ($)</span></p>
+          <p><span>{{$t('common.elec')}} (kwh)</span></p>
+          <p><span>{{$t('common.income')}} ($)</span></p>
         </div>
         <div class="plant-money">
           <p><span class="num">333</span></p>
@@ -35,8 +35,8 @@
       <div class="content-item flex-around">
         <i class="icon icon-plant-year"></i>
         <div class="plant-text">
-          <p><span>Electric (kwh)</span></p>
-          <p><span>Income ($)</span></p>
+          <p><span>{{$t('common.elec')}} (kwh)</span></p>
+          <p><span>{{$t('common.income')}} ($)</span></p>
         </div>
         <div class="plant-money">
           <p><span class="num">333</span></p>
@@ -46,8 +46,8 @@
       <div class="content-item flex-around">
         <i class="icon icon-plant-total"></i>
         <div class="plant-text">
-          <p><span>Electric (kwh)</span></p>
-          <p><span>Income ($)</span></p>
+          <p><span>{{$t('common.elec')}} (kwh)</span></p>
+          <p><span>{{$t('common.income')}} ($)</span></p>
         </div>
         <div class="plant-money">
           <p><span class="num">333</span></p>

@@ -5,7 +5,7 @@
         <el-col :span="12">
           <el-card shadow="never">
             <div class="title border-line" slot="header">
-              Today's abnormal
+              {{$t('plant.todayAb')}}
               <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
             </div>
             <el-echart :datas="normalData" height="200px"></el-echart>
@@ -13,38 +13,38 @@
         </el-col>
         <el-col :span="12">
           <el-card shadow="never">
-            <div class="title border-line" slot="header">Device status</div>
+            <div class="title border-line" slot="header">{{$t('plant.deviceS')}}</div>
             <div class="progress-container">
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Normal</span><span style="color:#67c23a">{{device.normal}}</span></div>
+                <div class="status-text f12 flex-between"><span>{{$t('common.normal')}}</span><span style="color:#67c23a">{{device.normal}}</span></div>
                 <el-progress class="progress" :show-text="false" :stroke-width="12" :percentage="percentMethod(device.normal)" color="#67c23a"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Alarm</span><span style="color:#e6a23c">{{device.warning}}</span></div>
+                <div class="status-text f12 flex-between"><span>{{$t('common.alarm')}}</span><span style="color:#e6a23c">{{device.warning}}</span></div>
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.warning)" color="#e6a23c"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Abnormal</span><span style="color:#f56c6c">{{device.fault}}</span></div>
+                <div class="status-text f12 flex-between"><span>{{$t('common.abnormal')}}</span><span style="color:#f56c6c">{{device.fault}}</span></div>
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.fault)" color="#f56c6c"></el-progress>
               </div>
               <div class="progress-line">
-                <div class="status-text f12 flex-between"><span>Offline</span><span style="color:#909399">{{device.offline}}</span></div>
+                <div class="status-text f12 flex-between"><span>{{$t('common.offline')}}</span><span style="color:#909399">{{device.offline}}</span></div>
                 <el-progress class="progress" :show-text="false" :text-inside="true" :stroke-width="12" :percentage="percentMethod(device.offline)" color="#909399"></el-progress>
               </div>
             </div>
           </el-card>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
-          <plant-status :title="'Power station condition'"></plant-status>
+          <plant-status :title="$t('plant.plantS')"></plant-status>
         </el-col>
       </el-row>
     </div>
     <div class="container-bottom">
       <line-bar>
         <template v-slot:radioBtn>
-          <el-radio-button label="power">Power</el-radio-button>
-          <el-radio-button label="elec">Generation</el-radio-button>
-          <el-radio-button label="list">Device list</el-radio-button>
+          <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
+          <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
+          <el-radio-button label="list">{{$t('plant.deviceL')}}</el-radio-button>
         </template>
         <template v-slot:other>
           <device-list></device-list>
