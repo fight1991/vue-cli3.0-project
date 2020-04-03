@@ -25,12 +25,12 @@
       </el-dropdown>
     </div>
     <div class="content">
+      <div class="bg"><img src="../../assets/login-bg.png" alt=""></div>
       <transition name="zoom">
         <keep-alive>
           <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
         </keep-alive>
       </transition>
-      <div class="bg"><img src="../../assets/login-bg.png" alt=""></div>
     </div>
   </div>
 </template>
@@ -65,11 +65,12 @@ export default {
 </script>
 <style lang="less" scoped>
   .login-container {
+    min-width: 900px;
     display: flex;
     flex-direction: column;
     height: 100%;
     background-size: cover;
-    background: linear-gradient(#2398dd, #1174b6);
+    background: linear-gradient(to top right, #1174b6, #2398dd);
     position: relative;
     .header {
       display: flex;
@@ -93,15 +94,13 @@ export default {
       flex: 1;
       position: relative;
       display: flex;
-      // justify-content: center;
       align-items: center;
       .bg {
+        animation: drop 3s ease-in-out infinite;
         z-index: 5;
         position: absolute;
-        left: 15%;
-        top: 50%;
-        transform: translateY(-60%);
-        width: 650px;
+        left: 10%;
+        width: 500px;
         img {
           width: 100%;
         }
@@ -110,18 +109,14 @@ export default {
     .login {
       z-index: 6;
       position: absolute;
-      right: 15%;
-      top: 20%;
-      // top: 50%;
-      // left: 50%;
+      right: 10%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
-      transform-origin: center;
-      width: 500px;
+      // transform-origin: center;
+      width: 450px;
       box-sizing: border-box;
-      // background-color:rgba(125, 172, 200, 0.7);
       background-color: #fff;
       border-radius: 4px;
-      padding: 45px;
+      padding: 25px;
       color: #999;
     }
     .tab-header {
@@ -154,6 +149,47 @@ export default {
   .login-btn {
     padding: 18px 0 10px;
   }
+@media only screen and(max-width:1080px) {
+  .login{
+    width: 380px!important;
+    right: 5%;
+  }
+  .content .bg {
+    width: 360px!important;
+    left: 5%!important;
+  }
+}
+@media only screen and(min-width:1080px) {
+  .login{
+    width: 480px!important;
+    right: 5%!important;
+  }
+  .content .bg {
+    width: 550px!important;
+    left: 5%!important;
+  }
+}
+@media only screen and(min-width:1400px) {
+  .login{
+    width: 480px!important;
+    right: 10%!important;
+  }
+  .content .bg {
+    width: 600px!important;
+    left: 10%!important;
+  }
+}
+@keyframes drop {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
 @keyframes zoomIn {
   from {
     opacity: 0;
