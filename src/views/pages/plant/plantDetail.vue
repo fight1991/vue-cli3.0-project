@@ -1,5 +1,6 @@
 <template>
   <section class="sys-main">
+    <!-- 电站名称区域 -->
     <div class="block bg-c mg-b15">
       <div class="plant-head clearfix">
         <div class="plant-name flex-center fl">
@@ -37,6 +38,7 @@
         </el-row>
       </div>
     </div>
+    <!-- 今日异常 设备状态区域 -->
     <div class="block">
       <el-row :gutter="15">
         <el-col :span="12">
@@ -77,8 +79,9 @@
         </el-col>
       </el-row>
     </div>
+    <!-- 电站状态 -->
     <div class="block">
-      <plant-status :title="$t('plant.plantS')"></plant-status>
+      <plant-status :incomeDetail="incomeDetail" :title="$t('plant.plantS')"></plant-status>
     </div>
     <div class="block">
       <line-bar :plantId="plantId">
@@ -101,6 +104,7 @@ import todayAbnormal from './todayAbnormal'
 import deviceList from './deviceList'
 import plantStatus from '../components/plantStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
+import Socket from '@/net/socket'
 
 export default {
   mixins: [echartData],
@@ -118,12 +122,33 @@ export default {
       abnormalVisible: false,
       plantId: '',
       plantList: [],
+      socket: null,
       device: {
         total: 0,
         normal: 0,
         warning: 0,
         fault: 0,
         offline: 0
+      },
+      incomeDetail: { // 收益详情
+        currency: '', // 货币种类
+        power: '', // 功率
+        today: {
+          generation: 0,
+          earnings: 0
+        },
+        month: {
+          generation: 0,
+          earnings: 0
+        },
+        year: {
+          generation: 0,
+          earnings: 0
+        },
+        cumulate: {
+          generation: 0,
+          earnings: 0
+        }
       }
     }
   },
@@ -155,10 +180,15 @@ export default {
         this.plantId = this.plantList[0].stationID
       }
     }
+    // this.getSomeIncome()
     this.pageFlag = page
   },
   mounted () {
 
+  },
+  beforeDestroy () {
+    console.log('hah ')
+    this.socket && this.socket.closeLink()
   },
   methods: {
     // 百分比取整数
@@ -224,6 +254,20 @@ export default {
       if (result) {
         this.device = result
       }
+    },
+    // 获取电站的实时功率、发电、收益
+    getSomeIncome () {
+      this.socket = new Socket()
+      this.socket.startLink({
+        url: '/plant/earnings/detail',
+        flag: 'income',
+        data: {
+          stationID: this.plantId
+        },
+        success: (res) => {
+          console.log(res)
+        }
+      })
     }
   }
 }

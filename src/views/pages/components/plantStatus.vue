@@ -5,7 +5,7 @@
       <div class="my-pg">
         <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
         <div class="progress-txt">
-          <div class="number">{{power + 'kw'}}</div>
+          <div class="number">{{incomeDetail.power + 'kw'}}</div>
           <div class="f12">{{$t('common.currentP')}}</div>
         </div>
       </div>
@@ -14,44 +14,44 @@
         <i class="icon icon-plant-day"></i>
         <div class="plant-text">
           <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ($)</span></p>
+          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
         </div>
         <div class="plant-money">
-          <p><span class="num">333</span></p>
-          <p><span class="money">333</span></p>
+          <p><span class="num">{{incomeDetail.today.generation}}</span></p>
+          <p><span class="money">{{incomeDetail.today.earnings}}</span></p>
         </div>
       </div>
       <div class="content-item flex-around">
         <i class="icon icon-plant-month"></i>
         <div class="plant-text">
           <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ($)</span></p>
+          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
         </div>
         <div class="plant-money">
-          <p><span class="num">333</span></p>
-          <p><span class="money">333</span></p>
+          <p><span class="num">{{incomeDetail.month.generation}}</span></p>
+          <p><span class="money">{{incomeDetail.month.earnings}}</span></p>
         </div>
       </div>
       <div class="content-item flex-around">
         <i class="icon icon-plant-year"></i>
         <div class="plant-text">
           <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ($)</span></p>
+          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
         </div>
         <div class="plant-money">
-          <p><span class="num">333</span></p>
-          <p><span class="money">333</span></p>
+          <p><span class="num">{{incomeDetail.year.generation}}</span></p>
+          <p><span class="money">{{incomeDetail.year.earnings}}</span></p>
         </div>
       </div>
       <div class="content-item flex-around">
         <i class="icon icon-plant-total"></i>
         <div class="plant-text">
           <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ($)</span></p>
+          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
         </div>
         <div class="plant-money">
-          <p><span class="num">333</span></p>
-          <p><span class="money">333</span></p>
+          <p><span class="num">{{incomeDetail.cumulate.generation}}</span></p>
+          <p><span class="money">{{incomeDetail.cumulate.earnings}}</span></p>
         </div>
       </div>
       </div>
@@ -74,6 +74,30 @@ export default {
     },
     plantId: {
       default: ''
+    },
+    incomeDetail: {
+      default () {
+        return {
+          currency: '', // 货币种类
+          power: '', // 功率
+          today: {
+            generation: 0,
+            earnings: 0
+          },
+          month: {
+            generation: 0,
+            earnings: 0
+          },
+          year: {
+            generation: 0,
+            earnings: 0
+          },
+          cumulate: {
+            generation: 0,
+            earnings: 0
+          }
+        }
+      }
     }
   },
   methods: {
