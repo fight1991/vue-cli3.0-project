@@ -1,22 +1,22 @@
 export default {
   email: {
     rule: /^([A-Za-z0-9_\-\\.])+\\@([A-Za-z0-9_\-\\.])+\.([A-Za-z]{2,4})$/, // 邮箱
-    message: 'Email is invalid'
+    message: 'login.errorMg3'
   },
   phone: {
     rule: /^\d+$/, // 手机号
-    message: 'Mobile number is invalid'
+    message: 'login.errorMg2'
   },
   user: {
     rule: /^[A-Za-z][A-Za-z0-9_-]{5,}$/, // 以字母开头的6-8位用户名
-    message: 'Username is not available'
+    message: 'login.errorMg4'
   },
   password: {
     rule: /^[A-Za-z0-9_&$#]{6,}$/, // 至少六位数密码
-    message: 'Password is invalid'
+    message: 'login.errorMg5'
   },
   code: {
     rule: /^\d{4}$/, // 验证码
-    message: 'Please enter 4-digit verification code'
+    message: 'login.errorMg6'
   }
 }

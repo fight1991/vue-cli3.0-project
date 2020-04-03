@@ -43,7 +43,7 @@ export default {
       this.$emit('update:visible', false)
     },
     async dialogOpen () {
-      let { result } = this.$axios({
+      let { result } = await this.$axios({
         url: '/plant/alarm/single/day',
         data: {
           stationID: this.$route.plantId

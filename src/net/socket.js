@@ -11,12 +11,10 @@ export default class socket {
   startLink (params, getData) {
     this.ws = new WebSocket(this.url)
     this.ws.onclose = (e) => { // 连接关闭触发
-      // 重新连接
-      console.log(e)
-      if (e.reason === 'destroy') return
-      this.reconnect()
+      console.error('websocket close')
     }
     this.ws.onerror = () => { // 发生异常
+      console.log('error')
       // 重新连接
       this.reconnect()
     }
@@ -31,15 +29,16 @@ export default class socket {
       getData && getData(res)
     }
   }
-  closeLink (e) {
-    this.ws.close(e)
+  closeLink () {
+    this.ws.close()
   }
   reconnect () {
+    console.log('哈哈')
     let that = this
     // 设置节流,避免重连请求重复
     if (this.isConnect) return
     this.isConnect = setTimeout(() => {
-      that.createSocket()
+      that.startLink()
       clearTimeout(that.isConnect)
       that.isConnect = null
     }, 4000)
@@ -53,9 +52,10 @@ export default class socket {
     let _this = this
     _this.timeoutObj = setTimeout(() => { // 每x秒发送一次
       _this.ws.send('heartBeat')
-      _this.serverTimeoutObj = setTimeout(() => { // 服务器间隔5000没有响应的话主动触发onclose
+      _this.serverTimeoutObj = setTimeout(() => { // 服务器间隔5000没有响应的话重新连接
         // 执行ws.close()会触发onclose
         _this.ws.close()
+        _this.ws.reconnect()
       }, _this.serverTimeout)
     }, _this.timeout)
   }

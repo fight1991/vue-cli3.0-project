@@ -45,17 +45,8 @@ export default {
       hidden: true,
       meta: {
         title: '电站详情',
+        page: 'detail',
         component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
-      }
-    },
-    {
-      permission: '',
-      path: '/bus/plant/deviceList',
-      name: 'bus-plant-deviceList',
-      hidden: false,
-      meta: {
-        title: '设备列表',
-        component: () => import(/* webpackChunkName: "bus-plant-deviceList" */ '@/views/pages/plant/deviceList')
       }
     }
   ]

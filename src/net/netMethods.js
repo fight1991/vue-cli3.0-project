@@ -24,11 +24,36 @@ const requests = {
       if (isLoad) store.commit('changeLoading', true)
       let res = await commonInstance[method](url, params)
       if (isLoad) store.commit('changeLoading', false)
-      return res
+      if (res.errno === store.state.successCode) {
+        return { result: res.result }
+      } else {
+        return { other: res.result }
+      }
     } catch (err) {
       // console.log(err)
       if (isLoad) store.commit('changeLoading', false)
-      return {}
+      return { error: err }
+    }
+  },
+  // 多个并发请求
+  $all: {
+    async promise (arr) { // 入参为promise对象,处理并发请求
+      try {
+        store.commit('changeLoading', true)
+        await commonInstance.all(arr)
+        store.commit('changeLoading', false)
+        return true
+      } catch (error) {
+        store.commit('changeLoading', false)
+        return false
+      }
+    },
+    url (arr, callback) {
+      let promiseObj = arr.map(v => commonInstance.get({
+        url: v.url,
+        params: v.data
+      }))
+      commonInstance.all(promiseObj).then(commonInstance.spread(callback))
     }
   },
   // 自定义请求

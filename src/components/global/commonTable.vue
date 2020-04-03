@@ -1,4 +1,6 @@
+
 <template>
+<!-- eslint-disable vue/valid-v-bind -->
   <div style="position:relative">
   <!--  自定义表头显示项目数 -->
     <el-popover popper-class="tableBtn-popper" v-if="checked">
@@ -19,9 +21,11 @@
       size="mini"
       highlight-current-row
       :border="border">
-      <el-table-column v-if="selectBox" type="selection" width="40" label="序号"></el-table-column>
+      <el-table-column v-if="selectBox" type="selection" align="center" width="40"></el-table-column>
+      <el-table-column v-if="showNum" type="index" width="50" label="NO." align="center"></el-table-column>
       <template v-for="(item,index) in trueTableHead">
         <el-table-column
+          show-overflow-tooltip
           v-if="!item.slotName"
           :key="'table' + index"
           :fixed="item.fixed || false"
@@ -32,6 +36,7 @@
           :render-header="item.renderHeader ? renderHead : renderCommon"
         ></el-table-column>
         <el-table-column v-else
+          show-overflow-tooltip
           :key="'table' + index"
           :fixed="item.fixed || false"
           :prop="item.prop || ''"
@@ -49,14 +54,16 @@
   </div>
 </template>
 <script>
-/*
-*  @param :
-*  1. clearSelection --- 如果传过来的值是true时,清空所有选项,然后会自动改变父组件的值为false
-*  2. tableList -- 表格数据列表
-*  3. tableHeadData -- 表格表头数据
-*  4. selectBox --- 是否显示勾选框
-*  5. border --- 是否显示边框
-*  6. showSummary -- 是否显示汇总
+/**
+ *  @param :
+ *  1. clearSelection --- 如果传过来的值是true时,清空所有选项,然后会自动改变父组件的值为false
+ *  2. tableList -- 表格数据列表
+ *  3. tableHeadData -- 表格表头数据
+ *  4. selectBox --- 是否显示勾选框
+ *  5. border --- 是否显示边框
+ *  6. showSummary -- 是否显示汇总
+ *  7. showNum -- 是否显示序号
+ *  9. selectSingle -- 表格是否为单选
 */
 export default {
   name: 'common-table',
@@ -101,11 +108,19 @@ export default {
         return false
       }
     },
+    showNum: {
+      type: Boolean,
+      default: false
+    },
     tableHeadData: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    selectSingle: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -126,20 +141,45 @@ export default {
   },
   methods: {
     selectSingleBox (selection, row) {
-      this.selection = selection
+      if (this.selectSingle) {
+        // 设置为单选
+        this.selection = [row]
+        this.$refs['commonTable'].clearSelection()
+        this.$refs['commonTable'].toggleRowSelection(row, true)
+      } else {
+        this.selection = selection
+      }
       this.$emit('select', selection, row)
     },
     // 勾选选择框
     selectAllBox (selection) {
-      this.selection = selection
+      if (this.selectSingle) {
+        this.$refs['commonTable'].clearSelection()
+        this.selection = []
+      } else {
+        this.selection = selection
+      }
       this.$emit('select', this.selection)
     },
     // 点击表格行
     selectRow (row) {
       let index = this.selection.indexOf(row)
-      if (index >= 0) { // 当前的行已经被选中了
-        this.$refs['commonTable'].toggleRowSelection(row, false)
+      if (this.selectSingle) {
+        if (index > -1) {
+          this.$refs['commonTable'].toggleRowSelection(row, false)
+          this.selection = []
+        } else {
+          this.selection = [row]
+          this.$refs['commonTable'].clearSelection()
+          this.$refs['commonTable'].toggleRowSelection(row, true)
+        }
+        this.$emit('select', this.selection)
+        return
+      }
+      if (index > -1) {
+        // 当前的行已经被选中了
         this.selection.splice(index, 1)
+        this.$refs['commonTable'].toggleRowSelection(row, false)
       } else {
         this.$refs['commonTable'].toggleRowSelection(row, true)
         this.selection.push(row)

@@ -11,8 +11,8 @@
                 popper-class="login-pop"
                 width="200"
                 placement="right-end">
-                <span>Make sure it starts width a letter and it's at least 6 characters including a number and a letter</span>
-                <el-input slot="reference" v-model="dataForm.user" placeholder="Username"></el-input>
+                <span>{{$t('login.tips1')}}</span>
+                <el-input slot="reference" v-model="dataForm.user" :placeholder="$t('login.username')"></el-input>
               </el-popover>
             </el-form-item>
           </el-col>
@@ -24,8 +24,8 @@
                 popper-class="login-pop"
                 width="200"
                 placement="right">
-                <span>Make sure it's at least 6 characters including a number and a letter</span>
-                <el-input slot="reference" :type="pwType" v-model="dataForm.password" placeholder="Password">
+                <span>{{$t('login.tips2')}}</span>
+                <el-input slot="reference" :type="pwType" v-model="dataForm.password" :placeholder="$t('login.pw')">
                   <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
                 </el-input>
               </el-popover>
@@ -33,7 +33,7 @@
           </el-col>
           <el-col :span="24" v-if="isEmail">
             <el-form-item prop="contact">
-              <el-input v-model="dataForm.contact" placeholder="Email address"></el-input>
+              <el-input v-model="dataForm.contact" :placeholder="$t('login.em')"></el-input>
             </el-form-item>
           </el-col>
           <div v-else>
@@ -46,13 +46,13 @@
             </el-col>
             <el-col :span="18" >
               <el-form-item prop="contact">
-                <el-input v-model="dataForm.contact" placeholder="Mobile number"></el-input>
+                <el-input v-model="dataForm.contact" :placeholder="$t('login.phone')"></el-input>
               </el-form-item>
             </el-col>
           </div>
           <el-col :span="24" class="code-area">
             <el-form-item prop="captcha">
-              <el-input v-model="dataForm.captcha" :maxlength="4" placeholder="4-digit verification code">
+              <el-input v-model="dataForm.captcha" :maxlength="4" :placeholder="$t('login.code')">
                 <el-button slot="append" @click="getCode">{{codeText}}</el-button>
               </el-input>
             </el-form-item>
@@ -62,18 +62,18 @@
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
       <el-checkbox v-model="isAgreen">
-        <span class="agree-text f12">Agree</span>
-        <span class="user-agree f12">《Terms of Service》</span>
+        <span class="agree-text f12">{{$t('login.agree')}}</span>
+        <span class="user-agree f12">{{$t('login.server')}}</span>
       </el-checkbox>
-      <span class="f12" v-if="isEmail" @click="toggleClick">Mobile number sign up</span>
-      <span class="f12" v-else @click="toggleClick">Email sign up</span>
+      <span class="f12" v-if="isEmail" @click="toggleClick">{{$t('login.mobileSp')}}</span>
+      <span class="f12" v-else @click="toggleClick">{{$t('login.emailSp')}}</span>
     </el-row>
     <!-- 注册按钮 -->
     <el-row class="login-btn">
-      <el-button :disabled="!isAgreen" class="login-click" type="primary" @click="goRegister">Sign up</el-button>
+      <el-button :disabled="!isAgreen" class="login-click" type="primary" @click="goRegister">{{$t('login.register')}}</el-button>
     </el-row>
     <el-row class="f12" type="flex" justify="end">
-      <span @click="backLogin">Back sign in</span>
+      <span @click="backLogin">{{$t('login.back')}}</span>
     </el-row>
   </div>
 </template>
@@ -103,10 +103,10 @@ export default {
         confirmWord: '' // 密码确认
       },
       loginRules: {
-        user: [{ required: true, pattern: valid.user.rule, message: valid.user.message, trigger: 'blur' }],
-        password: [{ required: true, pattern: valid.password.rule, message: valid.password.message, trigger: 'blur' }],
+        user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
+        password: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
         contact: [{ required: true, validator: this.contactValid, trigger: 'blur' }],
-        captcha: [{ required: true, pattern: valid.code.rule, message: valid.code.message, trigger: 'blur' }]
+        captcha: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
       }
     }
   },
@@ -130,7 +130,7 @@ export default {
     contactValid (rule, value, callback) {
       let typeValue = this.isEmail ? 'email' : 'phone'
       if (!valid[typeValue].rule.test(value)) {
-        callback(new Error(valid[typeValue].message))
+        callback(new Error(this.$t(valid[typeValue].message)))
       } else {
         callback()
       }
@@ -170,7 +170,7 @@ export default {
         success: res => {
           // 1.注册成功, 调用自动登录接口 ? 2. 跳转到产品介绍页面
           // this.$router.push('/product/index')
-          this.$message.success('sign up success')
+          this.$message.success(this.$t('login.successMg1'))
           this.backLogin()
         },
         other: res => {

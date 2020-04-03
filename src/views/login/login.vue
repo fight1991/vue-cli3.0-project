@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="24" v-if="isEmail">
             <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" placeholder="Email address or Username"></el-input>
+              <el-input v-model="dataForm.account" :placeholder="$t('login.account')"></el-input>
             </el-form-item>
           </el-col>
           <div v-else>
@@ -34,7 +34,7 @@
           </el-col> -->
           <el-col :span="24" v-if="isPw" class="password">
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.password" placeholder="Password" @keyup.native.enter="goLogin">
+              <el-input :type="pwType" v-model="dataForm.password" :placeholder="$t('login.pw')" @keyup.native.enter="goLogin">
                 <i slot="suffix" @click="showPw" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
@@ -43,15 +43,15 @@
       </el-form>
     </div>
     <el-row class="forgot-pw" type="flex" justify="space-between">
-      <span v-if="isEmail" @click="toggleEmail">Mobile number sign in</span>
-      <span v-else @click="toggleEmail">Email sign in</span>
-      <span @click="registerBtn('resetPw')">Forgot password?</span>
+      <span v-if="isEmail" @click="toggleEmail">{{$t('login.mobile')}}</span>
+      <span v-else @click="toggleEmail">{{$t('login.email')}}</span>
+      <span @click="registerBtn('resetPw')">{{$t('login.forgetPw')}}</span>
     </el-row>
     <el-row class="login-btn">
-      <el-button class="login-click" type="primary" @click="goLogin">Sign in</el-button>
+      <el-button class="login-click" type="primary" @click="goLogin">{{$t('login.login')}}</el-button>
     </el-row>
     <el-row class="find-btn" type="flex" justify="end">
-      <span @click="registerBtn('register')">Sign up</span>
+      <span @click="registerBtn('register')">{{$t('login.register')}}</span>
     </el-row>
   </div>
 </template>
@@ -116,12 +116,12 @@ export default {
       // 手机或邮箱正则
       let { account, password } = this.dataForm
       if (!this.getAcountType(account)) {
-        let erroMsg = this.isEmail ? 'Username or Email is invalid' : 'Mobile number is invalid'
+        let erroMsg = this.isEmail ? this.$t('login.errorMg1') : this.$t('login.errorMg2')
         this.$message.error(erroMsg)
         return false
       }
       if (!valid.password.rule.test(password)) {
-        this.$message.error(valid.password.message)
+        this.$message.error(this.$t(valid.password.message))
         return false
       }
       return true

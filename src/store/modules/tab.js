@@ -24,12 +24,14 @@ export default {
     // 添加新页签
     addTab (state, payLoad) {
       if (!payLoad) return
-      // 是否已经存在相同的tabId或path
-      let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId && tab.isShow) || tab.path === payLoad.path)
-      if (!isExist) {
+      // 有无相同的tabId,没有就新增页签
+      let sameTabId = state.tabList.some(tab => tab.tabId === payLoad.tabId)
+      if (!sameTabId) {
         state.tabList.push(payLoad)
       }
-      // 存在相同的tabId或相同的path并且需要刷新
+      // 是否已经存在相同的组件
+      let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId || tab.path === payLoad.path))
+      // 存在相同的组件并且需要刷新
       if (isExist && payLoad.params.refresh) {
         let existTab = state.tabList.find(tab => tab.path === payLoad.path)
         // 改变列表绑定的key值才会刷新
