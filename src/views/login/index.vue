@@ -30,7 +30,7 @@
           <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
         </keep-alive>
       </transition>
-      <div class="bg"><img src="../../assets/login-bg.jpg" alt=""></div>
+      <div class="bg"><img src="../../assets/login-bg.png" alt=""></div>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
     flex-direction: column;
     height: 100%;
     background-size: cover;
-    background-color: #00a0e9;
+    background: linear-gradient(#2398dd, #1174b6);
     position: relative;
     .header {
       display: flex;
@@ -99,9 +99,9 @@ export default {
         z-index: 5;
         position: absolute;
         left: 15%;
-        top: 45%;
+        top: 50%;
         transform: translateY(-60%);
-        width: 550px;
+        width: 650px;
         img {
           width: 100%;
         }
