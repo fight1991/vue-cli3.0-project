@@ -103,10 +103,10 @@ export default {
         confirmWord: '' // 密码确认
       },
       loginRules: {
-        user: [{ required: true, pattern: valid.user.rule, message: valid.user.message, trigger: 'blur' }],
-        password: [{ required: true, pattern: valid.password.rule, message: valid.password.message, trigger: 'blur' }],
+        user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
+        password: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
         contact: [{ required: true, validator: this.contactValid, trigger: 'blur' }],
-        captcha: [{ required: true, pattern: valid.code.rule, message: valid.code.message, trigger: 'blur' }]
+        captcha: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
       }
     }
   },

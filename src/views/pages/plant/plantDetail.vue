@@ -14,8 +14,8 @@
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
             <i class="arrow el-icon-caret-left" @click="switchPlant('reduce')"></i>
-            <el-select size="mini" v-model="plantName">
-              <el-option v-for="item in plantList" :label="item.name" :value="item.plantId" :key="item.plantId"></el-option>
+            <el-select size="mini" v-model="plantId">
+              <el-option v-for="item in plantList" :label="item.plantName" :value="item.stationID" :key="item.stationID"></el-option>
             </el-select>
             <i class="arrow el-icon-caret-right" @click="switchPlant('add')"></i>
           </div>
@@ -81,14 +81,14 @@
       <plant-status :title="$t('plant.plantS')"></plant-status>
     </div>
     <div class="block">
-      <line-bar>
+      <line-bar :plantId="plantId">
         <template v-slot:radioBtn>
           <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
           <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
           <el-radio-button label="list">{{$t('plant.deviceL')}}</el-radio-button>
         </template>
         <template v-slot:other>
-          <device-list></device-list>
+          <device-list ref="deviceList" :plantId="plantId"></device-list>
         </template>
       </line-bar>
     </div>
@@ -114,14 +114,10 @@ export default {
     return {
       pageFlag: 'detail',
       switch: false, // 节流
-      plantName: '',
       collapse: false,
       abnormalVisible: false,
       plantId: '',
-      plantList: [
-        { plantId: '12', name: '大亚湾' },
-        { plantId: '33', name: '秦山' }
-      ],
+      plantList: [],
       device: {
         total: 0,
         normal: 0,
@@ -140,22 +136,24 @@ export default {
       return total
     },
     plantIndex () {
-      return this.plantList.findIndex(v => v.plantId === this.plantName)
+      return this.plantList.findIndex(v => v.stationID === this.plantId)
     }
   },
   async created () {
-    console.log(this.$route)
     let { query: { plantId }, meta: { page } } = this.$route
     if (page === 'detail') { // 电站详情页面
       if (plantId) {
         this.plantId = plantId
-        this.getSingleStatus(plantId)
+        this.getSingleStatus()
+        this.getDeviceStatus()
       }
     } else { // dashboard页面
       // 获取plantList列表
       await this.getPlantList()
       // 截取plantList第一项
-      this.plantName = this.plantList[0].plantId
+      if (this.plantList[0]) {
+        this.plantId = this.plantList[0].stationID
+      }
     }
     this.pageFlag = page
   },
@@ -168,12 +166,12 @@ export default {
       if (this.deviceTotal === 0) return 0
       return (value / this.deviceTotal) * 100
     },
-    // 获取单个电站的状态
-    async getSingleStatus (id) {
+    // 获取单个电站的状态(今日异常)
+    async getSingleStatus () {
       let { result } = await this.$axios({
         url: '/v0/plant/status/single',
         data: {
-          stationID: id
+          stationID: this.plantId
         }
       })
       if (result && result.abnormal) {
@@ -188,26 +186,44 @@ export default {
         this.device = result.device
       }
     },
+    // 电站列表
     async getPlantList () {
-      // let { result } = await this.$axios()
+      let { result } = await this.$axios({
+        url: '/v0/plant/droplist'
+      })
+      if (result) {
+        this.plantList = result.plants || []
+      }
       return true
     },
-    switchPlant (type) {
+    // 左右切换电站
+    async switchPlant (type) {
       if (this.switch) return
       this.switch = true
       // 获取当前索引
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
-      console.log(index)
       if (index < 0) {
         index = 0
       }
       if (index > this.plantList.length - 1) {
         index = this.plantList.length - 1
       }
-      this.plantName = this.plantList[index].plantId
+      this.plantId = this.plantList[index].plantId
       // 发送请求
-      // this.$all
+      await this.$all.promise([this.getSingleStatus])
       this.switch = false
+    },
+    // 获取电站下的设备状态
+    async getDeviceStatus () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/status/detail',
+        data: {
+          stationID: this.plantId
+        }
+      })
+      if (result) {
+        this.device = result
+      }
     }
   }
 }

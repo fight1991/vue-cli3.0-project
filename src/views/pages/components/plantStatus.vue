@@ -71,7 +71,13 @@ export default {
     },
     power: { // 当前功率
       default: 0
+    },
+    plantId: {
+      default: ''
     }
+  },
+  methods: {
+
   }
 }
 </script>

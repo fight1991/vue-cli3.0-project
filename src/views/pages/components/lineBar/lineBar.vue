@@ -42,7 +42,6 @@ export default {
   mixins: [echartData],
   data () {
     return {
-      plantId: '',
       dateValue: '',
       dateType: 'Day',
       echartType: 'power', // 默认显示功率图表
@@ -56,10 +55,9 @@ export default {
   computed: {
 
   },
+  props: ['plantId'],
   created () {
-    let { plantId } = this.$route.query
-    if (plantId) {
-      this.plantId = plantId
+    if (this.plantId) {
       this.getLineData()
       this.getBarData(this.dateType)
     }
