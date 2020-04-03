@@ -189,7 +189,7 @@ export default {
 <style lang="less" scoped>
   @import './public';
   .find-btn {
-    color: #fff;
+    color: #3883c2;
     font-size: 14px;
   }
   .phone-area {

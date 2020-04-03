@@ -30,6 +30,7 @@
           <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
         </keep-alive>
       </transition>
+      <div class="bg"><img src="../../assets/login-bg.jpg" alt=""></div>
     </div>
   </div>
 </template>
@@ -68,10 +69,8 @@ export default {
     flex-direction: column;
     height: 100%;
     background-size: cover;
-    height: 600px;
     background-color: #00a0e9;
     position: relative;
-    transform: translateY(20%);
     .header {
       display: flex;
       justify-content: flex-end;
@@ -94,24 +93,35 @@ export default {
       flex: 1;
       position: relative;
       display: flex;
-      background: url("../../assets/login-bg.jpg") no-repeat center;
       // justify-content: center;
       align-items: center;
-      transform: translateY(-6%);
+      .bg {
+        z-index: 5;
+        position: absolute;
+        left: 15%;
+        top: 45%;
+        transform: translateY(-60%);
+        width: 550px;
+        img {
+          width: 100%;
+        }
+      }
     }
     .login {
+      z-index: 6;
       position: absolute;
-      right: 20%;
+      right: 15%;
+      top: 20%;
       // top: 50%;
       // left: 50%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       transform-origin: center;
-      width: 470px;
+      width: 500px;
       box-sizing: border-box;
       // background-color:rgba(125, 172, 200, 0.7);
-      background-color: #99D9F6;
-      border-radius: 6px;
-      padding: 40px;
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 45px;
       color: #999;
     }
     .tab-header {
@@ -132,7 +142,7 @@ export default {
       }
     }
     .find-btn {
-      color: #fff;
+      color: #3883c2;
       span {
         &:hover {
           color: @sys-main-header;
