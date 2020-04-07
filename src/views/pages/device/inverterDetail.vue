@@ -1,5 +1,33 @@
 <template>
   <section class="sys-main">
+    <!-- 电站名称区域 -->
+    <div class="block bg-c mg-b15">
+      <div class="plant-head clearfix">
+        <div class="plant-name flex-center fl">
+          <i class="iconfont icon-fadianzhan"></i>
+          <div>
+            <span>逆变器sn :</span>
+            <span>国家 :</span>
+            <span>城市 :</span>
+          </div>
+        </div>
+        <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
+        <i @click="collapse=!collapse" v-show="collapse" class="arrow-right fr el-icon-arrow-down"></i>
+      </div>
+      <div :class="{'plant-item':true, 'height-0':!collapse}">
+        <el-row :gutter="30">
+          <el-col :span="6">国家 :</el-col>
+          <el-col :span="6">城市 :</el-col>
+          <el-col :span="6">安装商 :</el-col>
+          <el-col :span="6">联系方式 :</el-col>
+          <el-col :span="6">用户 :</el-col>
+          <el-col :span="6">联系方式 :</el-col>
+          <el-col :span="6">电站类型 :</el-col>
+          <el-col :span="6">时间 :</el-col>
+          <el-col :span="6">地址 :</el-col>
+        </el-row>
+      </div>
+    </div>
     <!-- 设备状态 -->
     <device-status :title="'Device status'"></device-status>
     <!-- 今日异常 流向图 -->
@@ -66,6 +94,7 @@ export default {
   mixins: [lineChart, echartData],
   data () {
     return {
+      collapse: false,
       abnormalVisible: false,
       multiValue: [],
       options: [{
@@ -98,5 +127,48 @@ export default {
 .select-line {
   padding:10px;
   border-bottom:1px solid #f5f5f5;
+}
+.plant-head {
+  padding: 10px;
+  .arrow-right {
+    padding: 10px;
+    cursor: pointer;
+  }
+  .plant-name {
+    .iconfont {
+      color: @sys-main-header;
+      font-size: 32px;
+      margin-right: 10px;
+    }
+    span {
+      margin-right: 40px;
+    }
+  }
+  .select-area {
+    padding: 0 20px;
+    .arrow {
+      cursor: pointer;
+      margin: 0 3px;
+      font-size: 20px;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+}
+.plant-item {
+  transition: all .2s;
+  overflow: hidden;
+  max-height: 98px;
+  &.height-0 {
+    max-height: 0px;
+  }
+  .el-row {
+    border-top: 1px solid #f5f5f5;
+    padding: 10px 0 0 50px;
+  }
+  .el-col {
+    padding-bottom: 10px;
+  }
 }
 </style>

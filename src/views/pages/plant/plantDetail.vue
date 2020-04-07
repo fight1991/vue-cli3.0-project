@@ -292,6 +292,27 @@ export default {
     padding: 10px;
     cursor: pointer;
   }
+  .plant-name {
+    .iconfont {
+      color: @sys-main-header;
+      font-size: 32px;
+      margin-right: 10px;
+    }
+    span {
+      margin-right: 40px;
+    }
+  }
+  .select-area {
+    padding: 0 20px;
+    .arrow {
+      cursor: pointer;
+      margin: 0 3px;
+      font-size: 20px;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
 }
 .plant-item {
   transition: all .2s;
@@ -306,27 +327,6 @@ export default {
   }
   .el-col {
     padding-bottom: 10px;
-  }
-}
-.select-area {
-  padding: 0 20px;
-  .arrow {
-    cursor: pointer;
-    margin: 0 3px;
-    font-size: 20px;
-    &:hover {
-      background-color: #eee;
-    }
-  }
-}
-.plant-name {
-  .iconfont {
-    color: @sys-main-header;
-    font-size: 32px;
-    margin-right: 10px;
-  }
-  span {
-    margin-right: 40px;
   }
 }
 </style>
