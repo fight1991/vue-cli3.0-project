@@ -215,6 +215,7 @@ export default {
       if (result && result.device) {
         this.device = result.device
       }
+      return true
     },
     // 电站列表
     async getPlantList () {

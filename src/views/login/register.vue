@@ -195,4 +195,7 @@ export default {
   .user-agree {
     color: @sys-main-header;
   }
+  .agree-text {
+    color: #4c4c4c;
+  }
 </style>

@@ -108,7 +108,7 @@ export default {
       }
       return i
     },
-    // 折现图表数据
+    // 折现图表数据功率
     async getLineData () {
       let { result } = await this.$axios({
         url: '/v0/plant/history/single/raw/day',
@@ -127,8 +127,9 @@ export default {
         this.echartData.power.xAxis.data = xAxis
         this.echartData.power.series[0].data = value
       }
+      return true
     },
-    // 柱状图表数据
+    // 柱状图表数据;电量统计
     async getBarData (type) {
       let dateArr = this.dateValue.split('-')
       let { result } = await this.$axios({
@@ -145,6 +146,7 @@ export default {
       if (result && result.data && result.data.length > 0) {
         this.echartData.elec.dataset.source = result.data
       }
+      return true
     }
   }
 }

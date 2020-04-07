@@ -173,10 +173,4 @@ export default {
 </script>
 <style lang="less" scoped>
   @import './public';
-  .user-agree {
-    color: #d40e0e;
-  }
-  .agree-text {
-    color: #4c4c4c;
-  }
 </style>

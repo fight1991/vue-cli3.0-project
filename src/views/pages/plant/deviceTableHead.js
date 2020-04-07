@@ -5,55 +5,51 @@ export default {
       deviceTableHead: [
         {
           label: 'Inverter SN',
-          prop: 'age',
+          prop: 'deviceSN',
           checked: true,
           renderHeader: true
         },
         {
           label: 'DataCollector SN',
-          prop: 'age',
+          prop: 'moduleSN',
           checked: true,
           renderHeader: true
         },
         {
           label: 'Battery SN',
-          prop: 'age',
+          prop: 'batteryMainSN',
           checked: true,
           renderHeader: true
         },
         {
           label: 'Type',
-          prop: 'age',
+          prop: 'deviceType',
           checked: true
         },
         {
           label: 'Gernerating power',
-          prop: 'age',
+          prop: 'power',
           checked: true,
           renderHeader: true
         },
         {
           label: 'Gerneration today',
-          prop: 'age',
+          prop: 'generationToday',
           checked: true,
           renderHeader: true
         },
         {
           label: 'Gerneration Total',
-          prop: 'age',
+          prop: 'generationTotal',
           checked: true,
           renderHeader: true
         },
         {
           label: 'Grid-connected time',
-          prop: 'age',
+          prop: 'feedinDate',
           checked: true,
-          renderHeader: true
-        },
-        {
-          label: 'Country',
-          prop: 'age',
-          checked: true
+          renderHeader: true,
+          slotName: 'feedinDate'
         },
         {
           label: 'Status',

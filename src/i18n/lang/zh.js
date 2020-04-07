@@ -45,7 +45,7 @@ export default {
     back: '返回',
     verPw: '确认密码',
     ePhone: '手机号/邮箱',
-    server: '服务条款',
+    server: '《服务条款》',
     agree: '同意',
     resetPw: '重置密码',
     errorMg1: '用户名或邮箱错误',

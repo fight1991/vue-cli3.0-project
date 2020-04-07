@@ -27,6 +27,9 @@
             <i class="el-icon-error" v-show="row.status==3"></i>
             <i class="el-icon-remove" v-show="row.status==4"></i>
           </template>
+          <template v-slot:feedinDate="{row}">
+            {{row.feedinDate | formatDate('yyyy-MM-dd')}}
+          </template>
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
@@ -98,6 +101,7 @@ export default {
         this.pagination.pageSize = result.pageSize
         this.resultList = result.devices || []
       }
+      return true
     }
   }
 }
