@@ -71,6 +71,9 @@ export default {
     }
   },
   prop: ['plantId'],
+  created () {
+    this.search()
+  },
   methods: {
     search () {
       this.getDeviceList(this.$store.state.pagination)

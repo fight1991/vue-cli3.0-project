@@ -218,11 +218,11 @@ export default {
       this.plantId = this.plantList[index].plantId
       // 发送请求
       await this.$all.promise([
-        this.getSingleStatus,
-        this.getDeviceStatus,
-        this.$refs.deviceList.getDeviceList,
-        this.$refs.lineBar.getLineData,
-        this.$refs.lineBar.getBarData])
+        this.getSingleStatus(),
+        this.getDeviceStatus(),
+        this.$refs.deviceList.getDeviceList(),
+        this.$refs.lineBar.getLineData(),
+        this.$refs.lineBar.getBarData()])
       this.switch = false
     },
     // 获取电站下的设备状态
