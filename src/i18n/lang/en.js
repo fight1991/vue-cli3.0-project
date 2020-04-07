@@ -13,7 +13,7 @@ export default {
     normal: 'Normal',
     abnormal: 'Abnormal',
     alarm: 'Alarm',
-    glitch: 'Glitch',
+    glitch: 'Fault',
     offline: 'Offline',
     elec: 'Electric',
     income: 'Income',

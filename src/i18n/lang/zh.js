@@ -19,7 +19,7 @@ export default {
     income: '收益',
     power: '功率',
     gene: '统计',
-    all: '所有',
+    all: '全部',
     status: '状态',
     gPower: '发电功率',
     gCon: '并网功率',

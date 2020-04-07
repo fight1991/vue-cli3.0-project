@@ -6,15 +6,15 @@
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
             <el-select v-model="searchForm.status" placeholder="choose">
-              <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
+              <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
             <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="searchForm">reset</el-button>
-            <el-button type="primary" size="mini" @click="search">search</el-button>
+            <el-button size="mini" @click="searchForm">{{$t('common.reset')}}</el-button>
+            <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
           </el-form-item>
         </el-form>
       </search-bar>
@@ -33,10 +33,10 @@
         </common-table>
       </func-bar>
       <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal</span>
-        <span><i class="el-icon-warning"></i> Alarm</span>
-        <span><i class="el-icon-error"></i> Fault</span>
-        <span><i class="el-icon-remove"></i> Offline</span>
+        <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
+        <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}</span>
+        <span><i class="el-icon-error"></i> {{$t('common.glitch')}}</span>
+        <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
       </div>
       <page-box :pagination.sync="pagination" @change="getDeviceList"></page-box>
     </div>
@@ -51,7 +51,7 @@ export default {
       statusList: [ // 0 全部 1 正常 2 告警 3 故障 4离线
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'fault' },
+        { status: 2, label: 'glitch' },
         { status: 3, label: 'alarm' },
         { status: 4, label: 'offline' }
       ],
