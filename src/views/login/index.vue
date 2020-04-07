@@ -70,7 +70,7 @@ export default {
     flex-direction: column;
     height: 100%;
     background-size: cover;
-    background: linear-gradient(to top right, #1174b6, #2398dd);
+    background: linear-gradient(60deg, #1174b6 0%, #2398dd 40%, #40a9e6 75%,#56b3e9);
     position: relative;
     .header {
       display: flex;

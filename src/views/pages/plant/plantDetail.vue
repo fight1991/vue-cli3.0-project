@@ -84,7 +84,7 @@
       <plant-status :incomeDetail="incomeDetail" :title="$t('plant.plantS')"></plant-status>
     </div>
     <div class="block">
-      <line-bar :plantId="plantId">
+      <line-bar :plantId="plantId" ref="lineBar">
         <template v-slot:radioBtn>
           <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
           <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
@@ -196,27 +196,6 @@ export default {
       if (this.deviceTotal === 0) return 0
       return (value / this.deviceTotal) * 100
     },
-    // 获取单个电站的状态(今日异常)
-    async getSingleStatus () {
-      let { result } = await this.$axios({
-        url: '/v0/plant/status/single',
-        data: {
-          stationID: this.plantId
-        }
-      })
-      if (result && result.abnormal) {
-        let { warning, fault } = result.abnormal
-        this.normalData.title.text = warning + fault
-        this.normalData.series[0].data = [
-          { value: warning, name: 'Alarm' },
-          { value: fault, name: 'Glitch' }
-        ]
-      }
-      if (result && result.device) {
-        this.device = result.device
-      }
-      return true
-    },
     // 电站列表
     async getPlantList () {
       let { result } = await this.$axios({
@@ -241,7 +220,12 @@ export default {
       }
       this.plantId = this.plantList[index].plantId
       // 发送请求
-      await this.$all.promise([this.getSingleStatus])
+      await this.$all.promise([
+        this.getSingleStatus,
+        this.getDeviceStatus,
+        this.$refs.deviceList.getDeviceList,
+        this.$refs.lineBar.getLineData,
+        this.$refs.lineBar.getBarData])
       this.switch = false
     },
     // 获取电站下的设备状态
@@ -255,6 +239,28 @@ export default {
       if (result) {
         this.device = result
       }
+      return true
+    },
+    // 获取单个电站的状态(今日异常)
+    async getSingleStatus () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/status/single',
+        data: {
+          stationID: this.plantId
+        }
+      })
+      if (result && result.abnormal) {
+        let { warning, fault } = result.abnormal
+        this.normalData.title.text = warning + fault
+        this.normalData.series[0].data = [
+          { value: warning, name: 'Alarm' },
+          { value: fault, name: 'Glitch' }
+        ]
+      }
+      if (result && result.device) {
+        this.device = result.device
+      }
+      return true
     },
     // 获取电站的实时功率、发电、收益
     getSomeIncome () {

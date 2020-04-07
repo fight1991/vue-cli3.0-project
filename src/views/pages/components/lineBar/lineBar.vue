@@ -59,7 +59,7 @@ export default {
   created () {
     if (this.plantId) {
       this.getLineData()
-      this.getBarData(this.dateType)
+      this.getBarData()
     }
     this.setDefaultTime()
   },
@@ -74,7 +74,7 @@ export default {
     selectDateType (command) {
       this.dateType = command
       this.setDefaultTime()
-      this.getBarData(command)
+      this.getBarData()
     },
     // 设置默认事件
     setDefaultTime () {
@@ -99,7 +99,7 @@ export default {
         this.dateValue = tempYear.toString()
       }
       // 发送请求
-      this.getBarData(this.dateType)
+      this.getBarData()
     },
     // 小于10补0
     checkMonth (i) {
@@ -130,10 +130,10 @@ export default {
       return true
     },
     // 柱状图表数据;电量统计
-    async getBarData (type) {
+    async getBarData () {
       let dateArr = this.dateValue.split('-')
       let { result } = await this.$axios({
-        url: this.echartUrl[type],
+        url: this.echartUrl[this.dateType],
         method: 'post',
         data: {
           year: dateArr[0],
