@@ -1,19 +1,8 @@
 
 import store from '@/store'
-import Method from './netConfig'
-let { instance: commonInstance } = new Method(process.env.VUE_APP_API)
-let { instance: upLoadInstance } = new Method(process.env.VUE_APP_FILE)
-
-// 响应200时 业务状态码处理
-function bussinessBundle (res, other, success) {
-  if (res.errno === store.state.successCode) {
-    success && success(res)
-    return
-  }
-  if (other) {
-    other(res)
-  }
-}
+import { MethodBase, MethodAll } from './netConfig'
+let { instance: commonInstance } = new MethodBase(process.env.VUE_APP_API)
+let { instance: upLoadInstance } = new MethodBase(process.env.VUE_APP_FILE)
 
 const requests = {
   // 返回 promise
@@ -37,23 +26,11 @@ const requests = {
   },
   // 多个并发请求
   $all: {
-    async promise (arr) { // 入参为promise对象,处理并发请求
-      try {
-        store.commit('changeLoading', true)
-        await commonInstance.all(arr)
-        store.commit('changeLoading', false)
-        return true
-      } catch (error) {
-        store.commit('changeLoading', false)
-        return false
-      }
+    promise (promiseArr) { // 入参为promise对象,处理并发请求 async修饰的函数返回promise
+      return new MethodAll(promiseArr).$all(store)
     },
-    url (arr, callback) {
-      let promiseObj = arr.map(v => commonInstance.get({
-        url: v.url,
-        params: v.data
-      }))
-      commonInstance.all(promiseObj).then(commonInstance.spread(callback))
+    url (urlArr) {
+      return new MethodAll(urlArr).$all(store)
     }
   },
   // 自定义请求
@@ -97,6 +74,16 @@ const requests = {
     }).finally(() => {
       store.commit('changeLoading', false)
     })
+  }
+}
+// 响应200时 业务状态码处理
+function bussinessBundle (res, other, success) {
+  if (res.errno === store.state.successCode) {
+    success && success(res)
+    return
+  }
+  if (other) {
+    other(res)
   }
 }
 

@@ -183,11 +183,8 @@ export default {
     // this.getSomeIncome()
     this.pageFlag = page
   },
-  mounted () {
-
-  },
+  mounted () {},
   beforeDestroy () {
-    console.log('hah ')
     this.socket && this.socket.closeLink()
   },
   methods: {
