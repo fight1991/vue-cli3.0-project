@@ -22,7 +22,7 @@
             </el-col>
             <el-col :span="18">
               <el-form-item prop="mobile">
-                <el-input v-model="dataForm.account" placeholder="Mobile number"></el-input>
+                <el-input v-model="dataForm.account" class="phone-area-num" placeholder="Mobile number"></el-input>
               </el-form-item>
             </el-col>
           </div>

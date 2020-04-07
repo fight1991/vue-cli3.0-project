@@ -1,10 +1,26 @@
 import valid from './validate'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       timer: null,
-      codeText: 'Send'
+      codeText: ''
     }
+  },
+  computed: {
+    ...mapState({
+      codeTxt (state) {
+        if (this.codeText.includes('s')) {
+          return this.codeText
+        } else {
+          if (state.lang === 'zh') {
+            return '获取验证码'
+          } else {
+            return 'Send'
+          }
+        }
+      }
+    })
   },
   methods: {
     // 判断是邮箱/手机号/用户名
@@ -52,7 +68,7 @@ export default {
       if (this.timer) {
         clearInterval(this.timer)
         this.timer = null
-        this.codeText = 'Send'
+        this.codeText = this.$t('login.send')
       }
     }
   }

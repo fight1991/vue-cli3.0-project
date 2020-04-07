@@ -30,7 +30,7 @@
           :key="'table' + index"
           :fixed="item.fixed || false"
           :prop="item.prop || ''"
-          :label="item.label"
+          :label="$t(item.label)"
           :align="item.align || 'center'"
           :min-width="item.width || '80'"
           :render-header="item.renderHeader ? renderHead : renderCommon"
@@ -40,7 +40,7 @@
           :key="'table' + index"
           :fixed="item.fixed || false"
           :prop="item.prop || ''"
-          :label="item.label"
+          :label="$t(item.label)"
           :align="item.align || 'center'"
           :min-width="item.width || '80'"
           :render-header="item.renderHeader ? renderHead : renderCommon">

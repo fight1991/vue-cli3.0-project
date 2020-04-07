@@ -28,6 +28,7 @@ export default {
     total: '总数'
   },
   login: {
+    send: '获取验证码',
     mobile: '手机号登录',
     mobileSp: '手机号注册',
     username: '用户名',

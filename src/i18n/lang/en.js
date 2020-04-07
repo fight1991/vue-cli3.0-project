@@ -28,6 +28,7 @@ export default {
     total: 'Total'
   },
   login: {
+    send: 'Send',
     mobile: 'Mobile number sign in',
     mobileSp: 'Mobile number sign up',
     username: 'Username',

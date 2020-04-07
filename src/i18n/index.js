@@ -18,6 +18,7 @@ const langs = {
 export default {
   install (Vue) {
     Vue.config.lang = store.state.lang
+    Vue.config.missingHandler = function () {} // 关闭告警
     Vue.prototype.$switchLang = function (lang) {
       this.config.lang = lang
       store.commit('toggleLang', lang)

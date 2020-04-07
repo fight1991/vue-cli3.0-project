@@ -53,7 +53,7 @@
           <el-col :span="24" class="code-area">
             <el-form-item prop="captcha">
               <el-input v-model="dataForm.captcha" :maxlength="4" :placeholder="$t('login.code')">
-                <el-button slot="append" @click="getCode">{{codeText}}</el-button>
+                <el-button slot="append" @click="getCode">{{codeTxt}}</el-button>
               </el-input>
             </el-form-item>
           </el-col>
