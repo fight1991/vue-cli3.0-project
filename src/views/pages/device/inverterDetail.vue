@@ -2,14 +2,29 @@
   <section class="sys-main">
     <!-- 设备状态 -->
     <device-status :title="'Device status'"></device-status>
-    <!-- 流向图 -->
-    <el-card shadow="never">
-      <div class="title border-line" slot="header">
-        Flow graph
-        <i class="fr el-icon-more"></i>
-      </div>
-      <div class="flow-map" style="height:100px"></div>
-    </el-card>
+    <!-- 今日异常 流向图 -->
+    <div class="block">
+      <el-row :gutter="15">
+        <el-col :span="8">
+          <el-card shadow="never">
+            <div class="title border-line" slot="header">
+              {{$t('plant.todayAb')}}
+              <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
+            </div>
+            <el-echart :datas="normalData" height="200px"></el-echart>
+          </el-card>
+        </el-col>
+        <el-col :span="16">
+          <el-card shadow="never">
+            <div class="title border-line" slot="header">
+              Flow graph
+              <i class="fr el-icon-more"></i>
+            </div>
+            <div class="flow-map" style="height:100px"></div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
     <!-- 功率折线图和电量统计柱状图 -->
     <div class="container-bottom bg-c">
       <line-bar>
@@ -33,20 +48,25 @@
       </el-row>
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
+    <today-abnormal :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
+import echartData from '@/views/pages/plant/echartData'
 import deviceStatus from '../components/plantStatus'
+import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import lineChart from './lineChart'
 export default {
   components: {
     deviceStatus,
-    lineBar
+    lineBar,
+    todayAbnormal
   },
-  mixins: [lineChart],
+  mixins: [lineChart, echartData],
   data () {
     return {
+      abnormalVisible: false,
       multiValue: [],
       options: [{
         value: '选项1',

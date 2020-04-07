@@ -1,61 +1,65 @@
 <template>
   <el-card shadow="never">
     <div class="title border-line" slot="header">{{title}}</div>
-    <div class="current-kw flex-around">
-      <div class="my-pg">
-        <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
-        <div class="progress-txt">
-          <div class="number">{{incomeDetail.power + 'kw'}}</div>
-          <div class="f12">{{$t('common.currentP')}}</div>
+    <el-row class="current-kw">
+      <el-col :span="8">
+        <div class="my-pg flex-center">
+          <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
+          <div class="progress-txt">
+            <div class="number">{{incomeDetail.power + 'kw'}}</div>
+            <div class="f12">{{$t('common.currentP')}}</div>
+          </div>
         </div>
-      </div>
-      <div class="details flex">
-        <div class="content-item flex-around">
-        <i class="icon icon-plant-day"></i>
-        <div class="plant-text">
-          <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+      </el-col>
+      <el-col :span="16">
+        <div class="details flex">
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-day"></i>
+            <div class="plant-text">
+              <p><span>{{$t('common.elec')}} (kwh)</span></p>
+              <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">{{incomeDetail.today.generation}}</span></p>
+              <p><span class="money">{{incomeDetail.today.earnings}}</span></p>
+            </div>
+          </div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-month"></i>
+            <div class="plant-text">
+              <p><span>{{$t('common.elec')}} (kwh)</span></p>
+              <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">{{incomeDetail.month.generation}}</span></p>
+              <p><span class="money">{{incomeDetail.month.earnings}}</span></p>
+            </div>
+          </div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-year"></i>
+            <div class="plant-text">
+              <p><span>{{$t('common.elec')}} (kwh)</span></p>
+              <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">{{incomeDetail.year.generation}}</span></p>
+              <p><span class="money">{{incomeDetail.year.earnings}}</span></p>
+            </div>
+          </div>
+          <div class="content-item flex-around">
+            <i class="icon icon-plant-total"></i>
+            <div class="plant-text">
+              <p><span>{{$t('common.elec')}} (kwh)</span></p>
+              <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+            </div>
+            <div class="plant-money">
+              <p><span class="num">{{incomeDetail.cumulate.generation}}</span></p>
+              <p><span class="money">{{incomeDetail.cumulate.earnings}}</span></p>
+            </div>
+          </div>
         </div>
-        <div class="plant-money">
-          <p><span class="num">{{incomeDetail.today.generation}}</span></p>
-          <p><span class="money">{{incomeDetail.today.earnings}}</span></p>
-        </div>
-      </div>
-      <div class="content-item flex-around">
-        <i class="icon icon-plant-month"></i>
-        <div class="plant-text">
-          <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
-        </div>
-        <div class="plant-money">
-          <p><span class="num">{{incomeDetail.month.generation}}</span></p>
-          <p><span class="money">{{incomeDetail.month.earnings}}</span></p>
-        </div>
-      </div>
-      <div class="content-item flex-around">
-        <i class="icon icon-plant-year"></i>
-        <div class="plant-text">
-          <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
-        </div>
-        <div class="plant-money">
-          <p><span class="num">{{incomeDetail.year.generation}}</span></p>
-          <p><span class="money">{{incomeDetail.year.earnings}}</span></p>
-        </div>
-      </div>
-      <div class="content-item flex-around">
-        <i class="icon icon-plant-total"></i>
-        <div class="plant-text">
-          <p><span>{{$t('common.elec')}} (kwh)</span></p>
-          <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
-        </div>
-        <div class="plant-money">
-          <p><span class="num">{{incomeDetail.cumulate.generation}}</span></p>
-          <p><span class="money">{{incomeDetail.cumulate.earnings}}</span></p>
-        </div>
-      </div>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </el-card>
 </template>
 <script>
@@ -107,12 +111,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .current-kw {
-  height: 200px;
   .details {
     flex-wrap: wrap;
   }
 }
 .my-pg {
+  height: 240px;
   position: relative;
   margin-right: 15px;
   .el-progress {
