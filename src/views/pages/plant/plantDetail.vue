@@ -81,7 +81,7 @@
     </div>
     <!-- 电站状态 -->
     <div class="block">
-      <plant-status :incomeDetail="incomeDetail" :title="$t('plant.plantS')"></plant-status>
+      <plant-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.plantS')"></plant-status>
     </div>
     <div class="block">
       <line-bar :plantId="plantId" ref="lineBar">
@@ -102,7 +102,7 @@
 import echartData from './echartData'
 import todayAbnormal from './todayAbnormal'
 import deviceList from './deviceList'
-import plantStatus from '../components/plantStatus'
+import plantStatus from '../components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import Socket from '@/net/socket'
 
@@ -132,7 +132,7 @@ export default {
       },
       incomeDetail: { // 收益详情
         currency: '', // 货币种类
-        power: '', // 功率
+        power: 0, // 功率
         today: {
           generation: 0,
           earnings: 0

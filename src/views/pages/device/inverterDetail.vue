@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- 设备状态 -->
-    <device-status :title="'Device status'"></device-status>
+    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="'Device status'"></device-status>
     <!-- 今日异常 流向图 -->
     <div class="block">
       <el-row :gutter="15">
@@ -81,7 +81,7 @@
 </template>
 <script>
 import echartData from '@/views/pages/plant/echartData'
-import deviceStatus from '../components/plantStatus'
+import deviceStatus from '../components/powerStatus'
 import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import lineChart from './lineChart'
@@ -103,7 +103,27 @@ export default {
       }, {
         value: '选项2',
         label: '双皮奶'
-      }]
+      }],
+      incomeDetail: { // 收益详情
+        currency: '', // 货币种类
+        power: 0, // 功率
+        today: {
+          generation: 0,
+          earnings: 0
+        },
+        month: {
+          generation: 0,
+          earnings: 0
+        },
+        year: {
+          generation: 0,
+          earnings: 0
+        },
+        cumulate: {
+          generation: 0,
+          earnings: 0
+        }
+      }
     }
   },
   created () {
