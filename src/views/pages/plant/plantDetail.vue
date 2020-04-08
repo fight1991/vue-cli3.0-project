@@ -198,7 +198,7 @@ export default {
     getCommonRequest () {
       this.getAbnormalStatus()
       this.getDeviceStatus()
-      this.refs.deviceList.search()
+      this.$refs.deviceList.search()
       this.$refs.lineBar.getLineData()
       this.$refs.lineBar.getBarData()
     },
