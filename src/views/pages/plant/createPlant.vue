@@ -88,6 +88,7 @@
   </section>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -116,6 +117,7 @@ export default {
       },
       templateDevice: {
         sn: '',
+        key: '',
         isPass: 1
       },
       editInfo: {},
@@ -156,14 +158,17 @@ export default {
     errorList () {
       let temp = this.snResult.filter(v => v.errno !== 0)
       return temp.map(v => v.device)
-    }
+    },
+    ...mapState({
+      access: state => state.access
+    })
   },
   methods: {
     // 表格模板
     copyData () {
       return {
         devices: [
-          { sn: '' }
+          { sn: '', key: '' }
         ],
         details: {
           name: '',
@@ -275,9 +280,9 @@ export default {
     async remoteSN (item) {
       let { result } = await this.$axios({
         method: 'post',
-        url: '/v0/device/checksn',
+        url: '/v0/module/checksn',
         data: {
-          type: 1,
+          type: this.access === 1 ? 0 : 1,
           devices: item
         }
       })

@@ -164,14 +164,16 @@ export default {
       return this.plantList.findIndex(v => v.stationID === this.plantId)
     }
   },
-  async created () {
+  created () {
     let { query: { plantId }, meta: { page } } = this.$route
-    if (page === 'detail') { // 电站详情页面
-      if (plantId) {
-        this.plantId = plantId
-        this.getSingleStatus()
-        this.getDeviceStatus()
-      }
+    if (plantId) {
+      this.plantId = plantId
+    }
+    this.pageFlag = page
+  },
+  async mounted () {
+    if (this.pageFlag === 'detail') { // 电站详情页面
+      this.getCommonRequest()
     } else { // dashboard页面
       // 获取plantList列表
       await this.getPlantList()
@@ -179,11 +181,10 @@ export default {
       if (this.plantList[0]) {
         this.plantId = this.plantList[0].stationID
       }
+      this.getCommonRequest()
     }
     // this.getSomeIncome()
-    this.pageFlag = page
   },
-  mounted () {},
   beforeDestroy () {
     this.socket && this.socket.closeLink()
   },
@@ -192,6 +193,14 @@ export default {
     percentMethod (value) {
       if (this.deviceTotal === 0) return 0
       return (value / this.deviceTotal) * 100
+    },
+    // 发送非socket相关请求
+    getCommonRequest () {
+      this.getAbnormalStatus()
+      this.getDeviceStatus()
+      this.refs.deviceList.search()
+      this.$refs.lineBar.getLineData()
+      this.$refs.lineBar.getBarData()
     },
     // 电站列表
     async getPlantList () {
@@ -218,7 +227,7 @@ export default {
       this.plantId = this.plantList[index].plantId
       // 发送请求
       await this.$all.promise([
-        this.getSingleStatus(),
+        this.getAbnormalStatus(),
         this.getDeviceStatus(),
         this.$refs.deviceList.getDeviceList(),
         this.$refs.lineBar.getLineData(),
@@ -238,17 +247,17 @@ export default {
       }
       return true
     },
-    // 获取单个电站的状态(今日异常)
-    async getSingleStatus () {
+    // 获取今日异常
+    async getAbnormalStatus () {
       let { result } = await this.$axios({
-        url: '/v0/plant/status/single',
+        url: '/v0/plant/alarm/today',
         data: {
           stationID: this.plantId
         }
       })
-      if (result && result.abnormal) {
-        let { warning, fault } = result.abnormal
-        this.normalData.title.text = warning + fault
+      if (result) {
+        let { warning, fault, total } = result
+        this.normalData.title.text = total
         this.normalData.series[0].data = [
           { value: warning, name: 'Alarm' },
           { value: fault, name: 'Glitch' }

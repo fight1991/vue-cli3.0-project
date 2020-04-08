@@ -72,7 +72,7 @@ export default {
   },
   prop: ['plantId'],
   created () {
-    this.search()
+
   },
   methods: {
     search () {
@@ -91,7 +91,8 @@ export default {
     async getDeviceList (pagination) {
       let pages = pagination || this.$store.state.pagination
       let { result } = await this.$axios({
-        url: '/plant/device/list',
+        method: 'post',
+        url: '/v0/plant/device/list',
         data: {
           ...pages,
           stationID: this.plantId,
