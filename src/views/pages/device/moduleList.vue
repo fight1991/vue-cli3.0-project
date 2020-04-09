@@ -33,7 +33,18 @@
       <!-- 表格区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="iconfont icon-import" :disabled="access!=255" @click="importMulti">Import</el-button>
+          <el-dropdown @command="commandDrop" trigger="click">
+            <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">Import</el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="d">模板下载</el-dropdown-item>
+              <el-upload
+                class="dropDown-upload"
+                :before-upload="beforeUpload"
+                action="http://127.0.0.1">
+                <el-dropdown-item command="e" divided>导入</el-dropdown-item>
+              </el-upload>
+            </el-dropdown-menu>
+          </el-dropdown>
           <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">Unbind</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
@@ -147,6 +158,9 @@ export default {
     search () {
       this.getModuleList(this.$store.state.pagination)
     },
+    commandDrop () {
+
+    },
     // 批量导入
     importMulti () {
       // /module/import
@@ -185,6 +199,25 @@ export default {
         this.pagination.currentPage = result.currentPage
         this.pagination.pageSize = result.pageSize
       }
+    },
+    beforeUpload (file) {
+      // excel格式
+      let excelType = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+      if (excelType.includes(file.type)) {
+        this.$message({
+          message: 'invalid file type',
+          type: 'error'
+        })
+        return false
+      }
+      let param = new FormData()
+      param.append('multiFile', file, file.name)
+      // 文件上传请求
+      this.$upload({
+        url: '/v0/module/import',
+        data: {},
+        success: res => {}
+      })
     }
   }
 }
