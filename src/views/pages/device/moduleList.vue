@@ -11,14 +11,16 @@
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="choose">
+                <el-select style="width:100%" v-model="searchForm.communication" placeholder="choose">
                   <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.deviceType" placeholder="type"></el-input>
+                <el-select style="width:100%" v-model="searchForm.moduleType" placeholder="type">
+                  <el-option v-for="(item,index) in typeList" :label="item" :value="item" :key="item + index"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">
@@ -31,10 +33,10 @@
       <!-- 表格区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="iconfont icon-import" @click="importMulti">Import</el-button>
-          <el-button size="mini" icon="iconfont icon-unbind" @click="unbindMulti">Unbind</el-button>
+          <el-button size="mini" icon="iconfont icon-import" :disabled="access!=255" @click="importMulti">Import</el-button>
+          <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">Unbind</el-button>
         </el-row>
-        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
+        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-success"></i>
             <i class="el-icon-remove"></i>
@@ -49,6 +51,7 @@
   </section>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -56,12 +59,12 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'online' },
-        { status: 4, label: 'offline' }
+        { status: 2, label: 'offline' }
       ],
       searchForm: {
-        status: 0,
+        communication: 0,
         moduleSN: '',
-        deviceType: ''
+        moduleType: ''
       },
       pagination: {
         pageSize: 10,
@@ -72,12 +75,7 @@ export default {
         { age: 11 },
         { age: 11 }
       ],
-      statusAll: {
-        normal: 0,
-        warning: 0,
-        fault: 0,
-        offline: 0
-      },
+      typeList: [],
       tableHead: [
         {
           label: 'DataCollector SN',
@@ -87,7 +85,7 @@ export default {
         },
         {
           label: 'Type',
-          prop: 'deviceType',
+          prop: 'moduleType',
           checked: true
         },
         {
@@ -107,7 +105,7 @@ export default {
         },
         {
           label: 'Status',
-          prop: 'status',
+          prop: 'communication',
           checked: true,
           slotName: 'status'
         }
@@ -115,11 +113,20 @@ export default {
     }
   },
   computed: {
-    deviceId () {
-      return this.selection.map(v => v.deviceID)
+    ...mapState({
+      access: state => state.access
+    }),
+    bindIds () {
+      return this.selection.map(v => {
+        return {
+          moduleSN: v.moduleSN,
+          stationID: v.stationID
+        }
+      })
     }
   },
   created () {
+    this.getModuleTypeList()
     this.search()
   },
   methods: {
@@ -128,9 +135,9 @@ export default {
     },
     resetSearchForm () {
       this.searchForm = {
-        status: 0,
+        communication: 0,
         moduleSN: '',
-        deviceType: ''
+        moduleType: ''
       }
     },
     reset () {
@@ -142,15 +149,42 @@ export default {
     },
     // 批量导入
     importMulti () {
-
+      // /module/import
     },
     // 批量解绑
-    unbindMulti () {
-
+    async unbindMulti () {
+      let { result } = await this.$axios({
+        url: '/v0/module/disable',
+        data: {
+          modules: this.bindIds
+        }
+      })
+      if (result) {
+        this.search()
+      }
+    },
+    // 获取模块类型列表
+    async getModuleTypeList () {
+      let { result: { types } } = await this.$axios({
+        url: '/v0/module/types'
+      })
+      this.typeList = types || []
     },
     // 获取模块列表
-    getModuleList () {
-
+    async getModuleList (pagination) {
+      let { result } = await this.$axios({
+        url: '/v0/module/list',
+        data: {
+          ...pagination,
+          condition: this.searchForm
+        }
+      })
+      if (result) {
+        this.resultList = result.data || []
+        this.pagination.total = result.total
+        this.pagination.currentPage = result.currentPage
+        this.pagination.pageSize = result.pageSize
+      }
     }
   }
 }
