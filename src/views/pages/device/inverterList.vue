@@ -188,7 +188,7 @@ export default {
         url: 'v0/device/status/all'
       })
       if (result) {
-        // this.statusAll = result
+        this.statusAll = result
       }
     },
     // 删除逆变器
@@ -216,9 +216,12 @@ export default {
   border-bottom: 1px solid #f5f5f5;
 }
 .states-row {
-  width: 300px;
+  display: inline-block;
   font-size: 12px;
   padding: 10px 0 0 10px;
+  span {
+    margin-right: 15px;
+  }
 }
 .el-icon-warning {
   color: #E6A23C;

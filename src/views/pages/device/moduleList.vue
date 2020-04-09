@@ -201,9 +201,9 @@ export default {
       }
     },
     beforeUpload (file) {
-      // excel格式
+      // excel 或 .csv格式
       let excelType = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
-      if (excelType.includes(file.type)) {
+      if (!excelType.includes(file.type)) {
         this.$message({
           message: 'invalid file type',
           type: 'error'
@@ -211,7 +211,7 @@ export default {
         return false
       }
       let param = new FormData()
-      param.append('multiFile', file, file.name)
+      param.append('file', file, file.name)
       // 文件上传请求
       this.$upload({
         url: '/v0/module/import',
