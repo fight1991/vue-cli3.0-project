@@ -74,7 +74,7 @@
         <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
         <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
       </div>
-      <page-box :pagination="pagination" @change="getInverterList"></page-box>
+      <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>
