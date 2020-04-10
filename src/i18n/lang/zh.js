@@ -1,5 +1,7 @@
 export default {
   common: {
+    light: '光伏',
+    energy: '储能',
     cancel: '取消',
     confirm: '确定',
     tip: '提示',

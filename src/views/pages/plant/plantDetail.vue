@@ -6,9 +6,9 @@
         <div class="plant-name flex-center fl">
           <i class="iconfont icon-fadianzhan"></i>
           <div v-if="pageFlag==='detail'">
-            <span>电站名称 :</span>
-            <span>国家 :</span>
-            <span>城市 :</span>
+            <span>电站名称 : {{plantHeadInfo.plantName}}</span>
+            <span>国家 : {{plantHeadInfo.country}}</span>
+            <span>城市 : {{plantHeadInfo.city}}</span>
           </div>
           <div v-else>
             <span>电站名称 </span>
@@ -21,20 +21,20 @@
             <i class="arrow el-icon-caret-right" @click="switchPlant('add')"></i>
           </div>
         </div>
-        <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
-        <i @click="collapse=!collapse" v-show="collapse" class="arrow-right fr el-icon-arrow-down"></i>
+        <i @click="headCollapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
+        <i @click="headCollapse" v-show="collapse" class="arrow-right fr el-icon-arrow-down"></i>
       </div>
       <div :class="{'plant-item':true, 'height-0':!collapse}">
         <el-row :gutter="30">
-          <el-col :span="6" v-if="pageFlag==='board'">国家 :</el-col>
-          <el-col :span="6" v-if="pageFlag==='board'">城市 :</el-col>
-          <el-col :span="6">安装商 :</el-col>
-          <el-col :span="6">联系方式 :</el-col>
-          <el-col :span="6">用户 :</el-col>
-          <el-col :span="6">联系方式 :</el-col>
-          <el-col :span="6">电站类型 :</el-col>
-          <el-col :span="6">时间 :</el-col>
-          <el-col :span="6">地址 :</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">国家 : {{plants.country || ''}}</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">城市 : {{plants.city || ''}}</el-col>
+          <el-col :span="6">安装商 : {{installer.organName || ''}}</el-col>
+          <el-col :span="6">联系方式 : {{installer.phone || ''}}</el-col>
+          <el-col :span="6">用户 : {{users.name || ''}}</el-col>
+          <el-col :span="6">联系方式 : {{users.phone || ''}}</el-col>
+          <el-col :span="6">电站类型 : {{plants.plantType === 1 ? $t('common.light') : plants.plantType === 2 ? $t('common.energy'): ''}}</el-col>
+          <el-col :span="6">时间 : {{plants.createdDate || ''}}</el-col>
+          <el-col :span="6">地址 : {{plants.address || ''}}</el-col>
         </el-row>
       </div>
     </div>
@@ -105,6 +105,7 @@ import deviceList from './deviceList'
 import plantStatus from '../components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import Socket from '@/net/socket'
+import { formatDate } from '@/util'
 
 export default {
   mixins: [echartData],
@@ -123,6 +124,14 @@ export default {
       plantId: '',
       plantList: [],
       socket: null,
+      plantHeadInfo: {
+        plantName: '',
+        country: '',
+        city: ''
+      },
+      plants: {},
+      installer: {},
+      users: {},
       device: {
         total: 0,
         normal: 0,
@@ -173,6 +182,7 @@ export default {
   },
   async mounted () {
     if (this.pageFlag === 'detail') { // 电站详情页面
+      this.plantHeadInfo = this.$store.state['plant-module'].plantInfo
       this.getCommonRequest()
     } else { // dashboard页面
       // 获取plantList列表
@@ -189,6 +199,12 @@ export default {
     this.socket && this.socket.closeLink()
   },
   methods: {
+    // 顶部展开
+    headCollapse () {
+      this.collapse = !this.collapse
+      if (!this.collapse) return
+      this.getHeadInfo()
+    },
     // 百分比取整数
     percentMethod (value) {
       if (this.deviceTotal === 0) return 0
@@ -201,6 +217,21 @@ export default {
       this.$refs.deviceList.search()
       this.$refs.lineBar.getLineData()
       this.$refs.lineBar.getBarData()
+    },
+    // 获取头部电站展开详情
+    async getHeadInfo () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/addressbook',
+        data: {
+          stationID: this.plantId
+        }
+      })
+      this.plants = result.plant || {}
+      if (this.plants.createdDate) {
+        this.plants.createdDate = formatDate(this.plants.createdDate)
+      }
+      this.installer = result.installer || {}
+      this.users = result.users || {}
     },
     // 电站列表
     async getPlantList () {

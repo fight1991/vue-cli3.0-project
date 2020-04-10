@@ -1,5 +1,7 @@
 export default {
   common: {
+    light: 'Photovoltaic',
+    energy: 'Energy storage',
     cancel: 'Cancel',
     confirm: 'Confirm',
     tip: 'Tip',

@@ -70,7 +70,7 @@ export default {
       resultList: []
     }
   },
-  prop: ['plantId'],
+  props: ['plantId'],
   created () {
 
   },

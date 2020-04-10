@@ -11,7 +11,10 @@
           </el-col>
           <el-col :lg="12" :md="24">
             <el-form-item :label="$t('plant.type')" prop="details.type">
-              <el-input v-model="dataForm.details.type"></el-input>
+              <el-select v-model="dataForm.details.type" style="width:100%" :placeholder="$t('common.select')">
+                <el-option :label="$t('common.light')" :value="1" key="1"></el-option>
+                <el-option :label="$t('common.energy')" :value="2" key="2"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">

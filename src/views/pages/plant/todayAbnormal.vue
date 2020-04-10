@@ -44,7 +44,7 @@ export default {
     },
     async dialogOpen () {
       let { result } = await this.$axios({
-        url: '/plant/alarm/single/day',
+        url: '/v0/plant/alarm/today/detail',
         data: {
           stationID: this.$route.plantId
         }
