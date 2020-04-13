@@ -78,10 +78,11 @@
     <el-dialog
       title="Error List"
       width="300px"
+      :close-on-click-modal="false"
       :show-close="false"
       :visible.sync="errVisible">
       <div v-for="(item, index) in errorList" :key="'index'+index">
-        {{item.sn + ' - ' + item.key}}
+        {{item.sn}}
       </div>
       <el-row slot="footer" type="flex" justify="center">
         <el-button size="mini" @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
@@ -221,6 +222,7 @@ export default {
           this.dataForm.devices[i].isPass = 1
         }
       })
+      this.$forceUpdate()
       this.errVisible = false
     },
     // dialog中的确认
@@ -281,7 +283,7 @@ export default {
     },
     // 远程校验sn 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
     async remoteSN (item) {
-      let { result } = await this.$axios({
+      let { result, other } = await this.$axios({
         method: 'post',
         url: '/v0/module/checksn',
         data: {
@@ -289,9 +291,7 @@ export default {
           devices: item
         }
       })
-      if (result && result.length > 0) {
-        this.snResult = result
-      }
+      this.snResult = result || other || []
       return true
     },
     // 查询电站信息
