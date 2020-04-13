@@ -201,7 +201,7 @@ export default {
     async deviceDelete (index) {
       if (index === 0 && this.dataForm.devices.length === 1) {
         if (this.dataForm.devices[0].sn) {
-          let res = await this.$confirm(this.$t('   s2'), this.$t('common.tip'), {
+          let res = await this.$confirm(this.$t('common.tips2'), this.$t('common.tip'), {
             confirmButtonText: this.$t('common.confirm'),
             cancelButtonText: this.$t('common.cancel'),
             type: 'warning'
