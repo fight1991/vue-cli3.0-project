@@ -44,12 +44,7 @@ export default {
     return {
       dateValue: '',
       dateType: 'Day',
-      echartType: 'power', // 默认显示功率图表
-      echartUrl: {
-        Hours: '/v0/plant/history/single/report/day', // 日报表url // 获取每个小时
-        Day: '/v0/plant/history/single/report/month', // 月报表url 获取每天数据
-        Month: '/v0/plant/history/single/report/year' // 年报表url 获取每个月内数据
-      }
+      echartType: 'power' // 默认显示功率图表
     }
   },
   computed: {
@@ -111,21 +106,27 @@ export default {
     // 折现图表数据功率
     async getLineData () {
       let { result } = await this.$axios({
-        url: '/v0/plant/history/single/raw/day',
+        url: '/v0/plant/history/raw',
         method: 'post',
         data: {
-          year: new Date().getFullYear(),
-          month: new Date().getMonth(),
-          day: new Date().getDate(),
           stationID: this.plantId,
-          parameters: ['power']
+          variables: ['generationPower', 'feedinPower', 'loadsPower'],
+          timespan: 'hour',
+          beginDate: {
+            year: new Date().getFullYear(),
+            month: new Date().getMonth(),
+            day: new Date().getDate(),
+            hour: new Date().getHours(),
+            minute: new Date().getMinutes(),
+            second: new Date().getSeconds()
+          }
         }
       })
-      if (result && result.data && result.data.length > 0) {
-        let xAxis = result.data.map(v => v.datetime)
-        let value = result.data.map(v => v.value)
-        this.echartData.power.xAxis.data = xAxis
-        this.echartData.power.series[0].data = value
+      if (result && result.length > 0) {
+        result.forEach((v, i) => {
+          let tempData = v.data.map(item => [item.timestamp, item.value])
+          this.echartData.power.series[i].data = tempData
+        })
       }
       return true
     },
@@ -133,14 +134,18 @@ export default {
     async getBarData () {
       let dateArr = this.dateValue.split('-')
       let { result } = await this.$axios({
-        url: this.echartUrl[this.dateType],
+        url: 'v0/plant/history/report',
         method: 'post',
         data: {
-          year: dateArr[0],
-          month: dateArr[1] || '',
-          day: dateArr[2] || '',
           stationID: this.plantId,
-          parameters: ['generation', 'feed-in', 'loads', 'grid-consumption']
+          reportType: this.dateType.toLowerCase(),
+          variables: ['generation', 'feed-in', 'loads', 'gridConsumption'],
+          queryDate: {
+            year: dateArr[0],
+            month: dateArr[1] || '',
+            day: dateArr[2] || '',
+            hour: 0
+          }
         }
       })
       if (result && result.data && result.data.length > 0) {
