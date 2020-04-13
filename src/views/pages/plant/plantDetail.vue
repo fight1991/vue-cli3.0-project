@@ -84,7 +84,7 @@
       <plant-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.plantS')"></plant-status>
     </div>
     <div class="block">
-      <line-bar :plantId="plantId" ref="lineBar">
+      <line-bar :id="plantId" :type="'plant'" ref="lineBar">
         <template v-slot:radioBtn>
           <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
           <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>

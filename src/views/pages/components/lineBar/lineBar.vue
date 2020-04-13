@@ -44,15 +44,28 @@ export default {
     return {
       dateValue: '',
       dateType: 'Day',
-      echartType: 'power' // 默认显示功率图表
+      echartType: 'power', // 默认显示功率图表
+      powerUrl: {
+        plant: '/v0/plant/history/raw',
+        device: '/v0/device/history/raw'
+      },
+      barUrl: {
+        plant: '/v0/plant/history/report',
+        device: '/v0/device/history/report'
+      }
     }
   },
-  computed: {
-
+  computed: {},
+  props: {
+    id: {
+      default: ''
+    },
+    type: {
+      default: 'plant'
+    }
   },
-  props: ['plantId'],
   created () {
-    if (this.plantId) {
+    if (this.id) {
       this.getLineData()
       this.getBarData()
     }
@@ -106,10 +119,10 @@ export default {
     // 折现图表数据功率
     async getLineData () {
       let { result } = await this.$axios({
-        url: '/v0/plant/history/raw',
+        url: this.powerUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.plantId,
+          stationID: this.id,
           variables: ['generationPower', 'feedinPower', 'loadsPower'],
           timespan: 'hour',
           beginDate: {
@@ -134,10 +147,10 @@ export default {
     async getBarData () {
       let dateArr = this.dateValue.split('-')
       let { result } = await this.$axios({
-        url: 'v0/plant/history/report',
+        url: this.barUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.plantId,
+          stationID: this.id,
           reportType: this.dateType.toLowerCase(),
           variables: ['generation', 'feed-in', 'loads', 'gridConsumption'],
           queryDate: {

@@ -55,7 +55,7 @@
     </div>
     <!-- 功率折线图和电量统计柱状图 -->
     <div class="container-bottom bg-c">
-      <line-bar>
+      <line-bar :id="deviceId" :type="'device'" ref="lineBar">
         <template v-slot:radioBtn>
           <el-radio-button label="power">Power</el-radio-button>
           <el-radio-button label="elec">Generation</el-radio-button>
@@ -97,6 +97,7 @@ export default {
       collapse: false,
       abnormalVisible: false,
       multiValue: [],
+      deviceId: '',
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -128,6 +129,10 @@ export default {
   },
   created () {
 
+  },
+  mounted () {
+    this.$refs.lineBar.getLineData()
+    this.$refs.lineBar.getBarData()
   },
   methods: {
 
