@@ -1,5 +1,14 @@
 export default {
   common: {
+    invertSn: 'inverter sn',
+    alarmType: 'Error type',
+    common: 'common',
+    pvBus: 'PV&BUS',
+    powerGrid: 'power grid',
+    temper: 'temperature',
+    cpu: 'CPU',
+    eps: 'battery/EPS',
+    peri: 'peripheral devices',
     light: 'Photovoltaic',
     energy: 'Energy storage',
     cancel: 'Cancel',

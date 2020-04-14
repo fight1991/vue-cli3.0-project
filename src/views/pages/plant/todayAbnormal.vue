@@ -2,21 +2,41 @@
   <el-dialog
     class="sys-dialog"
     title="Abnormal list"
-    @opened="dialogOpen"
+    @opened="getList"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
     <div class="content">
-      <el-table size="mini" :height="400" :data="resultList" border>
-        <el-table-column label="Inverter SN" prop="sn"></el-table-column>
-        <el-table-column label="Error code" prop="code"></el-table-column>
-        <el-table-column label="Error name" prop="content"></el-table-column>
-        <el-table-column label="Reporting time" prop="datetime">
-          <template slot-scope="scope">
-            {{ scope.row.datetime | formatDate}}
-          </template>
-        </el-table-column>
-      </el-table>
+      <search-bar>
+        <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
+          <el-form-item>
+            <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="searchForm.alarmType" :placeholder="$t('common.alarmType')">
+              <el-option v-for="item in alarmTypeList" :label="$t('common.' + item.label)" :value="item.value" :key="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+            <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
+          </el-form-item>
+        </el-form>
+      </search-bar>
+      <func-bar>
+        <el-table size="mini" :height="400" :data="resultList" border>
+          <el-table-column label="Inverter SN" prop="deviceSN"></el-table-column>
+          <el-table-column label="Type" prop="alarmType"></el-table-column>
+          <el-table-column label="Code" prop="code"></el-table-column>
+          <el-table-column label="Content" prop="content"></el-table-column>
+          <el-table-column label="Reporting time" prop="time">
+            <template slot-scope="scope">
+              {{ scope.row.time | formatDate}}
+            </template>
+          </el-table-column>
+        </el-table>
+      </func-bar>
+      <page-box :pagination.sync="pagination" @change="getList"></page-box>
     </div>
   </el-dialog>
 </template>
@@ -25,7 +45,46 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      resultList: []
+      resultList: [],
+      searchForm: {
+        deviceSN: '',
+        alarmType: 0
+      },
+      pagination: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 40
+      },
+      alarmTypeList: [
+        {
+          value: 0,
+          label: 'all'
+        }, {
+          value: 1,
+          label: 'common'
+        }, {
+          value: 2,
+          label: 'pvBus'
+        }, {
+          value: 3,
+          label: 'powerGrid'
+        }, {
+          value: 4,
+          label: 'temper'
+        }, {
+          value: 5,
+          label: 'cpu'
+        }, {
+          value: 6,
+          label: 'eps'
+        }, {
+          value: 7,
+          label: 'peri'
+        }, {
+          value: 8,
+          label: 'alarm'
+        }
+      ]
     }
   },
   props: {
@@ -42,14 +101,29 @@ export default {
     closeDialog () {
       this.$emit('update:visible', false)
     },
-    async dialogOpen () {
+    reset () {
+      this.searchForm = {
+        deviceSN: '',
+        alarmType: 0
+      }
+    },
+    search () {
+      this.getList(this.$store.state.pagination)
+    },
+    async getList (pagination) {
       let { result } = await this.$axios({
         url: '/v0/plant/alarm/today/detail',
         data: {
-          stationID: this.$route.plantId
+          ...pagination,
+          condition: this.searchForm
         }
       })
-      this.resultList = result || []
+      if (result) {
+        this.pagination.total = result.total
+        this.pagination.currentPage = result.currentPage
+        this.pagination.pageSize = result.pageSize
+        this.resultList = result.data || []
+      }
     }
   }
 }

@@ -13,7 +13,7 @@
             <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="searchForm">{{$t('common.reset')}}</el-button>
+            <el-button size="mini" @click="resetSearchForm">{{$t('common.reset')}}</el-button>
             <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
           </el-form-item>
         </el-form>

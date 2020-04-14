@@ -1,5 +1,14 @@
 export default {
   common: {
+    invertSn: '逆变器sn',
+    alarmType: '报错类型',
+    common: '一般',
+    pvBus: 'PV&BUS',
+    powerGrid: '电网',
+    temper: '温度',
+    cpu: 'CPU',
+    eps: '电池/EPS',
+    peri: '外围设备',
     light: '光伏',
     energy: '储能',
     cancel: '取消',
