@@ -149,7 +149,8 @@ export default {
         method: 'post',
         data: {
           type: 0,
-          devices: [{ sn, key }]
+          devices: [{ sn, key }],
+          stationID: ''
         }
       })
       if (result) {

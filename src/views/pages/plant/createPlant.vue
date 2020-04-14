@@ -288,7 +288,8 @@ export default {
         url: '/v0/module/checksn',
         data: {
           type: this.access === 1 ? 0 : 1,
-          devices: item
+          devices: item,
+          stationID: this.plantId
         }
       })
       this.snResult = result || other || []

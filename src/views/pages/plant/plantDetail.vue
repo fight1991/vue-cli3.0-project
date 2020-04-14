@@ -193,6 +193,8 @@ export default {
       }
       this.getCommonRequest()
     }
+    console.log(this.$refs.deviceList)
+    console.log(this.$refs.lineBar)
     // this.getSomeIncome()
   },
   beforeDestroy () {
