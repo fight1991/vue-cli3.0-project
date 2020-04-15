@@ -4,11 +4,13 @@
     <div class="block bg-c mg-b15">
       <div class="plant-head clearfix">
         <div class="plant-name flex-center fl">
-          <i class="iconfont icon-fadianzhan"></i>
+          <i class="iconfont icon-nibianqi"></i>
           <div>
             <span>逆变器sn :</span>
-            <span>国家 :</span>
-            <span>城市 :</span>
+            <span>电站名 :</span>
+            <span>模块sn :</span>
+            <span>逆变器型号 :</span>
+            <span>设备状态 :</span>
           </div>
         </div>
         <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -17,14 +19,12 @@
       <div :class="{'plant-item':true, 'height-0':!collapse}">
         <el-row :gutter="30">
           <el-col :span="6">国家 :</el-col>
-          <el-col :span="6">城市 :</el-col>
-          <el-col :span="6">安装商 :</el-col>
-          <el-col :span="6">联系方式 :</el-col>
-          <el-col :span="6">用户 :</el-col>
-          <el-col :span="6">联系方式 :</el-col>
-          <el-col :span="6">电站类型 :</el-col>
-          <el-col :span="6">时间 :</el-col>
-          <el-col :span="6">地址 :</el-col>
+          <el-col :span="6">地区 :</el-col>
+          <el-col :span="6">安装时间 :</el-col>
+          <el-col :span="6">逆变器硬件版本 :</el-col>
+          <el-col :span="6">逆变器master :</el-col>
+          <el-col :span="6">逆变器slaver :</el-col>
+          <el-col :span="6">逆变器manager :</el-col>
         </el-row>
       </div>
     </div>
@@ -76,7 +76,7 @@
       </el-row>
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
-    <today-abnormal :visible.sync="abnormalVisible"></today-abnormal>
+    <today-abnormal :type="'device'" :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
