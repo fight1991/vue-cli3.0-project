@@ -29,7 +29,10 @@ export default {
     plant: '电站',
     more: '更多',
     onSta: '在线状态',
-    plantsName: '电站名'
+    plantsName: '电站名',
+    InvSN: '逆变器sn',
+    InvType: '逆变器型号',
+    datacolSN: '模块sn'
   },
   login: {
     send: '获取验证码',
@@ -115,10 +118,7 @@ export default {
     offInv: '离线设备',
     plantSta: '电站状态',
     plantOver: '电站概览',
-    InvSN: '逆变器sn',
-    datacolSN: '模块sn',
     datacolType: '模块类型',
-    InvType: '逆变器型号',
     ratedPower: '额定功率',
     lastUPTime: '最近更新时间',
     installer: '安装商',
@@ -130,6 +130,14 @@ export default {
     websiteAddr: '建站地址',
     websiteTime: '建站时间',
     showMoreUser: '查看更多用户'
+  },
+  inverter: {
+    InsTime: '安装时间',
+    InvHV: '逆变器硬件版本',
+    InvMas: '逆变器master',
+    InvSla: '逆变器slaver',
+    InvMan: '逆变器manager',
+    romSet: '远程设置'
   },
   monitor: '监控系统',
   chooseDate: '选择日期'

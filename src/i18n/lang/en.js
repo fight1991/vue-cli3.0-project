@@ -29,7 +29,10 @@ export default {
     plant: 'Plant',
     more: 'more',
     onSta: 'Online Status',
-    plantsName: 'Plants name'
+    plantsName: 'Plants name',
+    InvSN: 'Inverter SN',
+    InvType: 'Inverter Type',
+    datacolSN: 'DataCollector SN'
   },
   login: {
     send: 'Send',
@@ -115,10 +118,7 @@ export default {
     offInv: 'Offline inverters',
     plantSta: 'Plant status',
     plantOver: 'Plant overview',
-    InvSN: 'Inverter SN',
-    datacolSN: 'DataCollector SN',
     datacolType: 'DataCollector Type',
-    InvType: 'Inverter Type',
     ratedPower: 'Rated Power',
     lastUPTime: 'Last update time',
     installer: 'Installer',
@@ -130,6 +130,15 @@ export default {
     websiteAddr: 'Website address',
     websiteTime: 'Website time',
     showMoreUser: 'Show more users'
+  },
+  inverter: {
+    InsTime: 'Installation time',
+    InvHV: 'Inverter hardware version',
+    InvMas: 'Inverter master',
+    InvSla: 'Inverter slaver',
+    InvMan: 'Inverter manager',
+    romSet: 'Romote setup',
+    powerFD: 'Power flow diagram'
   },
   monitor: 'Monitor System',
   chooseDate: 'Choose Date'
