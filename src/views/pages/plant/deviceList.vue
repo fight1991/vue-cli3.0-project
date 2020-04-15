@@ -13,7 +13,7 @@
             <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="searchForm">{{$t('common.reset')}}</el-button>
+            <el-button size="mini" @click="resetSearchForm">{{$t('common.reset')}}</el-button>
             <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
           </el-form-item>
         </el-form>
@@ -70,9 +70,9 @@ export default {
       resultList: []
     }
   },
-  prop: ['plantId'],
+  props: ['plantId'],
   created () {
-    this.search()
+
   },
   methods: {
     search () {
@@ -91,7 +91,8 @@ export default {
     async getDeviceList (pagination) {
       let pages = pagination || this.$store.state.pagination
       let { result } = await this.$axios({
-        url: '/plant/device/list',
+        method: 'post',
+        url: '/v0/plant/device/list',
         data: {
           ...pages,
           stationID: this.plantId,

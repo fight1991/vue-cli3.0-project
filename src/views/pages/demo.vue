@@ -1,6 +1,10 @@
 <template>
   <div style="height: 1000px;background-color:#fff;border-top:1px solid transparent">
     <p>{{$route.meta.title || ''}}</p>
+    <div>
+     <textarea style="text-align:left" v-model="textareaValue" @paste="onPaste"></textarea>
+     <el-button @click="getBoard">获取clipboard</el-button>
+   </div>
     <el-date-picker
       size="mini"
       v-model="value2"
@@ -38,7 +42,8 @@ export default {
     return {
       dot: true,
       value2: '',
-      socket: null
+      socket: null,
+      textareaValue: ''
     }
   },
   created () {
@@ -50,6 +55,15 @@ export default {
   methods: {
     closeWebsocket () {
       this.socket.closeLink()
+    },
+    onPaste (e) {
+      console.log(e)
+      console.log(this.textareaValue)
+    },
+    getBoard () {
+      console.log(this.textareaValue)
+      let temp = this.textareaValue
+      console.log(temp.split('\n'))
     }
   }
 }

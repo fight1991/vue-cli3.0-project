@@ -35,52 +35,7 @@
       </div>
       <div class="status-count bg-c">
         <div class="title border-line">状态统计</div>
-        <div class="content flex">
-          <div class="content-item flex-around">
-            <i class="icon icon-plant-day"></i>
-            <div class="plant-text">
-              <p><span>Electric (kwh)</span></p>
-              <p><span>Income ($)</span></p>
-            </div>
-            <div class="plant-money">
-              <p><span class="num">333</span></p>
-              <p><span class="money">333</span></p>
-            </div>
-          </div>
-          <div class="content-item flex-around">
-            <i class="icon icon-plant-month"></i>
-            <div class="plant-text">
-              <p><span>Electric (kwh)</span></p>
-              <p><span>Income ($)</span></p>
-            </div>
-            <div class="plant-money">
-              <p><span class="num">333</span></p>
-              <p><span class="money">333</span></p>
-            </div>
-          </div>
-          <div class="content-item flex-around">
-            <i class="icon icon-plant-year"></i>
-            <div class="plant-text">
-              <p><span>Electric (kwh)</span></p>
-              <p><span>Income ($)</span></p>
-            </div>
-            <div class="plant-money">
-              <p><span class="num">333</span></p>
-              <p><span class="money">333</span></p>
-            </div>
-          </div>
-          <div class="content-item flex-around">
-            <i class="icon icon-plant-total"></i>
-            <div class="plant-text">
-              <p><span>Electric (kwh)</span></p>
-              <p><span>Income ($)</span></p>
-            </div>
-            <div class="plant-money">
-              <p><span class="num">333</span></p>
-              <p><span class="money">333</span></p>
-            </div>
-          </div>
-        </div>
+        <income-item :incomeDetail="incomeDetail"></income-item>
       </div>
     </div>
     <div class="right bg-c">
@@ -91,8 +46,10 @@
 </template>
 <script>
 import BMap from 'BMap'
+import incomeItem from './incomeItem'
 export default {
   name: 'show-item',
+  components: { incomeItem },
   data () {
     return {
       plantStatus: {
@@ -101,7 +58,26 @@ export default {
         abnormal: 0
       },
       incomeList: [],
-      mapId: '' // 地图容器 若id相同的话只渲染一次
+      mapId: '', // 地图容器 若id相同的话只渲染一次
+      incomeDetail: { // 收益详情
+        currency: '', // 货币种类
+        today: {
+          generation: 0,
+          earnings: 0
+        },
+        month: {
+          generation: 0,
+          earnings: 0
+        },
+        year: {
+          generation: 0,
+          earnings: 0
+        },
+        cumulate: {
+          generation: 0,
+          earnings: 0
+        }
+      }
     }
   },
   created () {

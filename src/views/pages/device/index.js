@@ -31,7 +31,7 @@ export default {
       name: '/bus-device-module',
       meta: {
         title: '模块管理',
-        component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/device/moduleList')
       }
     },
     {

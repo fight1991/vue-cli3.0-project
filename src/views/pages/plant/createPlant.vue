@@ -11,7 +11,10 @@
           </el-col>
           <el-col :lg="12" :md="24">
             <el-form-item :label="$t('plant.type')" prop="details.type">
-              <el-input v-model="dataForm.details.type"></el-input>
+              <el-select v-model="dataForm.details.type" style="width:100%" :placeholder="$t('common.select')">
+                <el-option :label="$t('common.light')" :value="1" key="1"></el-option>
+                <el-option :label="$t('common.energy')" :value="2" key="2"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :lg="12" :md="24">
@@ -75,10 +78,11 @@
     <el-dialog
       title="Error List"
       width="300px"
+      :close-on-click-modal="false"
       :show-close="false"
       :visible.sync="errVisible">
       <div v-for="(item, index) in errorList" :key="'index'+index">
-        {{item.sn + ' - ' + item.key}}
+        {{item.sn}}
       </div>
       <el-row slot="footer" type="flex" justify="center">
         <el-button size="mini" @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
@@ -88,6 +92,7 @@
   </section>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -116,6 +121,7 @@ export default {
       },
       templateDevice: {
         sn: '',
+        key: '',
         isPass: 1
       },
       editInfo: {},
@@ -156,14 +162,17 @@ export default {
     errorList () {
       let temp = this.snResult.filter(v => v.errno !== 0)
       return temp.map(v => v.device)
-    }
+    },
+    ...mapState({
+      access: state => state.access
+    })
   },
   methods: {
     // 表格模板
     copyData () {
       return {
         devices: [
-          { sn: '' }
+          { sn: '', key: '' }
         ],
         details: {
           name: '',
@@ -192,7 +201,7 @@ export default {
     async deviceDelete (index) {
       if (index === 0 && this.dataForm.devices.length === 1) {
         if (this.dataForm.devices[0].sn) {
-          let res = await this.$confirm(this.$t('   s2'), this.$t('common.tip'), {
+          let res = await this.$confirm(this.$t('common.tips2'), this.$t('common.tip'), {
             confirmButtonText: this.$t('common.confirm'),
             cancelButtonText: this.$t('common.cancel'),
             type: 'warning'
@@ -213,6 +222,7 @@ export default {
           this.dataForm.devices[i].isPass = 1
         }
       })
+      this.$forceUpdate()
       this.errVisible = false
     },
     // dialog中的确认
@@ -273,17 +283,16 @@ export default {
     },
     // 远程校验sn 任意一对sn-key验证通过都可创建成功,全部sn-key失败则创建失败
     async remoteSN (item) {
-      let { result } = await this.$axios({
+      let { result, other } = await this.$axios({
         method: 'post',
-        url: '/v0/device/checksn',
+        url: '/v0/module/checksn',
         data: {
-          type: 1,
-          devices: item
+          type: this.access === 1 ? 0 : 1,
+          devices: item,
+          stationID: this.plantId
         }
       })
-      if (result && result.length > 0) {
-        this.snResult = result
-      }
+      this.snResult = result || other || []
       return true
     },
     // 查询电站信息

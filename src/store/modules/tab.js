@@ -24,19 +24,22 @@ export default {
     // 添加新页签
     addTab (state, payLoad) {
       if (!payLoad) return
-      // 有无相同的tabId,没有就新增页签
-      let sameTabId = state.tabList.some(tab => tab.tabId === payLoad.tabId)
-      if (!sameTabId) {
-        state.tabList.push(payLoad)
-      }
-      // 是否已经存在相同的组件
-      let isExist = state.tabList.some(tab => (tab.tabId === payLoad.tabId || tab.path === payLoad.path))
-      // 存在相同的组件并且需要刷新
-      if (isExist && payLoad.params.refresh) {
-        let existTab = state.tabList.find(tab => tab.path === payLoad.path)
-        // 改变列表绑定的key值才会刷新
-        let newTabId = Date.now().toString()
-        existTab.tabId = payLoad.tabId = newTabId
+      // 有无相同的组件
+      let sameTab = state.tabList.find(tab => tab.path === payLoad.path)
+      // 是否已经存在相同的组件id
+      let sameId = state.tabList.some(tab => tab.tabId === payLoad.tabId)
+      if (payLoad.params.refresh) { // 有相同组件则替换
+        if (sameTab) {
+          // 改变列表绑定的key值才会刷新
+          let newTabId = Date.now().toString()
+          sameTab.tabId = payLoad.tabId = newTabId
+        } else {
+          state.tabList.push(payLoad)
+        }
+      } else {
+        if (!sameId) {
+          state.tabList.push(payLoad)
+        }
       }
       // 激活当前页签
       this.commit('setCurrentTab', payLoad.tabId)

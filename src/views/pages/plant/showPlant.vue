@@ -31,8 +31,8 @@
             </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail('look',row.stationID)"></i>
-              <i title="edit" class="iconfont icon-edit" v-if="username==row.owner" @click="goToDetail('edit',row.stationID)"></i>
+              <i title="look" class="iconfont icon-look" @click="goToDetail('look',row)"></i>
+              <i title="edit" class="iconfont icon-edit" v-if="username==row.owner" @click="goToDetail('edit',row)"></i>
               <i title="delete" class="iconfont icon-delete" v-if="username==row.owner" @click="deletePlant(row.stationID)"></i>
             </div>
           </template>
@@ -49,6 +49,7 @@
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
+import plantStore from './plantStore'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -89,6 +90,10 @@ export default {
   },
   created () {
     this.search()
+    this.$store.registerModule('plant-module', plantStore)
+  },
+  beforeDestroy () {
+    this.$store.unregisterModule('plant-module')
   },
   computed: {
     ...mapState({
@@ -146,23 +151,25 @@ export default {
       })
     },
     // 页面跳转
-    goToDetail (type, id) {
+    goToDetail (type, row) {
       if (type === 'look') {
+        let { country, city, name } = row
+        this.$store.commit('plant-module/setCountryAndCity', { country, city, plantName: name })
         this.$router.push({
           name: 'bus-plant-detail',
           query: {
-            plantId: id,
+            plantId: row.stationID,
             opType: 'look',
-            tabId: this.$route.name + 'look' + id
+            tabId: this.$route.name + 'look' + row.stationID
           }
         })
       } else {
         this.$router.push({
           name: 'bus-plant-edit',
           query: {
-            plantId: id,
+            plantId: row.stationID,
             opType: 'edit',
-            tabId: this.$route.name + 'edit' + id
+            tabId: this.$route.name + 'edit' + row.stationID
           }
         })
       }
