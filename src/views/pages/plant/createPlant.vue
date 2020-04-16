@@ -97,7 +97,7 @@ export default {
   data () {
     return {
       opType: 'add', // 记录操作类型 add创建, look查看 edit编辑
-      stationID: '', // 电站id
+      plantId: '', // 电站id
       snIsPass: true,
       errVisible: false,
       snResult: [], // sn校验的结果
@@ -145,8 +145,8 @@ export default {
       this.opType = opType || this.$route.query.opType
     }
     if (this.opType !== 'add') {
-      this.stationID = this.$route.query.plantId
-      this.getStationInfo(this.stationID)
+      this.plantId = this.$route.query.plantId
+      this.getStationInfo(this.plantId)
     }
   },
   computed: {

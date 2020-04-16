@@ -15,7 +15,7 @@
             <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="search">reset</el-button>
+            <el-button size="mini" @click="reset">reset</el-button>
             <el-button type="primary" size="mini" @click="search">search</el-button>
           </el-form-item>
         </el-form>
@@ -112,6 +112,7 @@ export default {
         status: 0,
         name: ''
       }
+      this.search()
     },
     // 获取电站列表
     getPlantList (pagination) {
