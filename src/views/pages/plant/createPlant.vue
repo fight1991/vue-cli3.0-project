@@ -263,7 +263,7 @@ export default {
         return
       }
       // 有的sn校验失败显示弹框
-      if (!this.isAllPass) {
+      if (!this.isAllError && !this.isAllPass) {
         this.errVisible = true
       }
     },
