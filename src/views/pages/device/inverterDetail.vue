@@ -76,7 +76,7 @@
       </el-row>
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
-    <today-abnormal :type="'device'" :visible.sync="abnormalVisible"></today-abnormal>
+    <today-abnormal :type="'device'" :id="deviceId" :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>

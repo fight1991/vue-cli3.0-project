@@ -95,7 +95,7 @@
         </template>
       </line-bar>
     </div>
-    <today-abnormal :type="'plant'" :visible.sync="abnormalVisible"></today-abnormal>
+    <today-abnormal :id="plantId" :type="'plant'" :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
