@@ -65,10 +65,6 @@ export default {
     }
   },
   created () {
-    if (this.id) {
-      this.getLineData()
-      this.getBarData()
-    }
     this.setDefaultTime()
   },
   mounted () {

@@ -69,7 +69,7 @@ export default {
           // },
           xAxis: {
             type: 'category',
-            data: [1, 2, 3]
+            data: []
           },
           grid: [{
             height: '55%'
