@@ -292,6 +292,7 @@ export default {
           stationID: this.plantId
         }
       })
+      console.log(result, other)
       this.snResult = result || other || []
       return true
     },
