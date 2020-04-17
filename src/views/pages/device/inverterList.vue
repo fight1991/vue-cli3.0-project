@@ -37,6 +37,19 @@
                 <el-input v-model="searchForm.deviceType" placeholder="type"></el-input>
               </el-form-item>
             </el-col>
+            <el-col :span="6">
+              <el-form-item>
+                <el-date-picker
+                  style="width:100%"
+                  v-model="times"
+                  value-format="timestamp"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
             <el-col :span="6" align="left">
               <el-button size="mini" @click="reset">reset</el-button>
               <el-button type="primary" size="mini" @click="search">search</el-button>
@@ -47,7 +60,6 @@
       <!-- 列表查询区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-plus">New</el-button>
           <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">Delete</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
@@ -85,6 +97,7 @@ export default {
   data () {
     return {
       selection: [],
+      times: [],
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
@@ -139,6 +152,7 @@ export default {
         country: '',
         deviceType: ''
       }
+      this.times = []
     },
     reset () {
       this.resetSearchForm()
@@ -172,7 +186,13 @@ export default {
         url: '/v0/device/list',
         data: {
           ...pagination,
-          condition: this.searchForm
+          condition: {
+            ...this.searchForm,
+            queryDate: {
+              begin: (this.times && this.times[0]) || 0,
+              end: (this.times && this.times[1]) || 0
+            }
+          }
         },
         success: ({ result }) => {
           if (result) {
