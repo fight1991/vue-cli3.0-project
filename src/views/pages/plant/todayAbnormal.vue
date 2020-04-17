@@ -2,6 +2,7 @@
   <el-dialog
     class="sys-dialog"
     title="Abnormal list"
+    :modal-append-to-body="false"
     @opened="search"
     @close="closeDialog"
     :visible.sync="dialogVisible"

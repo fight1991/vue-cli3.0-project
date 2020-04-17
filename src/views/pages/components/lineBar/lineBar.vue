@@ -118,11 +118,17 @@ export default {
     },
     // 折现图表数据功率
     async getLineData () {
+      let params = {}
+      if (this.type === 'plant') {
+        params.plantID = this.id
+      } else {
+        params.deviceID = this.id
+      }
       let { result } = await this.$axios({
         url: this.powerUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.id,
+          ...params,
           variables: ['generationPower', 'feedinPower', 'loadsPower'],
           timespan: 'hour',
           beginDate: {
@@ -146,11 +152,17 @@ export default {
     // 柱状图表数据;电量统计
     async getBarData () {
       let dateArr = this.dateValue.split('-')
+      let params = {}
+      if (this.type === 'plant') {
+        params.plantID = this.id
+      } else {
+        params.deviceID = this.id
+      }
       let { result } = await this.$axios({
         url: this.barUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.id,
+          ...params,
           reportType: this.dateType.toLowerCase(),
           variables: ['generation', 'feed-in', 'loads', 'gridConsumption'],
           queryDate: {

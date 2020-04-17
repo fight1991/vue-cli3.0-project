@@ -78,6 +78,7 @@
     <el-dialog
       title="Error List"
       width="300px"
+      :modal-append-to-body="false"
       :close-on-click-modal="false"
       :show-close="false"
       :visible.sync="errVisible">

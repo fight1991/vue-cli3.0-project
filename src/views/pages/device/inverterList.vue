@@ -62,8 +62,8 @@
           </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.id)"></i>
-              <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.id)"></i>
+              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.deviceID)"></i>
+              <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.deviceID)"></i>
             </div>
           </template>
         </common-table>
@@ -152,14 +152,16 @@ export default {
         this.$router.push({
           name: 'bus-device-inverterDetail',
           query: {
-            tabId: this.$router.name + page + id
+            id,
+            tabId: this.$route.name + page + id
           }
         })
       } else {
         this.$router.push({
           name: 'bus-device-remoteSetting',
           query: {
-            tabId: this.$router.name + page + id
+            id,
+            tabId: this.$route.name + page + id
           }
         })
       }
@@ -198,7 +200,7 @@ export default {
         return
       }
       let { result } = await this.$axios({
-        url: '​/device​/delete',
+        url: '/v0​/device/delete',
         method: 'post',
         data: this.deviceId
       })

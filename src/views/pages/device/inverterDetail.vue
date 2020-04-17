@@ -128,7 +128,7 @@ export default {
     }
   },
   created () {
-
+    this.deviceId = this.$route.query.id
   },
   mounted () {
     this.$refs.lineBar.getLineData()

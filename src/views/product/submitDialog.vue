@@ -2,6 +2,7 @@
   <el-dialog
     class="sys-dialog"
     :title="title"
+    :modal-append-to-body="false"
     @opened="dialogOpen"
     @close="closeDialog"
     :visible.sync="dialogVisible"
