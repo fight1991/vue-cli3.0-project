@@ -173,8 +173,18 @@ export default {
           }
         }
       })
-      if (result && result.data && result.data.length > 0) {
-        this.echartData.elec.dataset.source = result.data
+      if (result && result.length > 0) {
+        if (result[0].data && result[0].data.length > 0) {
+          this.echartData.elec.xAxis.data = result[0].data.map(v => v.index)
+        }
+        this.echartData.elec.legend.data = result.map(v => v.variable)
+        this.echartData.elec.series = result.map(v => {
+          return {
+            type: 'bar',
+            name: v.variable,
+            data: v.data
+          }
+        })
       }
       return true
     }
