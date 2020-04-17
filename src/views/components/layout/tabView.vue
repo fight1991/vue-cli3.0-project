@@ -34,6 +34,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  name: 'tab-view',
   data () {
     return {
       activeTabName: this.$store.state.tab.currentTab,

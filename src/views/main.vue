@@ -22,6 +22,7 @@ import layoutHeader from '@/views/components/layout/header'
 import layoutAside from '@/views/components/layout/sliderBar/aside'
 import tabView from '@/views/components/layout/tabView'
 export default {
+  name: 'router-main',
   components: {
     layoutHeader,
     layoutAside,
