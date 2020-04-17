@@ -41,7 +41,10 @@ const router = new VueRouter({
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth === false) { // 不需权限,直接放行 /login,/error-xx等
-    to.path === '/login' && storage.removeToken('token')
+    if (to.path === '/login') {
+      storage.removeToken('token')
+      router.app.$options.store.state.isFirst = true
+    }
     next()
   } else {
     if (!storage.getToken()) {

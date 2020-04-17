@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <keep-alive :exclude="['router-login']">
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 <script>
