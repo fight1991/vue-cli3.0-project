@@ -190,11 +190,9 @@ export default {
       // 截取plantList第一项
       if (this.plantList[0]) {
         this.plantId = this.plantList[0].stationID
+        this.getCommonRequest()
       }
-      this.getCommonRequest()
     }
-    console.log(this.$refs.deviceList)
-    console.log(this.$refs.lineBar)
     // this.getSomeIncome()
   },
   beforeDestroy () {

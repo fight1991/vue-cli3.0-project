@@ -76,7 +76,14 @@ router.afterEach((to, from) => {
   document.title = to.meta.title || 'FoxESS'
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
+  console.log(from)
   if (store.state.tabView && to.meta.component) {
+    let tempParams = JSON.parse(JSON.stringify(to.params))
+    // token异常拦截到登录页 有可能dom没更新完成就跳转到登录页,造成echart渲染异常
+    // 从login页面跳到指定redirect中的地址,刷新组件
+    if (from.query.redirect) {
+      tempParams.refresh = true
+    }
     store.commit('addTab', {
       tabId,
       title,
@@ -84,7 +91,7 @@ router.afterEach((to, from) => {
       components: [to.meta.component],
       path: to.path,
       query: JSON.parse(JSON.stringify(to.query)),
-      params: JSON.parse(JSON.stringify(to.params))
+      params: tempParams
     })
   }
 })
