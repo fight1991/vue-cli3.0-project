@@ -52,6 +52,10 @@ export default {
       barUrl: {
         plant: '/v0/plant/history/report',
         device: '/v0/device/history/report'
+      },
+      reportType: {
+        Day: 'month',
+        Month: 'year'
       }
     }
   },
@@ -126,10 +130,10 @@ export default {
         data: {
           ...params,
           variables: ['generationPower', 'feedinPower', 'loadsPower'],
-          timespan: 'hour',
+          timespan: 'day',
           beginDate: {
             year: new Date().getFullYear(),
-            month: new Date().getMonth(),
+            month: new Date().getMonth() + 1,
             day: new Date().getDate(),
             hour: new Date().getHours(),
             minute: new Date().getMinutes(),
@@ -138,16 +142,22 @@ export default {
         }
       })
       if (result && result.length > 0) {
-        result.forEach((v, i) => {
+        this.echartData.power.legend.data = result.map(v => v.variable)
+        this.echartData.power.series = result.map(v => {
           let tempData = v.data.map(item => [item.timestamp, item.value])
-          this.echartData.power.series[i].data = tempData
+          return {
+            type: 'line',
+            name: v.variable,
+            data: tempData,
+            smooth: true
+          }
         })
       }
       return true
     },
     // 柱状图表数据;电量统计
     async getBarData () {
-      let dateArr = this.dateValue.split('-')
+      // let dateArr = this.dateValue.split('-')
       let params = {}
       if (this.type === 'plant') {
         params.plantID = this.id
@@ -159,13 +169,13 @@ export default {
         method: 'post',
         data: {
           ...params,
-          reportType: this.dateType.toLowerCase(),
-          variables: ['generation', 'feed-in', 'loads', 'gridConsumption'],
+          reportType: this.reportType[this.dateType],
+          variables: ['generation', 'feedin', 'loads', 'gridConsumption'],
           queryDate: {
-            year: dateArr[0],
-            month: dateArr[1] || '',
-            day: dateArr[2] || '',
-            hour: 0
+            year: new Date(this.dateValue).getFullYear(),
+            month: new Date(this.dateValue).getMonth() + 1,
+            day: new Date(this.dateValue).getDate(),
+            hour: new Date(this.dateValue).getHours()
           }
         }
       })

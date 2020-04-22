@@ -9,8 +9,7 @@ export default {
             bottom: 10
           },
           tooltip: {
-            trigger: 'axis',
-            showContent: true
+            trigger: 'axis'
           },
           xAxis: {
             type: 'time',
@@ -20,6 +19,14 @@ export default {
           },
           grid: [{
             height: '55%'
+          }],
+          dataZoom: [{
+            type: 'slider',
+            show: true,
+            xAxisIndex: [0],
+            top: '80%',
+            start: 1,
+            end: 20
           }],
           yAxis: {
             type: 'value',
