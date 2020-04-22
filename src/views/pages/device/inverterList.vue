@@ -1,7 +1,7 @@
 <template>
   <section class="sys-main">
     <!-- 查询区域 -->
-    <div class="list-container bg-c">
+    <div class="sys-table-container">
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm">
           <el-row :gutter="15">
@@ -79,14 +79,14 @@
             </div>
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
+          <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
+          <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
+          <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
-        <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
-        <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
-        <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>
@@ -232,26 +232,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title {
-  padding: 10px 0px 10px;
-  margin-left: 10px;
-  border-bottom: 1px solid #f5f5f5;
-}
-.states-row {
-  display: inline-block;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-  span {
-    margin-right: 15px;
-  }
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
-.el-icon-error {
-  color: #F96867;
-}
+
 </style>

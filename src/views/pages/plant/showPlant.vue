@@ -2,8 +2,8 @@
   <section class="sys-main">
     <show-item ref="plantStatus"></show-item>
     <!-- 表格区域 -->
-    <div class="list-container bg-c">
-      <div class="title border-line">电站列表</div>
+    <el-card shadow="never">
+      <div class="title border-line" slot="header">电站列表</div>
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
@@ -37,13 +37,13 @@
             </div>
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> Normal</span>
+          <span><i class="el-icon-warning"></i> Abnormal</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal</span>
-        <span><i class="el-icon-warning"></i> Abnormal</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
-    </div>
+    </el-card>
   </section>
 </template>
 <script>
@@ -179,20 +179,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title {
-  padding: 10px 0px 10px;
-  margin-left: 10px;
-  border-bottom: 1px solid #f5f5f5;
-}
-.states-row {
-  width: 150px;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
+
 </style>

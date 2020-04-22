@@ -44,8 +44,8 @@
     padding: 12px 20px;
   }
   .pagination {
-    padding: 10px;
     font-size: 12px;
+    padding-top: 10px;
     .el-pager {
       .number {
         border-radius: 50%;
@@ -65,6 +65,16 @@
   .el-card.is-never-shadow {
     border: none;
   }
+  .el-table__header th>.cell{
+    text-align: center;
+    color: @sys-main-text;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .sys-table-container {
+    padding:10px;
+    background-color: #fff;
+  }
   .function-container {
     .el-table-column--selection .cell {
       padding-right: 10px;
@@ -72,12 +82,6 @@
     // .el-table__header th {
     //   background-color: #f9f9f9;
     // }
-    .el-table__header th>.cell{
-      text-align: center;
-      color: @sys-main-text;
-      font-size: 14px;
-      font-weight: 400;
-    }
     .el-table__body td .cell {
       font-weight: normal;
       font-size: 12px;
@@ -106,6 +110,23 @@
         cursor: pointer;
         color: @sys-main-header;
       }
+    }
+    .states-row {
+      display: inline-block;
+      font-size: 12px;
+      padding-top: 10px;
+      span {
+        margin-right: 15px;
+      }
+    }
+    .el-icon-warning {
+      color: #E6A23C;
+    }
+    .el-icon-success {
+      color: #67C23A;
+    }
+    .el-icon-error {
+      color: #F96867;
     }
   }
   .title {

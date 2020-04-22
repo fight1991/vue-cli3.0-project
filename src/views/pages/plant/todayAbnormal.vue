@@ -36,8 +36,8 @@
             </template>
           </el-table-column>
         </el-table>
+        <page-box :pagination.sync="pagination" @change="getList"></page-box>
       </func-bar>
-      <page-box :pagination.sync="pagination" @change="getList"></page-box>
     </div>
   </el-dialog>
 </template>
