@@ -8,6 +8,7 @@ export default {
         tabId: 'tab-index',
         title: 'home',
         path: '/bus/index',
+        name: 'tab-index',
         isShow: true,
         components: [Home],
         query: {},
@@ -30,9 +31,10 @@ export default {
       let sameId = state.tabList.some(tab => tab.tabId === payLoad.tabId)
       if (payLoad.params.refresh) { // 有相同组件则替换
         if (sameTab) {
-          // 改变列表绑定的key值才会刷新
-          let newTabId = Date.now().toString()
-          sameTab.tabId = payLoad.tabId = newTabId
+          sameTab.isShow = false
+          setTimeout(() => {
+            sameTab.isShow = true
+          })
         } else {
           state.tabList.push(payLoad)
         }
@@ -54,9 +56,9 @@ export default {
       let activeTabInfo = state.tabList[index + 1] || state.tabList[index - 1]
       state.tabList.splice(index, 1)
       if (tabId === state.currentTab) { // 如果关闭的是当前活动的页签,激活相邻页签(路由跳转)
-        let { path, query, params } = activeTabInfo
+        let { name, query, params } = activeTabInfo
         router.push({
-          path,
+          name,
           query,
           params
         })

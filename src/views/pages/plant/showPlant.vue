@@ -92,9 +92,6 @@ export default {
     this.search()
     this.$store.registerModule('plant-module', plantStore)
   },
-  beforeDestroy () {
-    this.$store.unregisterModule('plant-module')
-  },
   computed: {
     ...mapState({
       username: state => state.userInfo.user
@@ -102,6 +99,9 @@ export default {
   },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
+  },
+  beforeDestroy () {
+    this.$store.unregisterModule('plant-module')
   },
   methods: {
     search () {

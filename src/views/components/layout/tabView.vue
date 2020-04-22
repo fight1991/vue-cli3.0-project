@@ -10,7 +10,7 @@
           :name="item.tabId">
           <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
-            <div class="tab-content" v-if="isReLoad">
+            <div class="tab-content" v-if="isReLoad && item.isShow">
               <component :is="item.components[item.components.length-1]"></component>
               <div v-show="index>0" class="copy-right" v-text="rightText"></div>
             </div>
