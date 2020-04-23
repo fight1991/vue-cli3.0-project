@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <el-card shadow="never">
+      <el-card shadow="never" class="no-bottom">
         <div class="title border-line" slot="header">状态统计</div>
         <income-item :incomeDetail="incomeDetail"></income-item>
       </el-card>
