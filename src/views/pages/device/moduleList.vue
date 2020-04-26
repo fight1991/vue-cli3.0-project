@@ -48,7 +48,7 @@
           </el-dropdown>
           <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">Unbind</el-button>
         </el-row>
-        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
+        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :height="530" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-success"></i>
             <i class="el-icon-remove"></i>

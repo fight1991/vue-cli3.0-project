@@ -69,7 +69,9 @@ export default {
     // 关闭所有页签
     closeAllTab ({ state, commit }) {
       state.tabList.splice(1)
-      commit('setCurrentTab', 'tab-index')
+      router.push({
+        name: 'tab-index'
+      })
     },
     // 关闭非当前页签的所有页签
     closeOtherTab ({ state, getters }) {

@@ -21,7 +21,7 @@
         </el-form>
       </search-bar>
       <func-bar>
-        <common-table :tableHeadData="plantTableHead" :maxHeight="400" :tableList="resultList">
+        <common-table :tableHeadData="plantTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
