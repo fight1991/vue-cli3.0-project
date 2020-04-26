@@ -18,20 +18,20 @@ export default {
     },
     {
       permission: '',
-      path: '/bus/version/inPromotion',
-      name: '/bus-version-inPromotion',
+      path: '/bus/version/inverRemote',
+      name: '/bus-version-inverRemote',
       meta: {
         title: '逆变器远程升级',
-        component: () => import(/* webpackChunkName: "bus-device-battery" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-version-inverRemote" */ '@/views/pages/version/inverRemote')
       }
     },
     {
       permission: '',
-      path: '/bus/version/moPromotion',
-      name: '/bus-version-moPromotion',
+      path: '/bus/version/moduRemote',
+      name: '/bus-version-moduRemote',
       meta: {
         title: '模块远程升级',
-        component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/device/moduleList')
+        component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/version/moduRemote')
       }
     }
   ]
