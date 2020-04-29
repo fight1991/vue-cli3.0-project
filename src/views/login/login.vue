@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     accountType () {
-      return this.getAcountType(this.dataForm.account)
+      return !this.isEmail ? 'phone' : this.getAcountType(this.dataForm.account)
     }
   },
   methods: {
