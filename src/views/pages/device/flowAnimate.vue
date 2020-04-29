@@ -28,14 +28,15 @@ export default {
 
 <style lang="less" scoped>
 .flex {
-  width: 100%;
+  width: 95%;
 }
 .circle-line {
-  height: 100px;
+  height: 150px;
   border: 1px solid green;
   position: relative;
   &:first-child {
     width: 66%;
+    border-right: none;
   }
   &:last-child {
     width: 33%;
