@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- 设备状态 -->
-    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="'Device status'"></device-status>
+    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.deviceS')"></device-status>
     <!-- 今日异常 流向图 -->
     <div class="block">
       <el-row :gutter="15">
@@ -45,8 +45,9 @@
         <el-col :span="16">
           <el-card shadow="never">
             <div class="title border-line" slot="header">
-              Flow graph
-              <i class="fr el-icon-more"></i>
+              <!-- Flow graph -->
+              流向图
+              <i class="fr el-icon-more" @click="flowDialog=true"></i>
             </div>
             <div class="flow-map" style="height:100px"></div>
           </el-card>
@@ -77,6 +78,7 @@
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
     <today-abnormal :type="'device'" :id="deviceId" :visible.sync="abnormalVisible"></today-abnormal>
+    <flow-dialog :visible.sync="flowDialog"></flow-dialog>
   </section>
 </template>
 <script>
@@ -84,16 +86,19 @@ import echartData from '@/views/pages/plant/echartData'
 import deviceStatus from '../components/powerStatus'
 import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
+import flowDialog from './flowDialog'
 import lineChart from './lineChart'
 export default {
   components: {
     deviceStatus,
     lineBar,
-    todayAbnormal
+    todayAbnormal,
+    flowDialog
   },
   mixins: [lineChart, echartData],
   data () {
     return {
+      flowDialog: false,
       collapse: false,
       abnormalVisible: false,
       multiValue: [],
