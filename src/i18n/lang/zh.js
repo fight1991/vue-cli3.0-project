@@ -117,7 +117,6 @@ export default {
     plantsList: '电站列表',
     equipQua: '设备数量',
     InsCap: '装机容量',
-    genToday: '今日发电量',
     stationTime: '建站时间',
     errorCode: '报错码',
     errorName: '报错内容',
