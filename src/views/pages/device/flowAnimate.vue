@@ -28,48 +28,52 @@ export default {
 
 <style lang="less" scoped>
 .flex {
-  width: 100%;
+  width: 95%;
 }
 .circle-line {
-  height: 100px;
-  border: 1px solid green;
+  height: 150px;
   position: relative;
   &:first-child {
+    border-top: 1px solid green;
     width: 66%;
   }
   &:last-child {
     width: 33%;
+    border: 1px solid green;
+    border-right: none;
+    border-bottom: none;
   }
   .pv,
   .load,
   .grid,
   .inverter {
     position: absolute;
-    width: 142px;
-    height: 142px;
+    width: 85px;
+    height: 85px;
     background-image: url('../../../assets/sprite/sprite.png');
     // transform: translate(-50%,-50%) scale(.6);
     z-index: 99;
+    background-color: #fff;
   }
   .pv {
     top: 0;
     left: 0;
-    transform: translate(-50%,-50%) scale(.6);
+    transform: translate(-50%,-50%)
   }
   .inverter {
     top: 0;
     right: 50px;
-    transform: translate(0, -50%) scale(.6);
+    transform: translate(0, -50%)
   }
   .grid {
     top: 0;
     right: 0;
-    transform: translate(50%, -50%) scale(.6);
+    transform: translate(50%, -50%)
   }
   .load {
     bottom: 0;
     left: 0;
-    transform: translate(-50%, 50%) scale(.6);
+    transform: translate(-50%, 50%)
   }
   .dot1,.dot2,.dot3 {
     position: absolute;

@@ -39,7 +39,7 @@
               {{$t('plant.todayAb')}}
               <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
             </div>
-            <el-echart :datas="normalData" height="200px"></el-echart>
+            <el-echart :datas="normalData" height="250px"></el-echart>
           </el-card>
         </el-col>
         <el-col :span="16">
@@ -49,7 +49,7 @@
               流向图
               <i class="fr el-icon-more" @click="flowDialog=true"></i>
             </div>
-            <div class="flow-map flex-center" style="height:200px">
+            <div class="flow-map flex-center" style="height:250px">
               <flow-animate></flow-animate>
             </div>
           </el-card>
