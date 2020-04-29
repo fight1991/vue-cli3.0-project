@@ -34,12 +34,12 @@ export default {
   height: 150px;
   position: relative;
   &:first-child {
-    border-top: 1px solid green;
+    border-top: 1px dotted green;
     width: 66%;
   }
   &:last-child {
     width: 33%;
-    border: 1px solid green;
+    border: 1px dotted green;
     border-right: none;
     border-bottom: none;
   }
@@ -58,7 +58,7 @@ export default {
   .pv {
     top: 0;
     left: 0;
-    transform: translate(-50%,-50%)
+    transform: translate(-10px,-50%);
   }
   .inverter {
     top: 0;
@@ -68,7 +68,7 @@ export default {
   .grid {
     top: 0;
     right: 0;
-    transform: translate(50%, -50%)
+    transform: translate(10px, -50%)
   }
   .load {
     bottom: 0;
