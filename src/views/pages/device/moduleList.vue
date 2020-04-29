@@ -1,6 +1,7 @@
 <template>
-  <section class="sys-main bg-c">
-    <!-- 查询区域 -->
+  <section class="sys-main">
+    <div class="sys-table-container">
+      <!-- 查询区域 -->
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm">
           <el-row :gutter="15">
@@ -47,18 +48,19 @@
           </el-dropdown>
           <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">Unbind</el-button>
         </el-row>
-        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
+        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :height="530" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-success"></i>
             <i class="el-icon-remove"></i>
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> Normal</span>
+          <span><i class="el-icon-remove"></i> Offline</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getModuleList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal</span>
-        <span><i class="el-icon-remove"></i> Offline</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getModuleList"></page-box>
+    </div>
   </section>
 </template>
 <script>
@@ -179,15 +181,18 @@ export default {
     },
     // 获取模块类型列表
     async getModuleTypeList () {
-      let { result: { types } } = await this.$axios({
+      let { result } = await this.$axios({
         url: '/v0/module/types'
       })
-      this.typeList = types || []
+      if (result) {
+        this.typeList = result.types || []
+      }
     },
     // 获取模块列表
     async getModuleList (pagination) {
       let { result } = await this.$axios({
         url: '/v0/module/list',
+        method: 'post',
         data: {
           ...pagination,
           condition: this.searchForm
@@ -223,21 +228,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.states-row {
-  display: inline-block;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-  span {
-    margin-right: 15px;
-  }
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
-.el-icon-error {
-  color: #F96867;
-}
+
 </style>

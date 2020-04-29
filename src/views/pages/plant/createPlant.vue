@@ -78,6 +78,7 @@
     <el-dialog
       title="Error List"
       width="300px"
+      :modal-append-to-body="false"
       :close-on-click-modal="false"
       :show-close="false"
       :visible.sync="errVisible">
@@ -97,7 +98,7 @@ export default {
   data () {
     return {
       opType: 'add', // 记录操作类型 add创建, look查看 edit编辑
-      stationID: '', // 电站id
+      plantId: '', // 电站id
       snIsPass: true,
       errVisible: false,
       snResult: [], // sn校验的结果
@@ -145,8 +146,8 @@ export default {
       this.opType = opType || this.$route.query.opType
     }
     if (this.opType !== 'add') {
-      this.stationID = this.$route.query.plantId
-      this.getStationInfo(this.stationID)
+      this.plantId = this.$route.query.plantId
+      this.getStationInfo(this.plantId)
     }
   },
   computed: {
@@ -263,7 +264,7 @@ export default {
         return
       }
       // 有的sn校验失败显示弹框
-      if (!this.isAllPass) {
+      if (!this.isAllError && !this.isAllPass) {
         this.errVisible = true
       }
     },
@@ -292,6 +293,7 @@ export default {
           stationID: this.plantId
         }
       })
+      console.log(result, other)
       this.snResult = result || other || []
       return true
     },

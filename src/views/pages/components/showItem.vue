@@ -33,10 +33,10 @@
           </div>
         </div>
       </div>
-      <div class="status-count bg-c">
-        <div class="title border-line">状态统计</div>
+      <el-card shadow="never" class="no-bottom">
+        <div class="title border-line" slot="header">状态统计</div>
         <income-item :incomeDetail="incomeDetail"></income-item>
-      </div>
+      </el-card>
     </div>
     <div class="right bg-c">
       <div class="weather-content">天气</div>

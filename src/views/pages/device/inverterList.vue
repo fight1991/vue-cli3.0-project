@@ -1,7 +1,7 @@
 <template>
   <section class="sys-main">
     <!-- 查询区域 -->
-    <div class="list-container bg-c">
+    <div class="sys-table-container">
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm">
           <el-row :gutter="15">
@@ -37,6 +37,19 @@
                 <el-input v-model="searchForm.deviceType" placeholder="type"></el-input>
               </el-form-item>
             </el-col>
+            <el-col :span="6">
+              <el-form-item>
+                <el-date-picker
+                  style="width:100%"
+                  v-model="times"
+                  value-format="timestamp"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
             <el-col :span="6" align="left">
               <el-button size="mini" @click="reset">reset</el-button>
               <el-button type="primary" size="mini" @click="search">search</el-button>
@@ -47,7 +60,6 @@
       <!-- 列表查询区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-plus">New</el-button>
           <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">Delete</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
@@ -62,19 +74,19 @@
           </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.id)"></i>
-              <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.id)"></i>
+              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.deviceID)"></i>
+              <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.deviceID)"></i>
             </div>
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
+          <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
+          <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
+          <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
-        <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
-        <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
-        <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>
@@ -85,6 +97,7 @@ export default {
   data () {
     return {
       selection: [],
+      times: [],
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
@@ -139,6 +152,7 @@ export default {
         country: '',
         deviceType: ''
       }
+      this.times = []
     },
     reset () {
       this.resetSearchForm()
@@ -152,14 +166,16 @@ export default {
         this.$router.push({
           name: 'bus-device-inverterDetail',
           query: {
-            tabId: this.$router.name + page + id
+            id,
+            tabId: this.$route.name + page + id
           }
         })
       } else {
         this.$router.push({
           name: 'bus-device-remoteSetting',
           query: {
-            tabId: this.$router.name + page + id
+            id,
+            tabId: this.$route.name + page + id
           }
         })
       }
@@ -170,7 +186,13 @@ export default {
         url: '/v0/device/list',
         data: {
           ...pagination,
-          condition: this.searchForm
+          condition: {
+            ...this.searchForm,
+            queryDate: {
+              begin: (this.times && this.times[0]) || 0,
+              end: (this.times && this.times[1]) || 0
+            }
+          }
         },
         success: ({ result }) => {
           if (result) {
@@ -198,7 +220,7 @@ export default {
         return
       }
       let { result } = await this.$axios({
-        url: '​/device​/delete',
+        url: '/v0​/device/delete',
         method: 'post',
         data: this.deviceId
       })
@@ -210,26 +232,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title {
-  padding: 10px 0px 10px;
-  margin-left: 10px;
-  border-bottom: 1px solid #f5f5f5;
-}
-.states-row {
-  display: inline-block;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-  span {
-    margin-right: 15px;
-  }
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
-.el-icon-error {
-  color: #F96867;
-}
+
 </style>

@@ -52,6 +52,10 @@ export default {
       barUrl: {
         plant: '/v0/plant/history/report',
         device: '/v0/device/history/report'
+      },
+      reportType: {
+        Day: 'month',
+        Month: 'year'
       }
     }
   },
@@ -65,10 +69,6 @@ export default {
     }
   },
   created () {
-    if (this.id) {
-      this.getLineData()
-      this.getBarData()
-    }
     this.setDefaultTime()
   },
   mounted () {
@@ -118,16 +118,22 @@ export default {
     },
     // 折现图表数据功率
     async getLineData () {
+      let params = {}
+      if (this.type === 'plant') {
+        params.plantID = this.id
+      } else {
+        params.deviceID = this.id
+      }
       let { result } = await this.$axios({
         url: this.powerUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.id,
+          ...params,
           variables: ['generationPower', 'feedinPower', 'loadsPower'],
-          timespan: 'hour',
+          timespan: 'day',
           beginDate: {
             year: new Date().getFullYear(),
-            month: new Date().getMonth(),
+            month: new Date().getMonth() + 1,
             day: new Date().getDate(),
             hour: new Date().getHours(),
             minute: new Date().getMinutes(),
@@ -136,33 +142,55 @@ export default {
         }
       })
       if (result && result.length > 0) {
-        result.forEach((v, i) => {
+        this.echartData.power.legend.data = result.map(v => v.variable)
+        this.echartData.power.series = result.map(v => {
           let tempData = v.data.map(item => [item.timestamp, item.value])
-          this.echartData.power.series[i].data = tempData
+          return {
+            type: 'line',
+            name: v.variable,
+            data: tempData,
+            smooth: true
+          }
         })
       }
       return true
     },
     // 柱状图表数据;电量统计
     async getBarData () {
-      let dateArr = this.dateValue.split('-')
+      // let dateArr = this.dateValue.split('-')
+      let params = {}
+      if (this.type === 'plant') {
+        params.plantID = this.id
+      } else {
+        params.deviceID = this.id
+      }
       let { result } = await this.$axios({
         url: this.barUrl[this.type],
         method: 'post',
         data: {
-          stationID: this.id,
-          reportType: this.dateType.toLowerCase(),
-          variables: ['generation', 'feed-in', 'loads', 'gridConsumption'],
+          ...params,
+          reportType: this.reportType[this.dateType],
+          variables: ['generation', 'feedin', 'loads', 'gridConsumption'],
           queryDate: {
-            year: dateArr[0],
-            month: dateArr[1] || '',
-            day: dateArr[2] || '',
-            hour: 0
+            year: new Date(this.dateValue).getFullYear(),
+            month: new Date(this.dateValue).getMonth() + 1,
+            day: new Date(this.dateValue).getDate(),
+            hour: new Date(this.dateValue).getHours()
           }
         }
       })
-      if (result && result.data && result.data.length > 0) {
-        this.echartData.elec.dataset.source = result.data
+      if (result && result.length > 0) {
+        if (result[0].data && result[0].data.length > 0) {
+          this.echartData.elec.xAxis.data = result[0].data.map(v => v.index)
+        }
+        this.echartData.elec.legend.data = result.map(v => v.variable)
+        this.echartData.elec.series = result.map(v => {
+          return {
+            type: 'bar',
+            name: v.variable,
+            data: v.data
+          }
+        })
       }
       return true
     }

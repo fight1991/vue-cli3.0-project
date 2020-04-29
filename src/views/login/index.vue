@@ -40,6 +40,7 @@ import login from './login'
 import register from './register'
 import resetPw from './resetPw'
 export default {
+  name: 'router-login',
   components: {
     login,
     register,

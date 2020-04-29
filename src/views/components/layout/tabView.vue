@@ -1,16 +1,15 @@
 <template>
   <div class="tab-container">
-    <el-tabs v-model="activeTabName" type="card" @tab-remove="removeTab" @tab-click="tabClick">
+    <el-tabs v-model="$store.state.tab.currentTab" type="card" @tab-remove="removeTab" @tab-click="tabClick">
       <template v-for="(item, index) in tabList">
         <el-tab-pane
-          v-if="item.isShow"
           :closable="index > 0"
           :key="item.tabId"
           :label="item.title"
           :name="item.tabId">
           <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
-            <div class="tab-content" v-if="isReLoad">
+            <div class="tab-content" v-if="isReLoad && item.isShow">
               <component :is="item.components[item.components.length-1]"></component>
               <div v-show="index>0" class="copy-right" v-text="rightText"></div>
             </div>
@@ -34,9 +33,9 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  name: 'tab-view',
   data () {
     return {
-      activeTabName: this.$store.state.tab.currentTab,
       isReLoad: true,
       rightText: 'Copyrights © 2010-2020'
     }
@@ -48,13 +47,8 @@ export default {
   },
   computed: {
     ...mapState({
-      tabList: (state) => state.tab.tabList
+      tabList: state => state.tab.tabList
     })
-  },
-  watch: {
-    '$store.state.tab.currentTab': function (newData) {
-      this.activeTabName = newData
-    }
   },
   methods: {
     reload () {
@@ -64,7 +58,6 @@ export default {
       })
     },
     tabClick (tabInfo) {
-      console.log(this.activeTabName)
       let { path, query, params } = this.tabList.find(v => v.tabId === tabInfo.name)
       if (path === this.$route.path) return
       // if (tabInfo.name === 'tab-index') {

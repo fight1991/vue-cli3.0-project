@@ -38,6 +38,23 @@
         </el-row>
       </div>
     </div>
+    <!-- 电站状态 -->
+    <div class="block">
+      <plant-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.plantS')"></plant-status>
+    </div>
+    <!-- 功率 统计 设备列表 -->
+    <div class="block mg-b15">
+      <line-bar :id="plantId" :type="'plant'" ref="lineBar">
+        <template v-slot:radioBtn>
+          <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
+          <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
+          <el-radio-button label="list">{{$t('plant.deviceL')}}</el-radio-button>
+        </template>
+        <template v-slot:other>
+          <device-list ref="deviceList" :plantId="plantId"></device-list>
+        </template>
+      </line-bar>
+    </div>
     <!-- 今日异常 设备状态区域 -->
     <div class="block">
       <el-row :gutter="15">
@@ -79,23 +96,7 @@
         </el-col>
       </el-row>
     </div>
-    <!-- 电站状态 -->
-    <div class="block">
-      <plant-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.plantS')"></plant-status>
-    </div>
-    <div class="block">
-      <line-bar :id="plantId" :type="'plant'" ref="lineBar">
-        <template v-slot:radioBtn>
-          <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
-          <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
-          <el-radio-button label="list">{{$t('plant.deviceL')}}</el-radio-button>
-        </template>
-        <template v-slot:other>
-          <device-list ref="deviceList" :plantId="plantId"></device-list>
-        </template>
-      </line-bar>
-    </div>
-    <today-abnormal :type="'plant'" :visible.sync="abnormalVisible"></today-abnormal>
+    <today-abnormal :id="plantId" :type="'plant'" :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
@@ -190,11 +191,9 @@ export default {
       // 截取plantList第一项
       if (this.plantList[0]) {
         this.plantId = this.plantList[0].stationID
+        this.getCommonRequest()
       }
-      this.getCommonRequest()
     }
-    console.log(this.$refs.deviceList)
-    console.log(this.$refs.lineBar)
     // this.getSomeIncome()
   },
   beforeDestroy () {
@@ -324,6 +323,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+.el-icon-more {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 .status-text {
   padding: 2px 5px;

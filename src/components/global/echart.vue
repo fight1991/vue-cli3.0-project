@@ -21,17 +21,14 @@ export default {
       default: function () {
         return {}
       }
-    },
-    reset: {
-      default: ''
     }
   },
   watch: {
-    'datas': function () {
-      this.asyncInit()
-    },
-    'reset': function () {
-      this.asyncInit()
+    datas: {
+      handler: function () {
+        this.asyncInit()
+      },
+      deep: true
     }
   },
   data () {

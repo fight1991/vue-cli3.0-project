@@ -1,7 +1,7 @@
 <template>
   <section class="sys-main">
     <!-- 查询区域 -->
-    <div class="list-container bg-c">
+    <div class="sys-table-container">
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
@@ -31,14 +31,14 @@
             {{row.feedinDate | formatDate('yyyy-MM-dd')}}
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
+          <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}</span>
+          <span><i class="el-icon-error"></i> {{$t('common.glitch')}}</span>
+          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getDeviceList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
-        <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}</span>
-        <span><i class="el-icon-error"></i> {{$t('common.glitch')}}</span>
-        <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getDeviceList"></page-box>
     </div>
   </section>
 </template>
@@ -111,23 +111,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title {
-  padding: 10px 0px 10px;
-  margin-left: 10px;
-  border-bottom: 1px solid #f5f5f5;
-}
-.states-row {
-  width: 300px;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
-.el-icon-error {
-  color: #F96867;
-}
+
 </style>

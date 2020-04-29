@@ -13,6 +13,47 @@
     </el-popover>
     <!--  公共table列表 -->
     <el-table ref="commonTable"
+      v-if="height"
+      @select="selectSingleBox"
+      @select-all="selectAllBox"
+      @row-click="selectRow"
+      :data="tableList"
+      :height="height"
+      size="mini"
+      highlight-current-row
+      :border="border">
+      <el-table-column v-if="selectBox" type="selection" align="center" width="40"></el-table-column>
+      <el-table-column v-if="showNum" type="index" width="50" label="NO." align="center"></el-table-column>
+      <template v-for="(item,index) in trueTableHead">
+        <el-table-column
+          show-overflow-tooltip
+          v-if="!item.slotName"
+          :key="'table' + index"
+          :fixed="item.fixed || false"
+          :prop="item.prop || ''"
+          :label="$t(item.label)"
+          :align="item.align || 'center'"
+          :min-width="item.width || '80'"
+          :render-header="item.renderHeader ? renderHead : renderCommon"
+        ></el-table-column>
+        <el-table-column v-else
+          show-overflow-tooltip
+          :key="'table' + index"
+          :fixed="item.fixed || false"
+          :prop="item.prop || ''"
+          :label="$t(item.label)"
+          :align="item.align || 'center'"
+          :min-width="item.width || '80'"
+          :render-header="item.renderHeader ? renderHead : renderCommon">
+          <template slot-scope="scope">
+            <!-- 具名插槽 -->
+            <slot :name="item.slotName || 'default'" :row="scope.row"></slot>
+          </template>
+        </el-table-column>
+      </template>
+    </el-table>
+    <el-table ref="commonTable"
+      v-if="!height"
       @select="selectSingleBox"
       @select-all="selectAllBox"
       @row-click="selectRow"
@@ -77,6 +118,9 @@ export default {
       default () {
         return window.innerHeight - this.$store.state.tableH
       }
+    },
+    height: {
+      default: ''
     },
     tableList: {
       type: Array,

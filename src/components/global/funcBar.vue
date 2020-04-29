@@ -13,8 +13,4 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.function-container {
-  margin: 0px 10px;
-  background-color: #fff;
-}
 </style>

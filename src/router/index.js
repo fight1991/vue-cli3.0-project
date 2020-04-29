@@ -41,7 +41,10 @@ const router = new VueRouter({
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth === false) { // 不需权限,直接放行 /login,/error-xx等
-    to.path === '/login' && storage.removeToken('token')
+    if (to.path === '/login') {
+      storage.removeToken('token')
+      router.app.$options.store.state.isFirst = true
+    }
     next()
   } else {
     if (!storage.getToken()) {
@@ -74,14 +77,21 @@ router.afterEach((to, from) => {
   let tabId = to.query.tabId || to.params.tabId || to.name
   let title = to.query.tabTitle || to.params.tabTitle || to.meta.title
   if (store.state.tabView && to.meta.component) {
+    let tempParams = JSON.parse(JSON.stringify(to.params))
+    // token异常拦截到登录页 有可能dom没更新完成就跳转到登录页,造成echart渲染异常
+    // 从login页面跳到指定redirect中的地址,刷新组件
+    if (from.query.redirect) {
+      tempParams.refresh = true
+    }
     store.commit('addTab', {
       tabId,
       title,
       isShow: true,
       components: [to.meta.component],
       path: to.path,
+      name: to.name,
       query: JSON.parse(JSON.stringify(to.query)),
-      params: JSON.parse(JSON.stringify(to.params))
+      params: tempParams
     })
   }
 })

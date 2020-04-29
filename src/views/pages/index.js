@@ -1,6 +1,7 @@
 import DataView from './dataView'
 import Plant from './plant'
 import Device from './device'
+import Version from './version'
 import DataReport from './dataReport'
 import Alarm from './alarm'
 import Factory from './factory'
@@ -22,6 +23,7 @@ export default [
   DataView,
   Plant,
   Device,
+  Version,
   DataReport,
   Alarm,
   Factory,

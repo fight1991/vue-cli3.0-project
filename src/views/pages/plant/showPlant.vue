@@ -2,8 +2,8 @@
   <section class="sys-main">
     <show-item ref="plantStatus"></show-item>
     <!-- 表格区域 -->
-    <div class="list-container bg-c">
-      <div class="title border-line">电站列表</div>
+    <el-card shadow="never">
+      <div class="title border-line" slot="header">电站列表</div>
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
@@ -15,13 +15,13 @@
             <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="search">reset</el-button>
+            <el-button size="mini" @click="reset">reset</el-button>
             <el-button type="primary" size="mini" @click="search">search</el-button>
           </el-form-item>
         </el-form>
       </search-bar>
       <func-bar>
-        <common-table :tableHeadData="plantTableHead" :maxHeight="400" :tableList="resultList">
+        <common-table :tableHeadData="plantTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
@@ -37,13 +37,13 @@
             </div>
           </template>
         </common-table>
+        <div class="states-row">
+          <span><i class="el-icon-success"></i> Normal</span>
+          <span><i class="el-icon-warning"></i> Abnormal</span>
+        </div>
+        <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
       </func-bar>
-      <div class="states-row flex-between">
-        <span><i class="el-icon-success"></i> Normal</span>
-        <span><i class="el-icon-warning"></i> Abnormal</span>
-      </div>
-      <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
-    </div>
+    </el-card>
   </section>
 </template>
 <script>
@@ -92,9 +92,6 @@ export default {
     this.search()
     this.$store.registerModule('plant-module', plantStore)
   },
-  beforeDestroy () {
-    this.$store.unregisterModule('plant-module')
-  },
   computed: {
     ...mapState({
       username: state => state.userInfo.user
@@ -102,6 +99,9 @@ export default {
   },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
+  },
+  beforeDestroy () {
+    this.$store.unregisterModule('plant-module')
   },
   methods: {
     search () {
@@ -112,6 +112,7 @@ export default {
         status: 0,
         name: ''
       }
+      this.search()
     },
     // 获取电站列表
     getPlantList (pagination) {
@@ -178,20 +179,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title {
-  padding: 10px 0px 10px;
-  margin-left: 10px;
-  border-bottom: 1px solid #f5f5f5;
-}
-.states-row {
-  width: 150px;
-  font-size: 12px;
-  padding: 10px 0 0 10px;
-}
-.el-icon-warning {
-  color: #E6A23C;
-}
-.el-icon-success {
-  color: #67C23A;
-}
+
 </style>

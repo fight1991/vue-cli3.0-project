@@ -2,14 +2,15 @@
   <el-dialog
     class="sys-dialog"
     title="Abnormal list"
-    @opened="getList"
+    :modal-append-to-body="false"
+    @opened="search"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
     <div class="content">
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
-          <el-form-item>
+          <el-form-item v-if="type==='plant'">
             <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
           </el-form-item>
           <el-form-item>
@@ -25,7 +26,7 @@
       </search-bar>
       <func-bar>
         <el-table size="mini" :height="400" :data="resultList" border>
-          <el-table-column label="Inverter SN" prop="deviceSN"></el-table-column>
+          <el-table-column label="Inverter SN" prop="deviceSN" v-if="type==='plant'"></el-table-column>
           <el-table-column label="Type" prop="alarmType"></el-table-column>
           <el-table-column label="Code" prop="code"></el-table-column>
           <el-table-column label="Content" prop="content"></el-table-column>
@@ -35,8 +36,8 @@
             </template>
           </el-table-column>
         </el-table>
+        <page-box :pagination.sync="pagination" @change="getList"></page-box>
       </func-bar>
-      <page-box :pagination.sync="pagination" @change="getList"></page-box>
     </div>
   </el-dialog>
 </template>
@@ -90,6 +91,9 @@ export default {
   props: {
     visible: {
       default: false
+    },
+    type: {
+      default: 'plant'
     }
   },
   watch: {
@@ -111,9 +115,17 @@ export default {
       this.getList(this.$store.state.pagination)
     },
     async getList (pagination) {
+      let params = {}
+      if (this.type === 'plant') {
+        params.stationID = this.$attrs.id
+      } else {
+        params.deviceID = this.$attrs.id
+      }
       let { result } = await this.$axios({
-        url: '/v0/plant/alarm/today/detail',
+        method: 'post',
+        url: `/v0/${this.type}/alarm/today/detail`,
         data: {
+          ...params,
           ...pagination,
           condition: this.searchForm
         }

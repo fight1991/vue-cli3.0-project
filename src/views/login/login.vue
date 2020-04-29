@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     accountType () {
-      return this.getAcountType(this.dataForm.account)
+      return !this.isEmail ? 'phone' : this.getAcountType(this.dataForm.account)
     }
   },
   methods: {
@@ -166,7 +166,6 @@ export default {
         other: res => {
           // 41805 账号不存在 打开注册页面
           // 41807 用户名或密码错误
-          console.log(res)
           if (res.errno === 41805) {
             this.registerBtn('register')
             return false
