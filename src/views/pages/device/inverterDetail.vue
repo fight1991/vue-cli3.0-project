@@ -49,7 +49,9 @@
               流向图
               <i class="fr el-icon-more" @click="flowDialog=true"></i>
             </div>
-            <div class="flow-map" style="height:100px"></div>
+            <div class="flow-map flex-center" style="height:200px">
+              <flow-animate></flow-animate>
+            </div>
           </el-card>
         </el-col>
       </el-row>
@@ -87,13 +89,15 @@ import deviceStatus from '../components/powerStatus'
 import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import flowDialog from './flowDialog'
+import flowAnimate from './flowAnimate'
 import lineChart from './lineChart'
 export default {
   components: {
     deviceStatus,
     lineBar,
     todayAbnormal,
-    flowDialog
+    flowDialog,
+    flowAnimate
   },
   mixins: [lineChart, echartData],
   data () {
@@ -153,7 +157,9 @@ export default {
           deviceID: this.deviceId
         }
       })
-      this.options = result.varialbes || []
+      if (result) {
+        this.options = result.varialbes || []
+      }
     },
     // 多折线图表
     async getMultiChart () {
