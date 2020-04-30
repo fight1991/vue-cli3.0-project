@@ -7,7 +7,7 @@
       <div class="dot3"></div>
     </div>
     <div class="circle-line box-right">
-      <div class="dot2"></div>
+      <!-- <div class="dot2"></div> -->
       <div class="grid icon-grid"></div>
       <div class="load icon-load"></div>
     </div>
@@ -81,19 +81,18 @@ export default {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 1px solid red;
-    box-shadow: 1px;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 4px 1px #ccc;
     z-index: 66;
   }
   .dot1,.dot3 {
     left: 0;
-    background-color: green;
+    background-color: #67C23A;
     transform: translate(-50%,-50%);
     animation: dot1 2s linear infinite;
   }
   .dot3 {
     animation: dot3 2s linear infinite;
-    background-color: red;
   }
   .dot2 {
     right: 0;
