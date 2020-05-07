@@ -8,7 +8,7 @@ export default {
     message: 'login.errorMg2'
   },
   user: {
-    rule: /^[A-Za-z][A-Za-z0-9_-]{5,}$/, // 以字母开头的6-8位用户名
+    rule: /^[A-Za-z][A-Za-z0-9_-]{5,}$/, // 以字母开头的至少6位用户名
     message: 'login.errorMg4'
   },
   password: {

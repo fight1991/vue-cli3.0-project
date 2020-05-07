@@ -1,38 +1,14 @@
 <template>
   <div class="login">
-    <!-- <div class="tab-header">
-      <div @click="toggleClick('code')" :class="{'tab-item':true, 'active': isCode}">验证码登录</div>
-      <div @click="toggleClick('pw')" :class="{'tab-item':true, 'active': isPw}">密码登录</div>
-    </div> -->
     <div class="form">
       <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
         <el-row>
-          <el-col :span="24" v-if="isEmail">
-            <el-form-item prop="mobile">
-              <el-input v-model="dataForm.account" :placeholder="$t('login.account')"></el-input>
+          <el-col :span="24">
+            <el-form-item>
+              <el-input v-model="dataForm.user" :placeholder="$t('login.username')"></el-input>
             </el-form-item>
           </el-col>
-          <div v-else>
-            <el-col :span="6" class="phone-area">
-              <el-form-item>
-                <el-select v-model="dataForm.area">
-                  <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="18">
-              <el-form-item prop="mobile">
-                <el-input v-model="dataForm.account" class="phone-area-num" placeholder="Mobile number"></el-input>
-              </el-form-item>
-            </el-col>
-          </div>
-          <!-- <el-col :span="24" v-if="isCode">
-            <el-form-item prop="code">
-              <el-input v-model="dataForm.code" placeholder="验证码"></el-input>
-              <span class="get-code" @click="getCode">{{codeText}}</span>
-            </el-form-item>
-          </el-col> -->
-          <el-col :span="24" v-if="isPw" class="password">
+          <el-col :span="24" class="password">
             <el-form-item prop="pw">
               <el-input :type="pwType" v-model="dataForm.password" :placeholder="$t('login.pw')" @keyup.native.enter="goLogin">
                 <i slot="suffix" @click="showPw" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
@@ -43,15 +19,11 @@
       </el-form>
     </div>
     <el-row class="forgot-pw" type="flex" justify="space-between">
-      <span v-if="isEmail" @click="toggleEmail">{{$t('login.mobile')}}</span>
-      <span v-else @click="toggleEmail">{{$t('login.email')}}</span>
+      <span @click="registerBtn('register')">{{$t('login.register')}}</span>
       <span @click="registerBtn('resetPw')">{{$t('login.forgetPw')}}</span>
     </el-row>
     <el-row class="login-btn">
       <el-button class="login-click" type="primary" @click="goLogin">{{$t('login.login')}}</el-button>
-    </el-row>
-    <el-row class="find-btn" type="flex" justify="end">
-      <span @click="registerBtn('register')">{{$t('login.register')}}</span>
     </el-row>
   </div>
 </template>
@@ -73,51 +45,21 @@ export default {
       isEmail: false,
       areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
-        area: '+86',
-        account: '',
-        password: '',
-        accountType: '' //  user, email, phone
+        user: '',
+        password: ''
       },
       loginRules: {}
     }
   },
-  created () {
-    if (this.isEmail) {
-      this.dataForm.account = storage.getUserInfo('username')
-    } else {
-      let phone = storage.getUserInfo('phone')
-      if (!phone) return
-      this.dataForm.account = phone.split('-')[1]
-      this.dataForm.area = phone.split('-')[0]
-    }
-  },
-  computed: {
-    accountType () {
-      return !this.isEmail ? 'phone' : this.getAcountType(this.dataForm.account)
-    }
-  },
+  created () {},
+  computed: {},
   methods: {
-    toggleClick (type) {
-      this.loginType = 'code'
-      if (type === 'code') {
-        this.isCode = true
-        this.isPw = false
-      } else {
-        this.isCode = false
-        this.isPw = true
-      }
-    },
-    toggleEmail () {
-      this.isEmail = !this.isEmail
-      this.dataForm.account = ''
-    },
-    // 密码登录输入框校验
+    // 用户名密码登录输入框校验
     passwordValid () {
       // 手机或邮箱正则
-      let { account, password } = this.dataForm
-      if (!this.getAcountType(account)) {
-        let erroMsg = this.isEmail ? this.$t('login.errorMg1') : this.$t('login.errorMg2')
-        this.$message.error(erroMsg)
+      let { user, password } = this.dataForm
+      if (!valid.user.rule.test(user)) {
+        this.$message.error(this.$t(valid.user.message))
         return false
       }
       if (!valid.password.rule.test(password)) {
@@ -140,10 +82,6 @@ export default {
       if (!this.passwordValid()) return false
       this.dataForm.accountType = this.accountType
       let tempData = { ...this.dataForm }
-      if (this.accountType === 'phone') {
-        let { account, area } = this.dataForm
-        tempData.account = area + '-' + account
-      }
       this.$post({
         url: '/v0/user/login',
         data: {
