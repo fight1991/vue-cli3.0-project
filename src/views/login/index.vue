@@ -116,7 +116,7 @@ export default {
       width: 450px;
       box-sizing: border-box;
       background-color: #fff;
-      border-radius: 4px;
+      border-radius: 2px;
       padding: 25px;
       color: #999;
     }
