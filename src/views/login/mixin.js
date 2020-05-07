@@ -31,13 +31,12 @@ export default {
       return false
     },
     // 发送验证码
-    sendCode ({ contact, contactType }, callback) {
+    sendCode (user, callback) {
       if (this.timer) return
       this.$post({
         url: '/v0/user/sendcaptcha',
         data: {
-          contact,
-          contactType
+          user
         },
         success: () => {
           callback && callback()

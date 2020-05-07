@@ -190,9 +190,16 @@
   overflow-x: hidden;
 }
 .login {
+  .el-input__inner {
+    height: 32px;
+    line-height: 32px;
+  }
+  .el-form-item__label {
+    line-height: 18px!important;
+  }
   .code-area {
     .el-input-group__append {
-      border-radius: 2px;
+      border-radius: 0 2px 2px 0;
       background-color: #fff;
       border-color: #d8d8d8;
       width: 90px;
@@ -200,9 +207,18 @@
       padding: 0;
       .el-button {
         margin: 0;
-        padding: 12px 5px;
+        padding: 7px 5px;
       }
     }
+  }
+}
+.login-register {
+  .el-form--label-top .el-form-item__label {
+    padding-bottom: 0px;
+  }
+  .el-form-item__error {
+    right: 0;
+    left: auto;
   }
 }
 .login-pop {
@@ -210,16 +226,6 @@
   background-color: rgba(0,0,0);
   color: #fff;
   border-color: rgba(0,0,0,.6);
-}
-.login {
-  .phone-area {
-    .el-input__inner:hover {
-      border-color: #DCDFE6;
-    }
-    .el-input__inner {
-      border-right: none;
-    }
-  }
 }
 .sys-dialog {
   display: flex;
@@ -269,6 +275,11 @@
   .login {
     .el-input__inner {
       border-radius: 2px;
+    }
+    .code-area {
+      .el-input__inner {
+        border-radius: 2px 0 0;
+      }
     }
     .login-click {
       width: 100%;

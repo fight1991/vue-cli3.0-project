@@ -147,9 +147,6 @@ export default {
       }
     }
   }
-  .login-btn {
-    padding: 18px 0 10px;
-  }
 @media only screen and(max-width:1080px) {
   .login{
     width: 380px!important;

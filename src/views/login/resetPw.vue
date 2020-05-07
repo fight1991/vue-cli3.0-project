@@ -1,55 +1,39 @@
 <template>
-  <div class="login">
+  <div class="login login-register">
     <div class="form">
-      <el-form ref="dataForm" :model="dataForm" label-width="0px" :rules="loginRules">
+      <el-form ref="dataForm" :model="dataForm" label-position="top" :rules="loginRules">
         <el-row>
-          <el-col :span="24" v-if="isEmail">
-            <el-form-item prop="account">
-              <el-input v-model="dataForm.account" placeholder="Email address"></el-input>
+          <el-col :span="24">
+            <el-form-item prop="user" :label="$t('login.username')">
+              <el-input v-model="dataForm.user"></el-input>
             </el-form-item>
           </el-col>
-          <div v-else>
-            <el-col :span="6" class="phone-area">
-              <el-form-item>
-                <el-select v-model="dataForm.area">
-                  <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="18">
-              <el-form-item prop="account">
-                <el-input v-model="dataForm.account" placeholder="Mobile number"></el-input>
-              </el-form-item>
-            </el-col>
-          </div>
            <el-col :span="24" class="password">
-            <el-form-item prop="pw">
+            <el-form-item prop="pw" :label="$t('login.newPw')">
               <el-popover
                 :visible-arrow="false"
                 trigger="focus"
                 popper-class="login-pop"
                 width="200"
-                placement="bottom-start">
+                placement="left">
                 <span>{{$t('login.tips2')}}</span>
-                <el-input slot="reference" :type="pwType" v-model="dataForm.newPassword" :placeholder="$t('login.pw')">
+                <el-input slot="reference" :type="pwType" v-model="dataForm.newPassword">
                   <i slot="suffix" @click="showPw('pwType')" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
                 </el-input>
               </el-popover>
             </el-form-item>
           </el-col>
           <el-col :span="24" class="code-area">
-            <el-form-item prop="code">
-              <el-input v-model="dataForm.captcha" :maxlength="4" :placeholder="$t('login.code')">
-                <el-button slot="append" @click="getCode">{{codeText}}</el-button>
+            <el-form-item prop="code" :label="$t('login.code')">
+              <el-input style="padding-top:4px" v-model="dataForm.captcha" :maxlength="4">
+                <el-button slot="append" @click="getCode">{{codeTxt}}</el-button>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </div>
-    <el-row class="find-btn" type="flex" justify="space-between">
-      <span v-if="isEmail" @click="toggleEmail">{{$t('login.phone')}}</span>
-      <span v-else @click="toggleEmail">{{$t('login.em')}}</span>
+    <el-row class="find-btn" type="flex" justify="end">
       <span class="f12" @click="backLogin">{{$t('login.back')}}</span>
     </el-row>
     <el-row class="login-btn">
@@ -68,19 +52,16 @@ export default {
   data () {
     return {
       pwType: 'password',
-      confirmPwType: 'password',
       isAgreen: true,
-      isEmail: false,
-      areaNum: [ { num: '+86', contry: 'china' } ],
       dataForm: {
-        area: '+86',
-        account: '', // 账号
         newPassword: '', // 密码
-        accountType: '', // 类型 email, phone
+        user: '', // 类型 email, phone
         captcha: '' // 验证码
       },
       loginRules: {
-        account: [{ required: true, validator: this.accountValid, trigger: 'blur' }]
+        user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
+        pw: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
+        code: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
       }
     }
   },
@@ -91,71 +72,28 @@ export default {
   },
   props: ['pageFlag'],
   methods: {
-    toggleEmail () {
-      this.isEmail = !this.isEmail
-      this.dataForm.account = ''
-      this.$refs.dataForm.clearValidate('account')
-    },
     // 返回登录模块
     backLogin () {
       this.$emit('toggleStatus', 'login')
-    },
-    // 手机/邮箱校验
-    accountValid (rule, value, callback) {
-      let typeValue = this.isEmail ? 'email' : 'phone'
-      if (!valid[typeValue].rule.test(value)) {
-        callback(this.$t(new Error(valid[typeValue].message)))
-      } else {
-        callback()
-      }
-    },
-    // 输入框校验
-    validPass () {
-      // 手机或邮箱正则
-      let { account, newPassword, captcha } = this.dataForm
-      if (this.isEmail) {
-        if (!valid.email.rule.test(account)) {
-          this.$message.error(this.$t('login.errorMg3'))
-          return false
-        }
-      } else {
-        if (!valid.phone.rule.test(account)) {
-          this.$message.error(this.$t('login.errorMg2'))
-          return false
-        }
-      }
-      if (!valid.password.rule.test(newPassword)) {
-        this.$message.error(this.$t(valid.password.message))
-        return false
-      }
-      if (!valid.code.rule.test(captcha)) {
-        this.$message.error(this.$t(valid.code.message))
-        return false
-      }
-      return true
     },
     showPw (type) {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
     getCode () {
-      this.$refs.dataForm.validateField('account', (valid) => {
+      this.$refs.dataForm.validateField('user', (valid) => {
         if (!valid) {
           this.sendCode({
-            contact: this.dataForm.area + '-' + this.dataForm.account,
-            accountType: this.accountType
+            user: this.dataForm.user
           }, this.codeBtn)
         }
       })
     },
     // 重置密码
     resetPassword () {
-      if (!this.validPass()) return false
-      this.dataForm.accountType = this.accountType
+      let isPass = true
+      this.$refs.dataForm.validate(valid => (isPass = valid))
+      if (!isPass) return
       let tempData = { ...this.dataForm }
-      if (this.accountType === 'phone') {
-        let { area, account } = this.dataForm
-        tempData.account = area + '-' + account
-      }
       this.$post({
         url: '/v0/user/reset',
         data: {
@@ -173,4 +111,7 @@ export default {
 </script>
 <style lang="less" scoped>
   @import './public';
+  .find-btn {
+    padding-top: 5px;
+  }
 </style>
