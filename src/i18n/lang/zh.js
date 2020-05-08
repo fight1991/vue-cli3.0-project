@@ -1,4 +1,12 @@
 export default {
+  join: {
+    joinUs: '加入我们',
+    endUser: '终端用户',
+    installer: '安装商',
+    agent: '代理商',
+    create: '创建',
+    join: '加入'
+  },
   common: {
     invertSn: '逆变器sn',
     alarmType: '报错类型',

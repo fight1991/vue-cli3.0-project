@@ -7,7 +7,7 @@
         <span class="company-name">FoxESS</span>
       </div>
       <div class="header-right flex-start">
-        <div class="join-us"><i class="iconfont icon-hand-right"></i>JOIN US</div>
+        <div class="join-us"><i class="iconfont icon-hand-right"></i>{{$t('join.joinUs')}}</div>
       </div>
     </div>
     <!-- 内容区域 -->
@@ -17,23 +17,23 @@
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item name="1">
             <template slot="title">
-              <span class="collape-item user"><i class="iconfont icon-end-user"></i> User</span>
+              <span class="collape-item user"><i class="iconfont icon-end-user"></i> {{$t('join.endUser')}}</span>
             </template>
-            <div class="op-click" @click="userClick"><i class="iconfont icon-new"></i> New</div>
+            <div class="op-click" @click="userClick"><i class="iconfont icon-new"></i> {{$t('join.create')}}</div>
           </el-collapse-item>
           <el-collapse-item name="2">
             <template slot="title">
-              <span class="collape-item installer"><i class="iconfont icon-installer"></i> Installer</span>
+              <span class="collape-item installer"><i class="iconfont icon-installer"></i> {{$t('join.installer')}}</span>
             </template>
-            <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> New</div>
-            <div class="op-click" @click="installerClick('join')"><i class="iconfont icon-join"></i> Join</div>
+            <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> {{$t('join.create')}}</div>
+            <div class="op-click" @click="installerClick('join')"><i class="iconfont icon-join"></i> {{$t('join.join')}}</div>
           </el-collapse-item>
           <el-collapse-item title="Agent" name="3">
             <template slot="title">
-              <span class="collape-item agent"><i class="iconfont icon-agent"></i> Agent</span>
+              <span class="collape-item agent"><i class="iconfont icon-agent"></i> {{$t('join.agent')}}</span>
             </template>
-            <div class="op-click" @click="agentClick('add')"><i class="iconfont icon-new"></i> New</div>
-            <div class="op-click" @click="agentClick('join')"><i class="iconfont icon-join"></i> Join</div>
+            <div class="op-click" @click="agentClick('add')"><i class="iconfont icon-new"></i> {{$t('join.create')}}</div>
+            <div class="op-click" @click="agentClick('join')"><i class="iconfont icon-join"></i> {{$t('join.join')}}</div>
           </el-collapse-item>
         </el-collapse>
         </el-card>

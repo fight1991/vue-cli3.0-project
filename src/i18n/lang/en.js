@@ -1,4 +1,12 @@
 export default {
+  join: {
+    joinUs: 'JOIN US',
+    endUser: 'User',
+    installer: 'Installer',
+    agent: 'Agent',
+    create: 'New',
+    join: 'Join'
+  },
   common: {
     invertSn: 'inverter sn',
     alarmType: 'Error type',
