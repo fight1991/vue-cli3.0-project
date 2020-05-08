@@ -99,7 +99,10 @@ export default {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
     verPwValid (rule, value, callback) {
-      if (value !== this.dataForm.password) {
+      console.log(value)
+      console.log(this.dataForm.password)
+      let { password, confirmWord } = this.dataForm
+      if (confirmWord !== password) {
         callback(new Error(this.$t('login.pwNot')))
       }
       callback()
@@ -110,11 +113,6 @@ export default {
       let isPass = true
       this.$refs.dataForm.validate(valid => (isPass = valid))
       if (!isPass) return
-      let { confirmWord, password } = this.dataForm
-      if (confirmWord !== password) {
-        this.$message.error('')
-        return
-      }
       let tempData = { ...this.dataForm }
       this.$post({
         url: '/v0/user/register',
