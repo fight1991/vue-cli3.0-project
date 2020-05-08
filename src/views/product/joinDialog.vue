@@ -1,26 +1,25 @@
 <template>
   <el-dialog
-    class="sys-dialog"
     :title="title"
     :modal-append-to-body="false"
     @opened="dialogOpen"
     @close="closeDialog"
     :visible.sync="dialogVisible"
-    width="700px">
-    <div class="content">
-      <create-form ref="form" :tag="$attrs.tag" :organList="organList"></create-form>
+    width="600px">
+    <div class="form-content">
+      <join-form ref="form" :tag="$attrs.tag" :organList="organList"></join-form>
     </div>
     <div class="foot-btn flex-center">
       <el-button size="mini" @click="cancelForm">cancel</el-button>
-      <el-button size="mini" type="primary" @click="register">register</el-button>
+      <el-button size="mini" type="primary" @click="joinSome">register</el-button>
     </div>
   </el-dialog>
 </template>
 <script>
-import createForm from './component/createForm'
+import joinForm from './component/joinForm'
 export default {
   components: {
-    createForm
+    joinForm
   },
   data () {
     return {
@@ -61,20 +60,30 @@ export default {
       this.$refs.form.clearValidate()
       this.$refs.form.cancel()
     },
-    // 创建 代理商
-    register () {
+    // 加入成为安装商,加入代理商, 创建终端用户
+    joinSome () {
       let flag = true
-      this.$refs.form.$refs.dataForm.validate(valid => {
-        flag = valid
-      })
+      this.$refs.form.$refs.dataForm.validate(valid => (flag = valid))
       if (!flag) return
-      let submitData = this.$refs.form.dataForm
-      let phone = submitData.details.area + '-' + submitData.details.phone
-      submitData.details.phone = phone
-      submitData.organType = this.$attrs.tag
+      let { organNameS, organNameM, moduleSN } = this.$refs.form.dataForm
+      let tempData = {
+        moduleSN: '',
+        organName: [],
+        organType: ''
+      }
+      tempData.organType = this.$attrs.tag
+      if (this.$attrs.tag === 'user') {
+        tempData.moduleSN = moduleSN
+      }
+      if (this.$attrs.tag === 'installer') {
+        tempData.organName = organNameM
+      }
+      if (this.$attrs.tag === 'agent') {
+        tempData.organName = organNameS
+      }
       this.$post({
-        url: '/v0/organs/register',
-        data: submitData,
+        url: '/v0/organs/join',
+        data: tempData,
         success: res => {
           let access = this.access[this.$attrs.tag]
           this.$store.commit('setAccess', access)
@@ -88,5 +97,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.form-content {
+  padding: 10px 10px 50px;
+}
 </style>

@@ -25,8 +25,8 @@
             <template slot="title">
               <span class="collape-item installer"><i class="iconfont icon-installer"></i> {{$t('join.installer')}}</span>
             </template>
-            <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> {{$t('join.create')}}</div>
-            <div class="op-click" @click="installerClick('join')"><i class="iconfont icon-join"></i> {{$t('join.join')}}</div>
+            <!-- <div class="op-click" @click="installerClick('add')"><i class="iconfont icon-new"></i> {{$t('join.create')}}</div> -->
+            <div class="op-click" @click="installerClick"><i class="iconfont icon-join"></i> {{$t('join.join')}}</div>
           </el-collapse-item>
           <el-collapse-item title="Agent" name="3">
             <template slot="title">
@@ -49,26 +49,35 @@
     <submit-dialog
       :visible.sync="dialogVisible"
       :title="dialogTitle"
-      :tag="tag"
-      :type="opType">
+      :organList="organList"
+      :tag="tag">
     </submit-dialog>
+    <join-dialog
+      :visible.sync="joinVisible"
+      :title="dialogTitle"
+      :organList="organList"
+      :tag="tag">
+    </join-dialog>
   </div>
 </template>
 
 <script>
 import submitDialog from './submitDialog'
+import joinDialog from './joinDialog'
 import { mapState } from 'vuex'
 export default {
   components: {
-    submitDialog
+    submitDialog,
+    joinDialog
   },
   data () {
     return {
       activeName: '1',
       dialogTitle: '',
       tag: '', // user agent installer
-      opType: 'add',
       dialogVisible: false,
+      joinVisible: false,
+      organList: [],
       logoImg: require('@/assets/logo.png')
     }
   },
@@ -88,28 +97,32 @@ export default {
       }
       this.dialogTitle = 'New User'
       this.tag = 'user'
-      this.opType = 'join'
-      this.dialogVisible = true
+      this.joinVisible = true
     },
-    installerClick (command) {
+    installerClick () {
       // if (this.access) {
       //   this.tips()
       //   return
       // }
-      this.dialogTitle = command === 'add' ? 'New Installer' : 'Existing Installer'
+      this.dialogTitle = 'New Installer'
       this.tag = 'installer'
-      this.opType = command
-      this.dialogVisible = true
+      this.joinVisible = true
+      this.getOrgansList('agent')
     },
     agentClick (command) {
       if (this.access) {
         this.tips()
         return
       }
-      this.dialogTitle = command === 'add' ? 'New Agent' : 'Existing Agent'
+      this.getOrgansList('agent')
+      if (command === 'add') {
+        this.dialogTitle = 'New Agent'
+        this.dialogVisible = true
+      } else {
+        this.dialogTitle = 'Existing Agent'
+        this.joinVisible = true
+      }
       this.tag = 'agent'
-      this.opType = command
-      this.dialogVisible = true
     },
     tips () {
       this.$notify({
@@ -118,6 +131,11 @@ export default {
         offset: 100,
         type: 'warning'
       })
+    },
+    // 获取组织列表
+    async getOrgansList (tag) {
+      let { result } = await this.$axios({ url: '/v0/organs/list', data: { organType: tag } })
+      this.organList = result || []
     }
   }
 }
