@@ -8,7 +8,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Country" prop="details.country">
+        <el-form-item label="Country" prop="details.country" label-width="80px">
           <el-input v-model="dataForm.details.country"></el-input>
         </el-form-item>
       </el-col>
@@ -18,17 +18,17 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Email" prop="details.email" label-width="110px">
+        <el-form-item label="Email" prop="details.email">
           <el-input v-model="dataForm.details.email"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Postcode" prop="details.postcode">
+        <el-form-item label="Postcode" prop="details.postcode" label-width="80px">
           <el-input v-model="dataForm.details.postcode"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
-        <el-form-item label="MP" prop="details.phone" label-width="110px">
+      <el-col :span="24">
+        <el-form-item label="Mobile Phone" prop="details.phone">
           <div class="flex">
             <el-select v-model="dataForm.details.area" style="width:30%">
               <el-option v-for="item in areaNum" :key="item.num" :label="item.num" :value="item.num"></el-option>

@@ -68,10 +68,9 @@ export default {
         flag = valid
       })
       if (!flag) return
-      let submitData = this.$refs.form.dataForm
+      let submitData = JSON.parse(JSON.stringify(this.$refs.form.dataForm))
       let phone = submitData.details.area + '-' + submitData.details.phone
       submitData.details.phone = phone
-      submitData.organType = this.$attrs.tag
       this.$post({
         url: '/v0/organs/register',
         data: submitData,
