@@ -1,55 +1,47 @@
 <template>
   <section class="sys-main bg-c">
     <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="120px">
-      <div class="title border-line">{{$t('plant.plantSet')}}</div>
-      <div class="col-container">
-        <el-row :gutter="40">
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.name')" prop="details.name">
-              <el-input v-model="dataForm.details.name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.type')" prop="details.type">
-              <el-select v-model="dataForm.details.type" style="width:100%" :placeholder="$t('common.select')">
-                <el-option :label="$t('common.light')" :value="1" key="1"></el-option>
-                <el-option :label="$t('common.energy')" :value="2" key="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.country')" prop="details.country">
-              <el-input v-model="dataForm.details.country"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.city')" prop="details.city">
-              <el-input v-model="dataForm.details.city"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.address')" prop="details.address">
-              <el-input v-model="dataForm.details.address"></el-input>
-            </el-form-item>
-          </el-col>
-          <!-- <el-col :lg="12" :md="24">
-            <el-form-item label="建站日期" prop="details.createdDate">
-              <el-date-picker
-                style="width:100%"
-                v-model="dataForm.details.createdDate"
-                type="date"
-                :placeholder="$t('chooseDate')">
-              </el-date-picker>
-            </el-form-item>
-          </el-col> -->
-          <el-col :lg="12" :md="24">
-            <el-form-item :label="$t('plant.price')" prop="details.price">
-              <el-select v-model="dataForm.details.price" style="width:100%" :placeholder="$t('common.select')">
-                <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
+      <div class="top" v-if="access > 1">
+        <div class="title border-line">{{$t('plant.plantSet')}}</div>
+          <div class="col-container">
+            <el-row :gutter="40">
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.name')" prop="details.name">
+                  <el-input v-model="dataForm.details.name"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.type')" prop="details.type">
+                  <el-select v-model="dataForm.details.type" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option :label="$t('common.light')" :value="1" key="1"></el-option>
+                    <el-option :label="$t('common.energy')" :value="2" key="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.country')" prop="details.country">
+                  <el-input v-model="dataForm.details.country"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.city')" prop="details.city">
+                  <el-input v-model="dataForm.details.city"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.address')" prop="details.address">
+                  <el-input v-model="dataForm.details.address"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('plant.price')" prop="details.price">
+                  <el-select v-model="dataForm.details.price" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
       </div>
       <div class="title equipment border-line">{{$t('plant.epBind')}} <i class="el-add-icon el-icon-circle-plus-outline" @click="deviceAdd"></i></div>
       <div class="col-container devices">
@@ -140,7 +132,9 @@ export default {
     }
   },
   created () {
-    this.getPriceList()
+    if (this.access > 1) {
+      this.getPriceList()
+    }
     let { opType } = this.$route.meta
     if (opType) {
       this.opType = opType || this.$route.query.opType
