@@ -16,12 +16,6 @@ export default {
           renderHeader: true
         },
         {
-          label: 'Battery SN',
-          prop: 'batteryMainSN',
-          checked: true,
-          renderHeader: true
-        },
-        {
           label: 'firmware.devicetype',
           prop: 'deviceType',
           checked: true
