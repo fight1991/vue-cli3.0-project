@@ -11,7 +11,7 @@
             <span>城市 : {{plantHeadInfo.city}}</span>
           </div>
           <div v-else>
-            <span>电站名称 </span>
+            <span>{{$t('common.plantsName')}} </span>
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
             <i class="arrow el-icon-caret-left" @click="switchPlant('reduce')"></i>
