@@ -24,6 +24,7 @@ export default {
         {
           label: 'firmware.devicetype',
           prop: 'deviceType',
+          width: 100,
           checked: true
         },
         {
@@ -54,6 +55,8 @@ export default {
         {
           label: 'plant.equipSta',
           prop: 'status',
+          width: 120,
+          renderHeader: true,
           checked: true,
           slotName: 'status',
           fixed: 'right'
