@@ -1,20 +1,21 @@
 <template>
-  <div class="pagination flex-between">
-    <span v-show="lang==='zh'">显示第&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp;条结果 , 共{{pagination.total}}条</span>
-    <span v-show="lang==='en'">Show&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp; , Total&nbsp;{{pagination.total}}</span>
-    <el-pagination
-      v-if='pagination.total != 0'
-      background
-      :small="small"
-      :pager-count= "5"
-      @current-change="currentChange"
-      @size-change="sizeChange"
-      :current-page.sync="pagination.currentPage"
-      :page-sizes="pageSizes"
-      :page-size="pagination.pageSize"
-      :total="pagination.total"
-      :layout="layout">
-    </el-pagination>
+  <div>
+    <div class="pagination flex-between" v-if='pagination.total != 0'>
+      <span v-show="lang==='zh'">显示第&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp;条结果 , 共{{pagination.total}}条</span>
+      <span v-show="lang==='en'">Show&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp; , Total&nbsp;{{pagination.total}}</span>
+      <el-pagination
+        background
+        :small="small"
+        :pager-count= "5"
+        @current-change="currentChange"
+        @size-change="sizeChange"
+        :current-page.sync="pagination.currentPage"
+        :page-sizes="pageSizes"
+        :page-size="pagination.pageSize"
+        :total="pagination.total"
+        :layout="layout">
+      </el-pagination>
+    </div>
   </div>
 </template>
 

@@ -292,7 +292,7 @@ export default {
         this.normalData.title.text = total
         this.normalData.series[0].data = [
           { value: warning, name: 'Alarm' },
-          { value: fault, name: 'Glitch' }
+          { value: fault, name: 'Fault' }
         ]
       }
       if (result && result.device) {

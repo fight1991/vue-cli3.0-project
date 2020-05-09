@@ -17,7 +17,8 @@ export default {
         {
           label: 'common.postcode',
           prop: 'owner',
-          checked: true
+          checked: true,
+          width: 100
         },
         {
           label: 'plant.country',
@@ -30,10 +31,16 @@ export default {
           checked: true
         },
         {
+          label: 'common.postcode',
+          prop: 'postCode',
+          checked: true,
+          width: 100
+        },
+        {
           label: 'plant.equipqut',
           prop: 'quantity',
           checked: true,
-          width: '80',
+          width: '100',
           renderHeader: true
         },
         {
@@ -42,6 +49,12 @@ export default {
           checked: true,
           width: '80',
           renderHeader: true
+        },
+        {
+          label: 'common.pvcapacity',
+          prop: 'systemCapacity',
+          checked: true,
+          width: '120'
         },
         { // 实时数据 发电功率
           label: 'common.gPower',
