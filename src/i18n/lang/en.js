@@ -89,7 +89,9 @@ export default {
     import: 'Import',
     download: 'Download the template',
     delete: 'Delete',
-    release: 'Release'
+    release: 'Release',
+    postcode: 'Postcode',
+    pvcapacity: 'PV capacity'
   },
   login: {
     send: 'Send',

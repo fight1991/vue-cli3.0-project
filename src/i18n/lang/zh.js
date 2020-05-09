@@ -90,7 +90,9 @@ export default {
     import: '导入',
     download: '模板下载',
     delete: '批量删除',
-    release: '批量发布'
+    release: '批量发布',
+    postcode: '邮编',
+    pvcapacity: '系统组件容量'
   },
   login: {
     send: '获取验证码',
