@@ -20,7 +20,7 @@ export default {
           orient: 'vertical',
           right: '0px',
           top: 'center',
-          data: ['Alarm', 'Glitch'],
+          data: ['Alarm', 'Fault'],
           formatter: function (name) {
             return name
           }
@@ -53,7 +53,7 @@ export default {
             },
             data: [
               { value: 0, name: 'Alarm' },
-              { value: 0, name: 'Glitch' }
+              { value: 0, name: 'Fault' }
             ]
           }
         ]
