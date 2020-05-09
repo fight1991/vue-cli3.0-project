@@ -4,7 +4,7 @@ export default {
   path: '/bus/upgrade',
   name: 'bus-upgrade',
   meta: {
-    title: '远程升级',
+    title: 'remoteUp',
     component: () => import(/* webpackChunkName: "bus-upgrade" */ '@/views/pages/demo')
   }
 }

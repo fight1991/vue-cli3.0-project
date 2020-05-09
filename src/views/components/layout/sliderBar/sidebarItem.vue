@@ -3,13 +3,13 @@
     <template v-if="!menuItem.children || menuItem.children.length === 0">
       <el-menu-item :index="menuItem.path">
         <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
-        <span slot="title">{{menuItem.meta.title || ''}}</span>
+        <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
       </el-menu-item>
     </template>
     <el-submenu v-else :index="menuItem.path" popper-class="sidebar-pop">
       <template slot="title" >
         <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
-        <span slot="title">{{menuItem.meta.title || ''}}</span>
+        <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
       </template>
 
       <template v-for="child in menuItem.children">
@@ -20,7 +20,7 @@
           :key="child.path"/>
         <el-menu-item v-else :key="child.path" :index="child.path">
           <i v-if="child.icon" :class="'iconfont '+ child.icon"></i>
-          <span slot="title">{{child.meta.title || ''}}</span>
+          <span slot="title">{{$t('navBar.'+child.meta.title) || ''}}</span>
         </el-menu-item>
       </template>
     </el-submenu>

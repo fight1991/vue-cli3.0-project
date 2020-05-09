@@ -4,7 +4,7 @@ export default {
   path: '/bus/factory',
   name: 'bus-factory',
   meta: {
-    title: '工厂管理',
+    title: 'factM',
     component: () => import(/* webpackChunkName: "bus-factory" */ '@/views/pages/demo')
   }
 }

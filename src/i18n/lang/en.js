@@ -1,4 +1,30 @@
 export default {
+  navBar: {
+    board: 'Dash Board',
+    plantM: 'Plant',
+    plantN: 'New',
+    plantS: 'Display',
+    plantE: 'Edit',
+    plantD: 'Details',
+    deviceM: 'Device',
+    invertM: 'Inverter',
+    batteryM: 'Battery',
+    remoteS: 'Remote settting',
+    moduleM: 'Module',
+    versionM: 'Version',
+    firmware: 'Firmware',
+    inverUp: 'Inverter promotion',
+    moduleUp: 'Module promotion',
+    data: 'Data Report',
+    alarmM: 'Alarm',
+    alarmTime: 'Realtime',
+    alarmHistory: 'History',
+    factM: 'Factory',
+    afterSale: 'After sales',
+    remoteUp: 'Promotion',
+    infoSys: 'Message',
+    relog: 'Relog'
+  },
   join: {
     joinUs: 'JOIN US',
     endUser: 'User',
@@ -8,6 +34,8 @@ export default {
     join: 'Join'
   },
   common: {
+    closeAll: 'Close all',
+    closeOther: 'Close others',
     weather: 'Weather',
     invertSn: 'inverter sn',
     alarmType: 'Error type',

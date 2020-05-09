@@ -4,7 +4,7 @@ export default {
   path: '/bus/afterSale',
   name: 'bus-afterSale',
   meta: {
-    title: '售后管理',
+    title: 'afterSale',
     component: () => import(/* webpackChunkName: "bus-afterSale" */ '@/views/pages/demo')
   }
 }

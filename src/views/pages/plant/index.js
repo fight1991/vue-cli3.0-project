@@ -5,7 +5,7 @@ export default {
   name: 'bus-plant',
   // hidden: true,
   meta: {
-    title: '电站管理'
+    title: 'plantM'
   },
   children: [
     {
@@ -13,7 +13,7 @@ export default {
       path: '/bus/plant/add',
       name: 'bus-plant-add',
       meta: {
-        title: '创建电站',
+        title: 'plantN',
         opType: 'add',
         component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
       }
@@ -24,7 +24,7 @@ export default {
       name: 'bus-plant-edit',
       hidden: true,
       meta: {
-        title: '编辑电站',
+        title: 'plantE',
         opType: 'edit',
         component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
       }
@@ -34,7 +34,7 @@ export default {
       path: '/bus/plant/view',
       name: 'bus-plant-view',
       meta: {
-        title: '电站显示',
+        title: 'plantS',
         component: () => import(/* webpackChunkName: "bus-plant-view" */ '@/views/pages/plant/showPlant')
       }
     },
@@ -44,7 +44,7 @@ export default {
       name: 'bus-plant-detail',
       hidden: true,
       meta: {
-        title: '电站详情',
+        title: 'plantD',
         page: 'detail',
         component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
       }

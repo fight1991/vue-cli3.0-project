@@ -4,7 +4,7 @@ export default {
   path: '/bus/device',
   name: 'bus-device',
   meta: {
-    title: '设备管理'
+    title: 'deviceM'
   },
   children: [
     {
@@ -12,7 +12,7 @@ export default {
       path: '/bus/device/inverter',
       name: 'bus-device-inverter',
       meta: {
-        title: '逆变器管理',
+        title: 'invertM',
         component: () => import(/* webpackChunkName: "bus-device-inverter" */ '@/views/pages/device/inverterList')
       }
     },
@@ -21,7 +21,7 @@ export default {
       path: '/bus/device/battery',
       name: '/bus-device-battery',
       meta: {
-        title: '电池管理',
+        title: 'batteryM',
         component: () => import(/* webpackChunkName: "bus-device-battery" */ '@/views/pages/demo')
       }
     },
@@ -30,7 +30,7 @@ export default {
       path: '/bus/device/module',
       name: '/bus-device-module',
       meta: {
-        title: '模块管理',
+        title: 'moduleM',
         component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/device/moduleList')
       }
     },
@@ -50,7 +50,7 @@ export default {
       name: 'bus-device-remoteSetting',
       hidden: true,
       meta: {
-        title: '远程设置',
+        title: 'remoteS',
         component: () => import(/* webpackChunkName: "bus-device-remoteSetting" */ '@/views/pages/device/remoteSetting')
       }
     }

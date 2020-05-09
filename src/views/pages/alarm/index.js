@@ -4,7 +4,7 @@ export default {
   path: '/bus/alarm',
   name: 'bus-alarm',
   meta: {
-    title: '告警管理'
+    title: 'alarmM'
   },
   children: [
     {
@@ -12,7 +12,7 @@ export default {
       path: '/bus/alarm/realTime',
       name: 'bus-alarm-realTime',
       meta: {
-        title: '实时警告',
+        title: 'alarmTime',
         component: () => import(/* webpackChunkName: "bus-alarm-realTime" */ '@/views/pages/demo')
       }
     },
@@ -21,7 +21,7 @@ export default {
       path: '/bus/alarm/history',
       name: 'bus-alarm-history',
       meta: {
-        title: '历史告警查询',
+        title: 'alarmHistory',
         component: () => import(/* webpackChunkName: "bus-alarm-history" */ '@/views/pages/demo')
       }
     }

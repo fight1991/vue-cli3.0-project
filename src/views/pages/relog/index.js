@@ -4,7 +4,7 @@ export default {
   path: '/bus/relog',
   name: 'bus-relog',
   meta: {
-    title: '日志系统',
+    title: 'relog',
     component: () => import(/* webpackChunkName: "bus-relog" */ '@/views/pages/demo')
   }
 }
