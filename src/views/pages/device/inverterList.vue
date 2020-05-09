@@ -44,9 +44,9 @@
                   v-model="times"
                   value-format="timestamp"
                   type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  :range-separator="$t('common.to')"
+                  :start-placeholder="$t('common.start')"
+                  :end-placeholder="$t('common.end')">
                 </el-date-picker>
               </el-form-item>
             </el-col>

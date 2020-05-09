@@ -6,16 +6,16 @@
         <div class="plant-name flex-center fl">
           <i class="iconfont icon-fadianzhan"></i>
           <div v-if="pageFlag==='detail'">
-            <span>电站名称 : {{plantHeadInfo.plantName}}</span>
-            <span>国家 : {{plantHeadInfo.country}}</span>
-            <span>城市 : {{plantHeadInfo.city}}</span>
+            <span>{{$t('plant.name')}} : {{plantHeadInfo.plantName}}</span>
+            <span>{{$t('plant.country')}} : {{plantHeadInfo.country}}</span>
+            <span>{{$t('plant.city')}} : {{plantHeadInfo.city}}</span>
           </div>
           <div v-else>
             <span>{{$t('common.plantsName')}} </span>
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
             <i class="arrow el-icon-caret-left" @click="switchPlant('reduce')"></i>
-            <el-select size="mini" v-model="plantId">
+            <el-select size="mini" v-model="plantId" :placeholder="$t('common.select')">
               <el-option v-for="item in plantList" :label="item.plantName" :value="item.stationID" :key="item.stationID"></el-option>
             </el-select>
             <i class="arrow el-icon-caret-right" @click="switchPlant('add')"></i>
@@ -26,15 +26,15 @@
       </div>
       <div :class="{'plant-item':true, 'height-0':!collapse}">
         <el-row :gutter="30">
-          <el-col :span="6" v-if="pageFlag==='board'">国家 : {{plants.country || ''}}</el-col>
-          <el-col :span="6" v-if="pageFlag==='board'">城市 : {{plants.city || ''}}</el-col>
-          <el-col :span="6">安装商 : {{installer.organName || ''}}</el-col>
-          <el-col :span="6">联系方式 : {{installer.phone || ''}}</el-col>
-          <el-col :span="6">用户 : {{users.name || ''}}</el-col>
-          <el-col :span="6">联系方式 : {{users.phone || ''}}</el-col>
-          <el-col :span="6">电站类型 : {{plants.plantType === 1 ? $t('common.light') : plants.plantType === 2 ? $t('common.energy'): ''}}</el-col>
-          <el-col :span="6">时间 : {{plants.createdDate || ''}}</el-col>
-          <el-col :span="6">地址 : {{plants.address || ''}}</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">{{$t('plant.country')}} : {{plants.country || ''}}</el-col>
+          <el-col :span="6" v-if="pageFlag==='board'">{{$t('plant.city')}} : {{plants.city || ''}}</el-col>
+          <el-col :span="6">{{$t('join.installer')}}  : {{installer.organName || ''}}</el-col>
+          <el-col :span="6">{{$t('common.contact')}}  : {{installer.phone || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.user')}} : {{users.name || ''}}</el-col>
+          <el-col :span="6">{{$t('common.contact')}}  : {{users.phone || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.type')}} : {{plants.plantType === 1 ? $t('common.light') : plants.plantType === 2 ? $t('common.energy'): ''}}</el-col>
+          <el-col :span="6">{{$t('plant.websiteTime')}} : {{plants.createdDate || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.websiteAddr')}} : {{plants.address || ''}}</el-col>
         </el-row>
       </div>
     </div>
