@@ -4,7 +4,7 @@ export default {
   path: '/bus/dataReport',
   name: 'bus-dataReport',
   meta: {
-    title: '数据报表',
+    title: 'data',
     component: () => import(/* webpackChunkName: "bus-dataReport" */ '@/views/pages/demo')
   }
 }

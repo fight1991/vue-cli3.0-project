@@ -4,7 +4,7 @@ export default {
   path: '/bus/dataView',
   name: 'bus-data-view',
   meta: {
-    title: '数据概览',
+    title: 'board',
     page: 'board',
     component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
   }

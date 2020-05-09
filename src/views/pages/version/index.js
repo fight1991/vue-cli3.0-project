@@ -4,7 +4,7 @@ export default {
   path: '/bus/version',
   name: 'bus-version',
   meta: {
-    title: '版本管理'
+    title: 'versionM'
   },
   children: [
     {
@@ -12,7 +12,7 @@ export default {
       path: '/bus/version/firmware',
       name: 'bus-version-firmware',
       meta: {
-        title: '固件版本',
+        title: 'firmware',
         component: () => import(/* webpackChunkName: "bus-version-firmware" */ '@/views/pages/version/firmware')
       }
     },
@@ -21,7 +21,7 @@ export default {
       path: '/bus/version/inverRemote',
       name: '/bus-version-inverRemote',
       meta: {
-        title: '逆变器远程升级',
+        title: 'inverUp',
         component: () => import(/* webpackChunkName: "bus-version-inverRemote" */ '@/views/pages/version/inverRemote')
       }
     },
@@ -30,7 +30,7 @@ export default {
       path: '/bus/version/moduRemote',
       name: '/bus-version-moduRemote',
       meta: {
-        title: '模块远程升级',
+        title: 'moduleUp',
         component: () => import(/* webpackChunkName: "bus-device-module" */ '@/views/pages/version/moduRemote')
       }
     }

@@ -1,4 +1,32 @@
 export default {
+  navBar: {
+    home: '首页',
+    board: '数据概览',
+    plantM: '电站管理',
+    plantN: '创建电站',
+    plantS: '电站显示',
+    plantE: '编辑电站',
+    plantD: '电站详情',
+    deviceM: '设备管理',
+    invertM: '逆变器管理',
+    invertD: '逆变器详情',
+    remoteS: '远程设置',
+    batteryM: '电池管理',
+    moduleM: '模块管理',
+    versionM: '版本管理',
+    firmware: '固件版本',
+    inverUp: '逆变器远程升级',
+    moduleUp: '模块远程升级',
+    data: '数据报表',
+    alarmM: '告警管理',
+    alarmTime: '实时告警',
+    alarmHistory: '历史告警查询',
+    factM: '工厂管理',
+    afterSale: '售后管理',
+    remoteUp: '远程升级',
+    infoSys: '消息系统',
+    relog: '日志系统'
+  },
   join: {
     joinUs: '加入我们',
     endUser: '终端用户',
@@ -8,6 +36,8 @@ export default {
     join: '加入'
   },
   common: {
+    closeAll: '关闭全部',
+    closeOther: '关闭其他',
     weather: '天气',
     invertSn: '逆变器sn',
     alarmType: '报错类型',

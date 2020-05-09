@@ -52,13 +52,12 @@ export default {
       userInfo: state => state.userInfo
     })
   },
-  created () {
-    console.log(this.userInfo)
-  },
+  created () {},
   methods: {
     toggleLang (lang) {
       this.$switchLang(lang)
       this.lang = lang === 'en' ? 'English' : '中文'
+      document.title = this.$t('navBar.' + this.$route.meta.title)
     },
     userOption (op) {
       if (op === 'logout') {

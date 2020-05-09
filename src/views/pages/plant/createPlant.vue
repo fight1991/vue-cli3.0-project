@@ -6,6 +6,13 @@
           <div class="col-container">
             <el-row :gutter="40">
               <el-col :lg="12" :md="24">
+                <el-form-item :label="'代理商'" prop="agent">
+                  <el-select v-model="dataForm.agent" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="(item, index) in agentList" :key="'index' + index" :value="item" :label="item"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.name')" prop="details.name">
                   <el-input v-model="dataForm.details.name"></el-input>
                 </el-form-item>
@@ -34,10 +41,20 @@
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
+                <el-form-item label="邮编" prop="details.postcode">
+                  <el-input v-model="dataForm.details.postcode"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.price')" prop="details.price">
                   <el-select v-model="dataForm.details.price" style="width:100%" :placeholder="$t('common.select')">
                     <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item label="系统组件容量" prop="details.systemCapacity">
+                  <el-input v-model="dataForm.details.systemCapacity"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -94,10 +111,13 @@ export default {
       snIsPass: true,
       errVisible: false,
       snResult: [], // sn校验的结果
+      agentList: [],
       dataForm: {
         devices: [
           { sn: '', key: '', isPass: 1 }
         ],
+        timezoneOffset: '',
+        agent: '',
         details: {
           name: '',
           type: '',
@@ -109,7 +129,9 @@ export default {
           quantity: '',
           stationID: '',
           owner: '',
-          createdDate: ''
+          createdDate: '',
+          postcode: '',
+          systemCapacity: ''
         }
       },
       templateDevice: {
@@ -119,12 +141,15 @@ export default {
       },
       editInfo: {},
       rules: {
+        agent: [{ required: true, message: 'agent is required', trigger: 'change' }],
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
         'details.type': [{ required: true, message: 'type is required', trigger: 'blur' }],
         'details.country': [{ required: true, message: 'country is required', trigger: 'blur' }],
         'details.city': [{ required: true, message: 'city is required', trigger: 'blur' }],
         'details.address': [{ required: true, message: 'address is required', trigger: 'blur' }],
-        'details.price': [{ required: true, message: 'price is required', trigger: 'change' }]
+        'details.price': [{ required: true, message: 'price is required', trigger: 'change' }],
+        'details.systemCapacity': [{ required: true, message: 'capacity is required', trigger: 'blur' }],
+        'details.postcode': [{ required: true, message: 'postcodes is required', trigger: 'blur' }]
       },
       powerList: [
         { id: '3', name: 'CNY' }
@@ -134,6 +159,7 @@ export default {
   created () {
     if (this.access > 1) {
       this.getPriceList()
+      this.getAgentList()
     }
     let { opType } = this.$route.meta
     if (opType) {
@@ -169,13 +195,22 @@ export default {
         devices: [
           { sn: '', key: '' }
         ],
+        timezoneOffset: '',
+        agent: '',
         details: {
           name: '',
           type: '',
           country: '',
           city: '',
           address: '',
-          price: ''
+          price: '',
+          capacity: '',
+          quantity: '',
+          stationID: '',
+          owner: '',
+          createdDate: '',
+          postcode: '',
+          systemCapacity: ''
         }
       }
     },
@@ -183,10 +218,21 @@ export default {
     deviceAdd () {
       this.dataForm.devices.push({ ...this.templateDevice })
     },
+    // 获取代理商列表
+    async getAgentList () {
+      let { result } = await this.$axios({
+        url: '/v0/user/agents'
+      })
+      if (result) {
+        this.agentList = result.agents || []
+        // 设置默认值
+        this.dataForm.agent = result.default || ''
+      }
+    },
     // 获取电价列表
     async getPriceList () {
       let { result } = await this.$axios({
-        url: '/plant/statistics/pricelist'
+        url: '/v0/plant/earnings/pricelist'
       })
       if (result && result.length > 0) {
         this.powerList = result
@@ -287,7 +333,6 @@ export default {
           stationID: this.plantId
         }
       })
-      console.log(result, other)
       this.snResult = result || other || []
       return true
     },

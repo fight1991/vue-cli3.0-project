@@ -5,7 +5,7 @@
         <el-tab-pane
           :closable="index > 0"
           :key="item.tabId"
-          :label="item.title"
+          :label="$t('navBar.'+item.title)"
           :name="item.tabId">
           <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
@@ -23,8 +23,8 @@
           <i class="iconfont icon-caidan"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="closeAllTab">关闭全部</el-dropdown-item>
-          <el-dropdown-item command="closeOtherTab">关闭其他</el-dropdown-item>
+          <el-dropdown-item command="closeAllTab">{{$t('common.closeAll')}}</el-dropdown-item>
+          <el-dropdown-item command="closeOtherTab">{{$t('common.closeOther')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
