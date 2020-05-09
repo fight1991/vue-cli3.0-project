@@ -68,7 +68,7 @@
     <!-- 多选折线图 -->
     <div class="container-bottom bg-c">
       <el-row class="select-line">
-        <el-select v-model="multiValue" multiple size="mini" placeholder="choose" @change="selectChange">
+        <el-select v-model="multiValue" multiple size="mini" :placeholder="$t('common.select')" @change="selectChange">
           <el-option
             v-for="item in options"
             :key="item"

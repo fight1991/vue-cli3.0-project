@@ -10,10 +10,10 @@
     <div class="content">
       <func-bar>
         <el-table size="mini" :height="400" :data="resultList" border>
-          <el-table-column label="Type" prop="alarmType"></el-table-column>
-          <el-table-column label="Code" prop="code"></el-table-column>
-          <el-table-column label="Content" prop="content"></el-table-column>
-          <el-table-column label="Reporting time" prop="time">
+          <el-table-column :label="$t('common.alarmType')" prop="alarmType"></el-table-column>
+          <el-table-column :label="$t('plant.errorCode')" prop="code"></el-table-column>
+          <el-table-column :label="$t('plant.errorName')" prop="content"></el-table-column>
+          <el-table-column :label="$t('plant.reportTime')" prop="time">
             <template slot-scope="scope">
               {{ scope.row.time | formatDate}}
             </template>

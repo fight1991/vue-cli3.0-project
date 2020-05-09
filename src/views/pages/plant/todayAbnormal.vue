@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    title="Abnormal list"
+    :title="$t('plant.todayAbSta')"
     :modal-append-to-body="false"
     @opened="search"
     @close="closeDialog"
@@ -11,7 +11,7 @@
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item v-if="type==='plant'">
-            <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
+            <el-input v-model="searchForm.deviceSN" :placeholder="$t('common.invertSn')"></el-input>
           </el-form-item>
           <el-form-item>
             <el-select v-model="searchForm.alarmType" :placeholder="$t('common.alarmType')">
@@ -26,11 +26,11 @@
       </search-bar>
       <func-bar>
         <el-table size="mini" :height="400" :data="resultList" border>
-          <el-table-column label="Inverter SN" prop="deviceSN" v-if="type==='plant'"></el-table-column>
-          <el-table-column label="Type" prop="alarmType"></el-table-column>
-          <el-table-column label="Code" prop="code"></el-table-column>
-          <el-table-column label="Content" prop="content"></el-table-column>
-          <el-table-column label="Reporting time" prop="time">
+          <el-table-column :label="$t('common.invertSn')" prop="deviceSN" v-if="type==='plant'"></el-table-column>
+          <el-table-column :label="$t('common.alarmType')" prop="alarmType"></el-table-column>
+          <el-table-column :label="$t('plant.errorCode')" prop="code"></el-table-column>
+          <el-table-column :label="$t('plant.errorName')" prop="content"></el-table-column>
+          <el-table-column :label="$t('plant.reportTime')" prop="time">
             <template slot-scope="scope">
               {{ scope.row.time | formatDate}}
             </template>
