@@ -1,8 +1,8 @@
 const path = require('path')
 const SpritesmithPlugin = require('webpack-spritesmith') // 雪碧图插件
 const templateFunc = require(path.join(__dirname, './spriteTemplate')) // 雪碧图文件模板
-
-module.exports = {
+const CompressionPlugin = require('compression-webpack-plugin') // Gzip压缩
+const webpackConfig = {
   publicPath: '/', // 应用部署路径
   outputDir: 'dist', // 生产环境构建目录
   assetsDir: 'assets', // 放置生成的静态资源
@@ -104,3 +104,12 @@ module.exports = {
     }
   }
 }
+if (process.env.NODE_ENV === 'production') {
+  let tempCompress = new CompressionPlugin({
+    test: /\.js$|\.html$|.\css/, // 匹配文件名
+    threshold: 10240, // 对超过10k的数据压缩
+    deleteOriginalAssets: false // 不删除源文件
+  })
+  webpackConfig.configureWebpack.plugins.push(tempCompress)
+}
+module.exports = webpackConfig
