@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    title="Abnormal list"
+    :title="$t('plant.todayAbSta')"
     :modal-append-to-body="false"
     @opened="search"
     @close="closeDialog"
@@ -28,9 +28,9 @@
         <el-table size="mini" :height="400" :data="resultList" border>
           <el-table-column :label="$t('common.invertSn')" prop="deviceSN" v-if="type==='plant'"></el-table-column>
           <el-table-column :label="$t('common.alarmType')" prop="alarmType"></el-table-column>
-          <el-table-column :label="$t('common.errorCode')" prop="code"></el-table-column>
-          <el-table-column :label="$t('common.errorName')" prop="content"></el-table-column>
-          <el-table-column :label="$t('common.reportTime')" prop="time">
+          <el-table-column :label="$t('plant.errorCode')" prop="code"></el-table-column>
+          <el-table-column :label="$t('plant.errorName')" prop="content"></el-table-column>
+          <el-table-column :label="$t('plant.reportTime')" prop="time">
             <template slot-scope="scope">
               {{ scope.row.time | formatDate}}
             </template>
