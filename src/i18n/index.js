@@ -1,6 +1,9 @@
 import store from '@/store'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+// import ELEMENT from 'element-ui'
+// ...ELEMENT.lang.en
+// ...ELEMENT.lang.zhCN
 
 import en from './lang/en'
 import zh from './lang/zh'
