@@ -6,11 +6,11 @@
         <div class="plant-name flex-center fl">
           <i class="iconfont icon-nibianqi"></i>
           <div>
-            <span>逆变器sn : {{headInfo.deviceSN || ''}}</span>
-            <span>电站名 : {{headInfo.plantName || ''}}</span>
-            <span>模块sn : {{headInfo.moduleSN || ''}}</span>
-            <span>逆变器型号 : {{headInfo.deviceType || ''}}</span>
-            <span>设备状态 : {{headInfo.status || ''}}</span>
+            <span>{{$t('common.invertSn')}} : {{headInfo.deviceSN || ''}}</span>
+            <span>{{$t('plant.name')}} : {{headInfo.plantName || ''}}</span>
+            <span>{{$t('common.datacolSN')}}  : {{headInfo.moduleSN || ''}}</span>
+            <span>{{$t('common.InvType')}}  : {{headInfo.deviceType || ''}}</span>
+            <span>{{$t('plant.equipSta')}} : {{headInfo.status || ''}}</span>
           </div>
         </div>
         <i @click="collapse=!collapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -18,13 +18,13 @@
       </div>
       <div :class="{'plant-item':true, 'height-0':!collapse}">
         <el-row :gutter="30">
-          <el-col :span="6">国家 : {{headInfo.country || ''}}</el-col>
-          <el-col :span="6">地区 : {{headInfo.city || ''}}</el-col>
-          <el-col :span="6">安装时间 : {{headInfo.feedinDate | formatDate('yyyy-MM-dd')}}</el-col>
-          <el-col :span="6">逆变器硬件版本 : {{headInfo.hardwareVersion || ''}}</el-col>
-          <el-col :span="6">逆变器master : {{headInfo.softVersion && headInfo.softVersion.master || ''}}</el-col>
-          <el-col :span="6">逆变器slaver : {{headInfo.softVersion && headInfo.softVersion.slaver || ''}}</el-col>
-          <el-col :span="6">逆变器manager : {{headInfo.softVersion && headInfo.softVersion.manager || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.country')}}  : {{headInfo.country || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.city')}} : {{headInfo.city || ''}}</el-col>
+          <el-col :span="6">{{$t('inverter.InsTime')}}  : {{headInfo.feedinDate | formatDate('yyyy-MM-dd')}}</el-col>
+          <el-col :span="6">{{$t('inverter.InvHV')}}  : {{headInfo.hardwareVersion || ''}}</el-col>
+          <el-col :span="6">{{$t('inverter.InvMas')}} : {{headInfo.softVersion && headInfo.softVersion.master || ''}}</el-col>
+          <el-col :span="6">{{$t('inverter.InvSla')}} : {{headInfo.softVersion && headInfo.softVersion.slaver || ''}}</el-col>
+          <el-col :span="6">{{$t('inverter.InvMan')}} : {{headInfo.softVersion && headInfo.softVersion.manager || ''}}</el-col>
         </el-row>
       </div>
     </div>
@@ -46,7 +46,7 @@
           <el-card shadow="never">
             <div class="title border-line" slot="header">
               <!-- Flow graph -->
-              流向图
+              {{$t('inverter.powerFD')}}
               <i class="fr el-icon-more" @click="flowDialog=true"></i>
             </div>
             <div class="flow-map flex-center" style="height:250px">

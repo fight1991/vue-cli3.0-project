@@ -6,7 +6,7 @@
           <el-row :gutter="15">
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="版本号"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('firmware.version')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
@@ -31,17 +31,17 @@
               </el-form-item>
             </el-col>
             <el-col :span="4" align="left">
-              <el-button size="mini" @click="reset">重置</el-button>
-              <el-button type="primary" size="mini" @click="search">查询</el-button>
+              <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+              <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
           </el-row>
         </el-form>
       </search-bar>
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="iconfont icon-import">导入</el-button>
-          <el-button size="mini" icon="el-icon-delete">批量发布</el-button>
-          <el-button size="mini" icon="el-icon-delete">批量删除</el-button>
+          <el-button size="mini" icon="iconfont icon-import">{{$t('common.import')}}</el-button>
+          <el-button size="mini" icon="el-icon-delete">{{$t('common.release')}}</el-button>
+          <el-button size="mini" icon="el-icon-delete">{{$t('common.delete')}}</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :height="530" :tableList="resultList">
           <template v-slot:time="{row}">
@@ -70,27 +70,27 @@ export default {
       },
       tableHead: [
         {
-          label: '设备类型',
+          label: 'firmware.devicetype',
           prop: 'type',
           checked: true
         },
         {
-          label: '版本号',
+          label: 'firmware.version',
           prop: 'type',
           checked: true
         },
         {
-          label: '版本类型',
+          label: 'firmware.type',
           prop: 'type',
           checked: true
         },
         {
-          label: '审核状态',
+          label: 'firmware.status',
           prop: 'type',
           checked: true
         },
         {
-          label: '上传时间',
+          label: 'firmware.uptime',
           prop: 'time',
           checked: true,
           slotName: 'time'

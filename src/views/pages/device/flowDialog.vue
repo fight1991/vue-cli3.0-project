@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="sys-dialog"
-    title="实时数据"
+    :title="$t('inverter.liveData')"
     :modal-append-to-body="false"
     @opened="search"
     @close="closeDialog"

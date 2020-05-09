@@ -64,6 +64,7 @@ export default {
     abnormal: '不正常',
     alarm: '告警',
     glitch: '故障',
+    online: '在线',
     offline: '离线',
     elec: '发电',
     income: '收益',
@@ -80,9 +81,16 @@ export default {
     more: '更多',
     onSta: '在线状态',
     plantsName: '电站名称',
-    InvSN: '逆变器sn',
     InvType: '逆变器型号',
-    datacolSN: '模块sn'
+    datacolSN: '模块sn',
+    contact: '联系方式',
+    to: '至',
+    start: '开始日期',
+    end: '结束日期',
+    import: '导入',
+    download: '模板下载',
+    delete: '批量删除',
+    release: '批量发布'
   },
   login: {
     send: '获取验证码',
@@ -140,7 +148,6 @@ export default {
     goOn: '继续绑定',
     todayAb: '今日异常',
     todayAbSta: `今日异常统计`,
-    deviceS: '设备状态',
     plantS: '电站状态',
     deviceL: '设备列表',
     plantT: '电站总数',
@@ -187,9 +194,30 @@ export default {
     InsTime: '安装时间',
     InvHV: '逆变器硬件版本',
     InvMas: '逆变器master',
-    InvSla: '逆变器slaver',
+    InvSla: '逆变器slave',
     InvMan: '逆变器manager',
-    romSet: '远程设置'
+    romSet: '远程设置',
+    powerFD: '流向图',
+    liveData: '实时数据'
+  },
+  firmware: {
+    devicetype: '设备类型',
+    version: '版本号',
+    type: '版本类型',
+    status: '审核状态',
+    uptime: '上传时间'
+  },
+  invupgrade: {
+    invmodel: '逆变器类型',
+    invversion: '逆变器软件版本',
+    dataversion: '模块软件版本',
+    master: '主DSP版本',
+    slave: '副DSP版本',
+    arm: 'HMIV版本',
+    invstatus: '逆变器状态',
+    datastatus: '模块状态',
+    upgrade: '批量升级',
+    upstatus: '查看升级状态'
   },
   monitor: '监控系统',
   chooseDate: '选择日期'

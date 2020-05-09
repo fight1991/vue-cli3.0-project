@@ -25,8 +25,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">
-              <el-button size="mini" @click="reset">reset</el-button>
-              <el-button type="primary" size="mini" @click="search">search</el-button>
+              <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+              <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -37,12 +37,12 @@
           <el-dropdown @command="commandDrop" trigger="click">
             <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">Import</el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="d">模板下载</el-dropdown-item>
+              <el-dropdown-item command="d">{{$t('dataloggor.download')}}</el-dropdown-item>
               <el-upload
                 class="dropDown-upload"
                 :before-upload="beforeUpload"
                 action="http://127.0.0.1">
-                <el-dropdown-item command="e" divided>导入</el-dropdown-item>
+                <el-dropdown-item command="e" divided>{{$t('dataloggor.import')}}</el-dropdown-item>
               </el-upload>
             </el-dropdown-menu>
           </el-dropdown>

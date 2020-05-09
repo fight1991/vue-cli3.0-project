@@ -6,61 +6,61 @@
           <el-row :gutter="15">
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="逆变器sn"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('common.invertSn')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="模块sn"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="电站"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('common.plant')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="设备状态">
+                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('plant.equipSta')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="逆变器类型">
+                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('invupgrade.invmodel')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="模块类型">
+                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('plant.datacolType')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="逆变器软件版本"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('invupgrade.invversion')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" placeholder="模块软件版本"></el-input>
+                <el-input v-model="searchForm.version" :placeholder="$t('invupgrade.dataversion')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4" align="left">
-              <el-button size="mini" @click="reset">重置</el-button>
-              <el-button type="primary" size="mini" @click="search">查询</el-button>
+              <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+              <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
           </el-row>
         </el-form>
       </search-bar>
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-delete">批量升级</el-button>
-          <el-button size="mini" icon="el-icon-delete">查看升级状态</el-button>
+          <el-button size="mini" icon="el-icon-delete">{{$t('invupgrade.upgrade')}}</el-button>
+          <el-button size="mini" icon="el-icon-delete">{{$t('invupgrade.upstatus')}}</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :height="530" :tableList="resultList">
           <template v-slot:time="{row}">
@@ -68,8 +68,8 @@
           </template>
         </common-table>
         <div class="states-row">
-          <span><i class="el-icon-success"></i> 在线</span>
-          <span><i class="el-icon-remove"></i> 离线</span>
+          <span><i class="el-icon-success"></i> {{$t('common.online')}}</span>
+          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getList"></page-box>
       </func-bar>
@@ -93,52 +93,57 @@ export default {
       },
       tableHead: [
         {
-          label: '电站',
+          label: 'common.plant',
           prop: 'type',
           checked: true
         },
         {
-          label: '逆变器sn',
+          label: 'common.invertSn',
           prop: 'type',
           checked: true
         },
         {
-          label: '逆变器类型',
+          label: 'invupgrade.invmodel',
           prop: 'type',
           checked: true
         },
         {
-          label: '主DSP版本',
+          label: 'invupgrade.master',
           prop: 'type',
           checked: true
         },
         {
-          label: '副DSP版本',
+          label: 'invupgrade.slave',
           prop: 'time',
           checked: true
         },
         {
-          label: 'HMIV版本',
+          label: 'invupgrade.arm',
           prop: 'time',
           checked: true
         },
         {
-          label: '模块sn',
+          label: 'common.datacolSN',
           prop: 'time',
           checked: true
         },
         {
-          label: '模块类型',
+          label: 'plant.datacolType',
           prop: 'time',
           checked: true
         },
         {
-          label: '模块软件版本',
+          label: 'invupgrade.invversion',
           prop: 'time',
           checked: true
         },
         {
-          label: '逆变器状态',
+          label: 'invupgrade.dataversion',
+          prop: 'time',
+          checked: true
+        },
+        {
+          label: 'invupgrade.invstatus',
           prop: 'time',
           checked: true,
           slotName: 'status'
