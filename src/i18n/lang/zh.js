@@ -92,7 +92,10 @@ export default {
     delete: '批量删除',
     release: '批量发布',
     postcode: '邮编',
-    pvcapacity: '系统组件容量'
+    pvcapacity: '系统组件容量',
+    operation: '操作',
+    unbind: '批量解绑',
+    signal: '信号'
   },
   login: {
     send: '获取验证码',
@@ -190,7 +193,10 @@ export default {
     userEmail: '用户邮箱',
     websiteAddr: '建站地址',
     websiteTime: '建站时间',
-    showMoreUser: '查看更多用户'
+    showMoreUser: '查看更多用户',
+    gridtime: '并网时间',
+    equipqut: '设备数量',
+    pvcap: '装机容量'
   },
   inverter: {
     InsTime: '安装时间',

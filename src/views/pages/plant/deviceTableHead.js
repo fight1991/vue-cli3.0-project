@@ -4,13 +4,13 @@ export default {
     return {
       deviceTableHead: [
         {
-          label: 'Inverter SN',
+          label: 'common.invertSn',
           prop: 'deviceSN',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'DataCollector SN',
+          label: 'common.datacolSN',
           prop: 'moduleSN',
           checked: true,
           renderHeader: true
@@ -22,37 +22,37 @@ export default {
           renderHeader: true
         },
         {
-          label: 'Type',
+          label: 'firmware.devicetype',
           prop: 'deviceType',
           checked: true
         },
         {
-          label: 'Gernerating power',
+          label: 'common.gPower',
           prop: 'power',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Gerneration today',
+          label: 'plant.genTod',
           prop: 'generationToday',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Gerneration Total',
+          label: 'plant.genTot',
           prop: 'generationTotal',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Grid-connected time',
+          label: 'plant.gridtime',
           prop: 'feedinDate',
           checked: true,
           renderHeader: true,
           slotName: 'feedinDate'
         },
         {
-          label: 'Status',
+          label: 'plant.equipSta',
           prop: 'status',
           checked: true,
           slotName: 'status',

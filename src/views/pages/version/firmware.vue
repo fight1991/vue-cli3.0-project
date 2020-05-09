@@ -11,21 +11,21 @@
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.type" placeholder="choose">
+                <el-select style="width:100%" v-model="searchForm.type" :placeholder="$t('common.select')">
                   <el-option v-for="item in typeList" :label="item.label" :value="item.status" :key="item.status"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.moduleType" placeholder="type">
+                <el-select style="width:100%" v-model="searchForm.moduleType" :placeholder="$t('firmware.type')">
                   <el-option v-for="(item,index) in versionList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="type">
+                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('firmware.status')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>

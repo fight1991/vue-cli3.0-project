@@ -69,7 +69,7 @@
         </el-col>
         <el-col :span="12">
           <el-card shadow="never">
-            <div class="title border-line" slot="header">{{$t('plant.deviceS')}}</div>
+            <div class="title border-line" slot="header">{{$t('plant.equipSta')}}</div>
             <div class="progress-container">
               <div class="progress-line">
                 <div class="status-text f12 flex-between"><span>{{$t('common.total')}}</span><span style="color:#00BFFF">{{device.total}}</span></div>

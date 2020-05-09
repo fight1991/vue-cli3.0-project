@@ -71,7 +71,7 @@ export default {
     gene: 'Generation',
     all: 'All',
     status: 'Status',
-    gPower: 'generating power',
+    gPower: 'Generating power',
     gCon: 'grid-connect',
     pDiss: 'power dissipation',
     currentP: 'Current power',
@@ -91,7 +91,10 @@ export default {
     delete: 'Delete',
     release: 'Release',
     postcode: 'Postcode',
-    pvcapacity: 'PV capacity'
+    pvcapacity: 'PV capacity',
+    operation: 'Operation',
+    unbind: 'Unbind',
+    signal: 'Signal'
   },
   login: {
     send: 'Send',
@@ -189,7 +192,10 @@ export default {
     userEmail: 'User email',
     websiteAddr: 'Plant address',
     websiteTime: 'Establish time',
-    showMoreUser: 'Show more users'
+    showMoreUser: 'Show more users',
+    gridtime: 'Grid-connected time',
+    equipqut: 'Equipment quantity',
+    pvcap: 'PV capacity'
   },
   inverter: {
     InsTime: 'Grid-connection time',

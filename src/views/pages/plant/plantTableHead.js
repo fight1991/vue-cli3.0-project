@@ -4,61 +4,61 @@ export default {
     return {
       plantTableHead: [
         { // 实时数据 状态
-          label: 'status',
+          label: 'common.status',
           prop: 'status',
           checked: true,
           slotName: 'status'
         },
         {
-          label: 'name',
+          label: 'common.plant',
           prop: 'name',
           checked: true
         },
         {
-          label: 'account',
+          label: 'common.postcode',
           prop: 'owner',
           checked: true
         },
         {
-          label: 'country',
+          label: 'plant.country',
           prop: 'country',
           checked: true
         },
         {
-          label: 'city',
+          label: 'plant.city',
           prop: 'city',
           checked: true
         },
         {
-          label: 'equipment quantity',
+          label: 'plant.equipqut',
           prop: 'quantity',
           checked: true,
           width: '80',
           renderHeader: true
         },
         {
-          label: 'installed capacity',
+          label: 'plant.pvcap',
           prop: 'capacity',
           checked: true,
           width: '80',
           renderHeader: true
         },
         { // 实时数据 发电功率
-          label: 'generating power',
+          label: 'common.gPower',
           prop: 'power',
           checked: true,
           width: '80',
           renderHeader: true
         },
         { // 实时数据 今日发电量
-          label: 'generation today',
+          label: 'plant.genTod',
           prop: 'generationToday',
           checked: true,
           width: '80',
           renderHeader: true
         },
         {
-          label: 'station time',
+          label: 'plant.stationTime',
           prop: 'createdDate',
           checked: true,
           width: '130',
@@ -66,7 +66,7 @@ export default {
           slotName: 'createdDate'
         },
         {
-          label: 'operation',
+          label: 'common.operation',
           prop: '',
           width: '100',
           checked: true,

@@ -4,65 +4,65 @@ export default {
     return {
       inverterTableHead: [
         {
-          label: 'Inverter SN',
+          label: 'common.invertSn',
           prop: 'deviceSN',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'DataCollector SN',
+          label: 'common.datacolSN',
           prop: 'moduleSN',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Plant',
+          label: 'common.plant',
           prop: 'plantName',
           checked: true
         },
         {
-          label: 'Type',
+          label: 'invupgrade.invmodel',
           prop: 'deviceType',
           checked: true
         },
         {
-          label: 'Gernerating power',
+          label: 'common.gPower',
           prop: 'power',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Gerneration today',
+          label: 'plant.genTod',
           prop: 'generationToday',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Gerneration Total',
+          label: 'plant.genTot',
           prop: 'generationTotal',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Grid-connected time',
+          label: 'plant.gridtime',
           prop: 'feedinDate',
           checked: true,
           renderHeader: true,
           slotName: 'feedinDate'
         },
         {
-          label: 'Country',
+          label: 'plant.country',
           prop: 'age',
           checked: true
         },
         {
-          label: 'Status',
+          label: 'common.status',
           prop: 'status',
           checked: true,
           slotName: 'status'
         },
         {
-          label: 'Operation',
+          label: 'common.operation',
           prop: '',
           checked: true,
           width: '100',

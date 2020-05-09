@@ -7,34 +7,34 @@
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" placeholder="choose">
-                  <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
+                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('common.select')">
+                  <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.plantName" placeholder="plant name"></el-input>
+                <el-input v-model="searchForm.plantName" :placeholder="$t('common.plant')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
+                <el-input v-model="searchForm.deviceSN" :placeholder="$t('common.invertSn')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.moduleSN" placeholder="module sn"></el-input>
+                <el-input v-model="searchForm.moduleSN" :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.country" placeholder="country"></el-input>
+                <el-input v-model="searchForm.country" :placeholder="$t('plant.country')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.deviceType" placeholder="type"></el-input>
+                <el-input v-model="searchForm.deviceType" :placeholder="$t('invupgrade.invmodel')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -51,8 +51,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">
-              <el-button size="mini" @click="reset">reset</el-button>
-              <el-button type="primary" size="mini" @click="search">search</el-button>
+              <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+              <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -60,7 +60,7 @@
       <!-- 列表查询区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">Delete</el-button>
+          <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">{{$t('common.delete')}}</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
@@ -80,10 +80,10 @@
           </template>
         </common-table>
         <div class="states-row">
-          <span><i class="el-icon-success"></i> Normal: {{statusAll.normal}}</span>
-          <span><i class="el-icon-warning"></i> Alarm: {{statusAll.warning}}</span>
-          <span><i class="el-icon-error"></i> Glitch: {{statusAll.fault}}</span>
-          <span><i class="el-icon-remove"></i> Offline: {{statusAll.offline}}</span>
+          <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
+          <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}: {{statusAll.warning}}</span>
+          <span><i class="el-icon-error"></i> {{$t('common.glitch')}}: {{statusAll.fault}}</span>
+          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
       </func-bar>

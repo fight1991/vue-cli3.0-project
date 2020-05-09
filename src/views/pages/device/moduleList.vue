@@ -7,19 +7,19 @@
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.moduleSN" placeholder="module sn"></el-input>
+                <el-input v-model="searchForm.moduleSN" :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.communication" placeholder="choose">
-                  <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
+                <el-select style="width:100%" v-model="searchForm.communication" :placeholder="$t('common.select')">
+                  <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.moduleType" placeholder="type">
+                <el-select style="width:100%" v-model="searchForm.moduleType" :placeholder="$t('plant.datacolType')">
                   <el-option v-for="(item,index) in typeList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
@@ -35,7 +35,7 @@
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
           <el-dropdown @command="commandDrop" trigger="click">
-            <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">Import</el-button>
+            <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">{{$t('common.import')}}</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="d">{{$t('dataloggor.download')}}</el-dropdown-item>
               <el-upload
@@ -46,7 +46,7 @@
               </el-upload>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">Unbind</el-button>
+          <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">{{$t('common.unbind')}}</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :height="530" :tableList="resultList">
           <template v-slot:status="{row}">
@@ -55,8 +55,8 @@
           </template>
         </common-table>
         <div class="states-row">
-          <span><i class="el-icon-success"></i> Normal</span>
-          <span><i class="el-icon-remove"></i> Offline</span>
+          <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
+          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getModuleList"></page-box>
       </func-bar>
@@ -91,33 +91,33 @@ export default {
       typeList: [],
       tableHead: [
         {
-          label: 'DataCollector SN',
+          label: 'common.datacolSN',
           prop: 'moduleSN',
           checked: true,
           renderHeader: true
         },
         {
-          label: 'Type',
+          label: 'plant.datacolType',
           prop: 'moduleType',
           checked: true
         },
         {
-          label: 'Plant',
+          label: 'common.plant',
           prop: 'plantName',
           checked: true
         },
         {
-          label: 'Software version',
+          label: 'invupgrade.dataversion',
           prop: 'version',
           checked: true
         },
         {
-          label: 'Signal',
+          label: 'common.signal',
           prop: 'signal',
           checked: true
         },
         {
-          label: 'Status',
+          label: 'common.status',
           prop: 'communication',
           checked: true,
           slotName: 'status'
