@@ -1,6 +1,7 @@
 <template>
   <div class="pagination flex-between">
-    <span>显示第{{pagination.currentPage}}-{{pagination.pageSize}}条结果,共{{pagination.total}}条(每页显示{{pagination.pageSize}}条)</span>
+    <span v-show="lang==='zh'">显示第&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp;条结果 , 共{{pagination.total}}条</span>
+    <span v-show="lang==='en'">Show&nbsp;{{pagination.currentPage}}-{{pagination.pageSize}}&nbsp; , Total&nbsp;{{pagination.total}}</span>
     <el-pagination
       v-if='pagination.total != 0'
       background
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'pagination',
   props: {
@@ -26,7 +28,7 @@ export default {
     },
     layout: {
       default: () => { // total, sizes, prev, pager, next, jumper
-        return 'prev, pager, next'
+        return 'sizes, prev, pager, next, jumper'
       }
     },
     pagination: {
@@ -38,14 +40,17 @@ export default {
     pageSizes: {
       type: Array,
       default: function () {
-        return [10, 20, 50, 100, 200]
+        return [10, 20, 50]
       }
     }
   },
   data () {
-    return {
-
-    }
+    return {}
+  },
+  computed: {
+    ...mapState({
+      lang: state => state.lang
+    })
   },
   mounted () {
     // this.windowsWidth()

@@ -39,7 +39,7 @@
       </el-card>
     </div>
     <div class="right bg-c">
-      <div class="weather-content">天气</div>
+      <div class="weather-content">{{$t('common.weather')}}</div>
       <div :id="mapId" class="map-content" style="width:100%;"></div>
     </div>
   </div>
