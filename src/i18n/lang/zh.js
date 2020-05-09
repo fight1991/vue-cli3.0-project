@@ -1,5 +1,6 @@
 export default {
   navBar: {
+    home: '首页',
     board: '数据概览',
     plantM: '电站管理',
     plantN: '创建电站',

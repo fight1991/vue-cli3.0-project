@@ -1,5 +1,6 @@
 export default {
   navBar: {
+    home: 'Home',
     board: 'Dash Board',
     plantM: 'Plant',
     plantN: 'New',
