@@ -8,6 +8,7 @@ export default {
     join: '加入'
   },
   common: {
+    weather: '天气',
     invertSn: '逆变器sn',
     alarmType: '报错类型',
     common: '一般',
@@ -30,7 +31,7 @@ export default {
     reset: '重置',
     search: '查询',
     normal: '正常',
-    abnormal: '非正常',
+    abnormal: '不正常',
     alarm: '告警',
     glitch: '故障',
     offline: '离线',
@@ -48,7 +49,7 @@ export default {
     plant: '电站',
     more: '更多',
     onSta: '在线状态',
-    plantsName: '电站名',
+    plantsName: '电站名称',
     InvSN: '逆变器sn',
     InvType: '逆变器型号',
     datacolSN: '模块sn'
@@ -125,6 +126,7 @@ export default {
     genTot: '累计发电量',
     earnTot: '累计收益',
     plantsList: '电站列表',
+    statusGer: '状态统计',
     equipQua: '设备数量',
     InsCap: '装机容量',
     stationTime: '建站时间',

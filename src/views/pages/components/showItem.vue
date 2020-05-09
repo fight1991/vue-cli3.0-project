@@ -5,7 +5,7 @@
         <div class="items flex-around">
           <i class="iconfont icon-sum"></i>
           <div class="items-right">
-            <div>Total</div>
+            <div>{{$t('common.total')}}</div>
             <div>
               <span class="num">{{plantStatus.total}}</span>
               <span class="pcs">PCS</span>
@@ -15,7 +15,7 @@
         <div class="items flex-around">
           <i class="iconfont icon-normal"></i>
           <div class="items-right">
-            <div>Normal</div>
+            <div>{{$t('common.normal')}}</div>
             <div>
               <span class="num">{{plantStatus.normal}}</span>
               <span class="pcs">PCS</span>
@@ -25,7 +25,7 @@
         <div class="items flex-around">
           <i class="iconfont icon-fault"></i>
           <div class="items-right">
-            <div>Abnormal</div>
+            <div>{{$t('common.abnormal')}}</div>
             <div>
               <span class="num">{{plantStatus.abnormal}}</span>
               <span class="pcs">PCS</span>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <el-card shadow="never" class="no-bottom">
-        <div class="title border-line" slot="header">状态统计</div>
+        <div class="title border-line" slot="header">{{$t('plant.statusGer')}}</div>
         <income-item :incomeDetail="incomeDetail"></income-item>
       </el-card>
     </div>

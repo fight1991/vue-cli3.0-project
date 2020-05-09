@@ -3,20 +3,20 @@
     <show-item ref="plantStatus"></show-item>
     <!-- 表格区域 -->
     <el-card shadow="never">
-      <div class="title border-line" slot="header">电站列表</div>
+      <div class="title border-line" slot="header">{{$t('plant.plantsList')}}</div>
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
-            <el-select v-model="searchForm.status" placeholder="choose">
-              <el-option v-for="item in statusList" :label="item.label" :value="item.status" :key="item.status"></el-option>
+            <el-select v-model="searchForm.status">
+              <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.name" placeholder="plant name"></el-input>
+            <el-input v-model="searchForm.name" :placeholder="$t('common.plantsName')"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="mini" @click="reset">reset</el-button>
-            <el-button type="primary" size="mini" @click="search">search</el-button>
+            <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
+            <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
           </el-form-item>
         </el-form>
       </search-bar>
@@ -38,8 +38,8 @@
           </template>
         </common-table>
         <div class="states-row">
-          <span><i class="el-icon-success"></i> Normal</span>
-          <span><i class="el-icon-warning"></i> Abnormal</span>
+          <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
+          <span><i class="el-icon-warning"></i> {{$t('common.abnormal')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
       </func-bar>

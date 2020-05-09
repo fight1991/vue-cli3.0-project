@@ -8,6 +8,7 @@ export default {
     join: 'Join'
   },
   common: {
+    weather: 'Weather',
     invertSn: 'inverter sn',
     alarmType: 'Error type',
     common: 'common',
@@ -125,6 +126,7 @@ export default {
     genTot: 'Gross generation',
     earnTot: 'Gross earnings',
     plantsList: 'Plants list',
+    statusGer: 'Status statistics',
     equipQua: 'Equipment quantity',
     InsCap: 'Installed capacity',
     stationTime: 'Station time',
