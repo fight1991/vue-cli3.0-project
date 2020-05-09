@@ -15,12 +15,6 @@ export default {
           checked: true
         },
         {
-          label: 'common.postcode',
-          prop: 'owner',
-          checked: true,
-          width: 100
-        },
-        {
           label: 'plant.country',
           prop: 'country',
           checked: true
@@ -32,7 +26,7 @@ export default {
         },
         {
           label: 'common.postcode',
-          prop: 'postCode',
+          prop: 'owner',
           checked: true,
           width: 100
         },

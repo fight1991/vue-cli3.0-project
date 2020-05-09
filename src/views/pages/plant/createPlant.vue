@@ -116,7 +116,7 @@ export default {
         devices: [
           { sn: '', key: '', isPass: 1 }
         ],
-        timezoneOffset: '',
+        timezoneOffset: 0,
         agent: '',
         details: {
           name: '',
@@ -195,7 +195,7 @@ export default {
         devices: [
           { sn: '', key: '' }
         ],
-        timezoneOffset: '',
+        timezoneOffset: 0,
         agent: '',
         details: {
           name: '',
