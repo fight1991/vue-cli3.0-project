@@ -11,6 +11,8 @@
       <el-col :span="24" v-if="tag=='installer'">
         <el-form-item label="Authorizer" prop="organNameM" label-width="100px">
           <el-select
+            class="agent-multi"
+            :popper-append-to-body="false"
             v-model="dataForm.organNameM"
             multiple
             collapse-tags

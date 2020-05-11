@@ -98,6 +98,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .form-content {
-  padding: 10px 10px 50px;
+  height: 200px;
+  // padding: 10px 10px 50px;
 }
 </style>
