@@ -41,7 +41,7 @@
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
-                <el-form-item :label="$t('plant.address')" prop="details.postcode">
+                <el-form-item :label="$t('plant.postcode')" prop="details.postcode">
                   <el-input v-model="dataForm.details.postcode"></el-input>
                 </el-form-item>
               </el-col>

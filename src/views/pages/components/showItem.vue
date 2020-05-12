@@ -8,7 +8,6 @@
             <div>{{$t('common.total')}}</div>
             <div>
               <span class="num">{{plantStatus.total}}</span>
-              <span class="pcs">PCS</span>
             </div>
           </div>
         </div>
@@ -18,7 +17,6 @@
             <div>{{$t('common.normal')}}</div>
             <div>
               <span class="num">{{plantStatus.normal}}</span>
-              <span class="pcs">PCS</span>
             </div>
           </div>
         </div>
@@ -28,7 +26,6 @@
             <div>{{$t('common.abnormal')}}</div>
             <div>
               <span class="num">{{plantStatus.abnormal}}</span>
-              <span class="pcs">PCS</span>
             </div>
           </div>
         </div>
