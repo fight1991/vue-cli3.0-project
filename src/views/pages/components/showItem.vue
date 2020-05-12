@@ -150,9 +150,6 @@ export default {
             font-size: 16px;
             margin-right: 10px;
           }
-          .pcs {
-            font-size: 12px;
-          }
           div {
             padding: 2px;
           }
