@@ -117,7 +117,7 @@ export default {
       box-sizing: border-box;
       background-color: #fff;
       border-radius: 2px;
-      padding: 25px;
+      padding: 35px;
       color: #999;
     }
     .tab-header {

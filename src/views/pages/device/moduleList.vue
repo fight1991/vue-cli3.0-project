@@ -37,12 +37,12 @@
           <el-dropdown @command="commandDrop" trigger="click">
             <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">{{$t('common.import')}}</el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="d">{{$t('dataloggor.download')}}</el-dropdown-item>
+              <el-dropdown-item command="d">{{$t('common.download')}}</el-dropdown-item>
               <el-upload
                 class="dropDown-upload"
                 :before-upload="beforeUpload"
                 action="http://127.0.0.1">
-                <el-dropdown-item command="e" divided>{{$t('dataloggor.import')}}</el-dropdown-item>
+                <el-dropdown-item command="e" divided>{{$t('common.import')}}</el-dropdown-item>
               </el-upload>
             </el-dropdown-menu>
           </el-dropdown>

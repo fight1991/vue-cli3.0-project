@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-nibianqi',
+  icon: 'icon-shebeiguanli',
   path: '/bus/device',
   name: 'bus-device',
   meta: {
