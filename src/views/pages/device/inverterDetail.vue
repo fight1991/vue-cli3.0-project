@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- 设备状态 -->
-    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.deviceS')"></device-status>
+    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.equipSta')"></device-status>
     <!-- 今日异常 流向图 -->
     <div class="block">
       <el-row :gutter="15">
@@ -60,8 +60,8 @@
     <div class="container-bottom bg-c">
       <line-bar :id="deviceId" :type="'device'" ref="lineBar">
         <template v-slot:radioBtn>
-          <el-radio-button label="power">Power</el-radio-button>
-          <el-radio-button label="elec">Generation</el-radio-button>
+          <el-radio-button label="power">{{$t('common.power')}}</el-radio-button>
+          <el-radio-button label="elec">{{$t('common.gene')}}</el-radio-button>
         </template>
       </line-bar>
     </div>

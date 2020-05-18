@@ -9,6 +9,7 @@ export default {
     plantD: 'Details',
     deviceM: 'Device',
     invertM: 'Inverter',
+    invertD: 'Inverter Details',
     batteryM: 'Battery',
     remoteS: 'Remote settting',
     moduleM: 'Module',
