@@ -14,32 +14,33 @@
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.plantName" :placeholder="$t('common.plant')"></el-input>
+                <el-input v-model="searchForm.plantName" clearable :placeholder="$t('common.plant')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.deviceSN" :placeholder="$t('common.invertSn')"></el-input>
+                <el-input v-model="searchForm.deviceSN" clearable :placeholder="$t('common.invertSn')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.moduleSN" :placeholder="$t('common.datacolSN')"></el-input>
+                <el-input v-model="searchForm.moduleSN" clearable :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.country" :placeholder="$t('plant.country')"></el-input>
+                <el-input v-model="searchForm.country" clearable :placeholder="$t('plant.country')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.deviceType" :placeholder="$t('invupgrade.invmodel')"></el-input>
+                <el-input v-model="searchForm.deviceType" clearable :placeholder="$t('invupgrade.invmodel')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
                 <el-date-picker
+                  clearable
                   style="width:100%"
                   v-model="times"
                   value-format="timestamp"

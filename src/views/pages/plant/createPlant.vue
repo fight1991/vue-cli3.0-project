@@ -14,7 +14,7 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.name')" prop="details.name">
-                  <el-input v-model="dataForm.details.name"></el-input>
+                  <el-input v-model="dataForm.details.name" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
@@ -27,22 +27,22 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.country')" prop="details.country">
-                  <el-input v-model="dataForm.details.country"></el-input>
+                  <el-input v-model="dataForm.details.country" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.city')" prop="details.city">
-                  <el-input v-model="dataForm.details.city"></el-input>
+                  <el-input v-model="dataForm.details.city" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.address')" prop="details.address">
-                  <el-input v-model="dataForm.details.address"></el-input>
+                  <el-input v-model="dataForm.details.address" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('common.postcode')" prop="details.postcode">
-                  <el-input v-model="dataForm.details.postcode"></el-input>
+                  <el-input v-model="dataForm.details.postcode" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
@@ -54,7 +54,7 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('common.pvcapacity')" prop="details.systemCapacity">
-                  <el-input v-model="dataForm.details.systemCapacity"></el-input>
+                  <el-input v-model="dataForm.details.systemCapacity" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -66,7 +66,7 @@
           <!-- validator: (rule, value, callback)=>{checkSN(rule, value, callback, 'sn')} -->
           <el-col :span="12">
             <el-form-item :label="$t('plant.sn')" :prop="'devices.'+index+'.sn'" :rules="{required:true, message: 'sn is invalid', trigger: 'blur'}">
-              <el-input v-model="item.sn"></el-input>
+              <el-input v-model="item.sn" clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4" style="padding-left:0px">

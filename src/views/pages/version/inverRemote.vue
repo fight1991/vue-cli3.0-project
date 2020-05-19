@@ -6,22 +6,22 @@
           <el-row :gutter="15">
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('common.invertSn')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('common.invertSn')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('common.datacolSN')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('common.plant')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('common.plant')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('plant.equipSta')">
+                <el-select style="width:100%" clearable v-model="searchForm.status" :placeholder="$t('plant.equipSta')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
@@ -50,7 +50,7 @@
                 <el-input v-model="searchForm.version" :placeholder="$t('invupgrade.dataversion')"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="4" align="left">
+            <el-col :span="6" align="left">
               <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
               <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
@@ -100,53 +100,64 @@ export default {
         {
           label: 'common.invertSn',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 100
         },
         {
           label: 'invupgrade.invmodel',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 120
         },
         {
           label: 'invupgrade.master',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 100
         },
         {
           label: 'invupgrade.slave',
           prop: 'time',
-          checked: true
+          checked: true,
+          width: 100
         },
         {
           label: 'invupgrade.arm',
           prop: 'time',
-          checked: true
+          checked: true,
+          width: 100
         },
         {
           label: 'common.datacolSN',
           prop: 'time',
-          checked: true
+          checked: true,
+          renderHeader: true
         },
         {
           label: 'plant.datacolType',
           prop: 'time',
-          checked: true
+          checked: true,
+          renderHeader: true
         },
         {
           label: 'invupgrade.invversion',
           prop: 'time',
-          checked: true
+          checked: true,
+          renderHeader: true
         },
         {
           label: 'invupgrade.dataversion',
           prop: 'time',
-          checked: true
+          checked: true,
+          renderHeader: true
         },
         {
           label: 'invupgrade.invstatus',
           prop: 'time',
           checked: true,
-          slotName: 'status'
+          slotName: 'status',
+          renderHeader: true,
+          fixed: 'right'
         }
       ]
     }

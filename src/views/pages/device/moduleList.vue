@@ -7,11 +7,6 @@
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.moduleSN" :placeholder="$t('common.datacolSN')"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item>
                 <el-select style="width:100%" v-model="searchForm.communication" :placeholder="$t('common.select')">
                   <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
                 </el-select>
@@ -22,6 +17,11 @@
                 <el-select style="width:100%" v-model="searchForm.moduleType" :placeholder="$t('plant.datacolType')">
                   <el-option v-for="(item,index) in typeList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item>
+                <el-input v-model="searchForm.moduleSN" clearable :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">

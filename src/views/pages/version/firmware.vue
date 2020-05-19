@@ -6,31 +6,31 @@
           <el-row :gutter="15">
             <el-col :span="4">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('firmware.version')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('firmware.version')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.type" :placeholder="$t('common.select')">
+                <el-select style="width:100%" v-model="searchForm.type" clearable :placeholder="$t('firmware.devicetype')">
                   <el-option v-for="item in typeList" :label="item.label" :value="item.status" :key="item.status"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.moduleType" :placeholder="$t('firmware.type')">
+                <el-select style="width:100%" v-model="searchForm.moduleType" clearable :placeholder="$t('firmware.type')">
                   <el-option v-for="(item,index) in versionList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('firmware.status')">
+                <el-select style="width:100%" v-model="searchForm.status" clearable :placeholder="$t('firmware.status')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="4" align="left">
+            <el-col :span="6" align="left">
               <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
               <el-button type="primary" size="mini" @click="search">{{$t('common.search')}}</el-button>
             </el-col>
