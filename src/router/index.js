@@ -40,40 +40,43 @@ const router = new VueRouter({
 })
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
-  if (to.meta.requiresAuth === false) { // 不需权限,直接放行 /login,/error-xx等
+  let _this = router.app
+  // 不需权限,直接放行 /login,/error-xx等
+  if (to.meta.requiresAuth === false) {
     if (to.path === '/login') {
       storage.removeToken('token')
-      router.app.$options.store.state.isFirst = true
+      _this.$options.store.state.isFirst = true
     }
     next()
-  } else { // token不存在,跳转到login
-    if (!storage.getToken()) {
-      next('/login')
-    } else { // 路由跳转权限
-      let _this = router.app
-      if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
-        _this.$message.error('No permission!')
-        next('/')
-        return
-      }
-      next()
-      // 第一次进入系统需要获取权限状态和用户信息(刷新地址栏)
-      if (!_this.$options.store.state.isFirst) return
-      // 用户信息查询
-      let { result: userInfo } = await _this.$axios({ url: '/v0/user/info' })
-      // 权限查询
-      let { result: accessStatus } = await _this.$axios({ url: '/v0/user/access' })
-      if (userInfo) {
-        _this.$options.store.commit('setUserInfo', userInfo)
-        storage.setUserInfo(userInfo)
-      }
-      if (accessStatus && typeof accessStatus.access === 'number') {
-        _this.$options.store.commit('setAccess', accessStatus.access)
-      }
-      if (userInfo || accessStatus) {
-        _this.$options.store.commit('changeFirst', false)
-      }
-    }
+    return
+  }
+  // token不存在,跳转到login
+  if (!storage.getToken()) {
+    next('/login')
+    return
+  }
+  // 路由跳转鉴别权限
+  if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
+    _this.$message.error('No permission!')
+    next('/')
+    return
+  }
+  next()
+  // 第一次进入系统需要获取权限状态和用户信息(刷新地址栏)
+  if (!_this.$options.store.state.isFirst) return
+  // 用户信息查询
+  let { result: userInfo } = await _this.$axios({ url: '/v0/user/info' })
+  // 权限查询
+  let { result: accessStatus } = await _this.$axios({ url: '/v0/user/access' })
+  if (userInfo) {
+    _this.$options.store.commit('setUserInfo', userInfo)
+    storage.setUserInfo(userInfo)
+  }
+  if (accessStatus && typeof accessStatus.access === 'number') {
+    _this.$options.store.commit('setAccess', accessStatus.access)
+  }
+  if (userInfo || accessStatus) {
+    _this.$options.store.commit('changeFirst', false)
   }
 })
 // 路由跳转之后
