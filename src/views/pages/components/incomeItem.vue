@@ -3,7 +3,7 @@
     <div class="content-item flex-around">
       <i class="icon icon-plant-day"></i>
       <div class="plant-text">
-        <p><span>{{$t('common.elec')}} (kwh)</span></p>
+        <p><span>{{$t('plant.genTod')}} (kwh)</span></p>
         <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
       </div>
       <div class="plant-money">
@@ -14,7 +14,7 @@
     <div class="content-item flex-around">
       <i class="icon icon-plant-month"></i>
       <div class="plant-text">
-        <p><span>{{$t('common.elec')}} (kwh)</span></p>
+        <p><span>{{$t('plant.genMon')}} (kwh)</span></p>
         <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
       </div>
       <div class="plant-money">
@@ -36,8 +36,8 @@
     <div class="content-item flex-around">
       <i class="icon icon-plant-total"></i>
       <div class="plant-text">
-        <p><span>{{$t('common.elec')}} (kwh)</span></p>
-        <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+        <p><span>{{$t('plant.genTot')}} (kwh)</span></p>
+        <p><span>{{$t('plant.earnTot')}} ({{incomeDetail.currency}})</span></p>
       </div>
       <div class="plant-money">
         <p><span class="num">{{incomeDetail.cumulate.generation}}</span></p>

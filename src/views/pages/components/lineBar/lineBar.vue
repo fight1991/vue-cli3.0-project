@@ -129,7 +129,7 @@ export default {
         method: 'post',
         data: {
           ...params,
-          variables: ['generationPower', 'feedinPower', 'loadsPower'],
+          variables: ['outputpower', 'feed-in power', 'grid-consumption power'],
           timespan: 'day',
           beginDate: {
             year: new Date().getFullYear(),
@@ -170,7 +170,7 @@ export default {
         data: {
           ...params,
           reportType: this.reportType[this.dateType],
-          variables: ['generation', 'feedin', 'loads', 'gridConsumption'],
+          variables: ['yield', 'feedin', 'loads', 'gridConsumption'],
           queryDate: {
             year: new Date(this.dateValue).getFullYear(),
             month: new Date(this.dateValue).getMonth() + 1,
