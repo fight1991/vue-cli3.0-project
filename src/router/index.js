@@ -46,13 +46,18 @@ router.beforeEach(async (to, from, next) => {
       router.app.$options.store.state.isFirst = true
     }
     next()
-  } else {
+  } else { // token不存在,跳转到login
     if (!storage.getToken()) {
       next('/login')
-    } else {
+    } else { // 路由跳转权限
+      let _this = router.app
+      if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
+        _this.$message.error('No permission!')
+        next('/')
+        return
+      }
       next()
       // 第一次进入系统需要获取权限状态和用户信息(刷新地址栏)
-      let _this = router.app
       if (!_this.$options.store.state.isFirst) return
       // 用户信息查询
       let { result: userInfo } = await _this.$axios({ url: '/v0/user/info' })
