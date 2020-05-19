@@ -55,13 +55,6 @@ router.beforeEach(async (to, from, next) => {
     next('/login')
     return
   }
-  // 路由跳转鉴别权限
-  if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
-    _this.$message.error('No permission!')
-    next('/')
-    return
-  }
-  next()
   // 第一次进入系统需要获取权限状态和用户信息(刷新地址栏)
   if (!_this.$options.store.state.isFirst) return
   // 用户信息查询
@@ -78,6 +71,12 @@ router.beforeEach(async (to, from, next) => {
   if (userInfo || accessStatus) {
     _this.$options.store.commit('changeFirst', false)
   }
+  // 路由跳转鉴别权限
+  if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
+    _this.$message.error('No permissions!')
+    return
+  }
+  next()
 })
 // 路由跳转之后
 router.afterEach((to, from) => {

@@ -4,7 +4,7 @@ export default {
   name: 'bus-plant',
   // hidden: true,
   meta: {
-    permission: [0, 1, 2, 3],
+    permission: [1, 2, 3],
     title: 'plantM'
   },
   children: [
@@ -12,7 +12,7 @@ export default {
       path: '/bus/plant/add',
       name: 'bus-plant-add',
       meta: {
-        permission: [0, 1, 2, 3],
+        permission: [1, 2, 3],
         title: 'plantN',
         opType: 'add',
         component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
@@ -23,7 +23,7 @@ export default {
       name: 'bus-plant-edit',
       hidden: true,
       meta: {
-        permission: [0, 1, 2, 3],
+        permission: [1, 2, 3],
         title: 'plantE',
         opType: 'edit',
         component: () => import(/* webpackChunkName: "bus-plant-add" */ '@/views/pages/plant/createPlant')
@@ -33,7 +33,7 @@ export default {
       path: '/bus/plant/view',
       name: 'bus-plant-view',
       meta: {
-        permission: [0, 1, 2, 3],
+        permission: [1, 2, 3],
         title: 'plantS',
         component: () => import(/* webpackChunkName: "bus-plant-view" */ '@/views/pages/plant/showPlant')
       }
@@ -43,7 +43,7 @@ export default {
       name: 'bus-plant-detail',
       hidden: true,
       meta: {
-        permission: [0, 1, 2, 3],
+        permission: [1, 2, 3],
         title: 'plantD',
         page: 'detail',
         component: () => import(/* webpackChunkName: "bus-plant-detail" */ '@/views/pages/plant/plantDetail')
