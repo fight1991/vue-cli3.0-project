@@ -5,7 +5,7 @@ export default {
         power: { // 折线图表
           legend: {
             type: 'plain',
-            data: ['generating power', 'grid-connected', 'power dissipation'],
+            data: ['outputpower', 'feed-in power', 'grid-consumption power'],
             bottom: 10
           },
           tooltip: {
