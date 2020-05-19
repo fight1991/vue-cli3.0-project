@@ -57,7 +57,7 @@ export default {
     select: 'please select',
     tips1: 'Are you sure you want to cancel it?',
     tips2: 'Are you sure you want to delete it?',
-    reset: 'Reset',
+    reset: 'Clear',
     search: 'Search',
     normal: 'Normal',
     abnormal: 'Abnormal',

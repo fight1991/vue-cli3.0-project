@@ -6,31 +6,31 @@
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('common.datacolSN')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('common.datacolSN')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('common.plant')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('common.plant')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('plant.equipSta')">
+                <el-select style="width:100%" clearable v-model="searchForm.status" :placeholder="$t('plant.equipSta')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-select style="width:100%" v-model="searchForm.status" :placeholder="$t('plant.datacolType')">
+                <el-select style="width:100%" clearable v-model="searchForm.status" :placeholder="$t('plant.datacolType')">
                   <el-option v-for="(item,index) in statusList" :label="item" :value="item" :key="item + index"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-input v-model="searchForm.version" :placeholder="$t('invupgrade.dataversion')"></el-input>
+                <el-input v-model="searchForm.version" clearable :placeholder="$t('invupgrade.dataversion')"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6" align="left">
@@ -83,33 +83,42 @@ export default {
         {
           label: 'common.datacolSN',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 130
         },
         {
           label: 'plant.datacolType',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 130,
+          renderHeader: true
         },
         {
           label: 'invupgrade.dataversion',
           prop: 'type',
-          checked: true
+          checked: true,
+          width: 130,
+          renderHeader: true
         },
         {
           label: 'common.invertSn',
           prop: 'time',
-          checked: true
+          checked: true,
+          width: 110
         },
         {
           label: 'invupgrade.invmodel',
           prop: 'time',
-          checked: true
+          checked: true,
+          width: 120
         },
         {
           label: 'invupgrade.datastatus',
           prop: 'time',
           checked: true,
-          slotName: 'status'
+          slotName: 'status',
+          fixed: 'right',
+          renderHeader: true
         }
       ]
     }

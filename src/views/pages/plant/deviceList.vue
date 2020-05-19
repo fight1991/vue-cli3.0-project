@@ -5,12 +5,12 @@
       <search-bar>
         <el-form size="mini" label-width="0px" :model="searchForm" :inline="true">
           <el-form-item>
-            <el-select v-model="searchForm.status" placeholder="choose">
+            <el-select v-model="searchForm.status">
               <el-option v-for="item in statusList" :label="$t('common.' + item.label)" :value="item.status" :key="item.status"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.deviceSN" placeholder="inverter sn"></el-input>
+            <el-input v-model="searchForm.deviceSN" :placeholder="$t('common.invertSn')" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="resetSearchForm">{{$t('common.reset')}}</el-button>
