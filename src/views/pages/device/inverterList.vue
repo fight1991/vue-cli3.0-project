@@ -102,7 +102,7 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'fault' },
+        { status: 2, label: 'alarm' },
         { status: 3, label: 'alarm' },
         { status: 4, label: 'offline' }
       ],

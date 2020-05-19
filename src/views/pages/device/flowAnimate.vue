@@ -34,12 +34,12 @@ export default {
   height: 150px;
   position: relative;
   &:first-child {
-    border-top: 1px dotted green;
+    border-top: 2px dotted #C6dccf;
     width: 66%;
   }
   &:last-child {
     width: 33%;
-    border: 1px dotted green;
+    border: 2px dotted #C6dccf;
     border-right: none;
     border-bottom: none;
   }

@@ -42,8 +42,8 @@
       </search-bar>
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-delete">{{$t('invupgrade.upgrade')}}</el-button>
-          <el-button size="mini" icon="el-icon-delete">{{$t('invupgrade.upstatus')}}</el-button>
+          <el-button size="mini" icon="iconfont icon-shengji">{{$t('invupgrade.upgrade')}}</el-button>
+          <el-button size="mini" icon="iconfont icon-chakan">{{$t('invupgrade.upstatus')}}</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :height="530" :tableList="resultList">
           <template v-slot:time="{row}">

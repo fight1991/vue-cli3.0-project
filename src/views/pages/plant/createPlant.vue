@@ -41,6 +41,11 @@
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('common.postcode')" prop="details.postcode">
+                  <el-input v-model="dataForm.details.postcode" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.price')" prop="details.price">
                   <el-select v-model="dataForm.details.price" style="width:100%" :placeholder="$t('common.select')">
                     <el-option v-for="item in powerList" :key="item.id" :value="item.name" :label="item.name"></el-option>

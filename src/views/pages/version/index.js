@@ -1,6 +1,6 @@
 export default {
   permission: '',
-  icon: 'icon-nibianqi',
+  icon: 'icon-banbenxinxi',
   path: '/bus/version',
   name: 'bus-version',
   meta: {

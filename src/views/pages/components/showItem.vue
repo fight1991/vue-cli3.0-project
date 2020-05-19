@@ -192,7 +192,7 @@ export default {
       height: 95px;
       margin-bottom: 10px;
     }
-    width: 250px;
+    width: 350px;
     padding: 5px;
     box-sizing: border-box;
   }

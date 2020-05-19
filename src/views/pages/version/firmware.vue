@@ -40,7 +40,7 @@
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
           <el-button size="mini" icon="iconfont icon-import">{{$t('common.import')}}</el-button>
-          <el-button size="mini" icon="el-icon-delete">{{$t('common.release')}}</el-button>
+          <el-button size="mini" icon="iconfont icon-fabu">{{$t('common.release')}}</el-button>
           <el-button size="mini" icon="el-icon-delete">{{$t('common.delete')}}</el-button>
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :height="530" :tableList="resultList">
