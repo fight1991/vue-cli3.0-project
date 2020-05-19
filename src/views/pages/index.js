@@ -14,6 +14,7 @@ const Home = {
   hidden: true,
   name: 'tab-index',
   meta: {
+    requiresAuth: false,
     title: 'home',
     component: () => import(/* webpackChunkName: "home" */ '@/views/pages/home')
   }

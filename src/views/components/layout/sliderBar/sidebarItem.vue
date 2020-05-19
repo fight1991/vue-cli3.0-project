@@ -1,33 +1,41 @@
 <template>
   <div>
-    <template v-if="!menuItem.children || menuItem.children.length === 0">
-      <el-menu-item :index="menuItem.path">
+    <!-- 只有一级菜单 -->
+    <template v-if="firstMenuShow">
+      <el-menu-item :index="menuItem.path" v-show="menuPemission()">
         <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
         <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
       </el-menu-item>
     </template>
-    <el-submenu v-else :index="menuItem.path" popper-class="sidebar-pop">
-      <template slot="title" >
-        <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
-        <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
-      </template>
+    <!-- 有二级菜单 -->
+    <template v-else>
+      <el-submenu v-show="menuPemission(menuItem)" :index="menuItem.path" popper-class="sidebar-pop">
+        <template slot="title">
+          <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
+          <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
+        </template>
 
-      <template v-for="child in menuItem.children">
-        <!-- 递归 -->
-        <sidebar-item
-          v-if="child.children&&child.children.length>0"
-          :menuItem="child"
-          :key="child.path"/>
-        <el-menu-item v-else :key="child.path" :index="child.path">
-          <i v-if="child.icon" :class="'iconfont '+ child.icon"></i>
-          <span slot="title">{{$t('navBar.'+child.meta.title) || ''}}</span>
-        </el-menu-item>
-      </template>
-    </el-submenu>
+        <template v-for="child in menuItem.children">
+          <!-- 递归 -->
+          <sidebar-item
+            v-if="child.children&&child.children.length>0"
+            :menuItem="child"
+            :key="child.path"/>
+          <!-- 二级菜单 -->
+          <template v-else>
+            <el-menu-item v-show="menuPemission(child, 'chidl')" :key="child.path" :index="child.path">
+              <i v-if="child.icon" :class="'iconfont '+ child.icon"></i>
+              <span slot="title">{{$t('navBar.'+child.meta.title) || ''}}</span>
+            </el-menu-item>
+          </template>
+        </template>
+      </el-submenu>
+    </template>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'sidebarItem',
   data () {
@@ -35,22 +43,27 @@ export default {
 
     }
   },
+  computed: {
+    ...mapState({
+      access: state => state.access
+    }),
+    firstMenuShow () {
+      return !this.menuItem.children || this.menuItem.children.length === 0
+    }
+  },
   props: {
     menuItem: {
       type: Object,
-      required: true
+      required: true,
+      default () {
+        return {}
+      }
     }
   },
   methods: {
-    testaa (child) {
-      console.log(this.$store)
-      this.$store.commit('addTab', {
-        tabId: child.tabId,
-        title: child.title,
-        components: [{
-          dom: child.tabId
-        }]
-      })
+    menuPemission (obj = this.menuItem, hh) {
+      let { meta } = obj
+      return !meta.permission || (meta.permission && meta.permission.includes(this.access))
     }
   }
 }
