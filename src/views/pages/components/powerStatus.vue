@@ -20,7 +20,10 @@
       </el-card>
     </div>
     <div class="right bg-c hidden-sm-and-down">
-      天气
+      <div class="weather-img"><i class="iconfont icon-qing" style="font-size:80px"></i></div>
+      <div class="weather-text">晴天</div>
+      <div class="weather-temper">27℃</div>
+      <div class="weather-place"><i class="iconfont icon-dizhi"></i>&nbsp;江苏无锡</div>
     </div>
   </div>
 </template>
@@ -51,6 +54,25 @@ export default {
     margin-left: 10px;
     width: 200px;
     height: 321px;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .weather-text, .weather-place {
+      font-size: 12px;
+      color: #666;
+    }
+    .weather-temper {
+      font-size: 16px;
+    }
+    .weather-place i{
+      color: #FFA28D;
+    }
+    .weather-img {
+      color: #FDB201;
+    }
   }
   .left {
     flex: 1;
