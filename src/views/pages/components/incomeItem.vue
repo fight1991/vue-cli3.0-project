@@ -1,47 +1,39 @@
 <template>
   <div class="income-details flex">
     <div class="content-item flex-around">
-      <i class="icon icon-plant-day"></i>
+      <i class="icon icon-plant-day hidden-sm-and-down"></i>
       <div class="plant-text">
-        <p><span>{{$t('plant.genTod')}} (kwh)</span></p>
-        <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+        {{$t('plant.genTod')}} (kwh)
       </div>
-      <div class="plant-money">
-        <p><span class="num">{{incomeDetail.today.generation}}</span></p>
-        <p><span class="money">{{incomeDetail.today.earnings}}</span></p>
+      <div class="plant-money text-cut txt-c">
+        {{incomeDetail.today.generation}}
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-month"></i>
+      <i class="icon icon-plant-month hidden-sm-and-down"></i>
       <div class="plant-text">
-        <p><span>{{$t('plant.genMon')}} (kwh)</span></p>
-        <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+        {{$t('plant.genMon')}} (kwh)
       </div>
-      <div class="plant-money">
-        <p><span class="num">{{incomeDetail.month.generation}}</span></p>
-        <p><span class="money">{{incomeDetail.month.earnings}}</span></p>
+      <div class="plant-money text-cut">
+        {{incomeDetail.month.generation}}
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-year"></i>
+      <i class="icon icon-plant-total hidden-sm-and-down"></i>
       <div class="plant-text">
-        <p><span>{{$t('common.elec')}} (kwh)</span></p>
-        <p><span>{{$t('common.income')}} ({{incomeDetail.currency}})</span></p>
+        {{$t('plant.genTot')}} (kwh)
       </div>
-      <div class="plant-money">
-        <p><span class="num">{{incomeDetail.year.generation}}</span></p>
-        <p><span class="money">{{incomeDetail.year.earnings}}</span></p>
+      <div class="plant-money text-cut txt-c">
+        {{incomeDetail.cumulate.generation}}
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-total"></i>
+      <i class="icon icon-incomeT hidden-sm-and-down"></i>
       <div class="plant-text">
-        <p><span>{{$t('plant.genTot')}} (kwh)</span></p>
-        <p><span>{{$t('plant.earnTot')}} ({{incomeDetail.currency}})</span></p>
+        {{$t('plant.earnTot')}} ({{incomeDetail.currency}})
       </div>
-      <div class="plant-money">
-        <p><span class="num">{{incomeDetail.cumulate.generation}}</span></p>
-        <p><span class="money">{{incomeDetail.cumulate.earnings}}</span></p>
+      <div class="plant-money text-cut plant-money-green">
+        {{incomeDetail.cumulate.earnings}}
       </div>
     </div>
   </div>
@@ -84,6 +76,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .income-details {
+  height: 240px;
   flex-wrap: wrap;
   .content-item {
     padding: 10px 0;
@@ -93,14 +86,17 @@ export default {
       border-right: 1px solid #f5f5f5;
     }
     .plant-money {
-      .num {
-        color: #FFC245;
-        font-weight: bold;
-      }
-      .money {
-        color: #67C23A;
-        font-weight: bold;
-      }
+      width: 60px;
+      color: #FFC245;
+      font-weight: bold;
+      text-align: right;
+    }
+    .txt-c {
+      text-align: center;
+    }
+    .plant-money-green {
+      color: #67C23A;
+      font-weight: bold;
     }
   }
 }

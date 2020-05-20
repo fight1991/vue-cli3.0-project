@@ -1,21 +1,28 @@
 <template>
-  <el-card shadow="never">
-    <div class="title border-line" slot="header">{{title}}</div>
-    <el-row class="current-kw">
-      <el-col :span="8">
-        <div class="my-pg flex-center">
-          <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
-          <div class="progress-txt">
-            <div class="number">{{power + 'kw'}}</div>
-            <div class="f12">{{$t('common.currentP')}}</div>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="16">
-        <income-item v-bind="$attrs"></income-item>
-      </el-col>
-    </el-row>
-  </el-card>
+  <div class="whether">
+    <div class="left">
+      <el-card shadow="never">
+        <div class="title border-line" slot="header">{{title}}</div>
+        <el-row class="current-kw">
+          <el-col :span="8">
+            <div class="my-pg flex-center">
+              <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
+              <div class="progress-txt">
+                <div class="number">{{power + 'kw'}}</div>
+                <div class="f12">{{$t('common.currentP')}}</div>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="16">
+            <income-item v-bind="$attrs"></income-item>
+          </el-col>
+        </el-row>
+      </el-card>
+    </div>
+    <div class="right bg-c hidden-sm-and-down">
+      天气
+    </div>
+  </div>
 </template>
 <script>
 import incomeItem from './incomeItem'
@@ -38,6 +45,17 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.whether {
+  display: flex;
+  .right {
+    margin-left: 10px;
+    width: 200px;
+    height: 321px;
+  }
+  .left {
+    flex: 1;
+  }
+}
 .my-pg {
   height: 240px;
   position: relative;

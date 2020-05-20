@@ -33,7 +33,6 @@
         </common-table>
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}</span>
           <span><i class="el-icon-error"></i> {{$t('common.glitch')}}</span>
           <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>

@@ -56,7 +56,7 @@
       </line-bar>
     </div>
     <!-- 今日异常 设备状态区域 -->
-    <div class="block">
+    <div class="block" v-if="access!=1">
       <el-row :gutter="15">
         <el-col :span="12">
           <el-card shadow="never">
@@ -107,7 +107,7 @@ import plantStatus from '../components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import Socket from '@/net/socket'
 import { formatDate } from '@/util'
-
+import { mapState } from 'vuex'
 export default {
   mixins: [echartData],
   components: {
@@ -163,6 +163,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      access: state => state.access
+    }),
     deviceTotal () {
       let total = 0
       Object.values(this.device).forEach(value => {
