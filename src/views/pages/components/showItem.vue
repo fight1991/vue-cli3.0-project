@@ -53,7 +53,6 @@
   </div>
 </template>
 <script>
-import BMap from 'BMap'
 import incomeItem from './incomeItem'
 import gMap from './gMap'
 export default {
@@ -90,19 +89,9 @@ export default {
       }
     }
   },
-  created () {
-    this.mapId = 'map-content' + this.$route.name
-    window.addEventListener('resize', this.asyncInit)
-  },
-  mounted () {
-    this.initBaiduMap()
-  },
+  created () {},
+  mounted () {},
   methods: {
-    initBaiduMap () {
-      let mp = new BMap.Map(this.mapId)
-      mp.centerAndZoom(new BMap.Point(-118.24532, 34.05349), 11)
-      mp.enableScrollWheelZoom(true)
-    },
     // 获取所有电站正常 非正常 故障个数
     async getPlantStatus () {
       let { result } = await this.$axios({
@@ -117,14 +106,6 @@ export default {
     selectStatus (status) {
       this.$emit('getselect', status)
     }
-  },
-  asyncInit () {
-    this.$nextTick(() => {
-      this.initBaiduMap()
-    })
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.asyncInit)
   }
 }
 </script>
