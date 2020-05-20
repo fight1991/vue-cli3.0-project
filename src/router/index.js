@@ -40,7 +40,6 @@ const router = new VueRouter({
 })
 // 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
-  console.log(to)
   let _this = router.app
   // 不需权限,直接放行 /login,/error-xx等
   if (to.meta.requiresAuth === false) {

@@ -83,7 +83,8 @@ const webpackConfig = {
       'vuex': 'Vuex',
       'axios': 'axios',
       'vue-router': 'VueRouter',
-      'BMap': 'BMap'
+      'BMap': 'BMap',
+      'google': 'google'
     },
     optimization: {
       splitChunks: {
