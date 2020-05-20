@@ -204,7 +204,7 @@ export default {
     headCollapse () {
       this.collapse = !this.collapse
       if (!this.collapse) return
-      this.getHeadInfo()
+      this.plantId && this.getHeadInfo()
     },
     // 百分比取整数
     percentMethod (value) {
@@ -246,7 +246,7 @@ export default {
     },
     // 左右切换电站
     async switchPlant (type) {
-      if (this.switch) return
+      if (this.switch || this.plantList.length === 0) return
       this.switch = true
       // 获取当前索引
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
