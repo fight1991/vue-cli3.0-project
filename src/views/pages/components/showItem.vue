@@ -46,16 +46,19 @@
     </div>
     <div class="right bg-c">
       <div class="weather-content">{{$t('common.weather')}}</div>
-      <div :id="mapId" class="map-content" style="width:100%;"></div>
+      <div class="map-content" style="width:100%;">
+        <g-map></g-map>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import BMap from 'BMap'
 import incomeItem from './incomeItem'
+import gMap from './gMap'
 export default {
   name: 'show-item',
-  components: { incomeItem },
+  components: { incomeItem, gMap },
   data () {
     return {
       plantStatus: {
