@@ -1,6 +1,6 @@
 <template>
   <section class="sys-main">
-    <show-item ref="plantStatus"></show-item>
+    <show-item ref="plantStatus" @getselect="getselect"></show-item>
     <!-- 表格区域 -->
     <el-card shadow="never" v-if="access !== 1">
       <div class="title border-line" slot="header">{{$t('plant.plantsList')}}</div>
@@ -40,6 +40,7 @@
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
           <span><i class="el-icon-warning"></i> {{$t('common.abnormal')}}</span>
+          <span><i class="el-icon-warning"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
       </func-bar>
@@ -61,7 +62,8 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'abnormal' }
+        { status: 2, label: 'abnormal' },
+        { status: 3, label: 'offline' }
       ],
       searchForm: {
         status: 0, // 0 全部 ，1 正常， 2 异常
@@ -151,6 +153,11 @@ export default {
           this.search()
         }
       })
+    },
+    // 点击状态筛选列表
+    getselect (payLoad) {
+      this.searchForm.status = payLoad
+      this.search()
     },
     // 页面跳转
     goToDetail (type, row) {

@@ -2,7 +2,7 @@
   <div class="container-top mg-b10">
     <div class="left">
       <div class="top-item flex-between mg-b10">
-        <div class="items flex-around">
+        <div class="items flex-around" @click="selectStatus(0)">
           <i class="iconfont icon-sum"></i>
           <div class="items-right">
             <div>{{$t('common.total')}}</div>
@@ -11,7 +11,7 @@
             </div>
           </div>
         </div>
-        <div class="items flex-around">
+        <div class="items flex-around" @click="selectStatus(1)">
           <i class="iconfont icon-normal"></i>
           <div class="items-right">
             <div>{{$t('common.normal')}}</div>
@@ -20,12 +20,21 @@
             </div>
           </div>
         </div>
-        <div class="items flex-around">
+        <div class="items flex-around" @click="selectStatus(2)">
           <i class="iconfont icon-fault"></i>
           <div class="items-right">
             <div>{{$t('common.abnormal')}}</div>
             <div>
               <span class="num">{{plantStatus.abnormal}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="items flex-around" @click="selectStatus(3)">
+          <i class="iconfont icon-offline"></i>
+          <div class="items-right">
+            <div>{{$t('common.offline')}}</div>
+            <div>
+              <span class="num">{{plantStatus.offline}}</span>
             </div>
           </div>
         </div>
@@ -52,7 +61,8 @@ export default {
       plantStatus: {
         total: 0,
         normal: 0,
-        abnormal: 0
+        abnormal: 0,
+        offline: 0
       },
       incomeList: [],
       mapId: '', // 地图容器 若id相同的话只渲染一次
@@ -100,6 +110,9 @@ export default {
         this.plantStatus.normal = result.normal || 0
         this.plantStatus.abnormal = result.abnormal || 0
       }
+    },
+    selectStatus (status) {
+      this.$emit('getselect', status)
     }
   },
   asyncInit () {
@@ -126,10 +139,15 @@ export default {
     margin-right: 10px;
     .top-item {
       .items {
+        cursor: pointer;
         padding: 10px 20px;
         background-color: #fff;
         box-sizing: border-box;
-        width: 32%;
+        width: 24%;
+        &:hover {
+          box-shadow: 0 4px 6px rgba(0,0,0,.2);
+          transition: all .5s ease-in-out;
+        }
         .iconfont {
           font-size: 36px;
           color: #2AC6FC;
