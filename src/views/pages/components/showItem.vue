@@ -51,7 +51,7 @@
           <div class="date">{{timeInfo.date}} {{timeInfo.week}}</div>
         </div>
         <div class="weather-info flex-center">
-          <div class="weather-img"><i class="iconfont icon-tianqi-qing" style="font-size:60px"></i></div>
+          <div class="weather-img"><i class="iconfont icon-qing" style="font-size:60px"></i></div>
           <div class="weather-text">22℃</div>
         </div>
       </div>

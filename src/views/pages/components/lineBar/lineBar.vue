@@ -45,14 +45,6 @@ export default {
       dateValue: '',
       dateType: 'Day',
       echartType: 'power', // 默认显示功率图表
-      powerUrl: {
-        plant: '/v0/plant/history/raw',
-        device: '/v0/device/history/raw'
-      },
-      barUrl: {
-        plant: '/v0/plant/history/report',
-        device: '/v0/device/history/report'
-      },
       reportType: {
         Day: 'month',
         Month: 'year'
@@ -125,7 +117,7 @@ export default {
         params.deviceID = this.id
       }
       let { result } = await this.$axios({
-        url: this.powerUrl[this.type],
+        url: `/v0/${this.type}/history/raw`,
         method: 'post',
         data: {
           ...params,
@@ -165,7 +157,7 @@ export default {
         params.deviceID = this.id
       }
       let { result } = await this.$axios({
-        url: this.barUrl[this.type],
+        url: `/v0/${this.type}/history/report`,
         method: 'post',
         data: {
           ...params,
