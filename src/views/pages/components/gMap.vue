@@ -71,7 +71,7 @@ export default {
     },
     loadGMap () {
       return new Promise((resolve, reject) => {
-        if (typeof google !== 'undefined') {
+        if (typeof window.google !== 'undefined') {
           resolve(window.google)
           return
         }
@@ -93,13 +93,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.demo {
-  height: 1000px;
-  background-color:#fff;
-  border-top:1px solid transparent;
-  text-align: center;
-}
-#map_canvas {
-  margin: 0 auto;
-}
+
 </style>
