@@ -12,6 +12,17 @@ export default {
   methods: {
     backRoute (router) {
       this.$store.dispatch('backGo', router)
+    },
+    // 获取国家列表
+    async getCountryList () {
+      let { result } = await this.$axios({
+        url: '/v0/map/countries'
+      })
+      if (result) {
+        return result.countries || []
+      } else {
+        return []
+      }
     }
   }
 }

@@ -27,7 +27,9 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.country')" prop="details.country">
-                  <el-input v-model="dataForm.details.country" clearable></el-input>
+                  <el-select v-model="dataForm.details.country" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="(item, index) in countryList" :key="'index'+index" :value="item" :label="item"></el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
@@ -38,6 +40,13 @@
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.address')" prop="details.address">
                   <el-input v-model="dataForm.details.address" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24">
+                <el-form-item :label="$t('common.zone')" prop="timezone">
+                  <el-select v-model="dataForm.timezone" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="(item, index) in zoneList" :key="'index'+index" :value="item" :label="item"></el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24">
@@ -112,11 +121,14 @@ export default {
       errVisible: false,
       snResult: [], // sn校验的结果
       agentList: [],
+      zoneList: [], // 时区列表
+      countryList: [], // 国家列表
       dataForm: {
         devices: [
           { sn: '', key: '', isPass: 1 }
         ],
-        timezoneOffset: 0,
+        timezone: '',
+        daylight: '',
         agent: '',
         details: {
           name: '',
@@ -142,9 +154,10 @@ export default {
       editInfo: {},
       rules: {
         agent: [{ required: true, message: 'agent is required', trigger: 'change' }],
+        timezone: [{ required: true, message: 'time zone is required', trigger: 'change' }],
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
         'details.type': [{ required: true, message: 'type is required', trigger: 'blur' }],
-        'details.country': [{ required: true, message: 'country is required', trigger: 'blur' }],
+        'details.country': [{ required: true, message: 'country is required', trigger: 'change' }],
         'details.city': [{ required: true, message: 'city is required', trigger: 'blur' }],
         'details.address': [{ required: true, message: 'address is required', trigger: 'blur' }],
         'details.price': [{ required: true, message: 'price is required', trigger: 'change' }],
@@ -156,10 +169,12 @@ export default {
       ]
     }
   },
-  created () {
+  async created () {
     if (this.access > 1) {
       this.getPriceList()
       this.getAgentList()
+      this.getZoneList()
+      this.countryList = await this.getCountryList()
     }
     let { opType } = this.$route.meta
     if (opType) {
@@ -236,6 +251,15 @@ export default {
       })
       if (result && result.length > 0) {
         this.powerList = result
+      }
+    },
+    // 获取时区列表
+    async getZoneList () {
+      let { result } = await this.$axios({
+        url: '/v0/map/timezones'
+      })
+      if (result) {
+        this.zoneList = result.timezones || []
       }
     },
     // 设备删除
