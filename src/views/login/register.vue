@@ -47,16 +47,28 @@
       </el-form>
     </div>
     <el-row class="find-btn" type="flex" justify="space-between">
-      <el-checkbox v-model="isAgreen">
-        <span class="agree-text f12">{{$t('login.agree')}}</span>
-        <span class="user-agree f12">{{$t('login.server')}}</span>
-      </el-checkbox>
+      <div>
+        <el-checkbox v-model="isAgreen">
+          <span class="agree-text f12">{{$t('login.agree')}}</span>
+        </el-checkbox>
+        <span class="user-agree f12" @click="openDialog">{{$t('login.server')}}</span>
+      </div>
       <span @click="backLogin">{{$t('login.back')}}</span>
     </el-row>
     <!-- 注册按钮 -->
     <el-row class="login-btn">
       <el-button :disabled="!isAgreen" class="login-click" type="primary" @click="goRegister">{{$t('login.register')}}</el-button>
     </el-row>
+    <el-dialog
+      class="login-agree-dialog sys-dialog"
+      :title="''"
+      width="70%"
+      :modal-append-to-body="false"
+      :visible.sync="agreeVisible">
+      <div class="iframe-view" v-loading="loading" :style="{'height': dialogH + 'px' }">
+        <iframe  @load="load" src="http://8.209.116.72/i18n/zh_CN/UserAgreement.html" frameborder="0" height="100%" width="100%"></iframe>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -69,6 +81,9 @@ export default {
   mixins: [mixins],
   data () {
     return {
+      dialogH: window.innerHeight - 100,
+      agreeVisible: false,
+      loading: false,
       pwType: 'password',
       pwType2: 'password',
       isAgreen: true,
@@ -90,7 +105,22 @@ export default {
       return this.isEmail ? 'email' : 'phone'
     }
   },
+  created () {
+    window.addEventListener('resize', () => {
+      this.dialogH = window.innerHeight - 100
+    })
+  },
+  beforeDestroy () {
+
+  },
   methods: {
+    load () {
+      this.loading = false
+    },
+    // 打开用户协议窗口
+    openDialog () {
+      this.agreeVisible = true
+    },
     // 返回登录模块
     backLogin () {
       this.$emit('toggleStatus', 'login')
