@@ -95,7 +95,7 @@ export default {
           })
           break
         case 500:
-          // router.push('/error/5xx')
+          router.push('/error/5xx')
           break
         default:
           router.push('/error/5xx')
