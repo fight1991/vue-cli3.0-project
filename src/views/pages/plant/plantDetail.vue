@@ -64,7 +64,12 @@
               {{$t('plant.todayAb')}}
               <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
             </div>
-            <el-echart :datas="normalData" height="200px"></el-echart>
+            <div class="abnormal-content flex-around">
+              <i class="iconfont icon-alarm-total"></i>
+              <div class="item-op flex-center" title="view">
+                {{todayFault}}
+              </div>
+            </div>
           </el-card>
         </el-col>
         <el-col :span="12">
@@ -96,7 +101,6 @@
   </section>
 </template>
 <script>
-import echartData from './echartData'
 import todayAbnormal from './todayAbnormal'
 import deviceList from './deviceList'
 import plantStatus from '../components/powerStatus'
@@ -105,7 +109,6 @@ import Socket from '@/net/socket'
 import { formatDate } from '@/util'
 import { mapState } from 'vuex'
 export default {
-  mixins: [echartData],
   components: {
     todayAbnormal,
     deviceList,
@@ -129,6 +132,7 @@ export default {
       plants: {},
       installer: {},
       users: {},
+      todayFault: 0,
       device: {
         total: 0,
         normal: 0,
@@ -287,15 +291,7 @@ export default {
         }
       })
       if (result) {
-        let { warning, fault, total } = result
-        this.normalData.title.text = total
-        this.normalData.series[0].data = [
-          { value: warning, name: 'Alarm' },
-          { value: fault, name: 'Fault' }
-        ]
-      }
-      if (result && result.device) {
-        this.device = result.device
+        this.todayFault = result.total || 0
       }
       return true
     },
@@ -317,6 +313,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.abnormal-content {
+  height: 200px;
+}
 .progress-container {
   height: 200px;
   display: flex;
@@ -373,5 +372,14 @@ export default {
   .el-col {
     padding-bottom: 10px;
   }
+}
+.item-op {
+  cursor: pointer;
+  color: #F96867;
+  font-size: 32px;
+}
+.icon-alarm-total {
+  font-size: 180px;
+  color: #F96867;
 }
 </style>
