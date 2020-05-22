@@ -51,7 +51,7 @@
           <el-radio-button label="list">{{$t('plant.deviceL')}}</el-radio-button>
         </template>
         <template v-slot:other>
-          <device-list ref="deviceList" :plantId="plantId"></device-list>
+          <device-list ref="deviceList" :id="plantId"></device-list>
         </template>
       </line-bar>
     </div>
@@ -59,18 +59,7 @@
     <div class="block" v-if="access!=1">
       <el-row :gutter="15">
         <el-col :span="12">
-          <el-card shadow="never">
-            <div class="title border-line" slot="header">
-              {{$t('plant.todayAb')}}
-              <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
-            </div>
-            <div class="abnormal-content flex-around">
-              <i class="iconfont icon-alarm-total"></i>
-              <div class="item-op flex-center" title="view">
-                {{todayFault}}
-              </div>
-            </div>
-          </el-card>
+          <today-abnormal :todayFault="todayFault" :id="plantId" :type="'plant'"></today-abnormal>
         </el-col>
         <el-col :span="12">
           <el-card shadow="never">
@@ -97,7 +86,6 @@
         </el-col>
       </el-row>
     </div>
-    <today-abnormal :id="plantId" :type="'plant'" :visible.sync="abnormalVisible"></today-abnormal>
   </section>
 </template>
 <script>
@@ -105,7 +93,6 @@ import todayAbnormal from './todayAbnormal'
 import deviceList from './deviceList'
 import plantStatus from '../components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
-import Socket from '@/net/socket'
 import { formatDate } from '@/util'
 import { mapState } from 'vuex'
 export default {
@@ -216,7 +203,8 @@ export default {
     getCommonRequest () {
       this.getAbnormalStatus()
       this.getDeviceStatus()
-      this.$refs.deviceList.search()
+      this.getPlantEarns()
+      this.$refs.deviceList.search(this.plantId)
       this.$refs.lineBar.getLineData()
       this.$refs.lineBar.getBarData()
     },
@@ -262,7 +250,8 @@ export default {
       await this.$all.promise([
         this.getAbnormalStatus(),
         this.getDeviceStatus(),
-        this.$refs.deviceList.getDeviceList(),
+        this.getPlantEarns(),
+        this.$refs.deviceList.search(this.plantId),
         this.$refs.lineBar.getLineData(),
         this.$refs.lineBar.getBarData()])
       this.switch = false
@@ -293,37 +282,38 @@ export default {
       }
       return true
     },
-    // 获取电站的实时功率、发电、收益
-    getSomeIncome () {
-      this.socket = new Socket()
-      this.socket.startLink({
-        url: '/plant/earnings/detail',
-        flag: 'income',
+    // 获取单个电站的发电和收益情况
+    async getPlantEarns () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/earnings/detail',
         data: {
           stationID: this.plantId
-        },
-        success: (res) => {
-          console.log(res)
         }
       })
+      if (result) {
+        this.incomeDetail.power = result.power
+        this.incomeDetail.currencyCount = 0
+        this.incomeDetail.generation.today = result.today.generation
+        this.incomeDetail.generation.month = result.month.generation
+        this.incomeDetail.generation.cumulate = result.cumulate.generation
+        this.incomeDetail.earnings.cumulate = [
+          {
+            currency: result.currency,
+            value: result.cumulate.earnings
+          }
+        ]
+      }
+      return true
     }
   }
 }
 </script>
 <style lang="less" scoped>
-.abnormal-content {
-  height: 200px;
-}
 .progress-container {
   height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
-.el-icon-more {
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
 }
 .status-text {
   padding: 2px 5px;
@@ -370,14 +360,5 @@ export default {
   .el-col {
     padding-bottom: 10px;
   }
-}
-.item-op {
-  cursor: pointer;
-  color: #F96867;
-  font-size: 32px;
-}
-.icon-alarm-total {
-  font-size: 180px;
-  color: #F96867;
 }
 </style>

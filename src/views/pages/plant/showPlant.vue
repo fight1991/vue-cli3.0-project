@@ -33,8 +33,8 @@
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
               <i title="view" class="iconfont icon-look" @click="goToDetail('look',row)"></i>
-              <i title="edit" class="iconfont icon-edit" v-if="username==row.owner" @click="goToDetail('edit',row)"></i>
-              <i title="delete" class="iconfont icon-delete" v-if="username==row.owner" @click="deletePlant(row.stationID)"></i>
+              <i title="edit" class="iconfont icon-edit"  @click="goToDetail('edit',row)"></i>
+              <i title="delete" class="iconfont icon-delete" @click="deletePlant(row.stationID)"></i>
             </div>
           </template>
         </common-table>

@@ -159,13 +159,12 @@ export default {
     },
     // 获取所有电站的发电和收益情况
     async getPlantEarns () {
-      let { result, error, other } = await this.$axios({
+      let { result } = await this.$axios({
         url: '/v0/plant/earnings/all'
       })
       if (result) {
         this.incomeDetail = result
       }
-      if (error || other) {}
     }
   }
 }
