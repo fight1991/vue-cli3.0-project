@@ -47,17 +47,23 @@
     <div class="right bg-c">
       <div class="weather-content">{{$t('common.weather')}}</div>
       <div class="map-content" style="width:100%;">
-        <g-map></g-map>
+        <g-map v-if="lang=='en'"></g-map>
+        <b-map v-else></b-map>
       </div>
     </div>
   </div>
 </template>
 <script>
 import incomeItem from './incomeItem'
-import gMap from './gMap'
+const bMap = () => import('./bMap')
+const gMap = () => import('./gMap')
 export default {
   name: 'show-item',
-  components: { incomeItem, gMap },
+  components: {
+    incomeItem,
+    bMap,
+    gMap
+  },
   data () {
     return {
       plantStatus: {
@@ -87,6 +93,11 @@ export default {
           earnings: 0
         }
       }
+    }
+  },
+  computed: {
+    lang () {
+      return this.$store.state.lang
     }
   },
   created () {},

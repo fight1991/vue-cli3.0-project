@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import tab from './modules/tab' // 页签管理模块
+import socket from './modules/socketState' // websocket连接状态
 export default new Vuex.Store({
   state: {
     tableH: 320, // 表格高度
@@ -62,6 +63,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    tab
+    tab,
+    socket
   }
 })

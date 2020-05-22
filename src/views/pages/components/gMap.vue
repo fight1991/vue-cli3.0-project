@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import google from 'google'
 export default {
   data () {
     return {
       gMap: null,
-      cuPosition: null
+      cuPosition: null,
+      key: 'AIzaSyCRQmc6dZEosKrS54hJGlMvpOhUglfbo3Q'
     }
   },
   props: {
@@ -21,14 +21,18 @@ export default {
   },
   watch: {},
   created () {
-    this.getGeoLocation()
+    // this.getGeoLocation()
   },
   mounted () {
-    this.initMap()
+    this.loadGMap().then(() => {
+      this.initMap()
+      this.getGeoLocation()
+    })
   },
   methods: {
     initMap () {
-      this.gMap = new google.maps.Map(document.getElementById('g-map'), {
+      let gMap = window.google
+      this.gMap = new gMap.maps.Map(document.getElementById('g-map'), {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 8
       })
@@ -49,13 +53,13 @@ export default {
       // 重新设置中心点
       this.gMap.setCenter(this.cuPosition)
       // 添加标记点
-      let marker = new google.maps.Marker({
+      let marker = new window.google.maps.Marker({
         position: this.cuPosition
         // title: 'hellow'
       })
       marker.setMap(this.gMap)
       // 信息窗
-      let infoWindow = new google.maps.InfoWindow()
+      let infoWindow = new window.google.maps.InfoWindow()
       infoWindow.setPosition(this.cuPosition)
       infoWindow.setContent('Location found.')
       marker.addListener('click', () => {
@@ -64,6 +68,25 @@ export default {
     },
     getLocationError () {
       console.log('error获取经纬度信息失败')
+    },
+    loadGMap () {
+      return new Promise((resolve, reject) => {
+        if (typeof google !== 'undefined') {
+          resolve(window.google)
+          return
+        }
+        window.onGMapCallback = function () {
+          resolve(window.google)
+        }
+        let script = document.createElement('script')
+        script.type = 'text/javascript'
+        script.setAttribute('async', true)
+        script.setAttribute('defer', true)
+        script.src =
+          'https://maps.googleapis.com/maps/api/js?key=' + this.key + '&language=en&callback=onGMapCallback'
+        script.onerror = reject
+        document.head.appendChild(script)
+      })
     }
   }
 }
