@@ -75,7 +75,7 @@
           </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail('look', row.deviceID)"></i>
+              <i title="view" class="iconfont icon-look" @click="goToDetail('look', row.deviceID)"></i>
               <i title="remote setting" class="iconfont icon-remote-setting" @click="goToDetail('set', row.deviceID)"></i>
             </div>
           </template>

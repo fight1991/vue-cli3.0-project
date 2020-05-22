@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchForm.name" :placeholder="$t('common.plantsName')"></el-input>
+            <el-input v-model="searchForm.name" :placeholder="$t('common.plantsName')" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="reset">{{$t('common.reset')}}</el-button>
@@ -25,13 +25,14 @@
           <template v-slot:status="{row}">
             <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
+            <i class="el-icon-remove" v-show="Number(row.status) === 3"></i>
           </template>
           <template v-slot:createdDate="{row}">
               {{ Number(row.createdDate) | formatDate('yyyy-MM-dd HH:mm') }}
             </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
-              <i title="look" class="iconfont icon-look" @click="goToDetail('look',row)"></i>
+              <i title="view" class="iconfont icon-look" @click="goToDetail('look',row)"></i>
               <i title="edit" class="iconfont icon-edit" v-if="username==row.owner" @click="goToDetail('edit',row)"></i>
               <i title="delete" class="iconfont icon-delete" v-if="username==row.owner" @click="deletePlant(row.stationID)"></i>
             </div>
@@ -40,7 +41,7 @@
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
           <span><i class="el-icon-warning"></i> {{$t('common.abnormal')}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.offline')}}</span>
+          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
       </func-bar>
