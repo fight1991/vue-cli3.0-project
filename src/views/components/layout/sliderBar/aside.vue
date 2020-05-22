@@ -20,7 +20,6 @@
 <script>
 import navMenu from '@/views/pages/index.js'
 import sidebarItem from './sidebarItem'
-console.log(navMenu)
 export default {
   components: {
     sidebarItem

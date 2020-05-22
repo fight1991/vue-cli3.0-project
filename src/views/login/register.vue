@@ -129,8 +129,6 @@ export default {
       this[type] = this[type] === 'text' ? 'password' : 'text'
     },
     verPwValid (rule, value, callback) {
-      console.log(value)
-      console.log(this.dataForm.password)
       let { password, confirmWord } = this.dataForm
       if (confirmWord !== password) {
         callback(new Error(this.$t('login.pwNot')))
