@@ -10,17 +10,19 @@
         <el-dropdown size="mini" split-button @command="selectDateType">
           {{dateType}}
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="Day">Day</el-dropdown-item>
-            <el-dropdown-item command="Month">Month</el-dropdown-item>
+            <el-dropdown-item command="Days">Days</el-dropdown-item>
+            <el-dropdown-item command="Months">Months</el-dropdown-item>
+            <el-dropdown-item command="Years">Years</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span class="date-area">
           <i class="arrow el-icon-arrow-left" @click="computeDate('reduce')"></i>
           <el-date-picker
             size="mini"
-            style="width:110px"
-            v-model="dateValue"
-            :type="dateType=='Day' ? 'month':'year'">
+            style="width:125px"
+            :type="pickerDate[dateType]"
+            :picker-options="pickerOptions"
+            v-model="dateValue">
           </el-date-picker>
           <i class="arrow el-icon-arrow-right" @click="computeDate('add')"></i>
           </span>
@@ -43,11 +45,22 @@ export default {
   data () {
     return {
       dateValue: '',
-      dateType: 'Day',
+      dateType: 'Days',
       echartType: 'power', // 默认显示功率图表
       reportType: {
-        Day: 'month',
-        Month: 'year'
+        Days: 'day',
+        Months: 'month',
+        Years: 'year'
+      },
+      pickerDate: {
+        Days: 'month',
+        Months: 'year',
+        Years: 'year'
+      },
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        }
       }
     }
   },
@@ -78,13 +91,13 @@ export default {
     },
     // 设置默认事件
     setDefaultTime () {
-      let dateP = this.dateType === 'Day' ? 'yyyy-MM' : 'yyyy'
+      let dateP = this.dateType === 'Days' ? 'yyyy-MM-dd' : this.dateType === 'Months' ? 'yyyy-MM' : 'yyyy'
       this.dateValue = formatDate(new Date(), dateP)
     },
     // 计算月份 年份
     computeDate (type) {
       let currentTime = new Date(this.dateValue)
-      if (this.dateType === 'Day') { // 月份增减
+      if (this.dateType === 'Days') { // 月份增减
         let tempMonth = type === 'reduce' ? currentTime.getMonth() - 1 : currentTime.getMonth() + 1
         let temp = currentTime.setMonth(tempMonth)
         let lastDate = new Date(temp)
@@ -121,7 +134,7 @@ export default {
         method: 'post',
         data: {
           ...params,
-          variables: ['outputpower', 'feed-in power', 'grid-consumption power'],
+          variables: ['generationPower', 'feedinPower', 'loadsPower'],
           timespan: 'day',
           beginDate: {
             year: new Date().getFullYear(),
@@ -162,7 +175,7 @@ export default {
         data: {
           ...params,
           reportType: this.reportType[this.dateType],
-          variables: ['yield', 'feedin', 'loads', 'gridConsumption'],
+          variables: ['feedin', 'generation', 'loads', 'gridConsumption'],
           queryDate: {
             year: new Date(this.dateValue).getFullYear(),
             month: new Date(this.dateValue).getMonth() + 1,
