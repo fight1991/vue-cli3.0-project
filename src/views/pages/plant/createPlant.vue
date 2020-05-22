@@ -1,5 +1,5 @@
 <template>
-  <section class="sys-main bg-c">
+  <section class="sys-main bg-c" :style="{'min-height': setDivH + 'px'}">
     <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="120px">
       <div class="top" v-if="access > 1">
         <div class="title border-line">{{$t('plant.plantSet')}}</div>
