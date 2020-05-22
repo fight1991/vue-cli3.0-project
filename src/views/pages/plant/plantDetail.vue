@@ -141,23 +141,21 @@ export default {
         offline: 0
       },
       incomeDetail: { // 收益详情
-        currency: '', // 货币种类
-        power: 0, // 功率
-        today: {
-          generation: 0,
-          earnings: 0
+        currencyCount: 0, // 币种数量
+        power: '', // 功率
+        generation: {
+          today: 0,
+          month: 0,
+          year: 0,
+          cumulate: 0
         },
-        month: {
-          generation: 0,
-          earnings: 0
-        },
-        year: {
-          generation: 0,
-          earnings: 0
-        },
-        cumulate: {
-          generation: 0,
-          earnings: 0
+        earnings: {
+          cumulate: [
+            {
+              currency: '-',
+              value: 0
+            }
+          ]
         }
       }
     }

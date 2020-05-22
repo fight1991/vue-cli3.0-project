@@ -1,8 +1,10 @@
 <template>
   <div class="income-details flex">
     <div class="content-item flex-around">
-      <i class="icon icon-plant-day hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-day hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genTod')}} (kwh)
       </div>
       <div class="plant-money text-cut txt-c">
@@ -10,8 +12,10 @@
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-month hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-month hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genMon')}} (kwh)
       </div>
       <div class="plant-money text-cut">
@@ -19,8 +23,10 @@
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-total hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-total hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genTot')}} (kwh)
       </div>
       <div class="plant-money text-cut txt-c">
@@ -28,8 +34,10 @@
       </div>
     </div>
     <div class="content-item flex-around" v-if="incomeDetail.currencyCount <= 1">
-      <i class="icon icon-incomeT hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-incomeT hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.earnTot')}} ({{incomeDetail.earnings.cumulate[0]['currency']}})
       </div>
       <div class="plant-money text-cut plant-money-green">
@@ -37,8 +45,10 @@
       </div>
     </div>
     <div class="content-item flex-around" v-else>
-      <i class="icon icon-incomeT hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-incomeT hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.earnTot')}}
       </div>
       <div class="plant-money text-cut plant-money-green">
@@ -103,11 +113,16 @@ export default {
     &:nth-child(2n+1) {
       border-right: 1px solid #f5f5f5;
     }
+    .icon-img {
+      overflow: hidden;
+    }
+    .icon-img, .plant-text, .plant-money {
+      width: 33%;
+      text-align: center;
+    }
     .plant-money {
-      width: 60px;
       color: #FFC245;
       font-weight: bold;
-      text-align: right;
     }
     .txt-c {
       text-align: center;
