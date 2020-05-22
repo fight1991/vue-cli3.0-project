@@ -52,7 +52,7 @@ export default {
   display: flex;
   .right {
     margin-left: 10px;
-    width: 200px;
+    width: 300px;
     height: 321px;
     box-sizing: border-box;
     padding: 10px;
@@ -61,14 +61,15 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     .weather-text, .weather-place {
-      font-size: 12px;
+      font-size: 16px;
       color: #666;
     }
     .weather-temper {
-      font-size: 16px;
+      font-size: 25px;
     }
     .weather-place i{
       color: #FFA28D;
+      font-size: 30px;
     }
     .weather-img {
       color: #FDB201;
