@@ -84,6 +84,7 @@ import lineBar from '@/views/pages/components/lineBar/lineBar'
 import flowDialog from './flowDialog'
 import flowAnimate from './flowAnimate'
 import lineChart from './lineChart'
+import storage from '@/util/storage'
 export default {
   components: {
     deviceStatus,
@@ -95,6 +96,9 @@ export default {
   mixins: [lineChart, echartData],
   data () {
     return {
+      ws: null,
+      wsIsOpen: false,
+      todayFault: 0,
       flowDialog: false,
       collapse: false,
       abnormalVisible: false,
@@ -119,6 +123,16 @@ export default {
             }
           ]
         }
+      },
+      setWsHead ({ flag = '', url = '', data = {} }) {
+        return JSON.stringify({
+          token: storage.getToken(),
+          msgType: 'request',
+          interval: 2000,
+          sequence: flag,
+          parameters: data,
+          resource: url
+        })
       }
     }
   },
@@ -127,10 +141,31 @@ export default {
     this.getHeadInfo()
     this.getOptions()
     this.getAbnormalStatus()
+    this.createWebsocket(this.getWsInfo)
   },
   mounted () {
     this.$refs.lineBar.getLineData()
     this.$refs.lineBar.getBarData()
+  },
+  watch: {
+    wsIsOpen (newData) {
+      if (newData) {
+        this.ws.send(this.setWsHead({
+          flag: 'earning',
+          url: '/device/real/all',
+          data: {
+            deviceID: this.deviceId
+          }
+        }))
+        this.ws.send(this.setWsHead({
+          flag: 'flow',
+          url: '/device/real/flow',
+          data: {
+            deviceID: this.deviceId
+          }
+        }))
+      }
+    }
   },
   methods: {
     async getHeadInfo () {
@@ -201,6 +236,44 @@ export default {
       if (!this.multiValue) return
       this.lineChart.legend.data = this.multiValue
       this.getMultiChart()
+    },
+    // 创建websocket
+    createWebsocket (callback) {
+      if (this.ws) return
+      let ws = new WebSocket(process.env.VUE_APP_SOCKET)
+      this.ws = ws
+      let that = this
+      ws.onopen = function () {
+        that.wsIsOpen = true
+      }
+      ws.onclose = function () {
+        that.wsIsOpen = false
+      }
+      ws.onerror = function () {
+        that.wsIsOpen = false
+      }
+      ws.onmessage = function (e) {
+        let temp = JSON.parse(e.data)
+        if (temp.msgType === 'response') { // 响应成功与否
+          if (temp.errno === 0) {
+            console('参数发送成功')
+          } else {
+            console('错误码' + temp.errno)
+          }
+        }
+        if (temp.msgType === 'data') {
+          callback && callback(temp)
+        }
+      }
+    },
+    // 获取ws信息
+    getWsInfo (data) {
+      if (data.sequence === 'earning') {
+        console.log('earning')
+      }
+      if (data.sequence === 'flow') {
+        console.log('flow')
+      }
     }
   }
 }
