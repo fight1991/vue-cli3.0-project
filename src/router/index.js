@@ -52,8 +52,7 @@ router.beforeEach(async (to, from, next) => {
   }
   // token不存在,跳转到login
   if (!storage.getToken()) {
-    // next('/login')
-    next()
+    next('/login')
     return
   }
   // 第一次进入系统需要获取权限状态和用户信息(刷新地址栏)
