@@ -6,7 +6,7 @@
     </h2>
     <div>
       <span>{{content}}</span>
-      <el-link type="primary" @click="gotoHome()">Back home</el-link>
+      <el-link type="primary" @click="gotoHome()">{{$t('common.backHome')}}</el-link>
     </div>
   </div>
 </template>

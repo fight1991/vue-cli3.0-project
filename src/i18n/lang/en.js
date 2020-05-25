@@ -36,6 +36,7 @@ export default {
     join: 'Join'
   },
   common: {
+    backHome: 'Back home',
     zone: 'Time zone',
     closeAll: 'Close all',
     closeOther: 'Close others',

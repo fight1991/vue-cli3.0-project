@@ -36,6 +36,7 @@ export default {
     join: '加入'
   },
   common: {
+    backHome: '返回首页',
     zone: '时区',
     closeAll: '关闭全部',
     closeOther: '关闭其他',
