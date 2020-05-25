@@ -170,7 +170,7 @@ export default {
   methods: {
     async getHeadInfo () {
       let { result } = await this.$axios({
-        url: '/v0//device/addressbook',
+        url: '/v0/device/addressbook',
         data: {
           deviceID: this.deviceId
         }
