@@ -128,7 +128,7 @@ export default {
     errorMg4: 'Mobile number is invalid',
     errorMg5: 'Password is invalid',
     errorMg6: 'Please enter 4-digit verification code',
-    tips1: 'Make sure it starts width a letter and it is at least 6 characters including a number and a letter',
+    tips1: 'Make sure it starts width a letter and it is at least 5 characters',
     tips2: 'Make sure it is at least 6 characters including a number and a letter',
     tips3: '',
     tips4: '',
