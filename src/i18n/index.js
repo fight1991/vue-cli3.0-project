@@ -9,8 +9,6 @@ import ELEMENT from 'element-ui'
 import en from './lang/en'
 import zh from './lang/zh'
 
-Vue.use(VueI18n)
-Vue.use(ELEMENT)
 const messages = {
   en: {
     ...en,
@@ -31,12 +29,6 @@ const i18n = new VueI18n({
 Vue.use(ELEMENT, {
   i18n: (key, value) => i18n.t(key, value)
 })
-
-Vue.prototype.$switchLang = function (lang) {
-  i18n.locale = lang
-  store.commit('toggleLang', lang)
-}
-window.translateT = i18n.t
 
 export default i18n
 // export default {

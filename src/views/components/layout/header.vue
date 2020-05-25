@@ -55,7 +55,7 @@ export default {
   created () {},
   methods: {
     toggleLang (lang) {
-      this.$switchLang(lang)
+      this.$i18n.locale = lang
       this.lang = lang === 'en' ? 'English' : '中文'
       document.title = this.$t('navBar.' + this.$route.meta.title)
     },
