@@ -77,14 +77,15 @@ const webpackConfig = {
       })
     ],
     externals: {
-      // 'element-ui': 'ELEMENT',
+      'element-ui': 'ELEMENT',
       'vue-i18n': 'VueI18n',
       'vue': 'Vue',
       'vuex': 'Vuex',
       'axios': 'axios',
       'vue-router': 'VueRouter',
       'BMap': 'BMap',
-      'google': 'google'
+      'google': 'google',
+      'echarts': 'echarts'
     },
     optimization: {
       splitChunks: {

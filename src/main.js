@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 // import '@/style/variable/theme.scss' // 出现样式重复现象
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
 // 覆盖样式
 import '@/style/base.less'

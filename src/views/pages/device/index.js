@@ -35,7 +35,7 @@ export default {
       }
     },
     {
-      path: '/bus/device/inverter/inverterDetail',
+      path: '/bus/device/inverterDetail',
       name: 'bus-device-inverterDetail',
       hidden: true,
       meta: {

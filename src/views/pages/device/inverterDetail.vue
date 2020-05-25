@@ -283,6 +283,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@import '../components/plantInvert';
 .el-icon-more {
   font-size: 16px;
   font-weight: bold;
@@ -295,48 +296,5 @@ export default {
 .select-line {
   padding:10px;
   border-bottom:1px solid #f5f5f5;
-}
-.plant-head {
-  padding: 10px;
-  .arrow-right {
-    padding: 10px;
-    cursor: pointer;
-  }
-  .plant-name {
-    .iconfont {
-      color: @sys-main-header;
-      font-size: 32px;
-      margin-right: 10px;
-    }
-    span {
-      margin-right: 40px;
-    }
-  }
-  .select-area {
-    padding: 0 20px;
-    .arrow {
-      cursor: pointer;
-      margin: 0 3px;
-      font-size: 20px;
-      &:hover {
-        background-color: #eee;
-      }
-    }
-  }
-}
-.plant-item {
-  transition: all .2s;
-  overflow: hidden;
-  max-height: 98px;
-  &.height-0 {
-    max-height: 0px;
-  }
-  .el-row {
-    border-top: 1px solid #f5f5f5;
-    padding: 10px 0 0 50px;
-  }
-  .el-col {
-    padding-bottom: 10px;
-  }
 }
 </style>

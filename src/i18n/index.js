@@ -1,27 +1,24 @@
 import store from '@/store'
 import VueI18n from 'vue-i18n'
 import Vue from 'vue'
-import ElementUI from 'element-ui'
+import ELEMENT from 'element-ui'
 
-import enLocale from 'element-ui/lib/locale/lang/en'
-import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
-// import ELEMENT from 'element-ui'
-// ...ELEMENT.lang.en
-// ...ELEMENT.lang.zhCN
+// import enLocale from 'element-ui/lib/locale/lang/en'
+// import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
 import en from './lang/en'
 import zh from './lang/zh'
 
 Vue.use(VueI18n)
-Vue.use(ElementUI)
+Vue.use(ELEMENT)
 const messages = {
   en: {
     ...en,
-    ...enLocale
+    ...ELEMENT.lang.en
   },
   zh: {
     ...zh,
-    ...zhLocale
+    ...ELEMENT.lang.zhCN
   }
 }
 const i18n = new VueI18n({
@@ -31,7 +28,7 @@ const i18n = new VueI18n({
   messages // set locale messages
 })
 
-Vue.use(ElementUI, {
+Vue.use(ELEMENT, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
