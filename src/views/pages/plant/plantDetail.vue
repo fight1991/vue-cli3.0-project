@@ -89,9 +89,9 @@
   </section>
 </template>
 <script>
-import todayAbnormal from './todayAbnormal'
+import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import deviceList from './deviceList'
-import plantStatus from '../components/powerStatus'
+import plantStatus from '@/views/pages/components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import { formatDate } from '@/util'
 import { mapState } from 'vuex'

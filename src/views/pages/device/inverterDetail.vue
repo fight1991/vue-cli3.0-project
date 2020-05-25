@@ -41,7 +41,7 @@
             <div class="title border-line" slot="header">
               <!-- Flow graph -->
               {{$t('inverter.powerFD')}}
-              <i class="fr el-icon-more" @click="flowDialog=true"></i>
+              <i class="fr el-icon-more flow-icon-more" @click="flowDialog=true"></i>
             </div>
             <div class="flow-map flex-center" style="height:250px">
               <flow-animate></flow-animate>
@@ -77,9 +77,8 @@
   </section>
 </template>
 <script>
-import echartData from '@/views/pages/plant/echartData'
-import deviceStatus from '../components/powerStatus'
 import todayAbnormal from '@/views/pages/plant/todayAbnormal'
+import deviceStatus from '@/views/pages/components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import flowDialog from './flowDialog'
 import flowAnimate from './flowAnimate'
@@ -93,7 +92,7 @@ export default {
     flowDialog,
     flowAnimate
   },
-  mixins: [lineChart, echartData],
+  mixins: [lineChart],
   data () {
     return {
       ws: null,
@@ -284,7 +283,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '../components/plantInvert';
-.el-icon-more {
+.flow-icon-more {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
