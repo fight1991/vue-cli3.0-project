@@ -34,13 +34,7 @@
     <div class="block">
       <el-row :gutter="15">
         <el-col :span="8">
-          <el-card shadow="never">
-            <div class="title border-line" slot="header">
-              {{$t('plant.todayAb')}}
-              <i class="fr el-icon-more" @click="abnormalVisible=true"></i>
-            </div>
-            <el-echart :datas="normalData" height="250px"></el-echart>
-          </el-card>
+          <today-abnormal :todayFault="todayFault" :type="'device'" :id="deviceId" :contentH="250"></today-abnormal>
         </el-col>
         <el-col :span="16">
           <el-card shadow="never">
@@ -79,7 +73,6 @@
       </el-row>
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
-    <today-abnormal :type="'device'" :id="deviceId" :visible.sync="abnormalVisible"></today-abnormal>
     <flow-dialog :visible.sync="flowDialog"></flow-dialog>
   </section>
 </template>
@@ -91,6 +84,7 @@ import lineBar from '@/views/pages/components/lineBar/lineBar'
 import flowDialog from './flowDialog'
 import flowAnimate from './flowAnimate'
 import lineChart from './lineChart'
+import storage from '@/util/storage'
 export default {
   components: {
     deviceStatus,
@@ -102,6 +96,9 @@ export default {
   mixins: [lineChart, echartData],
   data () {
     return {
+      ws: null,
+      wsIsOpen: false,
+      todayFault: 0,
       flowDialog: false,
       collapse: false,
       abnormalVisible: false,
@@ -110,24 +107,32 @@ export default {
       options: [],
       headInfo: {},
       incomeDetail: { // 收益详情
-        currency: '', // 货币种类
-        power: 0, // 功率
-        today: {
-          generation: 0,
-          earnings: 0
+        currencyCount: 0, // 币种数量
+        power: '', // 功率
+        generation: {
+          today: 0,
+          month: 0,
+          year: 0,
+          cumulate: 0
         },
-        month: {
-          generation: 0,
-          earnings: 0
-        },
-        year: {
-          generation: 0,
-          earnings: 0
-        },
-        cumulate: {
-          generation: 0,
-          earnings: 0
+        earnings: {
+          cumulate: [
+            {
+              currency: '-',
+              value: 0
+            }
+          ]
         }
+      },
+      setWsHead ({ flag = '', url = '', data = {} }) {
+        return JSON.stringify({
+          token: storage.getToken(),
+          msgType: 'request',
+          interval: 2000,
+          sequence: flag,
+          parameters: data,
+          resource: url
+        })
       }
     }
   },
@@ -135,15 +140,37 @@ export default {
     this.deviceId = this.$route.query.id
     this.getHeadInfo()
     this.getOptions()
+    this.getAbnormalStatus()
+    this.createWebsocket(this.getWsInfo)
   },
   mounted () {
     this.$refs.lineBar.getLineData()
     this.$refs.lineBar.getBarData()
   },
+  watch: {
+    wsIsOpen (newData) {
+      if (newData) {
+        this.ws.send(this.setWsHead({
+          flag: 'earning',
+          url: '/device/real/all',
+          data: {
+            deviceID: this.deviceId
+          }
+        }))
+        this.ws.send(this.setWsHead({
+          flag: 'flow',
+          url: '/device/real/flow',
+          data: {
+            deviceID: this.deviceId
+          }
+        }))
+      }
+    }
+  },
   methods: {
     async getHeadInfo () {
       let { result } = await this.$axios({
-        url: '/v0//device/addressbook',
+        url: '/v0/device/addressbook',
         data: {
           deviceID: this.deviceId
         }
@@ -192,10 +219,65 @@ export default {
       }
       return true
     },
+    // 获取今日异常
+    async getAbnormalStatus () {
+      let { result } = await this.$axios({
+        url: '/v0/device/alarm/today',
+        data: {
+          deviceID: this.deviceId
+        }
+      })
+      if (result) {
+        this.todayFault = result.total || 0
+      }
+      return true
+    },
     selectChange () {
       if (!this.multiValue) return
       this.lineChart.legend.data = this.multiValue
       this.getMultiChart()
+    },
+    // 创建websocket
+    createWebsocket (callback) {
+      if (this.ws) return
+      if (!window.WebSocket) {
+        this.$message.error(`your brower can't support websocket, please go to update`)
+        return
+      }
+      let ws = new WebSocket(process.env.VUE_APP_SOCKET)
+      this.ws = ws
+      let that = this
+      ws.onopen = function () {
+        that.wsIsOpen = true
+      }
+      ws.onclose = function () {
+        that.wsIsOpen = false
+      }
+      ws.onerror = function () {
+        that.wsIsOpen = false
+      }
+      ws.onmessage = function (e) {
+        let temp = JSON.parse(e.data)
+        if (temp.msgType === 'response') { // 响应成功与否
+          if (temp.errno === 0) {
+            console('参数发送成功')
+          } else {
+            console('错误码' + temp.errno)
+          }
+        }
+        if (temp.msgType === 'data') {
+          callback && callback(temp)
+        }
+      }
+    },
+    // 获取ws信息
+    getWsInfo (data) {
+      if (data.sequence === 'earning') {
+        console.log('earning')
+      }
+      if (data.sequence === 'flow') {
+        console.log('flow')
+      }
     }
   }
 }

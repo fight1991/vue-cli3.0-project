@@ -95,22 +95,21 @@ export default {
       incomeList: [],
       mapId: '', // 地图容器 若id相同的话只渲染一次
       incomeDetail: { // 收益详情
-        currency: '', // 货币种类
-        today: {
-          generation: 0,
-          earnings: 0
+        currencyCount: 0, // 币种数量
+        power: '', // 功率
+        generation: {
+          today: 0,
+          month: 0,
+          year: 0,
+          cumulate: 0
         },
-        month: {
-          generation: 0,
-          earnings: 0
-        },
-        year: {
-          generation: 0,
-          earnings: 0
-        },
-        cumulate: {
-          generation: 0,
-          earnings: 0
+        earnings: {
+          cumulate: [
+            {
+              currency: '-',
+              value: 0
+            }
+          ]
         }
       }
     }
@@ -122,6 +121,11 @@ export default {
   },
   created () {
     this.getTimeInfo()
+    this.getPlantEarns()
+  },
+  beforeDestroy () {
+    this.timer && clearInterval(this.timer)
+    this.timer = null
   },
   mounted () {},
   methods: {
@@ -140,6 +144,7 @@ export default {
     selectStatus (status) {
       this.$emit('getselect', status)
     },
+    // 获取时钟信息
     getTimeInfo () {
       this.timer = setInterval(() => {
         // 时:分:秒
@@ -149,12 +154,17 @@ export default {
         this.timeInfo.date = tempArr[0]
         this.timeInfo.time = tempArr[1]
         let index = tempS.getDay() - 1
-        this.timeInfo.week = this.$store.state.lang === 'zh' ? this.timeTrans['zh'][index] : this.timeTrans['other'][index]
+        this.timeInfo.week = this.lang === 'zh' ? this.timeTrans['zh'][index] : this.timeTrans['other'][index]
       }, 1000)
     },
-    beforeDestroy () {
-      this.timer && clearInterval(this.timer)
-      this.timer = null
+    // 获取所有电站的发电和收益情况
+    async getPlantEarns () {
+      let { result } = await this.$axios({
+        url: '/v0/plant/earnings/all'
+      })
+      if (result) {
+        this.incomeDetail = result
+      }
     }
   }
 }

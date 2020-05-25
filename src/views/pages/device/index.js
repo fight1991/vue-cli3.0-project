@@ -40,7 +40,7 @@ export default {
       hidden: true,
       meta: {
         permission: [1, 2, 3],
-        title: '逆变器详情',
+        title: 'invertD',
         component: () => import(/* webpackChunkName: "bus-device-inverterDetail" */ '@/views/pages/device/inverterDetail')
       }
     },

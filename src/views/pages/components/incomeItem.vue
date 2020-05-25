@@ -1,41 +1,71 @@
 <template>
   <div class="income-details flex">
     <div class="content-item flex-around">
-      <i class="icon icon-plant-day hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-day hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genTod')}} (kwh)
       </div>
       <div class="plant-money text-cut txt-c">
-        {{incomeDetail.today.generation}}
+        {{incomeDetail.generation.today}}
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-month hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-month hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genMon')}} (kwh)
       </div>
       <div class="plant-money text-cut">
-        {{incomeDetail.month.generation}}
+        {{incomeDetail.generation.month}}
       </div>
     </div>
     <div class="content-item flex-around">
-      <i class="icon icon-plant-total hidden-sm-and-down"></i>
-      <div class="plant-text">
+      <div class="icon-img">
+        <i class="icon icon-plant-total hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
         {{$t('plant.genTot')}} (kwh)
       </div>
       <div class="plant-money text-cut txt-c">
-        {{incomeDetail.cumulate.generation}}
+        {{incomeDetail.generation.cumulate}}
       </div>
     </div>
-    <div class="content-item flex-around">
-      <i class="icon icon-incomeT hidden-sm-and-down"></i>
-      <div class="plant-text">
-        {{$t('plant.earnTot')}} ({{incomeDetail.currency}})
+    <div class="content-item flex-around" v-if="incomeDetail.currencyCount <= 1">
+      <div class="icon-img">
+        <i class="icon icon-incomeT hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
+        {{$t('plant.earnTot')}} ({{incomeDetail.earnings.cumulate[0]['currency']}})
       </div>
       <div class="plant-money text-cut plant-money-green">
-        {{incomeDetail.cumulate.earnings}}
+        {{incomeDetail.earnings.cumulate[0]['value']}}
       </div>
     </div>
+    <div class="content-item flex-around" v-else>
+      <div class="icon-img">
+        <i class="icon icon-incomeT hidden-sm-and-down"></i>
+      </div>
+      <div class="plant-text text-cut">
+        {{$t('plant.earnTot')}}
+      </div>
+      <div class="plant-money text-cut plant-money-green">
+        <i class="iconfont icon-look moneny-detail" v-popover:popover></i>
+      </div>
+    </div>
+    <el-popover
+      popper-class="money-popper"
+      ref="popover"
+      placement="right"
+      title="List"
+      width="200"
+      trigger="hover">
+      <p v-for="item in incomeDetail.earnings.cumulate" :key="item.currency">
+        {{item.currency + ' : ' + item.value}}
+      </p>
+    </el-popover>
   </div>
 </template>
 <script>
@@ -47,23 +77,21 @@ export default {
     incomeDetail: {
       default () {
         return {
-          currency: '', // 货币种类
+          currencyCount: 0, // 币种数量
           power: '', // 功率
-          today: {
-            generation: 0,
-            earnings: 0
+          generation: {
+            today: 0,
+            month: 0,
+            year: 0,
+            cumulate: 0
           },
-          month: {
-            generation: 0,
-            earnings: 0
-          },
-          year: {
-            generation: 0,
-            earnings: 0
-          },
-          cumulate: {
-            generation: 0,
-            earnings: 0
+          earnings: {
+            cumulate: [
+              {
+                currency: '-',
+                value: 0
+              }
+            ]
           }
         }
       }
@@ -85,11 +113,16 @@ export default {
     &:nth-child(2n+1) {
       border-right: 1px solid #f5f5f5;
     }
+    .icon-img {
+      overflow: hidden;
+    }
+    .icon-img, .plant-text, .plant-money {
+      width: 33%;
+      text-align: center;
+    }
     .plant-money {
-      width: 60px;
       color: #FFC245;
       font-weight: bold;
-      text-align: right;
     }
     .txt-c {
       text-align: center;
@@ -98,6 +131,9 @@ export default {
       color: #67C23A;
       font-weight: bold;
     }
+  }
+  .moneny-detail {
+    cursor: pointer;
   }
 }
 </style>
