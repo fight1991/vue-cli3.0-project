@@ -240,6 +240,10 @@ export default {
     // 创建websocket
     createWebsocket (callback) {
       if (this.ws) return
+      if (!window.WebSocket) {
+        this.$message.error(`your brower can't support websocket, please go to update`)
+        return
+      }
       let ws = new WebSocket(process.env.VUE_APP_SOCKET)
       this.ws = ws
       let that = this
