@@ -227,7 +227,7 @@ export default {
     upgrade: '批量升级',
     upstatus: '查看升级状态'
   },
-  errorcode: {
+  errorCode: {
     41200: '查询数据异常',
     41201: '服务运行异常',
     41202: '程序分支未处理',

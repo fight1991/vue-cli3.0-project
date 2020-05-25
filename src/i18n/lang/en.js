@@ -227,7 +227,7 @@ export default {
     upgrade: 'Batch upgrade',
     upstatus: 'View upgrade status'
   },
-  errorcode: {
+  errorCode: {
     41200: 'Query data failed',
     41201: 'Server exception',
     41202: 'Program branch not processed',

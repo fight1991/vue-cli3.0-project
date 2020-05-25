@@ -32,7 +32,7 @@ export default {
         tips = true
         Message({
           type: 'error',
-          message: 'error: ' + response.data.errno,
+          message: i18n.t('errorCode.' + response.data.errno),
           duration: 2000,
           onClose: () => {
             tips = false
@@ -50,7 +50,7 @@ export default {
         })
       } else { // 其他业务报错
         if (tips) return response.data
-        Message.error('error: ' + i18n.t('errorCode.' + response.data.errno))
+        Message.error(i18n.t('errorCode.' + response.data.errno))
       }
     }
     return response.data
