@@ -1,6 +1,7 @@
 import router from '@/router'
 import store from '@/store'
 import storage from '@/util/storage'
+import i18n from '@/i18n'
 import { Message } from 'element-ui'
 
 /**
@@ -49,7 +50,7 @@ export default {
         })
       } else { // 其他业务报错
         if (tips) return response.data
-        Message.error('error: ' + response.data.errno)
+        Message.error('error: ' + i18n.t('errorCode.' + response.data.errno))
       }
     }
     return response.data
