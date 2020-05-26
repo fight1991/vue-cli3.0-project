@@ -63,6 +63,9 @@ export default {
     .weather-text, .weather-place {
       font-size: 16px;
       color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .weather-temper {
       font-size: 25px;
