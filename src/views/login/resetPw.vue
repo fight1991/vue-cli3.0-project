@@ -9,7 +9,7 @@
             </el-form-item>
           </el-col>
            <el-col :span="24" class="password">
-            <el-form-item prop="pw" :label="$t('login.newPw')">
+            <el-form-item prop="newPassword" :label="$t('login.newPw')">
               <el-popover
                 :visible-arrow="false"
                 trigger="focus"
@@ -60,7 +60,7 @@ export default {
       },
       loginRules: {
         user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
-        pw: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
+        newPassword: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
         code: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
       }
     }

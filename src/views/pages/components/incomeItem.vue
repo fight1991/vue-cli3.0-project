@@ -38,10 +38,10 @@
         <i class="icon icon-incomeT hidden-sm-and-down"></i>
       </div>
       <div class="plant-text text-cut">
-        {{$t('plant.earnTot')}} ({{incomeDetail.earnings.cumulate[0]['currency']}})
+        {{$t('plant.earnTot')}} ({{incomeDetail.earnings.cumulate[0] && incomeDetail.earnings.cumulate[0]['currency']}})
       </div>
       <div class="plant-money text-cut plant-money-green">
-        {{incomeDetail.earnings.cumulate[0]['value']}}
+        {{incomeDetail.earnings.cumulate[0] && incomeDetail.earnings.cumulate[0]['value']}}
       </div>
     </div>
     <div class="content-item flex-around" v-else>

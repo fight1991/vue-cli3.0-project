@@ -51,7 +51,11 @@ export default {
       loginRules: {}
     }
   },
-  created () {},
+  created () {
+    if (this.$route.query.type === 'reset') {
+      this.registerBtn('resetPw')
+    }
+  },
   computed: {},
   methods: {
     // 用户名密码登录输入框校验
