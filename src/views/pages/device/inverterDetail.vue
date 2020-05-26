@@ -84,6 +84,7 @@ import flowDialog from './flowDialog'
 import flowAnimate from './flowAnimate'
 import lineChart from './lineChart'
 import storage from '@/util/storage'
+import { isJSON } from '@/util'
 export default {
   components: {
     deviceStatus,
@@ -156,6 +157,7 @@ export default {
             deviceID: this.deviceId
           }
         }))
+        this.ws.send('\r\n')
         this.ws.send(this.setWsHead({
           flag: 'flow',
           url: '/c/v0/device/real/flow',
@@ -163,8 +165,12 @@ export default {
             deviceID: this.deviceId
           }
         }))
+        this.ws.send('\r\n')
       }
     }
+  },
+  beforeDestroy () {
+    this.ws && this.ws.close()
   },
   methods: {
     async getHeadInfo () {
@@ -256,16 +262,20 @@ export default {
         that.wsIsOpen = false
       }
       ws.onmessage = function (e) {
-        let temp = JSON.parse(e.data)
-        if (temp.msgType === 'response') { // 响应成功与否
-          if (temp.errno === 0) {
-            console('参数发送成功')
-          } else {
-            console('错误码' + temp.errno)
+        if (isJSON(e.data)) {
+          let temp = JSON.parse(e.data)
+          if (temp.msgType === 'response') { // 响应成功与否
+            if (temp.errno === 0) {
+              console.log('参数发送成功')
+            } else {
+              console.log('错误码' + temp.errno)
+            }
           }
-        }
-        if (temp.msgType === 'data') {
-          callback && callback(temp)
+          if (temp.msgType === 'data') {
+            callback && callback(temp)
+          }
+        } else {
+          console.log('数据格式不正确')
         }
       }
     },
