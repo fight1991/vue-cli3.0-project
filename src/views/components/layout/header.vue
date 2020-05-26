@@ -27,17 +27,16 @@
           <span>{{userInfo.user || ''}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item command="logout" divided @click="logout">退出</el-dropdown-item>
+          <el-dropdown-item command="reset">{{$t('login.resetPw')}}</el-dropdown-item>
+          <el-dropdown-item command="logout" divided>{{$t('login.goOut')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span class="info"><i class="iconfont icon-info"></i></span>
+      <!-- <span class="info"><i class="iconfont icon-info"></i></span> -->
     </div>
   </div>
 </template>
 
 <script>
-import storage from '@/util/storage'
 import { mapState } from 'vuex'
 export default {
   name: 'layout-header',
@@ -62,20 +61,28 @@ export default {
     userOption (op) {
       if (op === 'logout') {
         this.logout()
+      } else {
+        this.goResetPw()
       }
+    },
+    // 修改密码
+    goResetPw () {
+      let { href } = this.$router.resolve({
+        path: '/login?type=reset'
+      })
+      window.open(href, '_self')
     },
     // 注销登录
     async logout () {
-      let res = await this.$confirm('Are you sure you want to log out?', 'tip', {
-        confirmButtonText: 'confirm',
-        cancelButtonText: 'cancel',
+      let res = await this.$confirm(this.$t('login.tips3'), this.$t('common.tip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
       this.$post({
         url: '/v0/user/logout',
         success: () => {
-          storage.removeLoginInfo()
           let { href } = this.$router.resolve({
             path: '/login'
           })

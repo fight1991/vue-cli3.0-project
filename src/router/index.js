@@ -45,6 +45,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth === false) {
     if (to.path === '/login') {
       storage.removeToken('token')
+      storage.removeLoginInfo()
       _this.$options.store.state.isFirst = true
     }
     next()
