@@ -151,14 +151,14 @@ export default {
       if (newData) {
         this.ws.send(this.setWsHead({
           flag: 'earning',
-          url: '/device/real/all',
+          url: '/c/v0/device/real/all',
           data: {
             deviceID: this.deviceId
           }
         }))
         this.ws.send(this.setWsHead({
           flag: 'flow',
-          url: '/device/real/flow',
+          url: '/c/v0/device/real/flow',
           data: {
             deviceID: this.deviceId
           }
