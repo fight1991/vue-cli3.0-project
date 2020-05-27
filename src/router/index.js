@@ -38,7 +38,7 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
-// 登陆校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
+// 登录校验、放行 注意: 有些cdn路由版本 地址栏输入路由地址时会加载2次
 router.beforeEach(async (to, from, next) => {
   let _this = router.app
   // 不需权限,直接放行 /login,/error-xx等
