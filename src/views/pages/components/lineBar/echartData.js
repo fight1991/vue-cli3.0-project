@@ -25,8 +25,8 @@ export default {
             show: true,
             xAxisIndex: [0],
             top: '80%',
-            start: 1,
-            end: 20
+            start: 0,
+            end: 70
           }],
           yAxis: {
             type: 'value',

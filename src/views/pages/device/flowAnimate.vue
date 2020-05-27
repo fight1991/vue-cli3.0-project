@@ -3,11 +3,12 @@
     <div class="circle-line box-left">
       <div class="pv icon-pv"></div>
       <div class="inverter icon-inverter"></div>
-      <div class="dot1"></div>
-      <div class="dot3"></div>
+      <div class="pv-text">PV&nbsp;:&nbsp;{{pvValue}}</div>
+      <div class="dot1" v-show="path==2 || path==1"></div>
+      <div class="dot3" v-show="path==2 || path==3"></div>
     </div>
     <div class="circle-line box-right">
-      <!-- <div class="dot2"></div> -->
+      <div class="dot2" v-show="path==4"></div>
       <div class="grid icon-grid"></div>
       <div class="load icon-load"></div>
     </div>
@@ -19,6 +20,14 @@ export default {
   data () {
     return {
       dot: true
+    }
+  },
+  props: {
+    path: {
+      default: 0
+    },
+    pvValue: {
+      default: 0
     }
   },
   created () {},
@@ -75,6 +84,16 @@ export default {
     left: 0;
     transform: translate(-50%, 50%)
   }
+  .pv-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: #67C23A;
+    font-size: 16px;
+    width: 85px;
+    text-align: center;
+    transform: translateX(-10px)
+  }
   .dot1,.dot2,.dot3 {
     position: absolute;
     top: 0;
@@ -96,7 +115,7 @@ export default {
   }
   .dot2 {
     right: 0;
-    background-color: blue;
+    background-color: #67C23A;
     transform: translate(50%,-50%);
     animation: dot2 2s linear infinite;
 

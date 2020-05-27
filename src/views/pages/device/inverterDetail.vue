@@ -44,7 +44,7 @@
               <i class="fr el-icon-more flow-icon-more" @click="flowDialog=true"></i>
             </div>
             <div class="flow-map flex-center" style="height:250px">
-              <flow-animate></flow-animate>
+              <flow-animate :path="flowPath" :pvValue="pvTotal"></flow-animate>
             </div>
           </el-card>
         </el-col>
@@ -62,7 +62,7 @@
     <!-- 多选折线图 -->
     <div class="container-bottom bg-c">
       <el-row class="select-line">
-        <el-select v-model="multiValue" multiple size="mini" :placeholder="$t('common.select')" @change="selectChange">
+        <el-select v-model="multiValue" collapse-tags multiple size="mini" :placeholder="$t('common.select')" @change="selectChange">
           <el-option
             v-for="item in options"
             :key="item"
@@ -96,6 +96,8 @@ export default {
   mixins: [lineChart],
   data () {
     return {
+      flowPath: 0,
+      pvTotal: 0,
       ws: null,
       wsIsOpen: false,
       todayFault: 0,
@@ -141,6 +143,7 @@ export default {
     this.getHeadInfo()
     this.getOptions()
     this.getAbnormalStatus()
+    this.getDeviceEarns()
     this.createWebsocket(this.getWsInfo)
   },
   mounted () {
@@ -173,6 +176,7 @@ export default {
     this.ws && this.ws.close()
   },
   methods: {
+    // 获取头部逆变器信息
     async getHeadInfo () {
       let { result } = await this.$axios({
         url: '/v0/device/addressbook',
@@ -182,6 +186,29 @@ export default {
       })
       this.headInfo = result || {}
     },
+    // 获取单个设备功率的发电和收益情况
+    async getDeviceEarns () {
+      let { result } = await this.$axios({
+        url: '/v0/device/earnings',
+        data: {
+          deviceID: this.deviceId
+        }
+      })
+      if (result) {
+        this.incomeDetail.power = result.power
+        this.incomeDetail.currencyCount = 0
+        this.incomeDetail.generation.today = result.today.generation
+        this.incomeDetail.generation.month = result.month.generation
+        this.incomeDetail.generation.cumulate = result.cumulate.generation
+        this.incomeDetail.earnings.cumulate = [
+          {
+            currency: result.currency,
+            value: result.cumulate.earnings
+          }
+        ]
+      }
+    },
+    // 获取图表下拉选择框
     async getOptions () {
       let { result } = await this.$axios({
         url: '/v0/device/variables',
@@ -190,7 +217,7 @@ export default {
         }
       })
       if (result) {
-        this.options = result.varialbes || []
+        this.options = result.variables || []
       }
     },
     // 多折线图表
@@ -199,11 +226,12 @@ export default {
         url: '/v0/device/history/raw',
         method: 'post',
         data: {
+          deviceID: this.deviceId,
           variables: this.multiValue,
           timespan: 'hour',
           beginDate: {
             year: new Date().getFullYear(),
-            month: new Date().getMonth(),
+            month: new Date().getMonth() + 1,
             day: new Date().getDate(),
             hour: new Date().getHours(),
             minute: new Date().getMinutes(),
@@ -212,14 +240,16 @@ export default {
         }
       })
       if (result && result.length > 0) {
+        let temp = []
         result.forEach((v, i) => {
           let tempData = v.data.map(item => [item.timestamp, item.value])
-          this.lineChart.series[i] = {
+          temp.push({
             name: v.variable,
             data: tempData,
             type: 'line',
             smooth: true
-          }
+          })
+          this.lineChart.series = temp
         })
       }
       return true
@@ -286,6 +316,34 @@ export default {
       }
       if (data.sequence === 'flow') {
         console.log('flow')
+        let res = data.data
+        let pvValue = 0
+        this.pvTotal = 0
+        let { pvPower, generationPower, loadsPower, feedinPower, gridConsumptionPower } = res
+        if (pvPower && pvPower.length > 0) {
+          let flag = pvPower.some(v => v.value > 0)
+          flag && (pvValue = 1)
+          pvPower.forEach(v => {
+            this.pvTotal += v.value
+          })
+        }
+        this.flowPath = this.getFlowPath(pvValue, generationPower.value, loadsPower.value, feedinPower.value, gridConsumptionPower.value)
+      }
+    },
+    // 计算得出流向图路径
+    getFlowPath (pvValue, generationPower, loadsPower, feedinPower, gridConsumptionPower) {
+      let tag1 = pvValue > 0 && generationPower > 0 && (feedinPower + generationPower) > 0
+      let tag2 = pvValue > 0 && generationPower > 0 && (feedinPower + generationPower) < 0
+      if (tag1 && feedinPower < 0) {
+        return 1
+      } else if (tag1 && feedinPower > 0) {
+        return 2
+      } else if (tag2 && feedinPower < 0) {
+        return 3
+      } else if (feedinPower > 0 && (generationPower + feedinPower) > 0) {
+        return 4
+      } else {
+        return 0
       }
     }
   }
