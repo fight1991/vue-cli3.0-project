@@ -13,10 +13,10 @@ const Home = {
   path: '/bus/index',
   hidden: true,
   name: 'tab-index',
+  component: () => import(/* webpackChunkName: "home" */ '@/views/pages/home'),
   meta: {
     permission: [1, 2, 3],
-    title: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/pages/home')
+    title: 'home'
   }
 }
 export default [

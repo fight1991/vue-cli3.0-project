@@ -8,12 +8,6 @@
           :label="$t('navBar.'+item.title)"
           :name="item.tabId">
           <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
-          <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
-            <div class="tab-content" v-if="isReLoad && item.isShow">
-              <component :is="item.components[item.components.length-1]"></component>
-              <div v-show="index>0" class="copy-right" v-text="rightText"></div>
-            </div>
-          </el-scrollbar>
         </el-tab-pane>
       </template>
     </el-tabs>
@@ -28,6 +22,10 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
+      <router-view></router-view>
+      <div class="copy-right" v-text="rightText"></div>
+    </el-scrollbar>
   </div>
 </template>
 <script>
