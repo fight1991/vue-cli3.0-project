@@ -131,7 +131,7 @@ export default {
         return JSON.stringify({
           token: storage.getToken(),
           msgType: 'request',
-          interval: 2000,
+          interval: 3000,
           sequence: flag,
           parameters: data,
           resource: url
