@@ -7,27 +7,31 @@
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
-    <div class="content">
-      <func-bar>
-        <el-table size="mini" :height="400" :data="resultList" border>
-          <el-table-column :label="$t('common.alarmType')" prop="alarmType"></el-table-column>
-          <el-table-column :label="$t('plant.errorCode')" prop="code"></el-table-column>
-          <el-table-column :label="$t('plant.errorName')" prop="content"></el-table-column>
-          <el-table-column :label="$t('plant.reportTime')" prop="time">
-            <template slot-scope="scope">
-              {{ scope.row.time | formatDate}}
-            </template>
-          </el-table-column>
-        </el-table>
-        <!-- <page-box :pagination.sync="pagination" @change="getList"></page-box> -->
-      </func-bar>
-    </div>
+    <el-tabs v-model="activeName" type="card">
+      <el-tab-pane
+        :label="item.blockName"
+        :name="'tab' + index"
+        v-for="(item, index) in tabList"
+        :key="item.blockName">
+        <div class="block-item" :style="{'max-height': setDivH - 100 + 'px'}">
+          <el-row class="block-head">
+            <el-col :span="12">Variable</el-col>
+            <el-col :span="12">Value</el-col>
+          </el-row>
+          <el-row v-for="item2 in item.values" :key="item2.variable">
+            <el-col :span="12">{{item2.variable}}</el-col>
+            <el-col :span="12">{{item2.value}}</el-col>
+          </el-row>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
   </el-dialog>
 </template>
 <script>
 export default {
   data () {
     return {
+      activeName: 'tab0',
       dialogVisible: false,
       resultList: [],
       pagination: {
@@ -70,6 +74,11 @@ export default {
   props: {
     visible: {
       default: false
+    },
+    tabList: {
+      default () {
+        return []
+      }
     }
   },
   watch: {
@@ -89,5 +98,23 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.block-item {
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-top: 10px;
+  margin-left: -5px;
+  .el-col {
+    border-bottom: 1px solid #ccc;
+    padding: 8px 5px;
+    &:nth-child(2n + 1) {
+      border-right: 1px solid #ccc;
+    }
+  }
+  .block-head {
+    .el-col {
+      background-color: #f5f5f5;
+    }
+  }
+}
 </style>

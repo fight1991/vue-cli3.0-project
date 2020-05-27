@@ -73,7 +73,7 @@
       </el-row>
       <el-echart :datas="lineChart" height="300px"></el-echart>
     </div>
-    <flow-dialog :visible.sync="flowDialog"></flow-dialog>
+    <flow-dialog :visible.sync="flowDialog" :tabList="flowDetail"></flow-dialog>
   </section>
 </template>
 <script>
@@ -97,6 +97,7 @@ export default {
   data () {
     return {
       flowPath: 0,
+      flowDetail: [],
       pvTotal: 0,
       ws: null,
       wsIsOpen: false,
@@ -154,7 +155,7 @@ export default {
     wsIsOpen (newData) {
       if (newData) {
         this.ws.send(this.setWsHead({
-          flag: 'earning',
+          flag: 'flowDetail',
           url: '/c/v0/device/real/all',
           data: {
             deviceID: this.deviceId
@@ -310,16 +311,17 @@ export default {
       }
     },
     // 获取ws信息
-    getWsInfo (data) {
-      if (data.sequence === 'earning') {
-        console.log('earning')
+    getWsInfo (res) {
+      if (res.sequence === 'flowDetail') {
+        console.log('flowDetail')
+        this.flowDetail = res.data.blocks || []
       }
-      if (data.sequence === 'flow') {
+      if (res.sequence === 'flow') {
         console.log('flow')
-        let res = data.data
+        let data = res.data
         let pvValue = 0
         this.pvTotal = 0
-        let { pvPower, generationPower, loadsPower, feedinPower, gridConsumptionPower } = res
+        let { pvPower, generationPower, loadsPower, feedinPower, gridConsumptionPower } = data
         if (pvPower && pvPower.length > 0) {
           let flag = pvPower.some(v => v.value > 0)
           flag && (pvValue = 1)
