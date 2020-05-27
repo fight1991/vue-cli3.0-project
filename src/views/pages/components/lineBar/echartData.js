@@ -1,3 +1,4 @@
+// import { formatDate } from '@/util'
 export default {
   data () {
     return {
@@ -15,10 +16,15 @@ export default {
             type: 'time',
             splitLine: {
               show: false
+            },
+            axisLabel: {
+              // formatter: function (value) {
+              //   return formatDate(value, 'MM-dd HH:mm')
+              // }
             }
           },
           grid: [{
-            height: '55%'
+            height: '50%'
           }],
           dataZoom: [{
             type: 'slider',
@@ -86,8 +92,8 @@ export default {
             show: true,
             xAxisIndex: [0],
             top: '80%',
-            start: 1,
-            end: 35
+            start: 0,
+            end: 70
           }],
           yAxis: {},
           // Declare several bar series, each will be mapped
