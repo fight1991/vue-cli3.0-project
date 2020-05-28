@@ -1,8 +1,10 @@
+import abstract from '@/views/components/abstract'
 export default {
   icon: 'icon-power',
   path: '/bus/plant',
   name: 'bus-plant',
   // hidden: true,
+  component: abstract,
   meta: {
     permission: [1, 2, 3],
     title: 'plantM'

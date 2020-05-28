@@ -2,7 +2,7 @@
   <div>
     <!-- 只有一级菜单 -->
     <template v-if="firstMenuShow">
-      <el-menu-item :index="menuItem.path" v-show="menuPemission()">
+      <el-menu-item :index="menuItem.path" :route="menuItem" @click="menuItemClick(menuItem)" v-show="menuPemission()">
         <i v-if="menuItem.icon" :class="'iconfont '+ menuItem.icon"></i>
         <span slot="title">{{$t('navBar.'+menuItem.meta.title) || ''}}</span>
       </el-menu-item>
@@ -23,7 +23,7 @@
             :key="child.path"/>
           <!-- 二级菜单 -->
           <template v-else>
-            <el-menu-item v-show="menuPemission(child, 'chidl')" :key="child.path" :index="child.path">
+            <el-menu-item @click="menuItemClick(child)" v-show="menuPemission(child, 'chidl')" :key="child.path" :index="child.path">
               <i v-if="child.icon" :class="'iconfont '+ child.icon"></i>
               <span slot="title">{{$t('navBar.'+child.meta.title) || ''}}</span>
             </el-menu-item>
@@ -64,6 +64,17 @@ export default {
     menuPemission (obj = this.menuItem, hh) {
       let { meta } = obj
       return !meta.permission || (meta.permission && meta.permission.includes(this.access))
+    },
+    menuItemClick (route) {
+      this.$store.commit('addTab', {
+        tabId: route.name,
+        name: route.name,
+        path: route.path,
+        title: route.meta.title,
+        query: {},
+        params: {}
+      })
+      console.log(route)
     }
   }
 }

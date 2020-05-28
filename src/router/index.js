@@ -83,5 +83,11 @@ router.beforeEach(async (to, from, next) => {
 // 路由跳转之后
 router.afterEach((to, from) => {
   document.title = to.meta.title || 'FoxESS'
+  // 粗出路由信息列表
+  store.commit('addRouteList', {
+    name: to.name,
+    path: to.path,
+    title: to.meta.title
+  })
 })
 export default router

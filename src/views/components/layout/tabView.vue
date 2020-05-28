@@ -23,7 +23,9 @@
       </el-dropdown>
     </div>
     <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
       <div class="copy-right" v-text="rightText"></div>
     </el-scrollbar>
   </div>

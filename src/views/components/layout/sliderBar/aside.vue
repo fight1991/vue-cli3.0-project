@@ -8,6 +8,7 @@
   </span>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
+      @select="menuClick"
       :default-active="$route.path"
       router
       :collapse="$store.state.collapse">
@@ -35,6 +36,11 @@ export default {
   methods: {
     toggleMenu () {
       this.$store.commit('changeCollapse')
+    },
+    menuClick (index, path) {
+      console.log(this.menuList)
+      console.log(index, path)
+      console.log(this.$router.currentRoute.path)
     },
     // 过滤树形结构数据中不符合条件路由(hidden为true)
     deal (arr) {
