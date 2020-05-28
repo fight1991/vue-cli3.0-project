@@ -36,6 +36,8 @@ export default {
     join: '加入'
   },
   common: {
+    enterFull: '全屏显示',
+    outFull: '退出全屏',
     backHome: '返回首页',
     zone: '时区',
     closeAll: '关闭全部',

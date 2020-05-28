@@ -36,6 +36,8 @@ export default {
     join: 'Join'
   },
   common: {
+    enterFull: 'in a full-screen ',
+    outFull: 'out of a full-screen ',
     backHome: 'Back home',
     zone: 'Time zone',
     closeAll: 'Close all',

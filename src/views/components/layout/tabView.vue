@@ -1,4 +1,5 @@
 <template>
+<div style="height:100%" :class="{'fullScreen':isFullScreen}" ref="fullScreen">
   <div class="tab-container">
     <el-tabs v-model="$store.state.tab.currentTab" type="card" @tab-remove="removeTab" @tab-click="tabClick">
       <template v-for="(item, index) in tabList">
@@ -29,6 +30,7 @@
       </el-dropdown>
     </div>
   </div>
+  </div>
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -36,6 +38,7 @@ export default {
   name: 'tab-view',
   data () {
     return {
+      isFullScreen: false,
       isReLoad: true,
       rightText: 'Copyrights © 2010-2020'
     }
@@ -50,6 +53,7 @@ export default {
       tabList: state => state.tab.tabList
     })
   },
+  created () {},
   methods: {
     reload () {
       this.isReLoad = false
@@ -76,6 +80,26 @@ export default {
     },
     closeTab (type) {
       this.$store.dispatch(type)
+    },
+    // 进入全屏 api
+    enterFullScreen () {
+      let element = this.$refs['fullScreen']
+      let requestMethod = element.requestFullScreen ||
+      element.webkitRequestFullScreen ||
+      element.mozRequestFullScreen ||
+      element.msRequestFullScreen || ''
+      // 使body元素进入全屏模式(100vh,100vw)
+      requestMethod && requestMethod.call(document.body)
+      this.isFullScreen = true
+    },
+    // 退出全屏api
+    exitFullScreen () {
+      this.fullScreen = false
+      let exitMethod = document.exitFullscreen ||
+      document.mozCancelFullScreen ||
+      document.webkitExitFullscreen ||
+      document.msExitFullScreen
+      exitMethod.call(document)
     }
   }
 }
@@ -95,6 +119,9 @@ export default {
 .el-icon-s-home {
   font-size: 20px;
   line-height: 30px;
+}
+.fullScreen {
+  background-color: #f5f5f5;
 }
 .tab-container {
   position: relative;
