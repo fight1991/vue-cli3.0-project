@@ -66,7 +66,8 @@ export default {
       if (document.fullscreenElement) {
         document.exitFullscreen()
       } else {
-        document.documentElement.requestFullscreen()
+        document.documentElement.requestFullscreen() // 文档流全屏
+        // document.documentElement.requestFullscreen.call('dom') // 是dom元素全屏
       }
     },
     // 切换语言
