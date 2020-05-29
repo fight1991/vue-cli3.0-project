@@ -231,6 +231,15 @@ export default {
     upgrade: 'Batch upgrade',
     upstatus: 'View upgrade status'
   },
+  chart: {
+    generation: 'Yield',
+    feedin: 'Feed-in',
+    loads: 'Loads',
+    gridConsumption: 'Grid-consumption',
+    loadsPower: 'Grid-consumption power',
+    generationPower: 'Output power',
+    feedinPower: 'Feed-in power'
+  },
   errorCode: {
     41200: 'Query data failed',
     41201: 'Server exception',

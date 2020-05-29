@@ -231,6 +231,15 @@ export default {
     upgrade: '批量升级',
     upstatus: '查看升级状态'
   },
+  chart: {
+    generation: '总发电量',
+    feedin: '并网电量',
+    loads: '负载损耗',
+    gridConsumption: '电网损耗电量',
+    loadsPower: '电网损耗功率',
+    generationPower: '发电功率',
+    feedinPower: '并网功率'
+  },
   errorCode: {
     41200: '查询数据异常',
     41201: '服务运行异常',
