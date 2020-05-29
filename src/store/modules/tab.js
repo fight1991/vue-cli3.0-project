@@ -32,9 +32,10 @@ export default {
       if (payLoad.params.refresh) { // 有相同组件则替换
         if (sameTab) {
           sameTab.isShow = false
-          setTimeout(() => {
+          sameTab.timer = setTimeout(() => {
             sameTab.isShow = true
-          })
+            clearTimeout(sameTab.timer)
+          }, 0)
         } else {
           state.tabList.push(payLoad)
         }

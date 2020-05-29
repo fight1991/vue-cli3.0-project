@@ -7,6 +7,7 @@
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
+    <div class="no-data">No Data</div>
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane
         :label="item.blockName"
@@ -33,7 +34,6 @@ export default {
     return {
       activeName: 'tab0',
       dialogVisible: false,
-      resultList: [],
       pagination: {
         pageSize: 10,
         currentPage: 1,
@@ -115,6 +115,11 @@ export default {
     .el-col {
       background-color: #f5f5f5;
     }
+  }
+  .no-data {
+    padding: 10px;
+    text-align: center;
+    color: #ccc;
   }
 }
 </style>

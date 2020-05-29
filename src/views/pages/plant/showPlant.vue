@@ -138,9 +138,9 @@ export default {
     },
     // 电站删除
     async deletePlant (id) {
-      let res = await this.$confirm('Are you sure you want to delete it?', 'tip', {
-        confirmButtonText: 'confirm',
-        cancelButtonText: 'cancel',
+      let res = await this.$confirm(this.$t('common.tips2'), this.$t('common.tip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
@@ -150,7 +150,7 @@ export default {
           stationID: id
         },
         success: () => {
-          this.$message.success('succcessful')
+          this.$message.success(this.$t('common.success'))
           this.search()
         }
       })
@@ -169,8 +169,10 @@ export default {
           name: 'bus-plant-detail',
           query: {
             plantId: row.stationID,
-            opType: 'look',
-            tabId: this.$route.name + 'look' + row.stationID
+            opType: 'look'
+          },
+          params: {
+            refresh: true
           }
         })
       } else {
@@ -178,8 +180,10 @@ export default {
           name: 'bus-plant-edit',
           query: {
             plantId: row.stationID,
-            opType: 'edit',
-            tabId: this.$route.name + 'edit' + row.stationID
+            opType: 'edit'
+          },
+          params: {
+            refresh: true
           }
         })
       }
