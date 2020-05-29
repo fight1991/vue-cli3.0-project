@@ -5,7 +5,10 @@ export default {
         legend: {
           type: 'plain',
           data: [],
-          bottom: 0
+          bottom: 0,
+          formatter: name => {
+            return this.$t('chart.' + name)
+          }
         },
         tooltip: {
           trigger: 'axis',

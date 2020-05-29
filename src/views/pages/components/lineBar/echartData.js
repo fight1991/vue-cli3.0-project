@@ -7,7 +7,10 @@ export default {
           legend: {
             type: 'plain',
             data: ['generationPower', 'feedinPower', 'loadsPower'],
-            bottom: 10
+            bottom: 10,
+            formatter: name => {
+              return this.$t('chart.' + name)
+            }
           },
           tooltip: {
             trigger: 'axis'
@@ -64,7 +67,10 @@ export default {
         elec: { // 柱状图
           legend: {
             bottom: 10,
-            data: []
+            data: [],
+            formatter: name => {
+              return this.$t('chart.' + name)
+            }
           },
           tooltip: {},
           // dataset: {
