@@ -1,4 +1,5 @@
 <template>
+<div style="height:100%" :class="{'fullScreen':isFullScreen}" ref="fullScreen">
   <div class="tab-container">
     <el-tabs v-model="$store.state.tab.currentTab" type="card" @tab-remove="removeTab" @tab-click="tabClick">
       <template v-for="(item, index) in tabList">
@@ -29,6 +30,7 @@
       </el-dropdown>
     </div>
   </div>
+  </div>
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -36,6 +38,7 @@ export default {
   name: 'tab-view',
   data () {
     return {
+      isFullScreen: false,
       isReLoad: true,
       rightText: 'Copyrights © 2010-2020'
     }
@@ -50,6 +53,7 @@ export default {
       tabList: state => state.tab.tabList
     })
   },
+  created () {},
   methods: {
     reload () {
       this.isReLoad = false
@@ -95,6 +99,9 @@ export default {
 .el-icon-s-home {
   font-size: 20px;
   line-height: 30px;
+}
+.fullScreen {
+  background-color: #f5f5f5;
 }
 .tab-container {
   position: relative;

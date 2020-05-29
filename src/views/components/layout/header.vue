@@ -32,6 +32,8 @@
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <span class="info"><i class="iconfont icon-info"></i></span> -->
+      <span class="fullscreen" v-show="!isFullScreen" @click="screenClick('enter')" :title="$t('common.enterFull')"><i class="iconfont icon-enter-fullScreen"></i></span>
+      <span class="fullscreen" v-show="isFullScreen" @click="screenClick('out')" :title="$t('common.outFull')"><i class="iconfont icon-out-fullScreen"></i></span>
     </div>
   </div>
 </template>
@@ -42,6 +44,7 @@ export default {
   name: 'layout-header',
   data () {
     return {
+      isFullScreen: false,
       lang: '中文',
       logoSrc: require('@/assets/logo.png')
     }
@@ -51,8 +54,23 @@ export default {
       userInfo: state => state.userInfo
     })
   },
-  created () {},
+  created () {
+    window.addEventListener('resize', () => {
+      !document.fullscreen && (this.isFullScreen = false)
+    })
+  },
   methods: {
+    // 切换全屏
+    screenClick (type) {
+      this.isFullScreen = type === 'enter'
+      if (document.fullscreenElement) {
+        document.exitFullscreen()
+      } else {
+        document.documentElement.requestFullscreen() // 文档流全屏
+        // document.documentElement.requestFullscreen.call('dom') // 是dom元素全屏
+      }
+    },
+    // 切换语言
     toggleLang (lang) {
       this.$i18n.locale = lang
       this.lang = lang === 'en' ? 'English' : '中文'
@@ -133,6 +151,14 @@ export default {
     color: #fff;
     margin-left: 20px;
     font-size: 16px;
+  }
+}
+.fullscreen {
+  cursor: pointer;
+  padding: 0 20px;
+  transition: all .2s;
+  &:hover {
+    transform: scale(1.5);
   }
 }
 </style>
