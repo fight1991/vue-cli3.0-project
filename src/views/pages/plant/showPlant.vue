@@ -165,25 +165,18 @@ export default {
       if (type === 'look') {
         let { country, city, name } = row
         this.$store.commit('plant-module/setCountryAndCity', { country, city, plantName: name })
-        this.$router.push({
+        this.$tab.replace({
           name: 'bus-plant-detail',
           query: {
             plantId: row.stationID,
-            opType: 'look'
-          },
-          params: {
-            refresh: true
+            pageFlag: 'detail'
           }
         })
       } else {
-        this.$router.push({
+        this.$tab.replace({
           name: 'bus-plant-edit',
           query: {
-            plantId: row.stationID,
-            opType: 'edit'
-          },
-          params: {
-            refresh: true
+            plantId: row.stationID
           }
         })
       }

@@ -163,23 +163,13 @@ export default {
       this.getInverterList(this.$store.state.pagination)
     },
     goToDetail (page, id) {
-      if (page === 'look') {
-        this.$router.push({
-          name: 'bus-device-inverterDetail',
-          query: {
-            id,
-            tabId: this.$route.name + page + id
-          }
-        })
-      } else {
-        this.$router.push({
-          name: 'bus-device-remoteSetting',
-          query: {
-            id,
-            tabId: this.$route.name + page + id
-          }
-        })
-      }
+      let routeName = page === 'look' ? 'bus-device-inverterDetail' : 'bus-device-remoteSetting'
+      this.$tab.replace({
+        name: routeName,
+        query: {
+          id
+        }
+      })
     },
     // 获取列表
     getInverterList (pagination) {

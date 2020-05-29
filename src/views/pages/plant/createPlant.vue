@@ -342,7 +342,9 @@ export default {
         },
         success: ({ result }) => {
           this.$message.success(this.$t('common.success'))
-          this.backRoute('bus-plant-view')
+          this.$tab.back({
+            name: 'bus-plant-view'
+          })
         }
       })
     },

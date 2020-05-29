@@ -73,6 +73,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 >     mock：前期模拟网络接口返回数据；
 >     net: 网络请求方法封装；
 >     router/index.js：路由总控；
+>     router/tabMethods: 页签跳转方法
 >     store：全局状态管理；
 >     views：功能模块页面；
 >         pages: 业务功能页面;
@@ -106,3 +107,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 >  1. 一级菜单：必须以模块命名，例如：财务管理 /finace
 >  2. 二级菜单：必须以一级名称+二级名, 例如：财务管理-->物流费用 /finance/logistics
 
+## 页签跳转 ## 
+> 1. this.$tab.open 打开新页签, 需要定义一个tabId
+> 2. this.$tab.push 同this.$router.push 在已有的页签中查找,有则激活,无则新增
+> 3. this.$tab.replace 替换已有页签,无则打开新页签
+> 4. this.$tab.open 关闭当前tab,打开指定tab(如果存在就刷新)
+ 
