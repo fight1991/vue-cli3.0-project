@@ -14,11 +14,11 @@
             <span>{{$t('common.plantsName')}} </span>
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
-            <i class="arrow el-icon-caret-left" @click="switchPlant('reduce')"></i>
+            <i class="arrow el-icon-caret-left" v-if="switchBtnShow" @click="switchPlant('reduce')"></i>
             <el-select size="mini" v-model="plantId" :placeholder="$t('common.select')">
               <el-option v-for="item in plantList" :label="item.plantName" :value="item.stationID" :key="item.stationID"></el-option>
             </el-select>
-            <i class="arrow el-icon-caret-right" @click="switchPlant('add')"></i>
+            <i class="arrow el-icon-caret-right" v-if="switchBtnShow" @click="switchPlant('add')"></i>
           </div>
         </div>
         <i @click="headCollapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -160,6 +160,9 @@ export default {
     },
     plantIndex () {
       return this.plantList.findIndex(v => v.stationID === this.plantId)
+    },
+    switchBtnShow () {
+      return this.plantList && this.plantList.length > 1
     }
   },
   created () {
@@ -205,8 +208,8 @@ export default {
       this.getDeviceStatus()
       this.getPlantEarns()
       this.$refs.deviceList.search(this.plantId)
-      this.$refs.lineBar.getLineData()
-      this.$refs.lineBar.getBarData()
+      this.$refs.lineBar.getLineData(this.plantId)
+      this.$refs.lineBar.getBarData(this.plantId)
     },
     // 获取头部电站展开详情
     async getHeadInfo () {
@@ -235,7 +238,7 @@ export default {
     },
     // 左右切换电站
     async switchPlant (type) {
-      if (this.switch || this.plantList.length === 0) return
+      if (this.switch || this.plantList.length <= 1) return
       this.switch = true
       // 获取当前索引
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
@@ -252,8 +255,8 @@ export default {
         this.getDeviceStatus(),
         this.getPlantEarns(),
         this.$refs.deviceList.search(this.plantId),
-        this.$refs.lineBar.getLineData(),
-        this.$refs.lineBar.getBarData()])
+        this.$refs.lineBar.getLineData(this.plantId),
+        this.$refs.lineBar.getBarData(this.plantId)])
       this.switch = false
     },
     // 获取电站下的设备状态
