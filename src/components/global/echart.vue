@@ -29,6 +29,9 @@ export default {
         this.asyncInit()
       },
       deep: true
+    },
+    '$store.state.lang': function () {
+      this.asyncInit()
     }
   },
   data () {

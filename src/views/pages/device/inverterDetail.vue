@@ -66,7 +66,7 @@
           <el-option
             v-for="item in options"
             :key="item"
-            :label="item"
+            :label="$t('chart.'+item)"
             :value="item">
           </el-option>
         </el-select>

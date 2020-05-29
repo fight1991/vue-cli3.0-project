@@ -18,6 +18,8 @@
         <span class="date-area">
           <i class="arrow el-icon-arrow-left" @click="computeDate('reduce')"></i>
           <el-date-picker
+            @change="getBarData()"
+            :clearable="false"
             size="mini"
             style="width:125px"
             :type="pickerDate[dateType]"
@@ -122,10 +124,10 @@ export default {
       return i
     },
     // 折现图表数据功率
-    async getLineData () {
+    async getLineData (id) {
       let params = {}
       if (this.type === 'plant') {
-        params.plantID = this.id
+        params.plantID = this.id || id
       } else {
         params.deviceID = this.id
       }
@@ -161,11 +163,11 @@ export default {
       return true
     },
     // 柱状图表数据;电量统计
-    async getBarData () {
+    async getBarData (id) {
       // let dateArr = this.dateValue.split('-')
       let params = {}
       if (this.type === 'plant') {
-        params.plantID = this.id
+        params.plantID = this.id || id
       } else {
         params.deviceID = this.id
       }
