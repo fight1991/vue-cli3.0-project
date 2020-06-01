@@ -51,7 +51,7 @@
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
-import plantStore from './plantStore'
+// import plantStore from './plantStore'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -93,7 +93,6 @@ export default {
   },
   created () {
     this.search()
-    this.$store.registerModule('plant-module', plantStore)
   },
   computed: {
     ...mapState({
@@ -104,9 +103,7 @@ export default {
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
   },
-  beforeDestroy () {
-    this.$store.unregisterModule('plant-module')
-  },
+  beforeDestroy () {},
   methods: {
     search () {
       this.getPlantList(this.$store.state.pagination)
@@ -164,12 +161,16 @@ export default {
     goToDetail (type, row) {
       if (type === 'look') {
         let { country, city, name } = row
-        this.$store.commit('plant-module/setCountryAndCity', { country, city, plantName: name })
         this.$tab.replace({
           name: 'bus-plant-detail',
           query: {
             plantId: row.stationID,
-            pageFlag: 'detail'
+            pageFlag: 'detail',
+            plantInfo: {
+              country,
+              city,
+              plantName: name
+            }
           }
         })
       } else {

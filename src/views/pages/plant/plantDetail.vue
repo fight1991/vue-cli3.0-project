@@ -110,7 +110,6 @@ export default {
       abnormalVisible: false,
       plantId: '',
       plantList: [],
-      socket: null,
       plantHeadInfo: {
         plantName: '',
         country: '',
@@ -174,7 +173,7 @@ export default {
   },
   async mounted () {
     if (this.pageFlag === 'detail') { // 电站详情页面
-      this.plantHeadInfo = this.$store.state['plant-module'].plantInfo
+      this.plantHeadInfo = this.$route.query.plantInfo
       this.getCommonRequest()
     } else { // dashboard页面
       // 获取plantList列表
@@ -187,9 +186,7 @@ export default {
     }
     // this.getSomeIncome()
   },
-  beforeDestroy () {
-    this.socket && this.socket.closeLink()
-  },
+  beforeDestroy () {},
   methods: {
     // 顶部展开
     headCollapse () {
