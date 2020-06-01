@@ -1,5 +1,5 @@
 <template>
-  <section class="sys-main">
+  <section class="sys-main flex-column-between bg-c" v-setH="setDivH">
     <!-- 查询区域 -->
     <div class="sys-table-container">
       <search-bar>
@@ -80,14 +80,16 @@
             </div>
           </template>
         </common-table>
-        <div class="states-row">
-          <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}: {{statusAll.warning}}</span>
-          <span><i class="el-icon-error"></i> {{$t('common.glitch')}}: {{statusAll.fault}}</span>
-          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
-        </div>
-        <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
       </func-bar>
+    </div>
+    <div class="page-list">
+      <div class="states-row">
+        <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
+        <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}: {{statusAll.warning}}</span>
+        <span><i class="el-icon-error"></i> {{$t('common.glitch')}}: {{statusAll.fault}}</span>
+        <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
+      </div>
+      <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>

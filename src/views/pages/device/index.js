@@ -22,7 +22,7 @@ export default {
       meta: {
         permission: [1, 2, 3],
         title: 'batteryM',
-        component: () => import(/* webpackChunkName: "bus-device-battery" */ '@/views/pages/demo')
+        component: () => import(/* webpackChunkName: "bus-device-battery" */ '@/views/pages/device/batteryList.vue')
       }
     },
     {
