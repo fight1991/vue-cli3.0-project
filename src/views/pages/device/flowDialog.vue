@@ -7,8 +7,8 @@
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
-    <div class="no-data">No Data</div>
-    <el-tabs v-model="activeName" type="card">
+    <div class="no-data" v-if="tabList.length<1">No Data</div>
+    <el-tabs v-model="activeName" type="card" v-else>
       <el-tab-pane
         :label="item.blockName"
         :name="'tab' + index"
@@ -116,10 +116,10 @@ export default {
       background-color: #f5f5f5;
     }
   }
-  .no-data {
-    padding: 10px;
-    text-align: center;
-    color: #ccc;
-  }
+}
+.no-data {
+  padding: 10px;
+  text-align: center;
+  color: #ccc;
 }
 </style>
