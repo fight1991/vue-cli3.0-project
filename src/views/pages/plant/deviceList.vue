@@ -33,7 +33,7 @@
         </common-table>
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
-          <span><i class="el-icon-error"></i> {{$t('common.glitch')}}</span>
+          <span><i class="el-icon-error"></i> {{$t('common.abnormal')}}</span>
           <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getDeviceList"></page-box>
