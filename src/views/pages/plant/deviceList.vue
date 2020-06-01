@@ -22,10 +22,10 @@
       <func-bar>
         <common-table :tableHeadData="deviceTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="row.status==2"></i>
+            <!-- 1 正常 2 故障 3 离线 -->
             <i class="el-icon-success" v-show="row.status==1"></i>
-            <i class="el-icon-error" v-show="row.status==3"></i>
-            <i class="el-icon-remove" v-show="row.status==4"></i>
+            <i class="el-icon-error" v-show="row.status==2"></i>
+            <i class="el-icon-remove" v-show="row.status==3"></i>
           </template>
           <template v-slot:feedinDate="{row}">
             {{row.feedinDate | formatDate('yyyy-MM-dd')}}
@@ -47,12 +47,11 @@ export default {
   mixins: [deviceTableHead],
   data () {
     return {
-      statusList: [ // 0 全部 1 正常 2 告警 3 故障 4离线
+      statusList: [ // 0 全部 1 正常 2 不正常  3离线
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'glitch' },
-        { status: 3, label: 'alarm' },
-        { status: 4, label: 'offline' }
+        { status: 2, label: 'abnormal' },
+        { status: 3, label: 'offline' }
       ],
       searchForm: {
         status: 0, // 0 全部 ，1 正常， 2 异常

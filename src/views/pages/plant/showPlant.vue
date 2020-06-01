@@ -23,7 +23,7 @@
       <func-bar>
         <common-table :tableHeadData="plantTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
+            <i class="el-icon-error" v-show="Number(row.status) === 2"></i>
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
             <i class="el-icon-remove" v-show="Number(row.status) === 3"></i>
           </template>
@@ -40,7 +40,7 @@
         </common-table>
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.abnormal')}}</span>
+          <span><i class="el-icon-error"></i> {{$t('common.abnormal')}}</span>
           <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>

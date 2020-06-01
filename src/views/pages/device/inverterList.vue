@@ -65,10 +65,10 @@
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="row.status==3"></i>
+            <!-- 1 正常 2 故障 3 离线 -->
             <i class="el-icon-success" v-show="row.status==1"></i>
             <i class="el-icon-error" v-show="row.status==2"></i>
-            <i class="el-icon-remove" v-show="row.status==4"></i>
+            <i class="el-icon-remove" v-show="row.status==3"></i>
           </template>
           <template v-slot:feedinDate="{row}">
             {{Number(row.feedinDate )| formatDate('yyyy-MM-dd')}}
@@ -85,8 +85,7 @@
     <div class="page-list">
       <div class="states-row">
         <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
-        <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}: {{statusAll.warning}}</span>
-        <span><i class="el-icon-error"></i> {{$t('common.glitch')}}: {{statusAll.fault}}</span>
+        <span><i class="el-icon-error"></i> {{$t('common.abnormal')}}: {{statusAll.fault}}</span>
         <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
       </div>
       <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
@@ -104,9 +103,8 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'alarm' },
-        { status: 3, label: 'alarm' },
-        { status: 4, label: 'offline' }
+        { status: 2, label: 'abnormal' },
+        { status: 3, label: 'offline' }
       ],
       searchForm: {
         status: 0,
