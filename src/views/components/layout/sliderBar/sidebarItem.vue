@@ -35,18 +35,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'sidebarItem',
   data () {
-    return {
-
-    }
+    return {}
   },
   computed: {
-    ...mapState({
-      access: state => state.access
-    }),
     firstMenuShow () {
       return !this.menuItem.children || this.menuItem.children.length === 0
     }

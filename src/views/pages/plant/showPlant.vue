@@ -83,8 +83,7 @@ export default {
   },
   computed: {
     ...mapState({
-      username: state => state.userInfo.user,
-      access: state => state.access
+      username: state => state.userInfo.user
     })
   },
   mounted () {

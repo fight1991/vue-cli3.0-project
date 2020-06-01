@@ -35,7 +35,7 @@
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
           <el-dropdown @command="commandDrop" trigger="click">
-            <el-button size="mini" icon="iconfont icon-import" :disabled="false" @click="importMulti">{{$t('common.import')}}</el-button>
+            <el-button size="mini" icon="iconfont icon-import" @click="importMulti">{{$t('common.import')}}</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="d">{{$t('common.download')}}</el-dropdown-item>
               <el-upload
@@ -48,7 +48,7 @@
           </el-dropdown>
           <el-button size="mini" icon="iconfont icon-unbind" :disabled="access!=255" @click="unbindMulti">{{$t('common.unbind')}}</el-button>
         </el-row>
-        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
+        <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
             <i class="el-icon-success" v-show="row.communication==1"></i>
             <i class="el-icon-remove" v-show="row.communication==2"></i>
@@ -75,7 +75,6 @@
   </section>
 </template>
 <script>
-import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -136,9 +135,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      access: state => state.access
-    }),
     bindIds () {
       return this.selection.map(v => {
         return {

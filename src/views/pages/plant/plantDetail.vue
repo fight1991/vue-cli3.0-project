@@ -94,7 +94,6 @@ import deviceList from './deviceList'
 import plantStatus from '@/views/pages/components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import { formatDate } from '@/util'
-import { mapState } from 'vuex'
 export default {
   components: {
     todayAbnormal,
@@ -147,9 +146,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      access: state => state.access
-    }),
     deviceTotal () {
       let total = 0
       Object.values(this.device).forEach(value => {

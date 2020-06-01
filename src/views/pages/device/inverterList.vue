@@ -61,7 +61,7 @@
       <!-- 列表查询区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">{{$t('common.delete')}}</el-button>
+          <el-button size="mini" icon="el-icon-delete" :disabled="access!=255" @click="deleteInverter">{{$t('common.delete')}}</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
@@ -122,7 +122,6 @@ export default {
       resultList: [],
       statusAll: {
         normal: 0,
-        warning: 0,
         fault: 0,
         offline: 0
       }

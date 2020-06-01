@@ -111,7 +111,6 @@
   </section>
 </template>
 <script>
-import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -198,10 +197,7 @@ export default {
     errorList () {
       let temp = this.snResult.filter(v => v.errno !== 0)
       return temp.map(v => v.device)
-    },
-    ...mapState({
-      access: state => state.access
-    })
+    }
   },
   methods: {
     // 表格模板
