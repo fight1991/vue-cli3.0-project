@@ -43,12 +43,12 @@ export default {
   height: 150px;
   position: relative;
   &:first-child {
-    border-top: 2px dotted #C6dccf;
+    border-top: 1px solid #67C23A;
     width: 66%;
   }
   &:last-child {
     width: 33%;
-    border: 2px dotted #C6dccf;
+    border: 1px solid #67C23A;
     border-right: none;
     border-bottom: none;
   }
@@ -97,11 +97,11 @@ export default {
   .dot1,.dot2,.dot3 {
     position: absolute;
     top: 0;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 1px solid #fff;
-    box-shadow: 0px 0px 4px 1px #ccc;
+    border: 2px solid greenyellow;
+    box-shadow: 0px 0px 4px 1px #FDB201;
     z-index: 66;
   }
   .dot1,.dot3 {
