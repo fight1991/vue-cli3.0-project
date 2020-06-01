@@ -14,11 +14,11 @@
             <span>{{$t('common.plantsName')}} </span>
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
-            <i class="arrow el-icon-caret-left" v-if="switchBtnShow" @click="switchPlant('reduce')"></i>
-            <el-select size="mini" v-model="plantId" :placeholder="$t('common.select')">
+            <i class="arrow el-icon-caret-left" v-if="switchBtnShow && plantIndex > 0" @click="switchPlant('reduce')"></i>
+            <el-select size="mini" @change="getCommonRequest" v-model="plantId" :placeholder="$t('common.select')">
               <el-option v-for="item in plantList" :label="item.plantName" :value="item.stationID" :key="item.stationID"></el-option>
             </el-select>
-            <i class="arrow el-icon-caret-right" v-if="switchBtnShow" @click="switchPlant('add')"></i>
+            <i class="arrow el-icon-caret-right" v-if="switchBtnShow && plantIndex < plantList.length -1" @click="switchPlant('add')"></i>
           </div>
         </div>
         <i @click="headCollapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -244,11 +244,13 @@ export default {
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
       if (index < 0) {
         index = 0
+        return
       }
       if (index > this.plantList.length - 1) {
         index = this.plantList.length - 1
+        return
       }
-      this.plantId = this.plantList[index].plantId
+      this.plantId = this.plantList[index].stationID
       // 发送请求
       await this.$all.promise([
         this.getAbnormalStatus(),
