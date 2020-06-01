@@ -33,7 +33,8 @@ export default {
     installer: '安装商',
     agent: '代理商',
     create: '创建',
-    join: '加入'
+    join: '加入',
+    joinTips: '加入成功, 请重新登录!'
   },
   common: {
     enterFull: '全屏显示',

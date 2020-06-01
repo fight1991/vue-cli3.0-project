@@ -212,7 +212,7 @@ export default {
         data: this.deviceId
       })
       if (result) {
-        this.$message.success('successful')
+        this.$message.success(this.$t('common.success'))
       }
     }
   }
