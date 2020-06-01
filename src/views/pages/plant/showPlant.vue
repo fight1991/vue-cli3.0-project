@@ -75,20 +75,7 @@ export default {
         currentPage: 1,
         total: 0
       },
-      resultList: [
-        {
-          name: 'zs',
-          age: 18,
-          city: 33333,
-          stationID: '1'
-
-        },
-        {
-          name: 'ls',
-          age: 133,
-          stationID: '2'
-        }
-      ]
+      resultList: []
     }
   },
   created () {

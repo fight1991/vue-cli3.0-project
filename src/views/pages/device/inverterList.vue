@@ -121,10 +121,7 @@ export default {
         currentPage: 1,
         total: 0
       },
-      resultList: [
-        { age: 11 },
-        { age: 11 }
-      ],
+      resultList: [],
       statusAll: {
         normal: 0,
         warning: 0,

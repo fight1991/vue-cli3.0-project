@@ -50,8 +50,17 @@
         </el-row>
         <common-table :tableHeadData="tableHead" @select="getSelection" :selectBox="access==255" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-success"></i>
-            <i class="el-icon-remove"></i>
+            <i class="el-icon-success" v-show="row.communication==1"></i>
+            <i class="el-icon-remove" v-show="row.communication==2"></i>
+          </template>
+          <template v-slot:signal="{row}">
+            <i class="icon icon-signal0" v-show="row.signal==0"></i>
+            <i class="icon icon-signal1" v-show="row.signal==1"></i>
+            <i class="icon icon-signal2" v-show="row.signal==2"></i>
+            <i class="icon icon-signal3" v-show="row.signal==3"></i>
+          </template>
+          <template v-slot:version="{row}">
+            {{row.version || '-'}}
           </template>
         </common-table>
       </func-bar>
@@ -86,10 +95,7 @@ export default {
         currentPage: 1,
         total: 0
       },
-      resultList: [
-        { age: 11 },
-        { age: 11 }
-      ],
+      resultList: [],
       typeList: [],
       tableHead: [
         {
@@ -111,12 +117,14 @@ export default {
         {
           label: 'invupgrade.dataversion',
           prop: 'version',
-          checked: true
+          checked: true,
+          slotName: 'version'
         },
         {
           label: 'common.signal',
           prop: 'signal',
-          checked: true
+          checked: true,
+          slotName: 'signal'
         },
         {
           label: 'common.status',
