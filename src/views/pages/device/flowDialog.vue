@@ -14,7 +14,7 @@
         :name="'tab' + index"
         v-for="(item, index) in tabList"
         :key="item.blockName">
-        <div class="block-item" :style="{'max-height': setDivH - 100 + 'px'}">
+        <div class="block-item" v-setH:max="setDivH - 100">
           <el-row class="block-head">
             <el-col :span="12">Variable</el-col>
             <el-col :span="12">Value</el-col>
