@@ -49,7 +49,6 @@ export default {
   },
   created () {
     window.addEventListener('resize', this.asyncInit)
-    console.log(this.$store.state.tab.currentTab)
   },
   mounted () {
     this.asyncInit()

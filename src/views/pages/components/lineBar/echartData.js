@@ -80,7 +80,13 @@ export default {
               return this.$t('chart.' + name)
             }
           },
-          tooltip: {},
+          tooltip: {
+            trigger: 'item',
+            formatter: params => {
+              let { seriesName, name, value, marker } = params
+              return this.$t('chart.' + seriesName) + '<br/>' + marker + name + ' : ' + value
+            }
+          },
           // dataset: {
           //   dimensions: ['axis', 'generation', 'feed-in', 'loads', 'grid consumption'],
           //   source: [
