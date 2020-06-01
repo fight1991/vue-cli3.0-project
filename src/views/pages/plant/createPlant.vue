@@ -354,7 +354,7 @@ export default {
         method: 'post',
         url: '/v0/module/checksn',
         data: {
-          type: this.access === 1 ? 0 : 1,
+          type: this.access === 1 ? 0 : this.opType === 'add' ? 1 : 2,
           devices: item,
           stationID: this.plantId
         }
