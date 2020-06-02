@@ -1,3 +1,4 @@
+import SparkMD5 from 'spark-md5'
 /**
  * 日期格式化 yyyy-MM-dd HH:mm:ss
  * @param date
@@ -78,6 +79,7 @@ export function formatCurrency (value, decimals = 2, currency = '', unit = '') {
     unit
   )
 }
+// 判断是否是json格式的字符串
 export function isJSON (str) {
   if (typeof str === 'string') {
     try {
@@ -92,5 +94,46 @@ export function isJSON (str) {
     }
   } else {
     return false
+  }
+}
+// 得到文件的md5值
+export async function getFileMd5 (file) {
+  const fileSize = file.size // 文件大小
+  const chunkSize = 1024 * 1024 * 10 // 切片的大小
+  const chunks = Math.ceil(fileSize / chunkSize) // 获取切片个数
+  const fileReader = new FileReader()
+  const spark = new SparkMD5.ArrayBuffer()
+  const bolbSlice =
+      File.prototype.slice ||
+      File.prototype.mozSlice ||
+      File.prototype.webkitSlice
+  let currentChunk = 0
+
+  fileReader.onload = e => {
+    const res = e.target.result
+    spark.append(res)
+    currentChunk++
+    if (currentChunk < chunks) {
+      loadNext()
+      console.log(`第${currentChunk}分片解析完成, 开始第${currentChunk + 1}分片解析`)
+    } else {
+      const md5 = spark.end()
+      return md5
+    }
+  }
+  const loadNext = () => {
+    const start = currentChunk * chunkSize
+    const end = start + chunkSize > file.size ? file.size : start + chunkSize
+    fileReader.readAsArrayBuffer(bolbSlice.call(file, start, end))
+  }
+  loadNext()
+}
+// 获取文件base64编码
+export async function getFileBase64 (file) {
+  let reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = e => {
+    let res = e.target.result
+    return res
   }
 }
