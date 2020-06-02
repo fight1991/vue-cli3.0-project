@@ -21,7 +21,7 @@
     <div class="tab-right">
       <el-dropdown trigger="click" @command="closeTab">
         <span class="el-dropdown-link">
-          <i class="iconfont icon-caidan"></i>
+          <i class="iconfont icon-caidan" :title="$t('common.tabOp')"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="closeAllTab">{{$t('common.closeAll')}}</el-dropdown-item>
@@ -108,7 +108,7 @@ export default {
   .tab-right {
     width: 40px;
     border-left: 1px solid #E4E7ED;
-    line-height: 32px;
+    line-height: 30px;
     text-align: center;
     position: absolute;
     right: 0;

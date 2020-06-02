@@ -37,6 +37,7 @@ export default {
     joinTips: '加入成功, 请重新登录!'
   },
   common: {
+    tabOp: '操作页签',
     enterFull: '全屏显示',
     outFull: '退出全屏',
     backHome: '返回首页',
