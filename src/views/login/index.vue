@@ -71,7 +71,7 @@ export default {
     flex-direction: column;
     height: 100%;
     background-size: cover;
-    background: linear-gradient(60deg, #1174b6 0%, #2398dd 40%, #40a9e6 75%,#56b3e9);
+    background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
     position: relative;
     .header {
       display: flex;
@@ -108,6 +108,7 @@ export default {
       }
     }
     .login {
+      box-shadow: 0 0 10px #ddd;
       z-index: 6;
       position: absolute;
       right: 10%;
