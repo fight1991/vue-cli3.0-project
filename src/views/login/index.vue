@@ -32,6 +32,7 @@
         </keep-alive>
       </transition>
     </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -73,6 +74,9 @@ export default {
     background-size: cover;
     background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
     position: relative;
+    .footer {
+      height: 55px;
+    }
     .header {
       display: flex;
       justify-content: flex-end;
@@ -108,7 +112,7 @@ export default {
       }
     }
     .login {
-      box-shadow: 0 0 10px #ddd;
+      box-shadow: 0 0 10px #999;
       z-index: 6;
       position: absolute;
       right: 10%;
@@ -164,7 +168,7 @@ export default {
     right: 5%!important;
   }
   .content .bg {
-    width: 550px!important;
+    width: 480px!important;
     left: 5%!important;
   }
 }
@@ -174,7 +178,7 @@ export default {
     right: 10%!important;
   }
   .content .bg {
-    width: 600px!important;
+    width: 550px!important;
     left: 10%!important;
   }
 }
