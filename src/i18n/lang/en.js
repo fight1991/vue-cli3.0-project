@@ -104,6 +104,14 @@ export default {
     signal: 'Signal'
   },
   login: {
+    product: 'PRODUCTS',
+    sSeries: 'S Series',
+    eSeries: 'E/F Series',
+    tSeries: 'T Series',
+    acStore: 'AC Storage',
+    site: 'FoxEss Site',
+    useTerm: 'Terms of Use',
+    allRight: 'All rights reserved',
     send: 'Send',
     mobile: 'Mobile number sign in',
     mobileSp: 'Mobile number sign up',
