@@ -67,7 +67,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .login-container {
-    min-width: 900px;
+    // min-width: 900px;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -160,6 +160,19 @@ export default {
   .content .bg {
     width: 360px!important;
     left: 5%!important;
+  }
+}
+  // 兼容手机端
+@media only screen and(max-width:768px) {
+  .content {
+    margin: 0 10px!important;
+  }
+  .login{
+    width: 100%!important;
+    right: 0!important;
+  }
+  .content .bg {
+    display: none;
   }
 }
 @media only screen and(min-width:1080px) {
