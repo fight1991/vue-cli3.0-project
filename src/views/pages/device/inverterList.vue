@@ -1,5 +1,5 @@
 <template>
-  <section class="sys-main">
+  <section class="sys-main flex-column-between bg-c" v-setH="setDivH">
     <!-- 查询区域 -->
     <div class="sys-table-container">
       <search-bar>
@@ -61,14 +61,14 @@
       <!-- 列表查询区域 -->
       <func-bar>
         <el-row class="table-btn" type="flex" justify="end">
-          <el-button size="mini" icon="el-icon-delete" @click="deleteInverter">{{$t('common.delete')}}</el-button>
+          <el-button size="mini" icon="el-icon-delete" :disabled="access!=255" @click="deleteInverter">{{$t('common.delete')}}</el-button>
         </el-row>
         <common-table :tableHeadData="inverterTableHead" @select="getSelection" :selectBox="true" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="row.status==3"></i>
+            <!-- 1 正常 2 故障 3 离线 -->
             <i class="el-icon-success" v-show="row.status==1"></i>
             <i class="el-icon-error" v-show="row.status==2"></i>
-            <i class="el-icon-remove" v-show="row.status==4"></i>
+            <i class="el-icon-remove" v-show="row.status==3"></i>
           </template>
           <template v-slot:feedinDate="{row}">
             {{Number(row.feedinDate )| formatDate('yyyy-MM-dd')}}
@@ -80,14 +80,15 @@
             </div>
           </template>
         </common-table>
-        <div class="states-row">
-          <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.alarm')}}: {{statusAll.warning}}</span>
-          <span><i class="el-icon-error"></i> {{$t('common.glitch')}}: {{statusAll.fault}}</span>
-          <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
-        </div>
-        <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
       </func-bar>
+    </div>
+    <div class="page-list">
+      <div class="states-row">
+        <span><i class="el-icon-success"></i> {{$t('common.normal')}}: {{statusAll.normal}}</span>
+        <span><i class="el-icon-error"></i> {{$t('common.abnormal')}}: {{statusAll.fault}}</span>
+        <span><i class="el-icon-remove"></i> {{$t('common.offline')}}: {{statusAll.offline}}</span>
+      </div>
+      <page-box :pagination.sync="pagination" @change="getInverterList"></page-box>
     </div>
   </section>
 </template>
@@ -102,9 +103,8 @@ export default {
       statusList: [
         { status: 0, label: 'all' },
         { status: 1, label: 'normal' },
-        { status: 2, label: 'alarm' },
-        { status: 3, label: 'alarm' },
-        { status: 4, label: 'offline' }
+        { status: 2, label: 'abnormal' },
+        { status: 3, label: 'offline' }
       ],
       searchForm: {
         status: 0,
@@ -117,15 +117,11 @@ export default {
       pagination: {
         pageSize: 10,
         currentPage: 1,
-        total: 40
+        total: 0
       },
-      resultList: [
-        { age: 11 },
-        { age: 11 }
-      ],
+      resultList: [],
       statusAll: {
         normal: 0,
-        warning: 0,
         fault: 0,
         offline: 0
       }
@@ -163,23 +159,13 @@ export default {
       this.getInverterList(this.$store.state.pagination)
     },
     goToDetail (page, id) {
-      if (page === 'look') {
-        this.$router.push({
-          name: 'bus-device-inverterDetail',
-          query: {
-            id,
-            tabId: this.$route.name + page + id
-          }
-        })
-      } else {
-        this.$router.push({
-          name: 'bus-device-remoteSetting',
-          query: {
-            id,
-            tabId: this.$route.name + page + id
-          }
-        })
-      }
+      let routeName = page === 'look' ? 'bus-device-inverterDetail' : 'bus-device-remoteSetting'
+      this.$tab.replace({
+        name: routeName,
+        query: {
+          id
+        }
+      })
     },
     // 获取列表
     getInverterList (pagination) {
@@ -226,7 +212,7 @@ export default {
         data: this.deviceId
       })
       if (result) {
-        this.$message.success('successful')
+        this.$message.success(this.$t('common.success'))
       }
     }
   }

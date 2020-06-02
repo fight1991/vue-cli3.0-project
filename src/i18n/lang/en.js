@@ -33,7 +33,8 @@ export default {
     installer: 'Installer',
     agent: 'Agent',
     create: 'New',
-    join: 'Join'
+    join: 'Join',
+    joinTips: 'Successful, Require a re-login'
   },
   common: {
     enterFull: 'in a full-screen ',

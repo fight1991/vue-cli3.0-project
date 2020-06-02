@@ -1,4 +1,3 @@
-// import { formatDate } from '@/util'
 export default {
   data () {
     return {
@@ -13,7 +12,16 @@ export default {
             }
           },
           tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter: params => {
+              let headLabel = ''
+              let res = ''
+              params.forEach(v => {
+                !headLabel && (headLabel = v.axisValueLabel)
+                res += '</br>' + v.marker + this.$t('chart.' + v.seriesName) + ' : ' + v.data[1]
+              })
+              return headLabel + res
+            }
           },
           xAxis: {
             type: 'time',
@@ -72,7 +80,13 @@ export default {
               return this.$t('chart.' + name)
             }
           },
-          tooltip: {},
+          tooltip: {
+            trigger: 'item',
+            formatter: params => {
+              let { seriesName, name, value, marker } = params
+              return this.$t('chart.' + seriesName) + '<br/>' + marker + name + ' : ' + value
+            }
+          },
           // dataset: {
           //   dimensions: ['axis', 'generation', 'feed-in', 'loads', 'grid consumption'],
           //   source: [

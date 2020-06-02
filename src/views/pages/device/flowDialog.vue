@@ -7,13 +7,14 @@
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="700px">
-    <el-tabs v-model="activeName" type="card">
+    <div class="no-data" v-if="tabList.length<1">No Data</div>
+    <el-tabs v-model="activeName" type="card" v-else>
       <el-tab-pane
         :label="item.blockName"
         :name="'tab' + index"
         v-for="(item, index) in tabList"
         :key="item.blockName">
-        <div class="block-item" :style="{'max-height': setDivH - 100 + 'px'}">
+        <div class="block-item" v-setH:max="setDivH - 100">
           <el-row class="block-head">
             <el-col :span="12">Variable</el-col>
             <el-col :span="12">Value</el-col>
@@ -33,11 +34,10 @@ export default {
     return {
       activeName: 'tab0',
       dialogVisible: false,
-      resultList: [],
       pagination: {
         pageSize: 10,
         currentPage: 1,
-        total: 40
+        total: 0
       },
       alarmTypeList: [
         {
@@ -116,5 +116,10 @@ export default {
       background-color: #f5f5f5;
     }
   }
+}
+.no-data {
+  padding: 10px;
+  text-align: center;
+  color: #ccc;
 }
 </style>

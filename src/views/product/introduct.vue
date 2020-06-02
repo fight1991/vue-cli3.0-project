@@ -64,7 +64,6 @@
 <script>
 import submitDialog from './submitDialog'
 import joinDialog from './joinDialog'
-import { mapState } from 'vuex'
 export default {
   components: {
     submitDialog,
@@ -81,14 +80,8 @@ export default {
       logoImg: require('@/assets/logo.png')
     }
   },
-  computed: {
-    ...mapState({
-      access: state => state.access
-    })
-  },
-  created () {
-
-  },
+  computed: {},
+  created () {},
   methods: {
     userClick () {
       if (this.access) {

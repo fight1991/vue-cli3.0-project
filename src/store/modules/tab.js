@@ -32,9 +32,10 @@ export default {
       if (payLoad.params.refresh) { // 有相同组件则替换
         if (sameTab) {
           sameTab.isShow = false
-          setTimeout(() => {
+          sameTab.timer = setTimeout(() => {
             sameTab.isShow = true
-          })
+            clearTimeout(sameTab.timer)
+          }, 0)
         } else {
           state.tabList.push(payLoad)
         }
@@ -80,29 +81,10 @@ export default {
       if (temp.tabId === 'tab-index') return
       state.tabList.push(temp)
     },
-    // 关闭当前页签,并打开指定的路由, 用name做跳转,当path和params共用时会失效
-    backGo ({ state }, routerInfo) {
+    // 移除页签
+    removeTab ({ state }) {
       let index = state.tabList.findIndex(v => v.tabId === state.currentTab)
       state.tabList.splice(index, 1)
-      if (typeof routerInfo === 'string') {
-        router.push({
-          name: routerInfo,
-          params: {
-            refresh: true
-          }
-        })
-      }
-      if (typeof routerInfo === 'object') {
-        let params = { refresh: true }
-        if (routerInfo.params !== '{}') {
-          params = Object.assign(params, routerInfo.params)
-        }
-        router.push({
-          name: routerInfo.name,
-          query: routerInfo.query || {},
-          params: params
-        })
-      }
     }
   }
 }

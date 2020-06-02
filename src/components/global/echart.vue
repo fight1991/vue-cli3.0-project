@@ -5,6 +5,7 @@
 </template>
 <script>
 import echarts from 'echarts'
+import { mapState } from 'vuex'
 export default {
   name: 'e-chart',
   props: {
@@ -23,6 +24,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      lang: state => state.lang,
+      currentTab: state => state.tab.currentTab
+    })
+  },
   watch: {
     datas: {
       handler: function () {
@@ -30,7 +37,10 @@ export default {
       },
       deep: true
     },
-    '$store.state.lang': function () {
+    lang: function () {
+      this.asyncInit()
+    },
+    currentTab: function () {
       this.asyncInit()
     }
   },

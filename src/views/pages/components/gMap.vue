@@ -27,6 +27,9 @@ export default {
     this.loadGMap().then(() => {
       this.initMap()
       this.getGeoLocation()
+    }).catch(() => {
+      // 谷歌地图引用失败
+      this.$message.error('国内网路访问谷歌地图失败,请翻墙重试!')
     })
   },
   methods: {

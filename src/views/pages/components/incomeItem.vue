@@ -52,20 +52,19 @@
         {{$t('plant.earnTot')}}
       </div>
       <div class="plant-money text-cut plant-money-green">
-        <i class="iconfont icon-look moneny-detail" v-popover:popover></i>
+        <el-popover
+          popper-class="money-popper"
+          placement="right"
+          title="List"
+          width="100"
+          trigger="hover">
+          <p v-for="item in incomeDetail.earnings.cumulate" :key="item.currency">
+            {{item.currency + ' : ' + dataFormate(item.value)}}
+          </p>
+          <i class="iconfont icon-look moneny-detail" slot="reference"></i>
+        </el-popover>
       </div>
     </div>
-    <el-popover
-      popper-class="money-popper"
-      ref="popover"
-      placement="right"
-      title="List"
-      width="200"
-      trigger="hover">
-      <p v-for="item in incomeDetail.earnings.cumulate" :key="item.currency">
-        {{item.currency + ' : ' + dataFormate(item.value)}}
-      </p>
-    </el-popover>
   </div>
 </template>
 <script>
@@ -136,6 +135,7 @@ export default {
   }
   .moneny-detail {
     cursor: pointer;
+    font-size: 26px;
   }
 }
 </style>

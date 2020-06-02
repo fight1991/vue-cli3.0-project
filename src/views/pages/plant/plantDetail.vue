@@ -14,11 +14,11 @@
             <span>{{$t('common.plantsName')}} </span>
           </div>
           <div class="select-area flex-center" v-if="pageFlag==='board'">
-            <i class="arrow el-icon-caret-left" v-if="switchBtnShow" @click="switchPlant('reduce')"></i>
-            <el-select size="mini" v-model="plantId" :placeholder="$t('common.select')">
+            <i class="arrow el-icon-caret-left" v-if="switchBtnShow && plantIndex > 0" @click="switchPlant('reduce')"></i>
+            <el-select size="mini" @change="getCommonRequest" v-model="plantId" :placeholder="$t('common.select')">
               <el-option v-for="item in plantList" :label="item.plantName" :value="item.stationID" :key="item.stationID"></el-option>
             </el-select>
-            <i class="arrow el-icon-caret-right" v-if="switchBtnShow" @click="switchPlant('add')"></i>
+            <i class="arrow el-icon-caret-right" v-if="switchBtnShow && plantIndex < plantList.length -1" @click="switchPlant('add')"></i>
           </div>
         </div>
         <i @click="headCollapse" v-show="!collapse" class="arrow-right fr el-icon-arrow-right"></i>
@@ -94,7 +94,6 @@ import deviceList from './deviceList'
 import plantStatus from '@/views/pages/components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
 import { formatDate } from '@/util'
-import { mapState } from 'vuex'
 export default {
   components: {
     todayAbnormal,
@@ -110,7 +109,6 @@ export default {
       abnormalVisible: false,
       plantId: '',
       plantList: [],
-      socket: null,
       plantHeadInfo: {
         plantName: '',
         country: '',
@@ -148,9 +146,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      access: state => state.access
-    }),
     deviceTotal () {
       let total = 0
       Object.values(this.device).forEach(value => {
@@ -174,7 +169,7 @@ export default {
   },
   async mounted () {
     if (this.pageFlag === 'detail') { // 电站详情页面
-      this.plantHeadInfo = this.$store.state['plant-module'].plantInfo
+      this.plantHeadInfo = this.$route.query.plantInfo
       this.getCommonRequest()
     } else { // dashboard页面
       // 获取plantList列表
@@ -187,9 +182,7 @@ export default {
     }
     // this.getSomeIncome()
   },
-  beforeDestroy () {
-    this.socket && this.socket.closeLink()
-  },
+  beforeDestroy () {},
   methods: {
     // 顶部展开
     headCollapse () {
@@ -244,11 +237,13 @@ export default {
       let index = type === 'reduce' ? this.plantIndex - 1 : this.plantIndex + 1
       if (index < 0) {
         index = 0
+        return
       }
       if (index > this.plantList.length - 1) {
         index = this.plantList.length - 1
+        return
       }
-      this.plantId = this.plantList[index].plantId
+      this.plantId = this.plantList[index].stationID
       // 发送请求
       await this.$all.promise([
         this.getAbnormalStatus(),

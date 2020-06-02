@@ -87,7 +87,7 @@ export default {
         success: res => {
           let access = this.access[this.$attrs.tag]
           this.$store.commit('setAccess', access)
-          this.$message.success('successful, require a re-login')
+          this.$message.success(this.$t('join.joinTips'))
           this.dialogVisible = false
           this.$router.push('/login')
         }

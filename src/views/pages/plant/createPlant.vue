@@ -1,5 +1,5 @@
 <template>
-  <section class="sys-main bg-c" :style="{'min-height': setDivH + 'px'}">
+  <section class="sys-main bg-c" v-setH:min="setDivH">
     <el-form size="mini" :model="dataForm" ref="dataForm" :rules="rules" label-position="left" label-width="120px">
       <div class="top" v-if="access > 1">
         <div class="title border-line">{{$t('plant.plantSet')}}</div>
@@ -111,7 +111,6 @@
   </section>
 </template>
 <script>
-import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -198,10 +197,7 @@ export default {
     errorList () {
       let temp = this.snResult.filter(v => v.errno !== 0)
       return temp.map(v => v.device)
-    },
-    ...mapState({
-      access: state => state.access
-    })
+    }
   },
   methods: {
     // 表格模板
@@ -342,7 +338,9 @@ export default {
         },
         success: ({ result }) => {
           this.$message.success(this.$t('common.success'))
-          this.backRoute('bus-plant-view')
+          this.$tab.back({
+            name: 'bus-plant-view'
+          })
         }
       })
     },
@@ -352,7 +350,7 @@ export default {
         method: 'post',
         url: '/v0/module/checksn',
         data: {
-          type: this.access === 1 ? 0 : 1,
+          type: this.access === 1 ? 0 : this.opType === 'add' ? 1 : 2,
           devices: item,
           stationID: this.plantId
         }

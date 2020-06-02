@@ -23,7 +23,7 @@
       <func-bar>
         <common-table :tableHeadData="plantTableHead" :tableList="resultList">
           <template v-slot:status="{row}">
-            <i class="el-icon-warning" v-show="Number(row.status) === 0"></i>
+            <i class="el-icon-error" v-show="Number(row.status) === 2"></i>
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
             <i class="el-icon-remove" v-show="Number(row.status) === 3"></i>
           </template>
@@ -40,7 +40,7 @@
         </common-table>
         <div class="states-row">
           <span><i class="el-icon-success"></i> {{$t('common.normal')}}</span>
-          <span><i class="el-icon-warning"></i> {{$t('common.abnormal')}}</span>
+          <span><i class="el-icon-error"></i> {{$t('common.abnormal')}}</span>
           <span><i class="el-icon-remove"></i> {{$t('common.offline')}}</span>
         </div>
         <page-box :pagination.sync="pagination" @change="getPlantList"></page-box>
@@ -51,7 +51,7 @@
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
-import plantStore from './plantStore'
+// import plantStore from './plantStore'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -73,40 +73,23 @@ export default {
       pagination: {
         pageSize: 10,
         currentPage: 1,
-        total: 40
+        total: 0
       },
-      resultList: [
-        {
-          name: 'zs',
-          age: 18,
-          city: 33333,
-          stationID: '1'
-
-        },
-        {
-          name: 'ls',
-          age: 133,
-          stationID: '2'
-        }
-      ]
+      resultList: []
     }
   },
   created () {
     this.search()
-    this.$store.registerModule('plant-module', plantStore)
   },
   computed: {
     ...mapState({
-      username: state => state.userInfo.user,
-      access: state => state.access
+      username: state => state.userInfo.user
     })
   },
   mounted () {
     this.$refs.plantStatus.getPlantStatus()
   },
-  beforeDestroy () {
-    this.$store.unregisterModule('plant-module')
-  },
+  beforeDestroy () {},
   methods: {
     search () {
       this.getPlantList(this.$store.state.pagination)
@@ -138,9 +121,9 @@ export default {
     },
     // 电站删除
     async deletePlant (id) {
-      let res = await this.$confirm('Are you sure you want to delete it?', 'tip', {
-        confirmButtonText: 'confirm',
-        cancelButtonText: 'cancel',
+      let res = await this.$confirm(this.$t('common.tips2'), this.$t('common.tip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => true).catch(() => false)
       if (!res) return
@@ -150,7 +133,7 @@ export default {
           stationID: id
         },
         success: () => {
-          this.$message.success('succcessful')
+          this.$message.success(this.$t('common.success'))
           this.search()
         }
       })
@@ -164,22 +147,23 @@ export default {
     goToDetail (type, row) {
       if (type === 'look') {
         let { country, city, name } = row
-        this.$store.commit('plant-module/setCountryAndCity', { country, city, plantName: name })
-        this.$router.push({
+        this.$tab.replace({
           name: 'bus-plant-detail',
           query: {
             plantId: row.stationID,
-            opType: 'look',
-            tabId: this.$route.name + 'look' + row.stationID
+            pageFlag: 'detail',
+            plantInfo: {
+              country,
+              city,
+              plantName: name
+            }
           }
         })
       } else {
-        this.$router.push({
+        this.$tab.replace({
           name: 'bus-plant-edit',
           query: {
-            plantId: row.stationID,
-            opType: 'edit',
-            tabId: this.$route.name + 'edit' + row.stationID
+            plantId: row.stationID
           }
         })
       }
