@@ -144,7 +144,6 @@ export default {
     goToDetail (type, row) {
       if (type === 'look') {
         let { country, city, name } = row
-        console.log(encodeData({ country, city, plantName: name }))
         this.$tab.replace({
           name: 'bus-plant-detail',
           query: {
