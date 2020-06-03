@@ -7,7 +7,7 @@
       </div>
       <div class="abnormal-content flex-around" :style="{'height': contentH + 'px'}">
         <i class="iconfont icon-alarm-total"></i>
-        <div class="item-op flex-center" title="view">
+        <div class="item-op flex-center" title="view" @click="dialogVisible=true">
           {{todayFault}}
         </div>
       </div>
