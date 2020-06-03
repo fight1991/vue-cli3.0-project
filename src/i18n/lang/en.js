@@ -150,6 +150,7 @@ export default {
     successMg2: 'Reset successfully'
   },
   plant: {
+    summerTime: 'Summer time',
     crePlant: 'New plant',
     sn: 'SN',
     key: 'KEY',

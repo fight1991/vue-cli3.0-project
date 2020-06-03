@@ -150,6 +150,7 @@ export default {
     successMg2: '重置成功'
   },
   plant: {
+    summerTime: '夏令时',
     crePlant: '创建电站',
     sn: '序列号',
     key: '注册码',

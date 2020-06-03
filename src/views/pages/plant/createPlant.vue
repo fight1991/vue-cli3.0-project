@@ -50,7 +50,7 @@
                 </el-form-item>
               </el-col>
               <el-col :lg="12" :md="24" v-if="hasSummerTime">
-                <el-form-item label="夏令时" prop="daylight">
+                <el-form-item :label="$t('plant.summerTime')" prop="daylight">
                   <el-select v-model="dataForm.daylight" filterable style="width:100%" :placeholder="$t('common.select')">
                     <el-option v-for="item in zoneInfo.daylights" :key="item" :value="item" :label="item"></el-option>
                   </el-select>
