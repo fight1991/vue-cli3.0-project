@@ -105,6 +105,7 @@ export default {
   margin-top: 10px;
   margin-left: -5px;
   .el-col {
+    height: 36px;
     border-bottom: 1px solid #ccc;
     padding: 8px 5px;
     &:nth-child(2n + 1) {
