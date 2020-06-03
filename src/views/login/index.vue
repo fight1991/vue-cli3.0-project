@@ -31,14 +31,14 @@
       </div>
     </div>
     <div class="content">
-      <div class="bg"><img src="@/assets/login-bg.png" alt=""></div>
+      <!-- <div class="bg"><img src="@/assets/login-bg.png" alt=""></div> -->
+      <div class="invert"></div>
       <!-- <div class="sys-text">
         <p class="top">SYSTEM MONITORING</p>
         <div class="down">
           <p>ANYTIME<br/>ANYWHERE</p>
         </div>
       </div> -->
-      <!-- <div class="bg"></div> -->
       <transition name="zoom">
         <keep-alive>
           <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
@@ -108,6 +108,8 @@ export default {
   }
 }
   .login-container {
+    // background: url("../../assets/inverter-bg.png") no-repeat left center;
+    // background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -156,7 +158,9 @@ export default {
     }
     .content {
       min-height: 400px;
-      background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
+      // background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
+      background: url("../../assets/inverter-bg.png") no-repeat left center;
+      background-size: cover;
       flex: 1;
       position: relative;
       display: flex;
@@ -187,10 +191,10 @@ export default {
       }
     }
     .login {
-      box-shadow: 0 0 10px #999;
+      box-shadow: 0 0 10px #ddd;
       z-index: 6;
       position: absolute;
-      right: 10%;
+      right: 15%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       // transform-origin: center;
       width: 450px;
