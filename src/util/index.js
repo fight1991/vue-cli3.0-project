@@ -137,3 +137,10 @@ export async function getFileBase64 (file) {
     return res
   }
 }
+// 编码解码
+export function encodeData (obj) {
+  return encodeURIComponent(JSON.stringify(obj))
+}
+export function decodeData (obj) {
+  return JSON.parse(decodeURIComponent(obj))
+}

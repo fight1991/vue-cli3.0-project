@@ -28,9 +28,9 @@
         <el-row :gutter="30">
           <el-col :span="6" v-if="pageFlag==='board'">{{$t('plant.country')}} : {{plants.country || ''}}</el-col>
           <el-col :span="6" v-if="pageFlag==='board'">{{$t('plant.city')}} : {{plants.city || ''}}</el-col>
-          <el-col :span="6">{{$t('join.installer')}}  : {{installer.organName || ''}}</el-col>
+          <el-col :span="6">{{$t('join.installer')}}  : {{installer.account || ''}}</el-col>
           <el-col :span="6">{{$t('common.contact')}}  : {{installer.phone || ''}}</el-col>
-          <el-col :span="6">{{$t('plant.user')}} : {{users.name || ''}}</el-col>
+          <el-col :span="6">{{$t('plant.user')}} : {{users.account || ''}}</el-col>
           <el-col :span="6">{{$t('common.contact')}}  : {{users.phone || ''}}</el-col>
           <el-col :span="6">{{$t('plant.type')}} : {{plants.plantType === 1 ? $t('common.light') : plants.plantType === 2 ? $t('common.energy'): ''}}</el-col>
           <el-col :span="6">{{$t('plant.websiteTime')}} : {{plants.createdDate || ''}}</el-col>
@@ -93,7 +93,7 @@ import todayAbnormal from '@/views/pages/plant/todayAbnormal'
 import deviceList from './deviceList'
 import plantStatus from '@/views/pages/components/powerStatus'
 import lineBar from '@/views/pages/components/lineBar/lineBar'
-import { formatDate } from '@/util'
+import { formatDate, decodeData } from '@/util'
 export default {
   components: {
     todayAbnormal,
@@ -169,7 +169,7 @@ export default {
   },
   async mounted () {
     if (this.pageFlag === 'detail') { // 电站详情页面
-      this.plantHeadInfo = this.$route.query.plantInfo
+      this.plantHeadInfo = decodeData(this.$route.query.plantInfo)
       this.getCommonRequest()
     } else { // dashboard页面
       // 获取plantList列表

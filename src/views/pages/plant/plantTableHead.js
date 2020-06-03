@@ -26,7 +26,7 @@ export default {
         },
         {
           label: 'common.postcode',
-          prop: 'owner',
+          prop: 'postcode',
           checked: true,
           width: 100
         },
@@ -69,8 +69,7 @@ export default {
           prop: 'createdDate',
           checked: true,
           width: '130',
-          renderHeader: true,
-          slotName: 'createdDate'
+          renderHeader: true
         },
         {
           label: 'common.operation',

@@ -27,9 +27,6 @@
             <i class="el-icon-success" v-show="Number(row.status) === 1"></i>
             <i class="el-icon-remove" v-show="Number(row.status) === 3"></i>
           </template>
-          <template v-slot:createdDate="{row}">
-              {{ Number(row.createdDate) | formatDate('yyyy-MM-dd HH:mm') }}
-            </template>
           <template v-slot:op="{row}">
             <div class="flex-center table-op-btn">
               <i title="view" class="iconfont icon-look" @click="goToDetail('look',row)"></i>
@@ -51,7 +48,7 @@
 <script>
 import showItem from '../components/showItem'
 import plantTableHead from './plantTableHead'
-// import plantStore from './plantStore'
+import { encodeData } from '@/util'
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -147,16 +144,13 @@ export default {
     goToDetail (type, row) {
       if (type === 'look') {
         let { country, city, name } = row
+        console.log(encodeData({ country, city, plantName: name }))
         this.$tab.replace({
           name: 'bus-plant-detail',
           query: {
             plantId: row.stationID,
             pageFlag: 'detail',
-            plantInfo: {
-              country,
-              city,
-              plantName: name
-            }
+            plantInfo: encodeData({ country, city, plantName: name })
           }
         })
       } else {
