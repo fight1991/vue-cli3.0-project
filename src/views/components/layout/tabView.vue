@@ -7,6 +7,7 @@
           :closable="index > 0"
           :key="item.tabId"
           :name="item.tabId">
+
           <!-- 页签区域开始 -->
           <span slot="label" v-if="index==0"><i class="iconfont icon-home"></i></span>
           <el-popover
@@ -19,6 +20,7 @@
             <div class="tab-refresh" @click="reload(item)"><i class="el-icon-refresh"></i>{{$t('common.refresh')}}</div>
           </el-popover>
           <!-- 页签区域结束 -->
+
           <!-- 组件内容区域开始 -->
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
             <div class="tab-content" v-if="item.isShow">
@@ -27,6 +29,7 @@
             </div>
           </el-scrollbar>
           <!-- 组件内容区域结束 -->
+
         </el-tab-pane>
       </template>
     </el-tabs>
@@ -105,7 +108,9 @@ export default {
   .el-icon-refresh {
     margin-right: 4px;
   }
+  font-size: 12px;
   &:hover {
+    background-color: #f5f5f5;
     color: @sys-main-header;
   }
 }
