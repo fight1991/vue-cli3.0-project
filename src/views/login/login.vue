@@ -10,7 +10,7 @@
           </el-col>
           <el-col :span="24" class="password">
             <el-form-item prop="pw">
-              <el-input :type="pwType" v-model="dataForm.password" :placeholder="$t('login.pw')" @keyup.native.enter="goLogin">
+              <el-input ref="password" :type="pwType" v-model="dataForm.password" :placeholder="$t('login.pw')" @keyup.native.enter="goLogin">
                 <i slot="suffix" @click="showPw" :class="pwType === 'password'?'iconfont icon-hide':'iconfont icon-show'"></i>
               </el-input>
             </el-form-item>
@@ -33,6 +33,7 @@ import md5 from 'js-md5'
 import mixins from './mixin'
 import valid from './validate'
 import storage from '@/util/storage'
+import link from './link'
 export default {
   name: 'login',
   mixins: [mixins],
@@ -55,9 +56,16 @@ export default {
     if (this.$route.query.type === 'reset') {
       this.registerBtn('resetPw')
     }
+    link.$on('sendUser', this.getUserFromRegister)
   },
   computed: {},
   methods: {
+    getUserFromRegister (user) {
+      this.dataForm.user = user
+      this.$nextTick(() => {
+        this.$refs.password.$refs.input.focus()
+      })
+    },
     // 用户名密码登录输入框校验
     passwordValid () {
       // 手机或邮箱正则
@@ -115,14 +123,6 @@ export default {
           // 若验证码登录则 41900 41901 41902验证码已失效, 验证码错误 验证码不存在
         }
       })
-    },
-    // 获取用户信息
-    async getUserInfo () {
-      let { result } = await this.$axios({ url: '/v0/user/info' })
-      if (result) {
-        this.$store.commit('setUserInfo', result)
-        storage.setUserInfo(result)
-      }
     }
   }
 }

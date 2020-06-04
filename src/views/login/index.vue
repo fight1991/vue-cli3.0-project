@@ -1,38 +1,70 @@
 <template>
   <div class="login-container" v-loading="$store.state.loading">
     <div class="header">
-      <el-dropdown
-        @command="toggleLang"
-        placement="top-start">
-        <span class="lang flex-center">
-          <i class="iconfont icon-yuyan"></i>
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="zh">中文</el-dropdown-item>
-          <el-dropdown-item command="en" divided>English</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <el-dropdown
-        placement="top-start">
-        <span class="app-downLoad flex-center">
-          <i class="iconfont icon-app"></i>
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>app-downLoad</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <div class="login-logo flex-center">
+        <img src="@/assets/logo.png" alt="">
+        <span>FoxESS</span>
+      </div>
+      <div class="header-right flex-center">
+        <el-dropdown
+          @command="toggleLang"
+          placement="top-start">
+          <span class="lang flex-center">
+            <i class="iconfont icon-yuyan"></i>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="zh">中文</el-dropdown-item>
+            <el-dropdown-item command="en" divided>English</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-dropdown
+          placement="top-start">
+          <span class="app-downLoad flex-center">
+            <i class="iconfont icon-app"></i>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>app-downLoad</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
     <div class="content">
-      <div class="bg"><img src="../../assets/login-bg.png" alt=""></div>
+      <!-- <div class="bg"><img src="@/assets/login-bg.png" alt=""></div> -->
+      <div class="invert"></div>
+      <!-- <div class="sys-text">
+        <p class="top">SYSTEM MONITORING</p>
+        <div class="down">
+          <p>ANYTIME<br/>ANYWHERE</p>
+        </div>
+      </div> -->
       <transition name="zoom">
         <keep-alive>
           <component :is="pageFlag" @toggleStatus="toggleStatus"></component>
         </keep-alive>
       </transition>
     </div>
-    <div class="footer"></div>
+    <div class="footer">
+      <div class="footer-content">
+        <p class="flex-center">
+          <el-link type="info" href="https://www.fox-ess.com/" target="_blank">{{$t('login.site')}}</el-link>
+          <i class="gap">-</i>
+          <el-link type="info" href="http://8.209.116.72/i18n/zh_CN/UserAgreement.html" target="_blank">{{$t('login.useTerm')}}</el-link>
+          <i class="gap">-</i>
+          {{$t('login.product')}}
+          <span class="gap">:</span>
+          <el-link type="info" href="https://fox-ess.com/single-phase/" target="_blank">{{$t('login.sSeries')}}</el-link>
+          <i class="gap">-</i>
+          <el-link type="info" href="https://fox-ess.com/single-phase/" target="_blank">{{$t('login.eSeries')}}</el-link>
+          <i class="gap">-</i>
+          <el-link type="info" href="https://fox-ess.com/single-phase/" target="_blank">{{$t('login.tSeries')}}</el-link>
+          <i class="gap">-</i>
+          <el-link type="info" href="https://fox-ess.com/single-phase/" target="_blank">{{$t('login.acStore')}}</el-link>
+        </p>
+        <p>{{$store.state.rightsTxt + $t('login.allRight')}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,25 +98,54 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.gap {
+  margin: 0 5px;
+}
+.login-logo {
+  width: 50px;
+  img {
+    width: 100%;
+  }
+}
   .login-container {
-    // min-width: 900px;
+    // background: url("../../assets/inverter-bg.png") no-repeat left center;
+    // background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: auto;
     background-size: cover;
-    background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
     position: relative;
-    .footer {
-      height: 55px;
+    .header,.footer {
+      background-color: #fff;
+    }
+    .footer-content {
+      font-size: 12px;
+      color: #999;
+      text-align:center;
+      // width: 1000px;
+      // margin: 0 auto;
+      padding: 10px 0;
     }
     .header {
+      .login-logo {
+        img {
+          width: 50px;
+        }
+        span {
+          margin-left: 5px;
+        }
+        width: 150px;
+        color: @sys-main-header;
+        font-weight: bold;
+      }
+      .header-right span{
+        color: @sys-main-header;
+      }
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       padding: 10px 20px;
       font-size: 22px;
-      .el-dropdown {
-        color: #fff;
-      }
       .app-downLoad, .lang {
         cursor: pointer;
       }
@@ -96,12 +157,30 @@ export default {
       }
     }
     .content {
+      min-height: 400px;
+      // background: linear-gradient(40deg, #1174b6 40%, #2398dd 80%,#56b3e9);
+      background: url("../../assets/inverter-bg.png") no-repeat left center;
+      background-size: cover;
       flex: 1;
       position: relative;
       display: flex;
       align-items: center;
+      .sys-text {
+        z-index: 66;
+        .top {
+          letter-spacing: 2px;
+          font-weight: bold;
+          color: @sys-main-header;
+        }
+        .down {
+          font-family: Rajdhani;
+          letter-spacing: 1px;
+          font-weight: 700;
+          font-size: 60px;
+        }
+      }
       .bg {
-        animation: drop 3s ease-in-out infinite;
+        // height: 300px;
         z-index: 5;
         position: absolute;
         left: 10%;
@@ -112,10 +191,10 @@ export default {
       }
     }
     .login {
-      box-shadow: 0 0 10px #999;
+      box-shadow: 0 0 10px #ddd;
       z-index: 6;
       position: absolute;
-      right: 10%;
+      right: 15%;
       // transform: translate(-50%,-50%); // 会改变变换的中心值
       // transform-origin: center;
       width: 450px;
@@ -164,11 +243,9 @@ export default {
 }
   // 兼容手机端
 @media only screen and(max-width:768px) {
-  .content {
-    margin: 0 10px!important;
-  }
   .login{
-    width: 100%!important;
+    width: calc(100% - 20px)!important;
+    margin: 0 10px;
     right: 0!important;
   }
   .content .bg {
@@ -181,7 +258,7 @@ export default {
     right: 5%!important;
   }
   .content .bg {
-    width: 480px!important;
+    width: 440px!important;
     left: 5%!important;
   }
 }
@@ -191,7 +268,7 @@ export default {
     right: 10%!important;
   }
   .content .bg {
-    width: 550px!important;
+    width: 460px!important;
     left: 10%!important;
   }
 }

@@ -45,6 +45,9 @@ export default {
     remark: '备注'
   },
   common: {
+    refresh: '刷新此页面',
+    noData: '暂无数据',
+    tabOp: '操作页签',
     enterFull: '全屏显示',
     outFull: '退出全屏',
     backHome: '返回首页',
@@ -112,6 +115,14 @@ export default {
     signal: '信号'
   },
   login: {
+    product: '产品',
+    sSeries: 'S系列',
+    eSeries: 'E/F系列',
+    tSeries: 'T系列',
+    acStore: 'AC存储',
+    site: '官网',
+    useTerm: '使用条款',
+    allRight: '版权所有',
     send: '获取验证码',
     mobile: '手机号登录',
     mobileSp: '手机号注册',
@@ -150,6 +161,7 @@ export default {
     successMg2: '重置成功'
   },
   plant: {
+    summerTime: '夏令时',
     crePlant: '创建电站',
     sn: '序列号',
     key: '注册码',

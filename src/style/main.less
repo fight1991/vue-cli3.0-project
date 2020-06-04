@@ -189,14 +189,6 @@
   background-color: #fff;
   position: relative;
 }
-// #pane-data-view {
-//   .el-scrollbar__view {
-//     height: 100%;
-//   }
-//   .tab-content {
-//     height: 100%;
-//   }
-// }
 .el-scrollbar {
   height: 100%;
 }
@@ -286,6 +278,9 @@
   }
 }
 .login-container {
+  .el-divider__text, .el-link {
+    font-size: 12px;
+  }
   .login {
     .el-input__inner {
       border-radius: 2px;
@@ -415,10 +410,9 @@
       line-height: 35px;
       border-bottom: none;
       height: 35px;
-      // &.is-active {
-      //   border-bottom-color: #e4e7ed;
-      //   background-color: #e5f2ff;
-      // }
+      .el-icon-close {
+        line-height: 14px;
+      }
     }
     .el-tabs__nav {
       border-radius: 0;
@@ -458,4 +452,8 @@
       display: none;
     }
   }
+}
+.tab-popper {
+  min-width: 45px;
+  padding: 10px 12px;
 }

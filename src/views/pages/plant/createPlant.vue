@@ -27,8 +27,8 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.country')" prop="details.country">
-                  <el-select v-model="dataForm.details.country" style="width:100%" :placeholder="$t('common.select')">
-                    <el-option v-for="(item, index) in countryList" :key="'index'+index" :value="item" :label="item"></el-option>
+                  <el-select v-model="dataForm.details.country" filterable style="width:100%" @change="getZoneList" :placeholder="$t('common.select')">
+                    <el-option v-for="item in countryList" :key="item.code" :value="item.code" :label="item.name"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -44,8 +44,15 @@
               </el-col>
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('common.zone')" prop="timezone">
-                  <el-select v-model="dataForm.timezone" style="width:100%" :placeholder="$t('common.select')">
-                    <el-option v-for="(item, index) in zoneList" :key="'index'+index" :value="item" :label="item"></el-option>
+                  <el-select v-model="dataForm.timezone" filterable :disabled="!zoneIsShow" style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="item in zoneInfo.timezones" :key="item" :value="item" :label="item"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :lg="12" :md="24" v-if="hasSummerTime">
+                <el-form-item :label="$t('plant.summerTime')" prop="daylight">
+                  <el-select v-model="dataForm.daylight" filterable style="width:100%" :placeholder="$t('common.select')">
+                    <el-option v-for="item in zoneInfo.daylights" :key="item" :value="item" :label="item"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -120,7 +127,11 @@ export default {
       errVisible: false,
       snResult: [], // sn校验的结果
       agentList: [],
-      zoneList: [], // 时区列表
+      zoneInfo: { // 时区信息
+        useDaylight: false,
+        timezones: [],
+        daylights: []
+      },
       countryList: [], // 国家列表
       dataForm: {
         devices: [
@@ -154,6 +165,7 @@ export default {
       rules: {
         agent: [{ required: true, message: 'agent is required', trigger: 'change' }],
         timezone: [{ required: true, message: 'time zone is required', trigger: 'change' }],
+        daylight: [{ required: true, message: 'summer time is required', trigger: 'change' }],
         'details.name': [{ required: true, message: 'name is required', trigger: 'blur' }],
         'details.type': [{ required: true, message: 'type is required', trigger: 'blur' }],
         'details.country': [{ required: true, message: 'country is required', trigger: 'change' }],
@@ -172,7 +184,6 @@ export default {
     if (this.access > 1) {
       this.getPriceList()
       this.getAgentList()
-      this.getZoneList()
       this.countryList = await this.getCountryList()
     }
     let { opType } = this.$route.meta
@@ -182,6 +193,11 @@ export default {
     if (this.opType !== 'add') {
       this.plantId = this.$route.query.plantId
       this.getStationInfo(this.plantId)
+    }
+  },
+  watch: {
+    '$store.state.lang': async function () {
+      this.countryList = await this.getCountryList()
     }
   },
   computed: {
@@ -197,6 +213,12 @@ export default {
     errorList () {
       let temp = this.snResult.filter(v => v.errno !== 0)
       return temp.map(v => v.device)
+    },
+    zoneIsShow () {
+      return this.zoneInfo.timezones && this.zoneInfo.timezones.length > 0
+    },
+    hasSummerTime () { // 是否有夏令时
+      return this.zoneInfo.useDaylight
     }
   },
   methods: {
@@ -204,9 +226,10 @@ export default {
     copyData () {
       return {
         devices: [
-          { sn: '', key: '' }
+          { sn: '', key: '', isPass: 1 }
         ],
-        timezoneOffset: 0,
+        timezone: '',
+        daylight: '',
         agent: '',
         details: {
           name: '',
@@ -250,12 +273,15 @@ export default {
       }
     },
     // 获取时区列表
-    async getZoneList () {
+    async getZoneList (code) {
       let { result } = await this.$axios({
-        url: '/v0/map/timezones'
+        url: '/v0/map/timezones',
+        data: {
+          country: code
+        }
       })
       if (result) {
-        this.zoneList = result.timezones || []
+        this.zoneInfo = result
       }
     },
     // 设备删除
@@ -324,13 +350,16 @@ export default {
         return
       }
       // 有的sn校验失败显示弹框
-      if (!this.isAllError && !this.isAllPass) {
+      if (!this.isAllError && !this.isAllPass && this.snResult.length > 0) {
         this.errVisible = true
       }
     },
     // 创建电站
     creatPlant () {
       let url = this.opType === 'add' ? '/v0/plant/create' : '/v0/plant/update'
+      if (!this.hasSummerTime) {
+        this.dataForm.daylight = ''
+      }
       this.$post({
         url: url,
         data: {

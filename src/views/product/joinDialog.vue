@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :modal-append-to-body="false"
-    @opened="dialogOpen"
+    @opened="cancelForm"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="600px">
@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      access: {
+      accessInfo: {
         user: 1,
         installer: 2,
         agent: 3
@@ -53,7 +53,8 @@ export default {
     closeDialog () {
       this.$emit('update:visible', false)
     },
-    dialogOpen () {
+    cancelBtn () {
+      this.dialogVisible = false
       this.cancelForm()
     },
     cancelForm () {

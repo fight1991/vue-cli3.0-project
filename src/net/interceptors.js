@@ -15,6 +15,7 @@ export default {
     // ajax异步请求
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
     config.headers['token'] = storage.getToken()
+    config.headers['lang'] = store.state.lang
     return config
   },
   // 请求发送失败之前

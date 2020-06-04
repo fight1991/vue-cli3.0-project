@@ -1,6 +1,10 @@
 <template>
   <div class="echart-box">
-    <div class="echart" ref="echart" :style="{'width':width,'height':height}"></div>
+    <div v-show="hasData" class="echart" ref="echart" :style="{'width':width,'height':height}"></div>
+    <div v-show="!hasData" class="noData flex-column-center" :style="{'width':width,'height':height}">
+      <p><i class="iconfont icon-noData"></i></p>
+      <p>{{$t('common.noData')}}</p>
+    </div>
   </div>
 </template>
 <script>
@@ -28,7 +32,14 @@ export default {
     ...mapState({
       lang: state => state.lang,
       currentTab: state => state.tab.currentTab
-    })
+    }),
+    hasData () { // 是否有数据
+      if (this.datas.series && this.datas.series.length > 0) {
+        return this.datas.series.every(v => v.data && v.data.length > 0)
+      } else {
+        return false
+      }
+    }
   },
   watch: {
     datas: {
@@ -75,5 +86,21 @@ export default {
 <style lang="less" scoped>
 .echart {
   overflow: hidden!important;
+}
+.noData {
+  text-align: center;
+  color: #ADE9F8;
+  font-weight: bold;
+  font-size: 16px;
+  p {
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .icon-noData {
+    font-weight: normal;
+    height: 100%;
+    font-size: 180px;
+    color: #ADE9F8;
+  }
 }
 </style>

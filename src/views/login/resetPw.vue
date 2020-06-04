@@ -25,7 +25,7 @@
           </el-col>
           <el-col :span="24" class="code-area">
             <el-form-item prop="code" :label="$t('login.code')">
-              <el-input style="padding-top:4px" v-model="dataForm.captcha" :maxlength="4">
+              <el-input style="padding-top:4px" v-model="dataForm.captcha" :maxlength="4" @keyup.native.enter="resetPassword">
                 <el-button slot="append" @click="getCode">{{codeTxt}}</el-button>
               </el-input>
             </el-form-item>
@@ -46,6 +46,7 @@
 import mixins from './mixin'
 import md5 from 'js-md5'
 import valid from './validate'
+import link from './link'
 export default {
   name: 'resetPw',
   mixins: [mixins],
@@ -102,6 +103,13 @@ export default {
         },
         success: res => {
           this.$message.success(this.$t('login.successMg2'))
+          link.$emit('sendUser', this.dataForm.user)
+          this.dataForm = {
+            user: '',
+            newPassword: '',
+            captcha: ''
+          }
+          this.clearTime()
           this.backLogin()
         }
       })

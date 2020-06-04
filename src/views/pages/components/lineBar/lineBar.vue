@@ -29,6 +29,16 @@
           <i class="arrow el-icon-arrow-right" @click="computeDate('add')"></i>
           </span>
       </div>
+      <div class="date" v-show="echartType=='power'">
+        <el-date-picker
+          @change="getLineData()"
+          :clearable="false"
+          size="mini"
+          style="width:125px"
+          :picker-options="pickerOptions"
+          v-model="powerDate">
+        </el-date-picker>
+      </div>
     </div>
     <!-- 图表 -->
     <div class="chart" v-show="echartType!=='list'">
@@ -47,6 +57,7 @@ export default {
   data () {
     return {
       dateValue: '',
+      powerDate: formatDate(Date.now(), 'yyyy-MM-dd'),
       dateType: 'Days',
       echartType: 'power', // 默认显示功率图表
       reportType: {
@@ -139,12 +150,12 @@ export default {
           variables: ['generationPower', 'feedinPower', 'loadsPower'],
           timespan: 'day',
           beginDate: {
-            year: new Date().getFullYear(),
-            month: new Date().getMonth() + 1,
-            day: new Date().getDate(),
-            hour: new Date().getHours(),
-            minute: new Date().getMinutes(),
-            second: new Date().getSeconds()
+            year: new Date(this.powerDate).getFullYear(),
+            month: new Date(this.powerDate).getMonth() + 1,
+            day: new Date(this.powerDate).getDate(),
+            hour: new Date(this.powerDate).getHours(),
+            minute: new Date(this.powerDate).getMinutes(),
+            second: new Date(this.powerDate).getSeconds()
           }
         }
       })

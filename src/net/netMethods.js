@@ -1,23 +1,29 @@
 
 import store from '@/store'
+import storage from '@/util/storage'
 import { MethodBase, MethodAll } from './netConfig'
 let { instance: commonInstance } = new MethodBase(process.env.VUE_APP_API)
 let { instance: upLoadInstance } = new MethodBase(process.env.VUE_APP_FILE)
 
 const requests = {
   // 返回 promise
-  async $axios ({ url, data = {}, method = 'get', isLoad = true }) {
+  async $axios ({ url, data = {}, method = 'get', isLoad = true, checkParams }) {
     let params = method === 'get' ? { params: data } : data
     // 无论resolve还是reject都返回一个结果
     try {
-      if (isLoad) store.commit('changeLoading', true)
-      let res = await commonInstance[method](url, params)
-      if (isLoad) store.commit('changeLoading', false)
-      if (res.errno === store.state.successCode) {
-        return { result: res.result }
-      } else {
-        return { other: res.result }
+      if (checkParams) { // 检查本地是否有缓存
+        if (storage.getStorage(checkParams)) {
+          return { result: storage.getStorage(checkParams) }
+        }
       }
+      isLoad && store.commit('changeLoading', true)
+      let res = await commonInstance[method](url, params)
+      isLoad && store.commit('changeLoading', false)
+      if (res.errno === store.state.successCode) {
+        checkParams && storage.setStorage(checkParams, res.result)
+        return { result: res.result }
+      }
+      return { other: res.result }
     } catch (err) {
       // console.log(err)
       if (isLoad) store.commit('changeLoading', false)
