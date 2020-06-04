@@ -37,6 +37,7 @@ export default {
     joinTips: 'Successful, Require a re-login'
   },
   common: {
+    refresh: 'Refresh page',
     noData: 'No Data',
     tabOp: 'Tab operations',
     enterFull: 'in a full-screen ',
