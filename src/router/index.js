@@ -75,6 +75,10 @@ router.beforeEach(async (to, from, next) => {
   }
   // 路由跳转鉴别权限
   if (!(to.meta.permission && to.meta.permission.includes(store.state.access))) {
+    if (store.state.access === 0) { // 游客
+      next('/product/index')
+      return
+    }
     _this.$message.error('No permissions!')
     return
   }
