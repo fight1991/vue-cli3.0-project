@@ -87,8 +87,13 @@ export default {
     // 修改密码
     goResetPw () {
       let { href } = this.$router.resolve({
-        path: '/login?type=reset'
+        path: '/login',
+        query: {
+          type: 'reset',
+          redirect: this.$router.currentRoute.fullPath
+        }
       })
+      sessionStorage.setItem('username', this.userInfo.user)
       window.open(href, '_self')
     },
     // 注销登录
