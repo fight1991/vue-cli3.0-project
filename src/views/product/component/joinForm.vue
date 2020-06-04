@@ -44,9 +44,9 @@ export default {
         moduleSN: ''
       },
       rules: {
-        organNameS: [{ required: true, message: '', trigger: 'change' }],
-        organNameM: [{ required: true, message: '', trigger: 'change' }],
-        moduleSN: [{ required: true, message: '', trigger: 'blur' }]
+        organNameS: [{ required: true, message: 'Authorizer is required', trigger: 'change' }],
+        organNameM: [{ required: true, message: 'Authorizer is required', trigger: 'change' }],
+        moduleSN: [{ required: true, message: 'sn is required', trigger: 'blur' }]
       }
     }
   },

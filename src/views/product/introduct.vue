@@ -156,6 +156,8 @@ export default {
     .iconfont {
       font-size: 22px;
       margin-right: 10px;
+      display: inline-block;
+      transform: rotate(90deg);
     }
     padding-right: 15px;
     font-size: 1.5rem;
