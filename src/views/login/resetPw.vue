@@ -24,7 +24,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24" class="code-area">
-            <el-form-item prop="code" :label="$t('login.code')">
+            <el-form-item prop="captcha" :label="$t('login.code')">
               <el-input style="padding-top:4px" v-model="dataForm.captcha" :maxlength="4" @keyup.native.enter="resetPassword">
                 <el-button slot="append" @click="getCode">{{codeTxt}}</el-button>
               </el-input>
@@ -62,7 +62,7 @@ export default {
       loginRules: {
         user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
         newPassword: [{ required: true, pattern: valid.password.rule, message: this.$t(valid.password.message), trigger: 'blur' }],
-        code: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
+        captcha: [{ required: true, pattern: valid.code.rule, message: this.$t(valid.code.message), trigger: 'blur' }]
       }
     }
   },

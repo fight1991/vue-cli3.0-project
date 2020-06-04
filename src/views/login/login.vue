@@ -109,7 +109,7 @@ export default {
           if (result.access === 0) { // 游客
             path = '/product/index'
           } else {
-            path = this.$route.query.redirect || '/bus/index'
+            path = this.$route.query.redirect || '/bus/dataView'
           }
           this.$router.push(path)
         },
