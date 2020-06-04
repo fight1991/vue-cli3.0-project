@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="map-content" style="width:100%;">
-        <g-map v-if="lang=='en'"></g-map>
+        <g-map v-if="lang=='en' && gMapNormal" @gMapError="gMapError"></g-map>
         <b-map v-else></b-map>
       </div>
     </div>
@@ -76,6 +76,7 @@ export default {
   },
   data () {
     return {
+      gMapNormal: true,
       timer: null,
       plantStatus: {
         total: 0,
@@ -129,6 +130,10 @@ export default {
   },
   mounted () {},
   methods: {
+    // 谷歌地图切换错误(没翻墙),暂时切换百度地图
+    gMapError () {
+      this.gMapNormal = false
+    },
     // 获取所有电站正常 非正常 故障个数
     async getPlantStatus () {
       let { result } = await this.$axios({
