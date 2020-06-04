@@ -88,7 +88,7 @@ export default {
         this.tips()
         return
       }
-      this.dialogTitle = 'New User'
+      this.dialogTitle = this.$t('join.newUser')
       this.tag = 'user'
       this.joinVisible = true
     },
@@ -97,7 +97,7 @@ export default {
       //   this.tips()
       //   return
       // }
-      this.dialogTitle = 'New Installer'
+      this.dialogTitle = this.$t('join.newInst')
       this.tag = 'installer'
       this.joinVisible = true
       this.getOrgansList('agent')
@@ -109,10 +109,10 @@ export default {
       }
       this.getOrgansList('agent')
       if (command === 'add') {
-        this.dialogTitle = 'New Agent'
+        this.dialogTitle = this.$t('join.newAgent')
         this.dialogVisible = true
       } else {
-        this.dialogTitle = 'Existing Agent'
+        this.dialogTitle = this.$t('join.existAgent')
         this.joinVisible = true
       }
       this.tag = 'agent'

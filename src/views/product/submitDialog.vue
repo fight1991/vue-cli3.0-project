@@ -11,8 +11,8 @@
       <create-form ref="form" :tag="$attrs.tag" :organList="organList"></create-form>
     </div>
     <div class="foot-btn flex-center">
-      <el-button size="mini" @click="cancelForm">cancel</el-button>
-      <el-button size="mini" type="primary" @click="register">register</el-button>
+      <el-button size="mini" @click="cancelForm">{{$t('common.cancel')}}</el-button>
+      <el-button size="mini" type="primary" @click="register">{{$t('common.register')}}</el-button>
     </div>
   </el-dialog>
 </template>

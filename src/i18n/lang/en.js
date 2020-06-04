@@ -34,7 +34,15 @@ export default {
     agent: 'Agent',
     create: 'New',
     join: 'Join',
-    joinTips: 'Successful, Require a re-login'
+    joinTips: 'Successful, Require a re-login',
+    newUser: 'New User',
+    newInst: 'New Installer',
+    newAgent: 'New Agent',
+    existAgent: 'Existing Agent',
+    companyName: 'Company Name',
+    email: 'Email',
+    phone: 'Mobile Phone',
+    remark: 'Remark'
   },
   common: {
     enterFull: 'in a full-screen ',
@@ -57,6 +65,7 @@ export default {
     energy: 'Energy storage',
     cancel: 'Cancel',
     confirm: 'Confirm',
+    register: 'Register',
     tip: 'Tip',
     success: 'successful',
     fail: 'failure',

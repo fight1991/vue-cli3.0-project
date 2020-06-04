@@ -10,8 +10,8 @@
       <join-form ref="form" :tag="$attrs.tag" :organList="organList"></join-form>
     </div>
     <div class="foot-btn flex-center">
-      <el-button size="mini" @click="cancelForm">cancel</el-button>
-      <el-button size="mini" type="primary" @click="joinSome">register</el-button>
+      <el-button size="mini" @click="cancelForm">{{$t('common.cancel')}}</el-button>
+      <el-button size="mini" type="primary" @click="joinSome">{{$t('common.register')}}</el-button>
     </div>
   </el-dialog>
 </template>

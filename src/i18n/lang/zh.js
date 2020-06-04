@@ -34,7 +34,15 @@ export default {
     agent: '代理商',
     create: '创建',
     join: '加入',
-    joinTips: '加入成功, 请重新登录!'
+    joinTips: '加入成功, 请重新登录!',
+    newUser: '新建用户',
+    newInst: '新建安装商',
+    newAgent: '新建代理商',
+    existAgent: '已有代理商',
+    companyName: '安装商名称',
+    email: '邮箱',
+    phone: '手机号',
+    remark: '备注'
   },
   common: {
     enterFull: '全屏显示',
@@ -57,6 +65,7 @@ export default {
     energy: '储能',
     cancel: '取消',
     confirm: '确定',
+    register: '注册',
     tip: '提示',
     success: '操作成功',
     fail: '操作失败',
