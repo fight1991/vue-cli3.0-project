@@ -6,7 +6,7 @@
         <el-row class="current-kw">
           <el-col :span="8">
             <div class="my-pg flex-center">
-              <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="49" :stroke-width="12"></el-progress>
+              <el-progress :width="150" type="circle" color="#67C23A" :show-text="false" :percentage="powerPercent" :stroke-width="12"></el-progress>
               <div class="progress-txt">
                 <div class="number">{{(power).toLocaleString() + 'kw'}}</div>
                 <div class="f12">{{$t('common.currentP')}}</div>
@@ -40,6 +40,17 @@ export default {
     },
     power: {
       default: 0
+    },
+    capacity: {
+      default: 0
+    }
+  },
+  computed: {
+    powerPercent () {
+      if (this.capacity > 0) {
+        return Math.ceil((this.power / this.capacity) * 100)
+      }
+      return 0
     }
   },
   methods: {

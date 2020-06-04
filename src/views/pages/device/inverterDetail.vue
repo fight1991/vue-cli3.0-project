@@ -29,7 +29,7 @@
       </div>
     </div>
     <!-- 设备状态 -->
-    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :title="$t('plant.equipSta')"></device-status>
+    <device-status :incomeDetail="incomeDetail" :power="incomeDetail.power" :capacity="incomeDetail.systemCapacity" :title="$t('plant.equipSta')"></device-status>
     <!-- 今日异常 流向图 -->
     <div class="block">
       <el-row :gutter="15">
