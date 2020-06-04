@@ -63,7 +63,7 @@ export default {
     getUserFromRegister (user) {
       this.dataForm.user = user
       this.$nextTick(() => {
-        this.$refs.password.$refs.input.focus()
+        this.$refs.password && this.$refs.password.$refs.input.focus()
       })
     },
     // 用户名密码登录输入框校验
