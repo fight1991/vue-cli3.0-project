@@ -42,7 +42,7 @@
     <!-- 底部区域 -->
     <div class="footer">
       <div class="rights-info">
-        Copyright ©2008-2020 江苏麦田能源有限公司, All Rights Reserved.
+        {{$store.state.rightsTxt + $t('login.allRight')}}
       </div>
     </div>
     <!-- 注册或加入 -->

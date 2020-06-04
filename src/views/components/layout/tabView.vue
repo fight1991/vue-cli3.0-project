@@ -25,7 +25,7 @@
           <el-scrollbar wrap-class="tab-scrollbar-wrapper" v-loading="$store.state.loading">
             <div class="tab-content" v-if="item.isShow">
               <component :is="item.components[item.components.length-1]"></component>
-              <div v-show="index>0" class="copy-right" v-text="rightText"></div>
+              <div v-show="index>0" class="copy-right" v-text="$store.state.rightsTxt + $t('login.allRight')"></div>
             </div>
           </el-scrollbar>
           <!-- 组件内容区域结束 -->
@@ -53,8 +53,7 @@ export default {
   name: 'tab-view',
   data () {
     return {
-      isFullScreen: false,
-      rightText: 'Copyrights © 2010-2020'
+      isFullScreen: false
     }
   },
   provide () {

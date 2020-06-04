@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      access: {
+      accessInfo: {
         user: 1,
         installer: 2,
         agent: 3
@@ -75,7 +75,7 @@ export default {
         url: '/v0/organs/register',
         data: submitData,
         success: res => {
-          let access = this.access[this.$attrs.tag]
+          let access = this.accessInfo[this.$attrs.tag]
           this.$store.commit('setAccess', access)
           this.$message.success(this.$t('join.joinTips'))
           this.dialogVisible = false

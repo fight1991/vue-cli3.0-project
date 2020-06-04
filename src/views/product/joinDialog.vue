@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      access: {
+      accessInfo: {
         user: 1,
         installer: 2,
         agent: 3

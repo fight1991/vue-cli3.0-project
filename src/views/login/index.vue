@@ -62,7 +62,7 @@
           <i class="gap">-</i>
           <el-link type="info" href="https://fox-ess.com/single-phase/" target="_blank">{{$t('login.acStore')}}</el-link>
         </p>
-        <p>© 2010-2020 FoxESS. {{$t('login.allRight')}}</p>
+        <p>{{$store.state.rightsTxt + $t('login.allRight')}}</p>
       </div>
     </div>
   </div>
