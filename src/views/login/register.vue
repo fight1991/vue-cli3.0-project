@@ -40,7 +40,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item prop="email" :label="$t('login.em')">
-              <el-input v-model="dataForm.email"></el-input>
+              <el-input v-model="dataForm.email" @keyup.native.enter="goRegister"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -76,6 +76,7 @@
 import mixins from './mixin'
 import md5 from 'js-md5'
 import valid from './validate'
+import link from './link'
 export default {
   name: 'register',
   mixins: [mixins],
@@ -90,7 +91,8 @@ export default {
       dataForm: {
         user: '', // 用户名
         password: '', // 密码
-        confirmWord: '' // 密码确认
+        confirmWord: '', // 密码确认
+        email: ''
       },
       loginRules: {
         user: [{ required: true, pattern: valid.user.rule, message: this.$t(valid.user.message), trigger: 'blur' }],
@@ -110,9 +112,7 @@ export default {
       this.dialogH = window.innerHeight - 100
     })
   },
-  beforeDestroy () {
-
-  },
+  beforeDestroy () {},
   methods: {
     load () {
       this.loading = false
@@ -152,6 +152,13 @@ export default {
           // 1.注册成功, 调用自动登录接口 ? 2. 跳转到产品介绍页面
           // this.$router.push('/product/index')
           this.$message.success(this.$t('login.successMg1'))
+          link.$emit('sendUser', this.dataForm.user)
+          this.dataForm = {
+            user: '',
+            password: '',
+            confirmWord: '',
+            email: ''
+          }
           this.backLogin()
         },
         other: res => {
