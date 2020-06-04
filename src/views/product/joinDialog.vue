@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :modal-append-to-body="false"
-    @opened="dialogOpen"
+    @opened="cancelForm"
     @close="closeDialog"
     :visible.sync="dialogVisible"
     width="600px">
@@ -10,7 +10,7 @@
       <join-form ref="form" :tag="$attrs.tag" :organList="organList"></join-form>
     </div>
     <div class="foot-btn flex-center">
-      <el-button size="mini" @click="cancelForm">cancel</el-button>
+      <el-button size="mini" @click="cancelBtn">cancel</el-button>
       <el-button size="mini" type="primary" @click="joinSome">register</el-button>
     </div>
   </el-dialog>
@@ -53,7 +53,8 @@ export default {
     closeDialog () {
       this.$emit('update:visible', false)
     },
-    dialogOpen () {
+    cancelBtn () {
+      this.dialogVisible = false
       this.cancelForm()
     },
     cancelForm () {

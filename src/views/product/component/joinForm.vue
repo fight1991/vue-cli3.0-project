@@ -8,7 +8,7 @@
         </el-form-item>
       </el-col>
       <!-- 安装商选择代理商 多选 -->
-      <el-col :span="24" v-if="tag=='installer'">
+      <el-col :span="24" v-show="tag=='installer'">
         <el-form-item label="Authorizer" prop="organNameM" label-width="100px">
           <el-select
             class="agent-multi"
@@ -22,7 +22,7 @@
         </el-form-item>
       </el-col>
       <!-- 代理商选择代理商 单选 -->
-      <el-col :span="24" v-if="tag=='agent'">
+      <el-col :span="24" v-show="tag=='agent'">
         <el-form-item label="Authorizer" prop="organNameS" label-width="100px">
           <el-select v-model="dataForm.organNameS" placeholder="Authorized Company or Authorizer" style="width:100%;">
             <el-option v-for="(item, index) in organList" :value="item" :key="'index' + index" :label="item"></el-option>
@@ -44,8 +44,8 @@ export default {
         moduleSN: ''
       },
       rules: {
-        organNameS: [{ required: true, message: 'Authorizer is required', trigger: 'change' }],
-        organNameM: [{ required: true, message: 'Authorizer is required', trigger: 'change' }],
+        organNameS: [{ required: true, message: 'Authorizer is required', trigger: 'blur' }],
+        organNameM: [{ required: true, message: 'Authorizer is required', trigger: 'blur' }],
         moduleSN: [{ required: true, message: 'sn is required', trigger: 'blur' }]
       }
     }
