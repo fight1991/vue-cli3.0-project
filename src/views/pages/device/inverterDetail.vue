@@ -297,7 +297,7 @@ export default {
           let temp = JSON.parse(e.data)
           if (temp.msgType === 'response') { // 响应成功与否
             if (temp.errno === 0) {
-              console.log('参数发送成功')
+              // console.log('参数发送成功')
             } else {
               console.log('错误码' + temp.errno)
             }
@@ -305,19 +305,15 @@ export default {
           if (temp.msgType === 'data') {
             callback && callback(temp)
           }
-        } else {
-          console.log('数据格式不正确')
-        }
+        } else {}
       }
     },
     // 获取ws信息
     getWsInfo (res) {
       if (res.sequence === 'flowDetail') {
-        console.log('flowDetail')
         this.flowDetail = res.data.blocks || []
       }
       if (res.sequence === 'flow') {
-        console.log('flow')
         let data = res.data
         let pvValue = 0
         this.pvTotal = 0

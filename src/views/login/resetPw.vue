@@ -83,9 +83,7 @@ export default {
     getCode () {
       this.$refs.dataForm.validateField('user', (valid) => {
         if (!valid) {
-          this.sendCode({
-            user: this.dataForm.user
-          }, this.codeBtn)
+          this.sendCode(this.dataForm.user, this.codeBtn)
         }
       })
     },
