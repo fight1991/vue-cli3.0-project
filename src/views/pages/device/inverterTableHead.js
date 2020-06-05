@@ -52,7 +52,7 @@ export default {
         },
         {
           label: 'plant.country',
-          prop: 'age',
+          prop: 'country',
           checked: true
         },
         {
