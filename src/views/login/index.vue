@@ -85,6 +85,12 @@ export default {
       lang: '中文'
     }
   },
+  created () {
+    // 系统header按钮跳转过来
+    if (this.$route.query.type === 'reset') {
+      this.toggleStatus('resetPw')
+    }
+  },
   methods: {
     // 切换登录还是注册
     toggleStatus (typeStatus) {

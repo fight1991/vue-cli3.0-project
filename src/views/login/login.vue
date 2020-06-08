@@ -53,17 +53,17 @@ export default {
     }
   },
   created () {
-    if (this.$route.query.type === 'reset') {
-      this.registerBtn('resetPw')
-    }
     link.$on('sendUser', this.getUserFromRegister)
+    if (this.$route.query.type === 'reset') { // 系统header>重置密码按钮>重置面板>重置成功>登录面板显示
+      this.dataForm.user = sessionStorage.getItem('username') || ''
+    }
   },
   computed: {},
   methods: {
     getUserFromRegister (user) {
       this.dataForm.user = user
       this.$nextTick(() => {
-        this.$refs.password.$refs.input.focus()
+        this.$refs.password && this.$refs.password.$refs.input.focus()
       })
     },
     // 用户名密码登录输入框校验

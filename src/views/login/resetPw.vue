@@ -71,6 +71,12 @@ export default {
       return this.isEmail ? 'email' : 'phone'
     }
   },
+  created () {
+    // 从系统重置密码跳转过来
+    if (this.$route.query.type === 'reset') {
+      this.dataForm.user = sessionStorage.getItem('username') || ''
+    }
+  },
   props: ['pageFlag'],
   methods: {
     // 返回登录模块

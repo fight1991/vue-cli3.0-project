@@ -28,7 +28,7 @@
               <el-col :lg="12" :md="24">
                 <el-form-item :label="$t('plant.country')" prop="details.country">
                   <el-select v-model="dataForm.details.country" filterable style="width:100%" @change="getZoneList" :placeholder="$t('common.select')">
-                    <el-option v-for="item in countryList" :key="item.code" :value="item.code" :label="item.name"></el-option>
+                    <el-option v-for="item in countryList" :key="item.code" :value="item.name" :label="item.name"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -273,11 +273,12 @@ export default {
       }
     },
     // 获取时区列表
-    async getZoneList (code) {
+    async getZoneList (name) {
+      let temp = this.countryList.find(v => v.name === name)
       let { result } = await this.$axios({
         url: '/v0/map/timezones',
         data: {
-          country: code
+          country: temp.code
         }
       })
       if (result) {
