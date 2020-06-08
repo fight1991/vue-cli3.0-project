@@ -153,16 +153,16 @@ export default {
             year: new Date(this.powerDate).getFullYear(),
             month: new Date(this.powerDate).getMonth() + 1,
             day: new Date(this.powerDate).getDate(),
-            hour: new Date(this.powerDate).getHours(),
-            minute: new Date(this.powerDate).getMinutes(),
-            second: new Date(this.powerDate).getSeconds()
+            hour: 0,
+            minute: 0,
+            second: 0
           }
         }
       })
       if (result && result.length > 0) {
         this.echartData.power.legend.data = result.map(v => v.variable)
         this.echartData.power.series = result.map(v => {
-          let tempData = v.data.map(item => [item.timestamp, item.value])
+          let tempData = v.data.map(item => [Date.parse(item.time), item.value])
           return {
             type: 'line',
             name: v.variable,

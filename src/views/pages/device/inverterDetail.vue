@@ -243,7 +243,7 @@ export default {
       if (result && result.length > 0) {
         let temp = []
         result.forEach((v, i) => {
-          let tempData = v.data.map(item => [item.timestamp, item.value])
+          let tempData = v.data.map(item => [Date.parse(item.time), item.value])
           temp.push({
             name: v.variable,
             data: tempData,
