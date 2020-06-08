@@ -55,7 +55,7 @@ export default {
     closeAll: 'Close all',
     closeOther: 'Close others',
     weather: 'Weather',
-    invertSn: 'inverter sn',
+    invertSn: 'Inverter sn',
     alarmType: 'Error type',
     common: 'common',
     pvBus: 'PV&BUS',
