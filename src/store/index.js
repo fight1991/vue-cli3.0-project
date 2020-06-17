@@ -10,14 +10,14 @@ export default new Vuex.Store({
     lang: 'zh', // 语言
     collapse: false, // 是否折叠
     loading: false,
-    loadingNum: 0,
+    loadingNum: 0, // 全局loading数量计数, 防止一个请求没有回来被另一个请求关掉了
     tabView: true, // 是否开启页签模式
     pagination: {
       pageSize: 10,
       currentPage: 1,
       total: 0
     },
-    access: 0, // 0 游客， 1 终端用户 ，2 安装商 3 代理商 ，255 厂商
+    access: -1, // 0 游客， 1 终端用户 ，2 安装商 3 代理商 ，255 厂商
     username: '',
     userInfo: {
       user: '', // 当前登录的用户名
